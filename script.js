@@ -363,29 +363,39 @@ function updateWorkflow(type) {
     });
   }
 
-  if (auditSteps.length && auditWorkflow) {
-    const firstAuditStep = auditSteps[0];
-  
-    auditSteps.forEach((step) => {
-      step.addEventListener("mouseenter", () => {
-        auditSteps.forEach((item) => item.classList.remove("is-active"));
-        step.classList.add("is-active");
-  
-        updateWorkflow(step.dataset.workflow);
-      });
-    });
-  
-    const auditProcess = document.querySelector(".audit-process");
-  
-    if (auditProcess) {
-      auditProcess.addEventListener("mouseleave", () => {
-        auditSteps.forEach((item) => item.classList.remove("is-active"));
-        firstAuditStep.classList.add("is-active");
-  
-        auditWorkflow.classList.remove("is-visible");
-      });
-    }
+if (auditSteps.length && auditWorkflow) {
+  const firstAuditStep = auditSteps[0];
+  const auditProcess = document.querySelector(".audit-process");
+  const isMobilePointer = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+
+  function activateAuditStep(step) {
+    auditSteps.forEach((item) => item.classList.remove("is-active"));
+    step.classList.add("is-active");
+    updateWorkflow(step.dataset.workflow);
   }
+
+  activateAuditStep(firstAuditStep);
+
+  auditSteps.forEach((step) => {
+    step.addEventListener("mouseenter", () => {
+      activateAuditStep(step);
+    });
+
+    step.addEventListener("click", () => {
+      activateAuditStep(step);
+    });
+  });
+
+  if (auditProcess) {
+    auditProcess.addEventListener("mouseleave", () => {
+      if (isMobilePointer) return;
+
+      auditSteps.forEach((item) => item.classList.remove("is-active"));
+      firstAuditStep.classList.add("is-active");
+      auditWorkflow.classList.remove("is-visible");
+    });
+  }
+}
 
 // QUD Landing — Traders path flight animation
 
