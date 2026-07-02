@@ -3581,9 +3581,10 @@ h2 {
   inset: 0;
   z-index: 120;
   display: none;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 28px;
+  padding: 24px 18px;
+  overflow-y: auto;
 }
 
 .legal-modal.is-open {
@@ -3599,8 +3600,10 @@ h2 {
 
 .legal-modal-panel {
   position: relative;
-  width: min(100%, 720px);
-  padding: 42px 44px 46px;
+  width: min(100%, 760px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 32px 36px 34px;
   border: 1px solid rgba(219, 163, 81, 0.24);
   border-radius: var(--radius-lg);
   background:
@@ -3637,12 +3640,111 @@ h2 {
   line-height: 1.08;
 }
 
-.legal-modal-panel p {
+.legal-modal-text {
   max-width: 600px;
   margin-top: 22px;
   color: var(--text-muted);
   font-size: 16px;
   line-height: 1.7;
+  white-space: pre-line;
+}
+
+.legal-modal-text.is-structured {
+  max-width: 100%;
+  margin-top: 18px;
+  white-space: normal;
+}
+
+.services-modal-content {
+  display: grid;
+  gap: 12px;
+  color: rgba(232, 232, 232, 0.76);
+  font-size: 12px;
+  line-height: 1.46;
+}
+
+.services-modal-content p,
+.services-modal-content ul {
+  margin: 0;
+}
+
+.services-modal-lead {
+  color: rgba(245, 245, 245, 0.84);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.services-modal-note,
+.services-modal-small,
+.services-modal-disclaimer {
+  color: rgba(214, 214, 214, 0.66);
+  font-size: 11px;
+  line-height: 1.48;
+}
+
+.services-modal-section {
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.services-modal-section h3 {
+  margin: 0 0 7px;
+  color: rgba(245, 245, 245, 0.92);
+  font-size: 15px;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+}
+
+.services-modal-badge {
+  display: inline-flex;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(219, 163, 81, 0.12);
+  color: rgba(219, 163, 81, 0.95);
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.services-modal-content ul {
+  display: grid;
+  gap: 4px;
+  padding-left: 17px;
+  margin-top: 8px;
+}
+
+.services-price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.services-price-grid div {
+  display: grid;
+  gap: 3px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.032);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.services-price-grid strong {
+  color: rgba(245, 245, 245, 0.92);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.services-price-grid span {
+  color: rgba(214, 214, 214, 0.62);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.services-modal-disclaimer {
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 body.is-legal-modal-open {
@@ -4018,244 +4120,20 @@ body.is-legal-modal-open {
   .investors-process-inline .process-carousel {
     height: auto;
     display: grid;
-    gap: 22px;
-    overflow: visible;
-  }
-
-  .process-orbit-item,
-  .process-orbit-item.is-active,
-  .process-orbit-item.is-next,
-  .process-orbit-item.is-prev,
-  .process-orbit-item.is-back,
-  .investors-process-inline .process-orbit-item {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    display: grid;
-    justify-items: start;
-    text-align: left;
-    transform: none;
-    opacity: 1;
-    filter: none;
-    pointer-events: auto;
-  }
-
-  .process-orbit-item.is-next p,
-  .process-orbit-item.is-prev p,
-  .process-orbit-item.is-back p {
-    display: block;
-  }
-
-  .process-orbit-icon,
-  .investors-process-inline .process-orbit-icon {
-    width: 62px;
-    height: 62px;
-    margin-bottom: 12px;
-  }
-
-  .process-orbit-icon svg {
-    width: 44px;
-    height: 44px;
-  }
-
-  .process-orbit-item p,
-  .investors-process-inline .process-orbit-item p {
-    max-width: 100%;
-  }
-
-  .investors-capital-icons {
-    grid-template-columns: 1fr;
-  }
-
-  .capital-icons-text {
-    min-height: auto;
-    padding-left: 0;
-    border-left: 0;
-    border-top: 1px solid rgba(219, 163, 81, 0.22);
-    padding-top: 22px;
-  }
-
-  .investors-final-card,
-  .investors-final-card-single .investors-final-main {
-    display: grid;
-    grid-template-columns: 1fr;
-    padding: 24px;
-    gap: 20px;
-    text-align: left;
-  }
-
-  .investors-final-card-single .investors-final-icon {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-  }
-
-  .investors-final-card-single .investors-final-main p {
-    text-align: left;
-  }
-
-  .about-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .about-intro,
-  .about-bridge,
-  .about-security,
-  .about-process,
-  .about-benefits,
-  .about-final {
-    grid-column: auto;
-    grid-row: auto;
-  }
-
-  .about-bridge {
-    min-height: auto;
-    grid-template-columns: 1fr;
-    gap: 28px;
-    padding-top: 0;
-  }
-
-  .about-bridge-side:first-child,
-  .about-bridge-side:last-child {
-    transform: none;
-  }
-
-  .about-flow-arrow,
-  .about-orbit-node {
-    display: none;
-  }
-
-  .about-orbit {
-    width: 100%;
-    height: auto;
-    min-height: 260px;
-    display: grid;
-    place-items: center;
-    background: transparent;
-  }
-
-  .about-orbit::before,
-  .about-orbit::after {
-    display: none;
-  }
-
-  .about-orbit-core {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-  }
-
-  .about-security h3,
-  .about-benefits h3 {
-    text-align: left;
-  }
-
-  .about-security h3::after {
-    margin-left: 0;
-    margin-right: auto;
-    background: linear-gradient(
-      90deg,
-      rgba(219, 163, 81, 0.62),
-      rgba(219, 163, 81, 0.18),
-      rgba(219, 163, 81, 0)
-    );
-  }
-
-  .about-security-list,
-  .about-process-line,
-  .about-benefits-grid {
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-
-  .about-security-list div,
-  .about-benefit {
-    border-right: 0;
-    padding-right: 0;
-  }
-
-  .about-process-step:not(:last-child)::after {
-    display: none;
-  }
-
-  .about-process h3 {
-    text-align: left;
-  }
-
-  .about-process-step {
-    justify-items: start;
-    text-align: left;
-  }
-
-  .about-process-icon {
-    margin: 12px 0 14px;
-  }
-
-  .about-process-step p {
-    max-width: 100%;
-  }
-
-  .about-final {
-    text-align: left;
-  }
-
-  .contacts-section {
-    padding-top: 64px;
-    padding-bottom: 64px;
-  }
-
-  .contacts-left-compact {
-    min-height: auto;
-  }
-
-  .contacts-form-card-compact,
-  .contacts-form-card {
-    padding: 24px;
-  }
-
-  .contacts-role-options {
-    grid-template-columns: 1fr;
-  }
-
-  .contacts-disclaimer-compact {
-    margin-top: 28px;
-  }
-
-  .contacts-consent {
-    grid-template-columns: 20px 1fr;
-  }
-
-  .contacts-consent input {
-    width: 18px;
-    height: 18px;
-    min-height: 18px;
-    margin-top: 2px !important;
-    border-radius: 4px;
-  }
-
-  .footer-inner-clean {
-    gap: 34px;
-  }
-
-  .footer-bottom-clean {
-    margin-top: 28px;
   }
 
   .legal-modal {
     align-items: flex-start;
-    padding: 18px 14px;
+    padding: 14px 12px;
     overflow-y: auto;
   }
 
   .legal-modal-panel {
     width: 100%;
     max-width: 100%;
-    max-height: calc(100vh - 36px);
+    max-height: calc(100vh - 28px);
     overflow-y: auto;
-    padding: 28px 22px 30px;
+    padding: 24px 18px 26px;
     border-radius: 12px;
   }
 
@@ -4265,17 +4143,39 @@ body.is-legal-modal-open {
     line-height: 1.12;
   }
 
-  .legal-modal-panel p {
+  .legal-modal-text {
     max-width: 100%;
-    margin-top: 18px;
-    font-size: 13px;
-    line-height: 1.58;
-    white-space: pre-line;
+    margin-top: 16px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .services-modal-content {
+    gap: 11px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .services-modal-lead {
+    font-size: 12px;
+  }
+
+  .services-modal-section h3 {
+    font-size: 14px;
+  }
+
+  .services-price-grid {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .services-price-grid div {
+    padding: 8px 9px;
   }
 
   .legal-modal-close {
-    top: 14px;
-    right: 14px;
+    top: 12px;
+    right: 12px;
     width: 32px;
     height: 32px;
     font-size: 22px;
