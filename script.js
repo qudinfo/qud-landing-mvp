@@ -864,7 +864,9 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
   };
 
   const openLegalModal = (type) => {
-    const content = legalContent[type] || legalContent.disclaimer;
+    const content = legalContent[type];
+
+    if (!content) return;
 
     modalTitle.textContent = content.title;
 
@@ -890,7 +892,10 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
   legalLinks.forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
-      openLegalModal(link.dataset.legalModal);
+      event.stopPropagation();
+
+      const modalType = link.getAttribute('data-legal-modal');
+      openLegalModal(modalType);
     });
   });
 
