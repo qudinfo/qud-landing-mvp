@@ -3,7 +3,7 @@
 <style>
 :root{--bg:#0b0d0f;--panel:#111315;--text:#c6c6c6;--text-strong:#f0f0ed;--muted:#8a8a8a;--blue:#8fa6c8;--green:#6fa56f;--yellow:#bda351;--orange:#b87945;--red:#b4514b;--border-soft:#1f2428}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 30% -10%,#151b21 0%,#0b0d0f 44%,#08090a 100%);color:var(--text);font-family:Inter,Arial,sans-serif}.page{max-width:1240px;margin:0 auto;padding:20px 22px}.panel{background:linear-gradient(180deg,rgba(17,20,22,.72),rgba(10,12,14,.82));border:1px solid rgba(255,255,255,.06);border-radius:0;padding:14px;box-shadow:0 10px 28px rgba(0,0,0,.14);position:relative;overflow:visible}h1{font-size:24px;margin:0 0 6px;color:var(--text-strong)}h2{font-size:12px;margin:0 0 6px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:800}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#d5c27a;font-weight:700;margin-bottom:8px}.subtitle{margin:0;color:var(--muted);font-size:13px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}.badge{display:inline-flex;border:1px solid rgba(189,163,81,.45);border-radius:999px;padding:5px 10px;color:#d5c27a;background:rgba(189,163,81,.06);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.badge.good{border-color:rgba(111,165,111,.45);color:#8ec58e;background:rgba(111,165,111,.07)}.badge.warn{border-color:rgba(189,163,81,.45);color:#d5c27a;background:rgba(189,163,81,.07)}.badge.danger{border-color:rgba(180,81,75,.5);color:#d97f78;background:rgba(180,81,75,.08)}.badge.neutral{border-color:rgba(143,166,200,.35);color:var(--blue);background:rgba(143,166,200,.07)}.top{margin-bottom:12px}.top-combined{display:grid;grid-template-columns:1.75fr .7fr .7fr;gap:24px;align-items:center}.top-title-block{padding-left:62px}.score-wrap{position:relative;height:154px}.score-gauge{width:100%;height:100%}.score-value{position:absolute;left:50%;top:64%;transform:translate(-50%,-50%);font-size:42px;color:var(--green);font-weight:850;text-align:center}.score-value small{display:block;font-size:12px;color:var(--muted);margin-top:4px}.gauge-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:12;stroke-linecap:round}.gauge-seg{fill:none;stroke-width:12;stroke-linecap:round}.gauge-seg.red{stroke:var(--red)}.gauge-seg.orange{stroke:var(--orange)}.gauge-seg.green{stroke:var(--green)}.gauge-marker{stroke:#efe8d2;stroke-width:4;stroke-linecap:round}.gauge-tick{fill:var(--muted);font-size:10px}.status-badges{height:154px;display:flex;flex-direction:column;justify-content:center;gap:8px}.status-line{display:flex;align-items:center;gap:8px}.status-note{font-size:10px;color:var(--muted);font-weight:600}.top-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:20px 0 24px}.metric-card{padding:10px 24px 10px 0;display:grid;grid-template-columns:auto 104px;grid-template-rows:auto auto;column-gap:18px;align-items:end}.metric-card:first-child{padding-left:24px}.metric-card+.metric-card{padding-left:24px;border-left:1px solid rgba(255,255,255,.12)}.metric-value{font-size:22px;color:var(--text-strong);font-weight:800;margin-top:8px}.metric-spark{grid-column:2;grid-row:1/span 2;width:104px;height:38px;align-self:center}.pre-account-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:24px}.pre-leak-panel{grid-column:span 4}.pre-score-panel{grid-column:span 8}.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:16px;row-gap:26px}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}.section-head{display:flex;justify-content:space-between;margin-bottom:14px}.chart-box{height:220px;margin-top:8px}.account-chart{height:250px}.planned-risk-chart{height:252px}.svg-chart{width:100%;height:100%;display:block}.gridline{stroke:rgba(255,255,255,.055);stroke-width:1}.axis-label{fill:var(--muted);font-size:10px;font-weight:600}.legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:10px;color:var(--muted)}.leg{display:inline-flex;align-items:center;gap:6px}.sw{width:10px;height:10px;border-radius:3px;background:var(--blue)}.sw.green{background:var(--green)}.sw.yellow{background:var(--yellow)}.sw.red{background:var(--red)}.sw.gray{background:#66717b}.mini-leak-stack{display:grid;gap:26px;margin-top:38px;padding:0 10px 8px}.mini-leak-row{display:grid;grid-template-columns:128px minmax(0,1fr);gap:18px;align-items:center}.mini-leak-name{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850;white-space:nowrap}.mini-leak-bar{height:7px;width:100%;max-width:100%;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 30%,var(--yellow) 30% 60%,var(--orange) 60% 80%,var(--red) 80% 100%);position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);overflow:visible}.mini-leak-bar .marker{position:absolute;top:-7px;width:4px;height:21px;background:#e9e0b6;border-radius:4px;box-shadow:0 0 0 2px rgba(0,0,0,.48);transform:translateX(-2px)}.pre-leak-panel{min-height:270px;overflow:hidden}.pre-leak-panel h2{font-size:13px;letter-spacing:.1em;margin-bottom:8px}.analysis-panel{padding:28px 14px 30px;background:transparent;border:0;box-shadow:none}.analysis-panel h2{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.analysis-head-value{order:-1;font-size:16px;color:var(--text-strong);font-weight:850}.analysis-winrate{font-size:9px;color:var(--muted)}.analysis-winrate b{font-size:11px}.analysis-gauge-wrap{height:92px;margin-top:18px;display:grid;place-items:center}.analysis-gauge{width:100%;height:78px}.sl-protection-layout{display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:center}.donut-center{font-size:28px;fill:var(--green);font-weight:850}.donut-sub{font-size:10px;fill:var(--muted);letter-spacing:.12em}.timeline-dots{height:172px;width:100%}.legend-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:10px;color:var(--muted)}.legend-row{display:inline-flex;gap:6px;align-items:center}.sq{width:10px;height:10px;border-radius:3px}.risk-zone-summary{display:grid;grid-template-columns:auto auto;gap:96px;margin-top:-42px;margin-bottom:18px;padding-left:14px}.risk-zone-value{font-size:20px;color:var(--text-strong);font-weight:850}.risk-zone-value.up{color:var(--red)}.risk-zone-value.down{color:var(--green)}.risk-zone-label{font-size:10px;color:var(--muted);margin-top:5px;font-weight:750}.risk-cv-scale{width:190px;margin-top:8px;margin-left:auto;margin-right:20px}.risk-after-note{margin-top:38px;color:var(--muted);font-size:14px}.risk-after-note b{font-size:22px;color:var(--green);font-weight:850}.risk-after-note b.up{color:var(--red)}.risk-cv-title{font-size:10px;color:var(--text-strong);font-weight:850;letter-spacing:.07em;margin-bottom:5px}.risk-cv-scale-top{position:relative;height:20px}.risk-cv-line{position:absolute;left:0;right:0;top:12px;height:5px;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 50%,var(--yellow) 50% 78%,var(--red) 78% 100%)}.risk-cv-marker{position:absolute;top:0;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #efe8d2}.risk-cv-ticks,.risk-cv-labels{display:flex;justify-content:space-between;font-size:8px;color:var(--muted);font-weight:750;margin-top:2px}.findings-panel{background:transparent;border:0;box-shadow:none;padding:18px 10px}.finding-list{display:grid;gap:18px;margin-top:18px}.finding-list .item{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:center}.item-num{width:24px;height:24px;border-radius:7px;font-size:11px;background:transparent;border:1.5px solid currentColor;display:grid;place-items:center;font-weight:800}.item-num.good{color:var(--green)}.item-num.warn{color:var(--yellow)}.item-num.danger{color:var(--red)}.item-title{font-size:12px;line-height:1.28;font-weight:500;color:var(--text)}.item-sub{display:none}.footer{display:flex;justify-content:space-between;margin-top:14px;color:var(--muted);font-size:12px;border-top:1px solid var(--border-soft);padding-top:12px}.not-available{fill:var(--muted);font-size:13px;font-weight:700}.help{display:inline-grid;place-items:center;width:16px;height:16px;margin-left:6px;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:0;line-height:1;cursor:help;vertical-align:middle;text-transform:none}.help:hover{border-color:rgba(255,255,255,.34);color:var(--text-strong)}.qud-tooltip{position:fixed;z-index:9999;max-width:420px;padding:18px 20px;background:rgba(10,12,14,.96);border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 22px 60px rgba(0,0,0,.5);color:var(--text);font-size:13px;line-height:1.42;pointer-events:none}.qud-tooltip-title{font-size:14px;font-weight:850;color:var(--text-strong);margin-bottom:12px}.qud-tooltip b{display:block;margin-top:9px;margin-bottom:3px;color:#d5c27a;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.qud-tooltip p{margin:0 0 3px}.qud-tooltip .muted{color:var(--muted)}@media(max-width:1100px){.top-combined,.grid,.pre-account-grid,.top-metrics{display:block}.panel{margin-bottom:14px}}
 </style></head><body><main class="page">
-<section class="top"><div class="panel"><div class="top-combined"><div class="top-title-block"><div class="eyebrow">Trade Decision Audit Report</div><h1>QUD TDA Basic</h1><p class="subtitle" id="headerMeta">—</p></div><div><div class="score-wrap"><svg class="score-gauge" id="scoreGauge" viewBox="0 0 320 180"></svg><div class="score-value" id="scoreValue">—</div></div><div class="label" style="text-align:center">Trust Score</div></div><div><div class="status-badges"><div class="status-line"><span class="badge" id="riskMode">—</span><span class="status-note">risk</span></div><div class="status-line"><span class="badge warn">PRE QUD</span><span class="status-note">trust</span></div><div class="status-line"><span class="badge good">↑ 7 SCORE</span><span class="status-note">prev.period</span></div></div><div class="label" style="text-align:center">Trust status</div></div></div></div></section>
+<section class="top"><div class="panel"><div class="top-combined"><div class="top-title-block"><div class="eyebrow">Trade Decision Audit Report</div><h1>QUD TDA Basic</h1><p class="subtitle" id="headerMeta">—</p></div><div><div class="score-wrap"><svg class="score-gauge" id="scoreGauge" viewBox="0 0 320 180"></svg><div class="score-value" id="scoreValue">—</div></div><div class="label" style="text-align:center">Trust Score</div></div><div><div class="status-badges"><div class="status-line"><span class="badge" id="riskMode">—</span><span class="status-note">risk</span></div><div class="status-line"><span class="badge warn">QUD ROOM</span><span class="status-note">trust</span></div><div class="status-line"><span class="badge good">↑ 7 SCORE</span><span class="status-note">prev.period</span></div></div><div class="label" style="text-align:center">Trust status</div></div></div></div></section>
 <section class="top-metrics"><div class="metric-card"><div class="label">Win Ratio</div><div class="metric-value" id="topWinRatio">—</div><svg class="metric-spark" id="sparkWinRatio"></svg></div><div class="metric-card"><div class="label">Profit Factor</div><div class="metric-value" id="topProfitFactor">—</div><svg class="metric-spark" id="sparkProfitFactor"></svg></div><div class="metric-card"><div class="label">Average Risk %</div><div class="metric-value" id="topAverageRisk">—</div><svg class="metric-spark" id="sparkAverageRisk"></svg></div><div class="metric-card"><div class="label">SL Safe</div><div class="metric-value" id="topSlSafe">—</div><svg class="metric-spark" id="sparkSlSafe"></svg></div></section>
 <section class="pre-account-grid"><div class="panel pre-leak-panel"><h2>QUD Leak Map</h2><div class="mini-leak-stack" id="miniLeakGrid"></div></div><div class="panel pre-score-panel"><h2>TRUST SCORE OVER TIME</h2><div class="chart-box"><svg class="svg-chart" id="scoreTrend"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Score</span><span class="leg"><span class="sw red"></span>pre QUD</span><span class="leg"><span class="sw" style="background:var(--orange)"></span>QUD Room</span><span class="leg"><span class="sw green"></span>QUD Elite</span></div></div></section>
 <section class="grid">
@@ -22,77 +22,79 @@
 </section><div class="footer"><span id="footTrader">fx-qud.com</span><span id="generated">Generated: —</span></div></main>
 <script id="report-data" type="application/json">{
   "report": {
-    "request_id": "QUD-TDA-REAL-109245314-20260710",
+    "request_id": "QUD-TDA-REAL-756010900-20260710",
     "title": "QUD TDA Basic",
     "type": "TRADER_REGULAR_REAL_CSV",
-    "generated_at": "2026-07-12 23:00:19",
+    "generated_at": "2026-07-13 00:29:23",
     "version": "BASIC_AUDIT_v1_manual_real_csv",
     "methodology_version": "BASIC_AUDIT_v1",
     "data_policy": "real_csv_only_no_mock"
   },
   "trader": {
-    "trader_id": "trd_109245314",
-    "account_login": "109245314",
+    "trader_id": "trd_5050978196",
+    "account_login": "756010900",
     "broker_server": "MetaQuotes-Demo"
   },
   "period": {
-    "current_period": "2026-07-03 — 2026-07-10",
-    "period_start": "2026-07-03 23:59:57",
-    "period_end": "2026-07-10 23:56:48",
+    "current_period": "2026-06-05 — 2026-07-10",
+    "period_start": "2026-06-05 07:40:51",
+    "period_end": "2026-07-10 23:52:44",
     "raw_files": [
-      "tda_events_aud_00007_109245314_week_20260629.csv",
-      "tda_events_aud_00007_109245314_week_20260706.csv"
+      "tda_events_aud_00001_756010900.csv",
+      "tda_events_aud_00003_756010900_week_20260629.csv",
+      "tda_events_aud_00003_756010900_week_20260706.csv"
     ],
     "audit_ids": [
-      "aud_00007"
+      "aud_00001",
+      "aud_00003"
     ]
   },
   "score": {
-    "qud_tda_score": 6.55,
-    "trust_score_status": "calculated_from_available_1_week_history_limited_sample",
-    "period_quality_score": 26.2,
-    "period_quality_zone": "pre QUD",
-    "risk_mode": "dangerous",
-    "trust_level": "pre QUD",
-    "weekly_quality_score": 26.2,
-    "history_weeks_count": 1,
-    "valid_weeks_count": 1,
-    "history_trust_factor": 0.25,
+    "qud_tda_score": 60.0,
+    "trust_score_status": "calculated_from_available_5_week_history_limited_sample",
+    "period_quality_score": 84.1,
+    "period_quality_zone": "QUD Elite",
+    "risk_mode": "elevated",
+    "trust_level": "QUD Room",
+    "weekly_quality_score": 100.0,
+    "history_weeks_count": 5,
+    "valid_weeks_count": 5,
+    "history_trust_factor": 0.6,
     "mature_phase_flag": false,
-    "previous_trust_score": 0.0,
-    "trust_score_delta": 6.55,
+    "previous_trust_score": 53.14,
+    "trust_score_delta": 6.86,
     "recent_stability_factor": 1.0,
     "critical_penalty_points": 0,
-    "final_trust_score": 6.55,
-    "trust_zone": "pre QUD",
-    "data_note": "limited one-week sample",
-    "main_damage_source": "Trades opened without Stop Loss"
+    "final_trust_score": 60.0,
+    "trust_zone": "QUD Room",
+    "data_note": "limited five-week sample",
+    "main_damage_source": "Risk above 2%"
   },
   "blocks": {
     "A": {
-      "score": 0.0,
-      "mode": "dangerous",
-      "main_issue": "Risk CV above 1.0 and daily drawdown above 20%"
+      "score": 49.95,
+      "mode": "elevated",
+      "main_issue": "Risk above 2%"
     },
     "B": {
-      "score": 0.0,
-      "mode": "unprotected",
-      "main_issue": "All trades opened without Stop Loss"
+      "score": 100.0,
+      "mode": "protected",
+      "main_issue": "SL behavior acceptable"
     },
     "C": {
-      "score": 28.0,
-      "mode": "unstable",
+      "score": 88.0,
+      "mode": "stable",
       "main_issue": "Risk increased after loss"
     },
     "D": {
-      "score": 0.0,
-      "mode": "unavailable",
-      "main_issue": "Plan/Factual sample excluded: no SL at entry"
+      "score": 100.0,
+      "mode": "controlled",
+      "main_issue": "Plan/Factual alignment acceptable"
     },
     "E": {
-      "score": 80.0,
-      "mode": "acceptable",
-      "main_issue": "Loss size exceeds win size"
+      "score": 90.0,
+      "mode": "strong",
+      "main_issue": "Loss size dominates win size"
     },
     "F": {
       "score": 100.0,
@@ -101,86 +103,186 @@
     }
   },
   "leaks": {
-    "risk_leak_score": 60.0,
-    "sl_leak_score": 100.0,
-    "behavior_leak_score": 100.0,
-    "execution_leak_score": 100.0,
-    "performance_leak_score": 20.0,
+    "risk_leak_score": 0,
+    "sl_leak_score": 0,
+    "behavior_leak_score": 0,
+    "execution_leak_score": 0,
+    "performance_leak_score": 0,
     "data_quality_leak_score": 0,
-    "main_leak": "SL Leak",
-    "main_leak_score": 100.0,
-    "summary": "Main quality leak: SL Leak"
+    "main_leak": "No material leak",
+    "main_leak_score": 0,
+    "summary": "No material quality leak in current week"
   },
   "account": {
     "data_status": "live",
     "currency": "USD",
     "history": [
       {
+        "day": "Jun 05",
+        "balance": 10295.86,
+        "equity": 10295.86
+      },
+      {
+        "day": "Jun 08",
+        "balance": 10295.86,
+        "equity": 10295.86
+      },
+      {
+        "day": "Jun 09",
+        "balance": 10295.86,
+        "equity": 10295.86
+      },
+      {
+        "day": "Jun 10",
+        "balance": 10410.26,
+        "equity": 10410.26
+      },
+      {
+        "day": "Jun 11",
+        "balance": 10553.26,
+        "equity": 10553.26
+      },
+      {
+        "day": "Jun 12",
+        "balance": 10650.76,
+        "equity": 10650.76
+      },
+      {
+        "day": "Jun 15",
+        "balance": 10650.76,
+        "equity": 10650.76
+      },
+      {
+        "day": "Jun 16",
+        "balance": 10541.86,
+        "equity": 10541.86
+      },
+      {
+        "day": "Jun 17",
+        "balance": 10647.46,
+        "equity": 10647.46
+      },
+      {
+        "day": "Jun 18",
+        "balance": 10471.06,
+        "equity": 10471.06
+      },
+      {
+        "day": "Jun 19",
+        "balance": 10641.46,
+        "equity": 10641.46
+      },
+      {
+        "day": "Jun 22",
+        "balance": 10641.46,
+        "equity": 10641.46
+      },
+      {
+        "day": "Jun 23",
+        "balance": 10641.46,
+        "equity": 10641.46
+      },
+      {
+        "day": "Jun 24",
+        "balance": 10641.46,
+        "equity": 10641.46
+      },
+      {
+        "day": "Jun 25",
+        "balance": 10641.46,
+        "equity": 10641.46
+      },
+      {
+        "day": "Jun 26",
+        "balance": 10641.46,
+        "equity": 10641.46
+      },
+      {
+        "day": "Jun 29",
+        "balance": 10754.76,
+        "equity": 10754.76
+      },
+      {
+        "day": "Jun 30",
+        "balance": 10754.76,
+        "equity": 10754.76
+      },
+      {
+        "day": "Jul 01",
+        "balance": 10866.36,
+        "equity": 10866.36
+      },
+      {
+        "day": "Jul 02",
+        "balance": 10977.46,
+        "equity": 10977.46
+      },
+      {
         "day": "Jul 03",
-        "balance": 10000.0,
-        "equity": 10000.0
+        "balance": 10977.46,
+        "equity": 10977.46
       },
       {
         "day": "Jul 06",
-        "balance": 9948.5,
-        "equity": 9905.7
+        "balance": 10977.46,
+        "equity": 10977.46
       },
       {
         "day": "Jul 07",
-        "balance": 10554.98,
-        "equity": 10554.98
+        "balance": 11080.86,
+        "equity": 11080.86
       },
       {
         "day": "Jul 08",
-        "balance": 10850.98,
-        "equity": 10850.98
+        "balance": 11218.36,
+        "equity": 11218.36
       },
       {
         "day": "Jul 09",
-        "balance": 9393.68,
-        "equity": 9233.68
+        "balance": 11329.46,
+        "equity": 11329.46
       },
       {
         "day": "Jul 10",
-        "balance": 11814.98,
-        "equity": 11814.98
+        "balance": 11401.46,
+        "equity": 11401.46
       }
     ],
     "metrics": {
-      "win_ratio_pct": 60.0,
-      "profit_factor": 1.4465,
-      "average_win": 489.97,
-      "average_loss": 508.09,
-      "net_profit": 1814.98,
-      "gross_profit": 5879.68,
-      "gross_loss": 4064.7,
-      "start_balance": 10000.0,
-      "end_balance": 11814.98
+      "win_ratio_pct": 86.7,
+      "profit_factor": 5.26,
+      "average_win": 115.54,
+      "average_loss": 142.65,
+      "net_profit": 1216.7,
+      "gross_profit": 1502.0,
+      "gross_loss": 285.3,
+      "start_balance": 10184.76,
+      "end_balance": 11401.46
     }
   },
   "duration_quality": {
     "data_status": "live_limited_sample",
-    "baseline_win_rate_pct": 60.0,
+    "baseline_win_rate_pct": 86.7,
     "groups": [
       {
         "avg_duration_label": "<15m",
-        "win_rate_pct": 83.3333,
-        "trades_count": 6
+        "win_rate_pct": null,
+        "trades_count": 0
       },
       {
         "avg_duration_label": "15m–1h",
-        "win_rate_pct": 33.3333,
-        "trades_count": 6
+        "win_rate_pct": 77.7778,
+        "trades_count": 9
       },
       {
         "avg_duration_label": "1h–4h",
-        "win_rate_pct": 25.0,
+        "win_rate_pct": 100.0,
         "trades_count": 4
       },
       {
         "avg_duration_label": "4h–1d",
         "win_rate_pct": 100.0,
-        "trades_count": 4
+        "trades_count": 2
       },
       {
         "avg_duration_label": "1d+",
@@ -194,325 +296,319 @@
     "groups": [
       {
         "symbol": "EURUSD",
-        "wins": 2,
-        "volume": 0.6,
-        "trades": 2,
-        "net_profit": 18.9
+        "wins": 3,
+        "volume": 4.6,
+        "trades": 4,
+        "net_profit": 149.7
       },
       {
-        "symbol": "XAUUSD",
-        "wins": 10,
-        "volume": 8.1,
-        "trades": 18,
-        "net_profit": 1796.08
+        "symbol": "GBPUSD",
+        "wins": 9,
+        "volume": 11.7,
+        "trades": 10,
+        "net_profit": 995.0
+      },
+      {
+        "symbol": "USDCAD",
+        "wins": 1,
+        "volume": 1.0,
+        "trades": 1,
+        "net_profit": 72.0
       }
     ]
   },
   "analysis": {
-    "short_cover_ratio": 3.0766,
-    "short_win_rate_pct": 68.75,
-    "profit_factor": 1.4465,
-    "total_win_rate_pct": 60.0,
-    "long_cover_ratio": 0.003,
-    "long_win_rate_pct": 25.0
+    "short_cover_ratio": 6.2127,
+    "short_win_rate_pct": 85.7,
+    "profit_factor": 5.2646,
+    "total_win_rate_pct": 86.7,
+    "long_cover_ratio": 4.6726,
+    "long_win_rate_pct": 87.5
   },
   "risk": {
-    "trades_total": 19,
-    "avg_pct": 0.7755,
-    "median_pct": 0.2357,
-    "max_pct": 2.6038,
-    "min_pct": 0.0,
-    "std_pct": 0.887,
-    "cv_pct": 1.1438,
-    "personal_risk_baseline_pct": 0.2357,
-    "personal_risk_low_bound_pct": 0.1178,
-    "personal_risk_high_bound_pct": 0.3535,
-    "risk_reduced_count": 6,
-    "risk_normal_count": 5,
-    "risk_expansion_count": 8,
-    "risk_expansion_pct": 42.11,
-    "risk_drift_count": 8,
-    "trades_above_1pct": 6,
-    "trades_above_2pct": 2,
+    "trades_total": 15,
+    "avg_pct": 1.5671,
+    "median_pct": 1.3867,
+    "max_pct": 2.5758,
+    "min_pct": 0.6422,
+    "std_pct": 0.5378,
+    "cv_pct": 0.3432,
+    "personal_risk_baseline_pct": 1.3867,
+    "personal_risk_low_bound_pct": 0.6934,
+    "personal_risk_high_bound_pct": 2.08,
+    "risk_reduced_count": 1,
+    "risk_normal_count": 11,
+    "risk_expansion_count": 3,
+    "risk_expansion_pct": 20.0,
+    "risk_drift_count": 3,
+    "trades_above_1pct": 14,
+    "trades_above_2pct": 3,
     "trades_above_3pct": 0,
-    "daily_dd_max_pct": 23.7045,
+    "daily_dd_max_pct": 1.6567,
     "trade_series": [
       {
-        "trade_id": "9428884656",
-        "risk_pct": 0.146,
-        "timestamp": "2026-07-06 08:11:37",
+        "trade_id": "1112833864",
+        "risk_pct": 2.2681,
+        "timestamp": "2026-06-05 09:53:45",
         "week": "W1"
       },
       {
-        "trade_id": "9428904750",
-        "risk_pct": 0.4968,
-        "timestamp": "2026-07-06 08:12:55",
+        "trade_id": "1177069607",
+        "risk_pct": 2.5758,
+        "timestamp": "2026-06-10 09:54:50",
         "week": "W1"
       },
       {
-        "trade_id": "9443738770",
-        "risk_pct": 0.0579,
-        "timestamp": "2026-07-06 21:09:31",
+        "trade_id": "1201299938",
+        "risk_pct": 2.4101,
+        "timestamp": "2026-06-11 09:57:22",
         "week": "W1"
       },
       {
-        "trade_id": "9444661485",
-        "risk_pct": 1.2088,
-        "timestamp": "2026-07-06 22:23:28",
-        "week": "W1"
+        "trade_id": "1223588933",
+        "risk_pct": 1.934,
+        "timestamp": "2026-06-12 10:01:25",
+        "week": "W2"
       },
       {
-        "trade_id": "9469271912",
-        "risk_pct": 0.0156,
-        "timestamp": "2026-07-08 07:13:01",
-        "week": "W1"
+        "trade_id": "1265052073",
+        "risk_pct": 1.0225,
+        "timestamp": "2026-06-16 10:01:06",
+        "week": "W2"
       },
       {
-        "trade_id": "9469384488",
-        "risk_pct": 0.1052,
-        "timestamp": "2026-07-08 07:24:37",
-        "week": "W1"
+        "trade_id": "1283360105",
+        "risk_pct": 1.3043,
+        "timestamp": "2026-06-17 09:55:01",
+        "week": "W2"
       },
       {
-        "trade_id": "9469520406",
-        "risk_pct": 0.0535,
-        "timestamp": "2026-07-08 07:40:14",
-        "week": "W1"
+        "trade_id": "1306440374",
+        "risk_pct": 1.6567,
+        "timestamp": "2026-06-18 09:34:59",
+        "week": "W2"
       },
       {
-        "trade_id": "9469630200",
-        "risk_pct": 0.2906,
-        "timestamp": "2026-07-08 07:51:19",
-        "week": "W1"
+        "trade_id": "1328684596",
+        "risk_pct": 1.3867,
+        "timestamp": "2026-06-19 09:58:08",
+        "week": "W3"
       },
       {
-        "trade_id": "9469816516",
-        "risk_pct": 1.9575,
-        "timestamp": "2026-07-08 08:08:11",
-        "week": "W1"
+        "trade_id": "57302911432",
+        "risk_pct": 1.3231,
+        "timestamp": "2026-06-29 10:07:58",
+        "week": "W4"
       },
       {
-        "trade_id": "9472826046",
-        "risk_pct": 2.6038,
-        "timestamp": "2026-07-08 11:21:37",
-        "week": "W1"
+        "trade_id": "57348439955",
+        "risk_pct": 1.7741,
+        "timestamp": "2026-07-01 09:55:37",
+        "week": "W4"
       },
       {
-        "trade_id": "9472824682",
-        "risk_pct": 2.5687,
-        "timestamp": "2026-07-08 11:22:05",
-        "week": "W1"
+        "trade_id": "57368652227",
+        "risk_pct": 1.2755,
+        "timestamp": "2026-07-02 09:48:54",
+        "week": "W4"
       },
       {
-        "trade_id": "9491069976",
-        "risk_pct": 0.2357,
-        "timestamp": "2026-07-09 07:33:30",
-        "week": "W1"
+        "trade_id": "57425882724",
+        "risk_pct": 1.1724,
+        "timestamp": "2026-07-07 09:57:41",
+        "week": "W5"
       },
       {
-        "trade_id": "9491170814",
-        "risk_pct": 0.2333,
-        "timestamp": "2026-07-09 07:45:04",
-        "week": "W1"
+        "trade_id": "57445626004",
+        "risk_pct": 1.2806,
+        "timestamp": "2026-07-08 09:55:11",
+        "week": "W5"
       },
       {
-        "trade_id": "9491576250",
-        "risk_pct": 0.2113,
-        "timestamp": "2026-07-09 08:19:58",
-        "week": "W1"
+        "trade_id": "57466897271",
+        "risk_pct": 1.4806,
+        "timestamp": "2026-07-09 09:57:36",
+        "week": "W5"
       },
       {
-        "trade_id": "9495099385",
-        "risk_pct": 0.073,
-        "timestamp": "2026-07-09 12:05:39",
-        "week": "W1"
-      },
-      {
-        "trade_id": "9495614516",
-        "risk_pct": 0.919,
-        "timestamp": "2026-07-09 12:44:16",
-        "week": "W1"
-      },
-      {
-        "trade_id": "9505139158",
-        "risk_pct": 1.7671,
-        "timestamp": "2026-07-09 21:38:55",
-        "week": "W1"
-      },
-      {
-        "trade_id": "9505147970",
-        "risk_pct": 1.7916,
-        "timestamp": "2026-07-09 21:39:33",
-        "week": "W1"
-      },
-      {
-        "trade_id": "9518680171",
-        "risk_pct": 0.0,
-        "timestamp": "2026-07-10 17:58:35",
-        "week": "W1"
+        "trade_id": "57483219479",
+        "risk_pct": 0.6422,
+        "timestamp": "2026-07-10 09:59:44",
+        "week": "W5"
       }
     ]
   },
   "sl": {
-    "trades_total": 20,
-    "trades_without_sl_at_open": 20,
-    "trades_with_sl_at_open": 0,
-    "no_sl_warning_count": 20,
-    "sl_set_count": 19,
-    "sl_changed_count": 15,
+    "trades_total": 15,
+    "trades_without_sl_at_open": 0,
+    "trades_with_sl_at_open": 15,
+    "no_sl_warning_count": 0,
+    "sl_set_count": 15,
+    "sl_changed_count": 0,
     "sl_removed_count": 0,
-    "risk_increase_after_sl_change_count": 11,
-    "max_risk_after_sl_change_pct": 1.6045,
-    "unsafe_trades_count": 20,
-    "sl_safe_count": 0,
-    "sl_safe_pct": 0.0,
+    "risk_increase_after_sl_change_count": 0,
+    "max_risk_after_sl_change_pct": 0,
+    "unsafe_trades_count": 0,
+    "sl_safe_count": 15,
+    "sl_safe_pct": 100.0,
     "protection_rate_trend": [
       {
         "period": "W1",
-        "protected_rate_pct": 0.0
+        "protected_rate_pct": 100.0
+      },
+      {
+        "period": "W2",
+        "protected_rate_pct": 100.0
+      },
+      {
+        "period": "W3",
+        "protected_rate_pct": 100.0
+      },
+      {
+        "period": "W4",
+        "protected_rate_pct": 100.0
+      },
+      {
+        "period": "W5",
+        "protected_rate_pct": 100.0
       }
     ],
     "event_timeline": [
       {
-        "ticket": "9428884656",
-        "event": "NO_SL"
+        "ticket": "1112833864",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9428904750",
-        "event": "NO_SL"
+        "ticket": "1177069607",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9443738770",
-        "event": "NO_SL"
+        "ticket": "1201299938",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9444661485",
-        "event": "NO_SL"
+        "ticket": "1223588933",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9469271912",
-        "event": "NO_SL"
+        "ticket": "1265052073",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9469384488",
-        "event": "NO_SL"
+        "ticket": "1283360105",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9469520406",
-        "event": "NO_SL"
+        "ticket": "1306440374",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9469630200",
-        "event": "NO_SL"
+        "ticket": "1328684596",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9469816516",
-        "event": "NO_SL"
+        "ticket": "57302911432",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9472824682",
-        "event": "NO_SL"
+        "ticket": "57348439955",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9472826046",
-        "event": "NO_SL"
+        "ticket": "57368652227",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9491069976",
-        "event": "NO_SL"
+        "ticket": "57425882724",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9491170814",
-        "event": "NO_SL"
+        "ticket": "57445626004",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9491576250",
-        "event": "NO_SL"
+        "ticket": "57466897271",
+        "event": "SL_SAFE"
       },
       {
-        "ticket": "9495099385",
-        "event": "NO_SL"
-      },
-      {
-        "ticket": "9495614516",
-        "event": "NO_SL"
-      },
-      {
-        "ticket": "9501933912",
-        "event": "NO_SL"
-      },
-      {
-        "ticket": "9505139158",
-        "event": "NO_SL"
-      },
-      {
-        "ticket": "9505147970",
-        "event": "NO_SL"
-      },
-      {
-        "ticket": "9518680171",
-        "event": "NO_SL"
+        "ticket": "57483219479",
+        "event": "SL_SAFE"
       }
     ]
   },
   "behavior": {
-    "trade_after_loss_count": 8,
-    "trade_after_win_count": 10,
-    "risk_after_loss_avg_pct": 1.3745,
-    "risk_after_win_avg_pct": 0.4471,
-    "risk_after_1_loss_pct": 0.7497,
-    "risk_after_2_losses_pct": 1.0152,
-    "risk_after_3_losses_pct": 2.0305,
-    "max_risk_after_loss_streak_pct": 2.6038,
-    "risk_increase_after_loss_count": 6,
-    "position_size_increased_after_loss_count": 4,
-    "avg_minutes_after_loss_to_next_trade": 53.3,
-    "min_minutes_after_loss_to_next_trade": 1.7,
-    "revenge_trading_signal_count": 6,
-    "post_loss_risk_drift_pct": 0.9274,
-    "post_loss_risk_expansion_count": 5,
-    "post_loss_risk_expansion_pct": 71.43
+    "trade_after_loss_count": 2,
+    "trade_after_win_count": 12,
+    "risk_after_loss_avg_pct": 1.3455,
+    "risk_after_win_avg_pct": 1.5456,
+    "risk_after_1_loss_pct": 1.3455,
+    "risk_after_2_losses_pct": null,
+    "risk_after_3_losses_pct": null,
+    "max_risk_after_loss_streak_pct": 1.3867,
+    "risk_increase_after_loss_count": 1,
+    "position_size_increased_after_loss_count": 0,
+    "avg_minutes_after_loss_to_next_trade": 1409.4,
+    "min_minutes_after_loss_to_next_trade": 1387.0,
+    "revenge_trading_signal_count": 0,
+    "post_loss_risk_drift_pct": -0.2002,
+    "post_loss_risk_expansion_count": 0,
+    "post_loss_risk_expansion_pct": 0
   },
   "plan_fact": {
-    "trades_count": 0,
-    "excluded_no_sl_count": 20,
-    "plan_fact_valid_sample_pct": 0.0,
-    "planned_risk_avg_pct": 0.0,
-    "actual_loss_avg_pct": 0.0,
+    "trades_count": 15,
+    "excluded_no_sl_count": 0,
+    "plan_fact_valid_sample_pct": 100.0,
+    "planned_risk_avg_pct": 1.5671,
+    "actual_loss_avg_pct": 1.3396,
     "deviation_avg_pct": 0.0,
     "deviation_max_pct": 0.0,
     "deviation_avg_abs_pct": 0.0,
     "deviation_max_abs_pct": 0.0,
     "negative_deviation_trades": 0,
     "negative_deviation_trades_pct": 0.0,
-    "execution_leak_flag": true,
-    "points": []
+    "execution_leak_flag": false,
+    "points": [
+      {
+        "trade_id": "1265052073",
+        "planned": 1.0225,
+        "actual": 1.0225,
+        "timestamp": "2026-06-16 10:48:02",
+        "week": "W2"
+      },
+      {
+        "trade_id": "1306440374",
+        "planned": 1.6567,
+        "actual": 1.6567,
+        "timestamp": "2026-06-18 10:06:18",
+        "week": "W2"
+      }
+    ]
   },
   "performance": {
-    "closed_trades_count": 20,
-    "wins_count": 12,
-    "losses_count": 8,
-    "win_ratio_pct": 60.0,
-    "gross_profit": 5879.68,
-    "gross_loss": 4064.7,
-    "net_profit": 1814.98,
-    "profit_factor": 1.4465,
-    "average_win": 489.97,
-    "average_loss": 508.09,
-    "avg_win_loss_ratio": 0.9643,
-    "long_trades_count": 4,
-    "short_trades_count": 16,
-    "long_win_ratio_pct": 25.0,
-    "short_win_ratio_pct": 68.75,
-    "long_net_profit": -2149.2,
-    "short_net_profit": 3964.18,
-    "long_short_imbalance_flag": true,
-    "best_instrument": "XAUUSD",
-    "worst_instrument": "EURUSD",
-    "instrument_concentration_pct": 90.0,
-    "avg_trade_duration_minutes": 136.6,
-    "avg_win_duration_minutes": 183.5,
-    "avg_loss_duration_minutes": 66.3
+    "closed_trades_count": 15,
+    "wins_count": 13,
+    "losses_count": 2,
+    "win_ratio_pct": 86.66666666666667,
+    "gross_profit": 1502.0,
+    "gross_loss": 285.3,
+    "net_profit": 1216.7,
+    "profit_factor": 5.2646,
+    "average_win": 115.54,
+    "average_loss": 142.65,
+    "avg_win_loss_ratio": 0.8099,
+    "long_trades_count": 8,
+    "short_trades_count": 7,
+    "long_win_ratio_pct": 87.5,
+    "short_win_ratio_pct": 85.7,
+    "long_net_profit": 649.0,
+    "short_net_profit": 567.7,
+    "long_short_imbalance_flag": false,
+    "best_instrument": "GBPUSD",
+    "worst_instrument": "USDCAD",
+    "instrument_concentration_pct": 66.7,
+    "avg_trade_duration_minutes": 91.0,
+    "avg_win_duration_minutes": 99.0,
+    "avg_loss_duration_minutes": 39.2
   },
   "data_quality": {
     "raw_trades_file_present": true,
@@ -523,88 +619,116 @@
     "invalid_trade_id_count": 0,
     "duplicate_trade_count": 0,
     "period_coverage_pct": 100,
-    "active_trading_days": 5,
+    "active_trading_days": 15,
     "minimum_sample_valid": true,
     "data_quality_score": 100,
     "data_quality_mode": "valid",
     "data_quality_main_issue": "Data quality acceptable"
   },
   "findings": {
-    "scope": "current_week_W1_only",
+    "scope": "current_week_W5_only",
     "items": [
       {
         "rank": 1,
-        "rule_id": "W1-B-N01",
+        "rule_id": "W5-B-P01",
         "source_block": "B",
-        "severity": "high",
-        "priority_score": 100,
-        "title": "Все 20 сделок недели были открыты без установленного Stop Loss.",
-        "text": "Все 20 сделок недели были открыты без установленного Stop Loss.",
-        "metric_id": "w1_trades_without_sl_at_open",
-        "metric_value": 20
+        "severity": "low",
+        "priority_score": 30,
+        "title": "Все 4 сделки текущей недели были открыты с установленным Stop Loss.",
+        "text": "Все 4 сделки текущей недели были открыты с установленным Stop Loss.",
+        "metric_id": "w5_sl_safe_pct",
+        "metric_value": 100.0
       },
       {
         "rank": 2,
-        "rule_id": "W1-A-N01",
+        "rule_id": "W5-A-P01",
         "source_block": "A",
-        "severity": "high",
-        "priority_score": 95,
-        "title": "Максимальная внутридневная просадка equity достигла 23.70%.",
-        "text": "Максимальная внутридневная просадка equity достигла 23.70%.",
-        "metric_id": "w1_daily_dd_max_pct",
-        "metric_value": 23.7045
+        "severity": "low",
+        "priority_score": 30,
+        "title": "Сделок с риском выше 2% за текущую неделю не зафиксировано.",
+        "text": "Сделок с риском выше 2% за текущую неделю не зафиксировано.",
+        "metric_id": "w5_trades_above_2pct",
+        "metric_value": 0
       },
       {
         "rank": 3,
-        "rule_id": "W1-A-N02",
+        "rule_id": "W5-A-P02",
         "source_block": "A",
-        "severity": "high",
-        "priority_score": 85,
-        "title": "8 из 19 сделок с измеримым риском вышли выше персонального диапазона риска.",
-        "text": "8 из 19 сделок с измеримым риском вышли выше персонального диапазона риска.",
-        "metric_id": "w1_risk_expansion_count",
-        "metric_value": 8
+        "severity": "low",
+        "priority_score": 25,
+        "title": "Максимальная внутридневная просадка текущей недели составила 0.66%.",
+        "text": "Максимальная внутридневная просадка текущей недели составила 0.66%.",
+        "metric_id": "w5_daily_dd_max_pct",
+        "metric_value": 0.6552
       },
       {
         "rank": 4,
-        "rule_id": "W1-C-N01",
+        "rule_id": "W5-C-N01",
         "source_block": "C",
-        "severity": "high",
-        "priority_score": 80,
-        "title": "После убытков риск увеличивался в 6 из 7 случаев с доступным расчётом риска.",
-        "text": "После убытков риск увеличивался в 6 из 7 случаев с доступным расчётом риска.",
-        "metric_id": "w1_risk_increase_after_loss_count",
-        "metric_value": 6
+        "severity": "low",
+        "priority_score": 20,
+        "title": "В текущей неделе не было убыточных сделок, поэтому Risk After Loss не применялся.",
+        "text": "В текущей неделе не было убыточных сделок, поэтому Risk After Loss не применялся.",
+        "metric_id": "w5_losses_count",
+        "metric_value": 0
       },
       {
         "rank": 5,
-        "rule_id": "W1-E-P01",
+        "rule_id": "W5-E-P01",
         "source_block": "E",
         "severity": "low",
-        "priority_score": 30,
-        "title": "Неделя завершена с чистой прибылью 1 814.98 USD при Profit Factor 1.45.",
-        "text": "Неделя завершена с чистой прибылью 1 814.98 USD при Profit Factor 1.45.",
-        "metric_id": "w1_net_profit",
-        "metric_value": 1814.98
+        "priority_score": 20,
+        "title": "Текущая неделя завершена чистой прибылью 424.00 USD по 4 сделкам.",
+        "text": "Текущая неделя завершена чистой прибылью 424.00 USD по 4 сделкам.",
+        "metric_id": "w5_net_profit",
+        "metric_value": 424.0
       }
     ]
   },
   "comparison": {
-    "previous_period": "not_available",
-    "current_period": "2026-07-03 — 2026-07-10",
-    "score_history": [],
-    "items": []
+    "previous_period": "2026-06-29 — 2026-07-03",
+    "current_period": "2026-07-07 — 2026-07-10",
+    "score_history": [
+      {
+        "period": "W1",
+        "score": 22.34
+      },
+      {
+        "period": "W2",
+        "score": 30.42
+      },
+      {
+        "period": "W3",
+        "score": 43.88
+      },
+      {
+        "period": "W4",
+        "score": 53.14
+      },
+      {
+        "period": "W5",
+        "score": 60.0
+      }
+    ],
+    "items": [
+      {
+        "metric": "trust_score",
+        "previous": 53.14,
+        "current": 60.0,
+        "delta": 6.86
+      }
+    ]
   }
 }</script>
 <script>
-const $=id=>document.getElementById(id), data=JSON.parse($('report-data').textContent); const num=v=>Number.isFinite(+v)?+v:0, clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim(); const blue=()=>css('--blue'), green=()=>css('--green'), red=()=>css('--red'), yellow=()=>css('--yellow'); function svgEl(n,a={}){const e=document.createElementNS('http://www.w3.org/2000/svg',n);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));return e} function clear(s){while(s&&s.firstChild)s.removeChild(s.firstChild)}const helpTexts={leakMap:['QUD Leak Map','Карта потерь качества торгового процесса по блокам: риск, защита сделки, поведение после убытков и исполнение.','Чем дальше маркер вправо, тем сильнее утечка качества. Зелёный — контроль, жёлтый — зона внимания, оранжевый/красный — заметная проблема.','Показывает, в каком блоке торговый процесс теряет доверие.'],trustScoreTrend:['Trust Score Over Time','Динамика Trust Score по неделям с учётом накопленной истории.','0–39 — pre QUD, 40–79 — QUD Room, 80–100 — QUD Elite. Линия показывает изменение качества от недели к неделе.','Передаёт изменение качества торгового процесса во времени.'],accountEquity:['Account Balance & Equity','Динамика баланса и equity по реальным CSV-данным за период аудита.','Balance — закрытый результат. Equity — состояние счёта с учётом открытых позиций. Если линии совпадают, плавающей просадки в точках отчёта не было.','Показывает финансовую траекторию счёта без замены анализа качества решений.'],holdingTime:['Holding Time Efficiency','Эффективность сделок по времени удержания относительно win rate трейдера.','Зелёный бар — группа выше baseline win rate. Красный — ниже baseline. N/A — сделок в группе не было.','Показывает, какие горизонты удержания работают лучше или хуже средней нормы трейдера.'],instrumentContribution:['Instrument Contribution & Load','Сравнение вклада инструментов в выигрышные сделки и торговую нагрузку.','Win Contribution — доля выигрышных сделок инструмента. Load Volume — доля торгового объёма.','Показывает, где формируется результат и где сконцентрирована нагрузка.'],shortCover:['Short Cover Ratio','Насколько прибыльные short-сделки перекрывают убыточные short-сделки.','Выше 1.0 — Edge zone. Ниже 1.0 — Loss zone.','Показывает качество результата отдельно по short-направлению.'],profitFactor:['Profit Factor','Соотношение общей прибыли к общему убытку за период.','Выше 1.0 — прибыль перекрывает убытки. Ниже 1.0 — убытки превышают прибыль.','Показывает результативность, но не заменяет риск- и поведенческую оценку.'],longCover:['Long Cover Ratio','Насколько прибыльные long-сделки перекрывают убыточные long-сделки.','Выше 1.0 — Edge zone. Ниже 1.0 — Loss zone.','Показывает качество результата отдельно по long-направлению.'],protectedTrades:['Protected Trades Rate','Доля сделок, открытых с установленным Stop Loss, и стабильность защиты по неделям.','SAFE — сделки с корректным SL. No SL / SL Removed / SL Changed показывают нарушения защиты сделки.','Передаёт дисциплину защиты позиции.'],riskZone:['Risk Zone Distribution','Распределение сделок относительно персонального диапазона риска трейдера.','Normal Risk — внутри персонального диапазона. Risk Expansion — выше верхней границы. Reduced Risk — ниже рабочей зоны.','Показывает, насколько стабильно трейдер соблюдает собственный риск-профиль.'],riskAfterLoss:['Risk After Loss','Как менялся риск после убыточных сделок.','Бар ниже personal baseline — снижение риска после убытка. Бар выше baseline — риск-разгон. N/A — такой серии убытков не было.','Показывает наличие или отсутствие risk escalation после убытка.'],riskConsistency:['Risk Consistency','Последовательность риска по каждой реальной сделке из CSV.','Голубая линия — риск по сделкам. Зелёная зона — персональный диапазон. Жёлтый пунктир — median baseline. Красная точка — выход выше диапазона.','Показывает стабильность риск-дисциплины по фактической последовательности сделок.'],plannedRisk:['Planned Risk vs Actual Loss','Сравнение запланированного риска по SL с фактическим убытком по сделке.','Серая зона — убыток в рамках плана. Красный сегмент — превышение плана. Белая линия — planned SL. Жёлтый пунктир — median risk.','Показывает, были ли убытки в рамках заранее установленного риска.'],findings:['5 Key Findings','Пять ключевых фактов по текущей отчётной неделе W4.','Findings описывают текущую неделю, а не весь исторический период. Это факты, не торговые рекомендации.','Передаёт краткий диагностический вывод по последней неделе аудита.']};
+const $=id=>document.getElementById(id), data=JSON.parse($('report-data').textContent); const num=v=>Number.isFinite(+v)?+v:0, clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim(); const blue=()=>css('--blue'), green=()=>css('--green'), red=()=>css('--red'), yellow=()=>css('--yellow'); function svgEl(n,a={}){const e=document.createElementNS('http://www.w3.org/2000/svg',n);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));return e} function clear(s){while(s&&s.firstChild)s.removeChild(s.firstChild)}const helpTexts={leakMap:['QUD Leak Map','Карта потерь качества торгового процесса по блокам: риск, защита сделки, поведение после убытков и исполнение.','Чем дальше маркер вправо, тем сильнее утечка качества. Зелёный — контроль, жёлтый — зона внимания, оранжевый/красный — заметная проблема.','Показывает, в каком блоке торговый процесс теряет доверие.'],trustScoreTrend:['Trust Score Over Time','Динамика Trust Score по неделям с учётом накопленной истории.','0–39 — pre QUD, 40–79 — QUD Room, 80–100 — QUD Elite. Линия показывает изменение качества от недели к неделе.','Передаёт изменение качества торгового процесса во времени.'],accountEquity:['Account Balance & Equity','Динамика баланса и equity по реальным CSV-данным за период аудита.','Balance — закрытый результат. Equity — состояние счёта с учётом открытых позиций. Если линии совпадают, плавающей просадки в точках отчёта не было.','Показывает финансовую траекторию счёта без замены анализа качества решений.'],holdingTime:['Holding Time Efficiency','Эффективность сделок по времени удержания относительно win rate трейдера.','Зелёный бар — группа выше baseline win rate. Красный — ниже baseline. N/A — сделок в группе не было.','Показывает, какие горизонты удержания работают лучше или хуже средней нормы трейдера.'],instrumentContribution:['Instrument Contribution & Load','Сравнение вклада инструментов в выигрышные сделки и торговую нагрузку.','Win Contribution — доля выигрышных сделок инструмента. Load Volume — доля торгового объёма.','Показывает, где формируется результат и где сконцентрирована нагрузка.'],shortCover:['Short Cover Ratio','Насколько прибыльные short-сделки перекрывают убыточные short-сделки.','Выше 1.0 — Edge zone. Ниже 1.0 — Loss zone.','Показывает качество результата отдельно по short-направлению.'],profitFactor:['Profit Factor','Соотношение общей прибыли к общему убытку за период.','Выше 1.0 — прибыль перекрывает убытки. Ниже 1.0 — убытки превышают прибыль.','Показывает результативность, но не заменяет риск- и поведенческую оценку.'],longCover:['Long Cover Ratio','Насколько прибыльные long-сделки перекрывают убыточные long-сделки.','Выше 1.0 — Edge zone. Ниже 1.0 — Loss zone.','Показывает качество результата отдельно по long-направлению.'],protectedTrades:['Protected Trades Rate','Доля сделок, открытых с установленным Stop Loss, и стабильность защиты по неделям.','SAFE — сделки с корректным SL. No SL / SL Removed / SL Changed показывают нарушения защиты сделки.','Передаёт дисциплину защиты позиции.'],riskZone:['Risk Zone Distribution','Распределение сделок относительно персонального диапазона риска трейдера.','Normal Risk — внутри персонального диапазона. Risk Expansion — выше верхней границы. Reduced Risk — ниже рабочей зоны.','Показывает, насколько стабильно трейдер соблюдает собственный риск-профиль.'],riskAfterLoss:['Risk After Loss','Как менялся риск после убыточных сделок.','Бар ниже personal baseline — снижение риска после убытка. Бар выше baseline — риск-разгон. N/A — такой серии убытков не было.','Показывает наличие или отсутствие risk escalation после убытка.'],riskConsistency:['Risk Consistency','Последовательность риска по каждой реальной сделке из CSV.','Голубая линия — риск по сделкам. Зелёная зона — персональный диапазон. Жёлтый пунктир — median baseline. Красная точка — выход выше диапазона.','Показывает стабильность риск-дисциплины по фактической последовательности сделок.'],plannedRisk:['Planned Risk vs Actual Loss','Сравнение запланированного риска по SL с фактическим убытком по сделке.','Серая зона — убыток в рамках плана. Красный сегмент — превышение плана. Белая линия — planned SL. Жёлтый пунктир — median risk.','Показывает, были ли убытки в рамках заранее установленного риска.'],findings:['5 Key Findings','Пять ключевых фактов по текущей отчётной неделе W5.','Findings описывают текущую неделю, а не весь исторический период. Это факты, не торговые рекомендации.','Передаёт краткий диагностический вывод по последней неделе аудита.']};
 
 function initHelp(){const map=[['QUD LEAK MAP','leakMap'],['TRUST SCORE OVER TIME','trustScoreTrend'],['ACCOUNT BALANCE & EQUITY','accountEquity'],['HOLDING TIME EFFICIENCY','holdingTime'],['INSTRUMENT CONTRIBUTION & LOAD','instrumentContribution'],['SHORT COVER RATIO','shortCover'],['PROFIT FACTOR','profitFactor'],['LONG COVER RATIO','longCover'],['PROTECTED TRADES RATE','protectedTrades'],['RISK ZONE DISTRIBUTION','riskZone'],['RISK AFTER LOSS','riskAfterLoss'],['RISK CONSISTENCY','riskConsistency'],['PLANNED RISK VS ACTUAL LOSS','plannedRisk'],['5 KEY FINDINGS','findings']];document.querySelectorAll('h2').forEach(h=>{const raw=(h.childNodes[0]?.textContent||h.textContent||'').trim().toUpperCase();const item=map.find(([label])=>raw.includes(label));if(!item||h.querySelector('.help'))return;const icon=document.createElement('span');icon.className='help';icon.dataset.help=item[1];icon.textContent='?';const before=h.querySelector('.analysis-head-value');if(before)h.insertBefore(icon,before);else h.appendChild(icon)});let tip;document.querySelectorAll('.help[data-help]').forEach(el=>{el.addEventListener('mouseenter',()=>{const t=helpTexts[el.dataset.help];if(!t)return;tip=document.createElement('div');tip.className='qud-tooltip';tip.innerHTML=`<div class="qud-tooltip-title">${t[0]}</div><b>Что показывает</b><p>${t[1]}</p><b>Как читать цифры</b><p>${t[2]}</p><b>Что передаёт</b><p class="muted">${t[3]}</p>`;document.body.appendChild(tip);const r=el.getBoundingClientRect();const left=Math.min(window.innerWidth-440,Math.max(16,r.left-20));const top=Math.min(window.innerHeight-tip.offsetHeight-16,Math.max(16,r.bottom+12));tip.style.left=left+'px';tip.style.top=top+'px'});el.addEventListener('mouseleave',()=>{if(tip){tip.remove();tip=null}})})}
 function scoreGauge(svg,score){clear(svg);const cx=160,cy=125,r=90,start=200,end=-20,total=start-end;const polar=(a,rad=r)=>{const z=Math.PI*a/180;return{x:cx+rad*Math.cos(z),y:cy-rad*Math.sin(z)}};const angle=v=>start-(v/100)*total;const arc=(a1,a2,cls)=>{const p1=polar(a1),p2=polar(a2),large=Math.abs(a1-a2)>180?1:0;svg.appendChild(svgEl('path',{d:`M ${p1.x} ${p1.y} A ${r} ${r} 0 ${large} 1 ${p2.x} ${p2.y}`,class:cls}))};arc(start,end,'gauge-track');arc(angle(0),angle(39),'gauge-seg red');arc(angle(40),angle(79),'gauge-seg orange');arc(angle(80),angle(100),'gauge-seg green');[0,40,80,100].forEach(v=>{const p=polar(angle(v),108);svg.appendChild(svgEl('text',{x:p.x,y:p.y+4,'text-anchor':'middle',class:'gauge-tick'})).textContent=v});const a=angle(clamp(score,0,100)),p1=polar(a,r-8),p2=polar(a,r+8);svg.appendChild(svgEl('line',{x1:p1.x,y1:p1.y,x2:p2.x,y2:p2.y,class:'gauge-marker'}))}
 function drawLine(svg,arr,opts={}){clear(svg);if(!arr||!arr.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:46,r:20,t:18,b:34};const vals=arr.map(d=>num(d.y));const minY=opts.minY??Math.min(0,...vals),maxY=opts.maxY??Math.max(1,...vals)*1.15;const x=i=>p.l+(w-p.l-p.r)*(arr.length<=1?0:i/(arr.length-1));const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);for(let i=0;i<=4;i++){const yy=p.t+(h-p.t-p.b)*i/4;svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=(maxY-(maxY-minY)*i/4).toFixed(opts.digits??0)}let d='';arr.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(num(pt.y)));svg.appendChild(svgEl('path',{d,fill:'none',stroke:opts.color||blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));arr.forEach((pt,i)=>{svg.appendChild(svgEl('circle',{cx:x(i),cy:y(num(pt.y)),r:2.8,fill:opts.color||blue(),stroke:'#0b0d0f','stroke-width':1}));if(i%Math.ceil(arr.length/7)===0||i===arr.length-1)svg.appendChild(svgEl('text',{x:x(i),y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.x})}
 function sparkMini(svg,arr,opts={}){clear(svg);if(!arr||!arr.length)return;const w=svg.clientWidth||104,h=svg.clientHeight||38,p={l:3,r:4,t:6,b:6};const vals=arr.map(d=>num(d.y));const minY=opts.minY??Math.min(...vals),maxY=opts.maxY??Math.max(...vals);const x=i=>p.l+(w-p.l-p.r)*(arr.length<=1?0:i/(arr.length-1));const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);let d='';arr.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(num(pt.y)));svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':1.7,'stroke-linecap':'round','stroke-linejoin':'round'}));const last=arr[arr.length-1];svg.appendChild(svgEl('circle',{cx:x(arr.length-1),cy:y(num(last.y)),r:2.2,fill:blue()}));}
 function trustScoreTrend(svg,arr){clear(svg);if(!arr||!arr.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:58,r:24,t:18,b:34};const minY=0,maxY=100;const x=i=>p.l+(w-p.l-p.r)*(arr.length<=1?0:i/(arr.length-1));const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY);const zoneX=p.l-22,zoneW=8;[0,40,80,100].forEach(v=>{svg.appendChild(svgEl('line',{x1:p.l,y1:y(v),x2:w-p.r,y2:y(v),class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:y(v)+4,class:'axis-label'})).textContent=v});svg.appendChild(svgEl('rect',{x:zoneX,y:y(40),width:zoneW,height:y(0)-y(40),rx:3,fill:red(),opacity:.95}));svg.appendChild(svgEl('rect',{x:zoneX,y:y(80),width:zoneW,height:y(40)-y(80),rx:3,fill:css('--orange'),opacity:.95}));svg.appendChild(svgEl('rect',{x:zoneX,y:y(100),width:zoneW,height:y(80)-y(100),rx:3,fill:green(),opacity:.95}));let d='';arr.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(num(pt.y)));svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':2.4,'stroke-linecap':'round','stroke-linejoin':'round'}));arr.forEach((pt,i)=>{svg.appendChild(svgEl('circle',{cx:x(i),cy:y(num(pt.y)),r:3.2,fill:blue(),stroke:'#0b0d0f','stroke-width':1.2}));svg.appendChild(svgEl('text',{x:x(i),y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.x});const last=arr[arr.length-1];svg.appendChild(svgEl('text',{x:x(arr.length-1)-2,y:y(num(last.y))-10,'text-anchor':'middle',class:'axis-label'})).textContent=Number(last.y).toFixed(2)}
-function accountChart(svg,hist){clear(svg);if(!hist||!hist.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:58,r:20,t:18,b:34};const vals=hist.flatMap(x=>[num(x.balance),num(x.equity)]);const step=200;const minY=9200;const maxY=Math.ceil(Math.max(...vals)/step)*step;const x=i=>p.l+(w-p.l-p.r)*(hist.length<=1?0:i/(hist.length-1));const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);for(let v=minY;v<=maxY;v+=step){const yy=y(v);svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=v.toFixed(0)}const makePath=key=>{let d='';hist.forEach((pt,i)=>{d+=(i?'L':'M')+x(i)+' '+y(num(pt[key]))});return d};svg.appendChild(svgEl('path',{d:makePath('balance'),fill:'none',stroke:blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));svg.appendChild(svgEl('path',{d:makePath('equity'),fill:'none',stroke:'#66717b','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round','stroke-dasharray':'4 4'}));hist.forEach((pt,i)=>{if(i%Math.ceil(hist.length/7)===0||i===hist.length-1)svg.appendChild(svgEl('text',{x:x(i),y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.day});}
+function accountChart(svg,hist){clear(svg);if(!hist||!hist.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:58,r:20,t:18,b:34};const vals=hist.flatMap(x=>[num(x.balance),num(x.equity)]);const step=200;const minY=10000;const maxY=Math.ceil(Math.max(...vals)/step)*step;const x=i=>p.l+(w-p.l-p.r)*(hist.length<=1?0:i/(hist.length-1));const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);for(let v=minY;v<=maxY;v+=step){const yy=y(v);svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=v.toFixed(0)}const makePath=key=>{let d='';hist.forEach((pt,i)=>{d+=(i?'L':'M')+x(i)+' '+y(num(pt[key]))});return d};svg.appendChild(svgEl('path',{d:makePath('balance'),fill:'none',stroke:blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));svg.appendChild(svgEl('path',{d:makePath('equity'),fill:'none',stroke:'#66717b','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round','stroke-dasharray':'4 4'}));hist.forEach((pt,i)=>{if(i%Math.ceil(hist.length/7)===0||i===hist.length-1)svg.appendChild(svgEl('text',{x:x(i),y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.day});}
 function bars(svg,rows,opts={}){clear(svg);const w=svg.clientWidth||600,h=svg.clientHeight||220,p={l:42,r:24,t:18,b:60};const vals=rows.map(r=>r.y==null?0:r.y);const minY=opts.minY??Math.min(0,...vals),maxY=opts.maxY??Math.max(1,...vals)*1.18;const x=i=>p.l+(w-p.l-p.r)*(i+.5)/rows.length;const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);for(let i=0;i<=4;i++){const yy=p.t+(h-p.t-p.b)*i/4;svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}))}svg.appendChild(svgEl('line',{x1:p.l,y1:y(0),x2:w-p.r,y2:y(0),stroke:'#66717b','stroke-width':1,'stroke-dasharray':'4 4'}));if(opts.baselineLabel){svg.appendChild(svgEl('text',{x:p.l-26,y:y(0)-8,'text-anchor':'start',class:'axis-label'})).textContent=opts.baselineLabel}const bw=Math.min(34,(w-p.l-p.r)/rows.length*.38);rows.forEach((r,i)=>{if(r.y==null){svg.appendChild(svgEl('text',{x:x(i),y:h-32,'text-anchor':'middle',class:'axis-label'})).textContent='N/A'}else{const top=y(Math.max(0,r.y)),bot=y(Math.min(0,r.y));svg.appendChild(svgEl('rect',{x:x(i)-bw/2,y:top,width:bw,height:Math.max(2,bot-top),rx:3,fill:r.y>=0?green():red(),opacity:.9}));svg.appendChild(svgEl('text',{x:x(i),y:(r.y>=0?top-7:bot+15),'text-anchor':'middle',class:'axis-label'})).textContent=(r.y>0?'+':'')+r.y.toFixed(0)+'%'}svg.appendChild(svgEl('text',{x:x(i),y:h-12,'text-anchor':'middle',class:'axis-label'})).textContent=r.x})}
 function groupedBars(svg,groups){const totalWins=groups.reduce((a,g)=>a+num(g.wins),0)||1,totalVol=groups.reduce((a,g)=>a+num(g.volume),0)||1;clear(svg);const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:42,r:18,t:18,b:44};const rows=groups.map(g=>({symbol:g.symbol,win:num(g.wins)/totalWins*100,load:num(g.volume)/totalVol*100}));const maxY=100;const x=i=>p.l+(w-p.l-p.r)*(i+.5)/rows.length;const y=v=>h-p.b-(h-p.t-p.b)*v/maxY;[0,20,40,60,80,100].forEach(v=>{const yy=y(v);svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=v+'%'});const bw=18;rows.forEach((r,i)=>{const cx=x(i);const winTop=y(r.win),loadTop=y(r.load);svg.appendChild(svgEl('rect',{x:cx-bw-3,y:winTop,width:bw,height:h-p.b-winTop,rx:3,fill:green()}));svg.appendChild(svgEl('text',{x:cx-bw/2-3,y:winTop-7,'text-anchor':'middle',class:'axis-label'})).textContent=Math.round(r.win)+'%';svg.appendChild(svgEl('rect',{x:cx+3,y:loadTop,width:bw,height:h-p.b-loadTop,rx:3,fill:blue(),opacity:.9}));svg.appendChild(svgEl('text',{x:cx+bw/2+3,y:loadTop-7,'text-anchor':'middle',class:'axis-label'})).textContent=Math.round(r.load)+'%';svg.appendChild(svgEl('text',{x:cx,y:h-14,'text-anchor':'middle',class:'axis-label'})).textContent=r.symbol})}
 function analysisGauge(svg,value){clear(svg);svg.setAttribute('viewBox','0 0 280 92');const x1=26,x2=254,y=48,split=1,max=2;const x=v=>x1+(x2-x1)*(clamp(v,0,max)/max);svg.appendChild(svgEl('rect',{x:x1,y:y-4,width:x(split)-x1,height:8,fill:red(),rx:3}));svg.appendChild(svgEl('rect',{x:x(split),y:y-4,width:x2-x(split),height:8,fill:green(),rx:3}));svg.appendChild(svgEl('line',{x1:x(split),y1:y-14,x2:x(split),y2:y+14,stroke:'#050607','stroke-width':4}));const cx=x(clamp(value,0,max));svg.appendChild(svgEl('path',{d:`M ${cx-7} ${y-21} L ${cx+7} ${y-21} L ${cx} ${y-10} Z`,fill:'#efe8d2'}));svg.appendChild(svgEl('text',{x:x1,y:y+30,'text-anchor':'start',class:'axis-label'})).textContent='Loss zone';svg.appendChild(svgEl('text',{x:x(split),y:y+30,'text-anchor':'middle',class:'axis-label'})).textContent='1.0';svg.appendChild(svgEl('text',{x:x2,y:y+30,'text-anchor':'end',class:'axis-label'})).textContent='Edge zone'}
@@ -614,7 +738,11 @@ function riskCvScale(el,cv){const raw=num(cv),left=clamp(raw,0,1)*100;el.innerHT
 function riskConsistency(svg,series,base){clear(svg);if(!series||!series.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}const w=svg.clientWidth||780,h=svg.clientHeight||220,p={l:54,r:24,t:18,b:42};const low=num(data.risk.personal_risk_low_bound_pct),high=num(data.risk.personal_risk_high_bound_pct),median=num(data.risk.personal_risk_baseline_pct);const vals=series.map(x=>num(x.risk_pct));const minY=0,maxY=Math.max(3,Math.ceil(Math.max(...vals,high)*10)/10);const x=i=>p.l+(w-p.l-p.r)*(series.length<=1?0:i/(series.length-1));const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);[0,.8,1.5,2.3,3].forEach(v=>{const yy=y(v);svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=v.toFixed(1)});svg.appendChild(svgEl('rect',{x:p.l,y:y(high),width:w-p.l-p.r,height:y(low)-y(high),fill:green(),opacity:.10}));svg.appendChild(svgEl('line',{x1:p.l,y1:y(median),x2:w-p.r,y2:y(median),stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'}));let d='';series.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(num(pt.risk_pct)));svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));series.forEach((pt,i)=>{const risk=num(pt.risk_pct);const above=risk>high;svg.appendChild(svgEl('circle',{cx:x(i),cy:y(risk),r:3,fill:above?red():blue(),stroke:'#0b0d0f','stroke-width':1.1}))});const weeks=[];series.forEach((pt,i)=>{if(!weeks.length||weeks[weeks.length-1].week!==pt.week)weeks.push({week:pt.week,start:i,end:i});else weeks[weeks.length-1].end=i});weeks.forEach(wk=>{const cx=(x(wk.start)+x(wk.end))/2;svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=wk.week;if(wk.start>0)svg.appendChild(svgEl('line',{x1:x(wk.start),y1:p.t,x2:x(wk.start),y2:h-p.b,stroke:'rgba(255,255,255,.04)','stroke-width':1}))});svg.appendChild(svgEl('text',{x:4,y:p.t-6,class:'axis-label'})).textContent='Risk %'}
 function riskAfterLoss(svg,b){clear(svg);const w=svg.clientWidth||360,h=svg.clientHeight||220,p={l:116,r:28,t:22,b:58};const rows=[{x:'1 Loss',y:b.risk_after_1_loss_pct},{x:'2 Losses',y:b.risk_after_2_losses_pct},{x:'3+ Losses',y:b.risk_after_3_losses_pct}];const normal=num(data.risk.personal_risk_baseline_pct);const vals=rows.map(r=>r.y).filter(v=>v!=null).map(num);const maxY=Math.max(normal*1.35,...vals,2);const minY=0;const x=i=>p.l+(w-p.l-p.r)*(i+.5)/rows.length;const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);for(let i=0;i<=4;i++){const yy=p.t+(h-p.t-p.b)*i/4;svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}))}svg.appendChild(svgEl('line',{x1:p.l,y1:y(normal),x2:w-p.r,y2:y(normal),stroke:'#66717b','stroke-width':1,'stroke-dasharray':'4 4'}));svg.appendChild(svgEl('text',{x:8,y:y(normal)-8,'text-anchor':'start',class:'axis-label'})).textContent='Normal risk '+normal.toFixed(2);const bw=34;rows.forEach((r,i)=>{const cx=x(i);if(r.y==null){svg.appendChild(svgEl('text',{x:cx,y:y(normal)+18,'text-anchor':'middle',class:'axis-label'})).textContent='N/A'}else{const val=num(r.y);const top=y(Math.max(val,normal)),bot=y(Math.min(val,normal));const isAbove=val>normal;svg.appendChild(svgEl('rect',{x:cx-bw/2,y:top,width:bw,height:Math.max(2,bot-top),rx:4,fill:isAbove?red():green(),opacity:.9}));svg.appendChild(svgEl('text',{x:cx,y:isAbove?top-9:bot+16,'text-anchor':'middle',class:'axis-label'})).textContent=val.toFixed(1)}svg.appendChild(svgEl('text',{x:cx,y:h-14,'text-anchor':'middle',class:'axis-label'})).textContent=r.x})}
 function planFact(svg,p,base){clear(svg);const allWeeks=[...new Set(data.risk.trade_series.map(t=>t.week))];const weeks=allWeeks.length?allWeeks:['W1','W2','W3','W4'];const points=(p||[]).map((pt,i)=>({...pt,_idx:i}));const w=svg.clientWidth||780,h=svg.clientHeight||252,pad={l:58,r:26,t:24,b:48};if(!points.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='no closed loss trades in period';return}const vals=points.flatMap(x=>[num(x.planned),num(x.actual),num(base)]);const maxY=Math.max(2,Math.ceil(Math.max(...vals)*10)/10),minY=0;const weekX=i=>pad.l+(w-pad.l-pad.r)*(weeks.length<=1?0:i/(weeks.length-1));const y=v=>h-pad.b-(h-pad.t-pad.b)*(v-minY)/(maxY-minY||1);for(let i=0;i<=4;i++){const v=maxY*i/4,yy=y(v);svg.appendChild(svgEl('line',{x1:pad.l,y1:yy,x2:w-pad.r,y2:yy,class:'gridline'}));svg.appendChild(svgEl('text',{x:6,y:yy+4,class:'axis-label'})).textContent=v.toFixed(1)}svg.appendChild(svgEl('text',{x:6,y:pad.t-8,class:'axis-label'})).textContent='Loss %';svg.appendChild(svgEl('line',{x1:pad.l,y1:y(num(base)),x2:w-pad.r,y2:y(num(base)),stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'}));weeks.forEach((wk,wi)=>{const cx=weekX(wi);if(wi>0)svg.appendChild(svgEl('line',{x1:cx,y1:pad.t,x2:cx,y2:h-pad.b,stroke:'rgba(255,255,255,.04)','stroke-width':1}));svg.appendChild(svgEl('text',{x:cx,y:h-12,'text-anchor':'middle',class:'axis-label'})).textContent=wk;if(!points.some(pt=>pt.week===wk))svg.appendChild(svgEl('text',{x:cx,y:y(num(base))+18,'text-anchor':'middle',class:'axis-label'})).textContent='N/A'});const bw=34,lossGap=42;const placed=[];weeks.forEach((wk,wi)=>{const list=points.filter(pt=>pt.week===wk);list.forEach((pt,li)=>{const cx=weekX(wi)+(li-(list.length-1)/2)*lossGap;const planned=num(pt.planned),actual=num(pt.actual),within=Math.min(actual,planned),excess=Math.max(0,actual-planned),baseY=y(0),withinTop=y(within);placed.push({...pt,cx});svg.appendChild(svgEl('rect',{x:cx-bw/2,y:withinTop,width:bw,height:Math.max(2,baseY-withinTop),rx:3,fill:'#66717b',opacity:.92}));if(excess>0){svg.appendChild(svgEl('rect',{x:cx-bw/2,y:y(actual),width:bw,height:Math.max(2,withinTop-y(actual)),rx:3,fill:red(),opacity:.92}))}svg.appendChild(svgEl('text',{x:cx,y:y(actual)-8,'text-anchor':'middle',class:'axis-label'})).textContent=actual.toFixed(2)+'%';svg.appendChild(svgEl('text',{x:cx,y:h-28,'text-anchor':'middle',class:'axis-label'})).textContent='L'+(li+1)})});if(placed.length){let d='';placed.forEach((pt,i)=>d+=(i?'L':'M')+pt.cx+' '+y(num(pt.planned)));svg.appendChild(svgEl('path',{d,fill:'none',stroke:'#c0c0bd','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'}));placed.forEach(pt=>svg.appendChild(svgEl('circle',{cx:pt.cx,cy:y(num(pt.planned)),r:3,fill:'#c0c0bd',stroke:'#0b0d0f','stroke-width':1})))} }
-function render(){const d=data;const currentAuditId=(d.period.audit_ids&&d.period.audit_ids.length)?d.period.audit_ids[d.period.audit_ids.length-1]:'not_available';document.getElementById('headerMeta').textContent=`${d.trader.account_login} · ${currentAuditId} · ${d.trader.trader_id} · ${d.period.current_period}`;document.getElementById('footTrader').textContent='fx-qud.com';document.getElementById('generated').textContent='Generated: '+d.report.generated_at+' · '+d.report.methodology_version;const q=6.55;document.getElementById('scoreValue').innerHTML=Math.round(q);scoreGauge($('scoreGauge'),q);$('riskMode').textContent=d.blocks.A.mode.toUpperCase();$('riskMode').className='badge '+(d.blocks.A.mode==='dangerous'||d.blocks.A.score<40?'danger':d.blocks.A.score>=85?'good':'warn');$('topWinRatio').textContent=d.performance.win_ratio_pct.toFixed(1)+'%';$('topProfitFactor').textContent=d.performance.profit_factor.toFixed(2);$('topAverageRisk').textContent=d.risk.avg_pct.toFixed(2)+'%';$('topSlSafe').textContent=d.sl.sl_safe_pct.toFixed(1)+'%';sparkMini($('sparkWinRatio'),[{x:'W1',y:60.0000}],{minY:0,maxY:100});sparkMini($('sparkProfitFactor'),[{x:'W1',y:1.4465}],{minY:0,maxY:5});sparkMini($('sparkAverageRisk'),[{x:'W1',y:0.7755}],{minY:0,maxY:3});sparkMini($('sparkSlSafe'),[{x:'W1',y:0.0000}],{minY:0,maxY:100});const leaks=[['Risk Leak',d.leaks.risk_leak_score],['SL Leak',d.leaks.sl_leak_score],['Behavior Leak',d.leaks.behavior_leak_score],['Execution Leak',d.leaks.execution_leak_score]];$('miniLeakGrid').innerHTML=leaks.map(([name,val])=>`<div class="mini-leak-row"><div class="mini-leak-name">${name}</div><div class="mini-leak-bar"><span class="marker" style="left:${val}%"></span></div></div>`).join('');trustScoreTrend($('scoreTrend'),[
-  {x:'W1',y:6.55}
+function render(){const d=data;const currentAuditId=(d.period.audit_ids&&d.period.audit_ids.length)?d.period.audit_ids[d.period.audit_ids.length-1]:'not_available';document.getElementById('headerMeta').textContent=`${d.trader.account_login} · ${currentAuditId} · ${d.trader.trader_id} · ${d.period.current_period}`;document.getElementById('footTrader').textContent='fx-qud.com';document.getElementById('generated').textContent='Generated: '+d.report.generated_at+' · '+d.report.methodology_version;const q=60.0;document.getElementById('scoreValue').innerHTML=Math.round(q);scoreGauge($('scoreGauge'),q);$('riskMode').textContent=d.blocks.A.mode.toUpperCase();$('riskMode').className='badge '+(d.blocks.A.mode==='dangerous'||d.blocks.A.score<40?'danger':d.blocks.A.score>=85?'good':'warn');$('topWinRatio').textContent=d.performance.win_ratio_pct.toFixed(1)+'%';$('topProfitFactor').textContent=d.performance.profit_factor.toFixed(2);$('topAverageRisk').textContent=d.risk.avg_pct.toFixed(2)+'%';$('topSlSafe').textContent=d.sl.sl_safe_pct.toFixed(1)+'%';sparkMini($('sparkWinRatio'),[{x:'W1',y:100},{x:'W2',y:50},{x:'W3',y:100},{x:'W4',y:100},{x:'W5',y:100}],{minY:0,maxY:100});sparkMini($('sparkProfitFactor'),[{x:'W1',y:5},{x:'W2',y:.71},{x:'W3',y:5},{x:'W4',y:5},{x:'W5',y:5}],{minY:0,maxY:5});sparkMini($('sparkAverageRisk'),[{x:'W1',y:2.42},{x:'W2',y:1.48},{x:'W3',y:1.39},{x:'W4',y:1.46},{x:'W5',y:1.14}],{minY:0,maxY:3});sparkMini($('sparkSlSafe'),[{x:'W1',y:100},{x:'W2',y:100},{x:'W3',y:100},{x:'W4',y:100},{x:'W5',y:100}],{minY:0,maxY:100});const leaks=[['Risk Leak',d.leaks.risk_leak_score],['SL Leak',d.leaks.sl_leak_score],['Behavior Leak',d.leaks.behavior_leak_score],['Execution Leak',d.leaks.execution_leak_score]];$('miniLeakGrid').innerHTML=leaks.map(([name,val])=>`<div class="mini-leak-row"><div class="mini-leak-name">${name}</div><div class="mini-leak-bar"><span class="marker" style="left:${val}%"></span></div></div>`).join('');trustScoreTrend($('scoreTrend'),[
+  {x:'W1',y:22.34},
+  {x:'W2',y:30.42},
+  {x:'W3',y:43.88},
+  {x:'W4',y:53.14},
+  {x:'W5',y:60.00}
 ]);accountChart($('accountEquity'),d.account.history);bars($('durationQuality'),d.duration_quality.groups.map(g=>({x:g.avg_duration_label,y:g.win_rate_pct==null?null:g.win_rate_pct-d.duration_quality.baseline_win_rate_pct})),{baselineLabel:'Trader Win Rate '+d.duration_quality.baseline_win_rate_pct.toFixed(1)+'%'});groupedBars($('instrumentContribution'),d.instrument_contribution.groups);$('shortCoverValue').textContent=d.analysis.short_cover_ratio.toFixed(2)+'x';$('profitFactorValue').textContent=d.analysis.profit_factor.toFixed(2);$('longCoverValue').textContent=d.analysis.long_cover_ratio.toFixed(2)+'x';$('shortWinRateValue').textContent=d.analysis.short_win_rate_pct.toFixed(1)+'%';$('totalWinRateValue').textContent=d.analysis.total_win_rate_pct.toFixed(1)+'%';$('longWinRateValue').textContent=d.analysis.long_win_rate_pct.toFixed(1)+'%';analysisGauge($('shortAnalysisGauge'),d.analysis.short_cover_ratio);analysisGauge($('profitabilityGauge'),d.analysis.profit_factor);analysisGauge($('longAnalysisGauge'),d.analysis.long_cover_ratio);const slSeg=[{label:'No SL',value:d.sl.trades_without_sl_at_open,color:red()},{label:'SL Removed',value:d.sl.sl_removed_count,color:'#b87945'},{label:'SL Changed',value:d.sl.sl_changed_count,color:yellow()},{label:'SL Safe',value:d.sl.sl_safe_count,color:green()}];donut($('slDonut'),slSeg,d.sl.sl_safe_pct.toFixed(1)+'%','SAFE');$('slLegend').innerHTML=slSeg.map(s=>`<span class="legend-row"><span class="sq" style="background:${s.color}"></span>${s.label} - ${(s.value/(d.sl.trades_total||1)*100).toFixed(1)}%</span>`).join('');drawLine($('slTimeline'),d.sl.protection_rate_trend.map(x=>({x:x.period,y:x.protected_rate_pct})),{minY:0,maxY:100,color:green()});riskZone($('scoreDonut'),d.risk);$('riskZoneSummary').innerHTML=`<div><div class="risk-zone-value">${d.risk.personal_risk_baseline_pct.toFixed(2)}%</div><div class="risk-zone-label">Personal baseline</div></div><div><div class="risk-zone-value ${d.risk.risk_drift_count>0?'up':'down'}">${d.risk.risk_drift_count>0?'↑':'↓'} ${d.risk.risk_drift_count>0?'+':''}${d.risk.risk_drift_count}</div><div class="risk-zone-label">Risk drift</div></div>`;$('scoreLegend').innerHTML='<span class="leg"><span class="sw green"></span>Normal Risk</span><span class="leg"><span class="sw red"></span>Risk Expansion</span>';riskAfterLoss($('lossBarsTop'),d.behavior);$('lossNoteTop').className='risk-after-note';$('lossNoteTop').innerHTML=`Risk drift: <b class="${d.behavior.post_loss_risk_drift_pct>0?'up':''}">${d.behavior.post_loss_risk_drift_pct>0?'↑ ':''}${d.behavior.post_loss_risk_drift_pct.toFixed(2)}%</b>`;riskCvScale($('riskCvScale'),d.risk.cv_pct);riskConsistency($('riskLine'),d.risk.trade_series,d.risk.personal_risk_baseline_pct);planFact($('scatter'),d.plan_fact.points,d.risk.personal_risk_baseline_pct);$('findings').innerHTML=d.findings.items.map((it,i)=>{const cls=it.severity==='critical'||it.severity==='high'?'danger':it.severity==='medium'?'warn':'good';return`<div class="item"><div class="item-num ${cls}">${i+1}</div><div><div class="item-title">${it.title}</div></div></div>`}).join('')}initHelp();render();
 </script></body></html>
