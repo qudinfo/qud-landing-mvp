@@ -1,0 +1,3069 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>QUD TDA Basic — Real CSV Dashboard</title>
+<style>
+:root{--bg:#0b0d0f;--panel:#111315;--text:#c6c6c6;--text-strong:#f0f0ed;--muted:#8a8a8a;--blue:#8fa6c8;--green:#6fa56f;--yellow:#bda351;--orange:#b87945;--red:#b4514b;--border-soft:#1f2428}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 30% -10%,#151b21 0%,#0b0d0f 44%,#08090a 100%);color:var(--text);font-family:Inter,Arial,sans-serif}.page{max-width:1240px;margin:0 auto;padding:20px 22px}.panel{background:linear-gradient(180deg,rgba(17,20,22,.72),rgba(10,12,14,.82));border:1px solid rgba(255,255,255,.06);border-radius:0;padding:14px;box-shadow:0 10px 28px rgba(0,0,0,.14);position:relative;overflow:visible}h1{font-size:24px;margin:0 0 6px;color:var(--text-strong)}h2{font-size:12px;margin:0 0 6px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:800}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#d5c27a;font-weight:700;margin-bottom:8px}.subtitle{margin:0;color:var(--muted);font-size:13px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}.badge{display:inline-flex;border:1px solid rgba(189,163,81,.45);border-radius:999px;padding:5px 10px;color:#d5c27a;background:rgba(189,163,81,.06);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.badge.good{border-color:rgba(111,165,111,.45);color:#8ec58e;background:rgba(111,165,111,.07)}.badge.warn{border-color:rgba(189,163,81,.45);color:#d5c27a;background:rgba(189,163,81,.07)}.badge.danger{border-color:rgba(180,81,75,.5);color:#d97f78;background:rgba(180,81,75,.08)}.badge.neutral{border-color:rgba(143,166,200,.35);color:var(--blue);background:rgba(143,166,200,.07)}.top{margin-bottom:12px}.top-combined{display:grid;grid-template-columns:1.75fr .7fr .7fr;gap:24px;align-items:center}.top-title-block{padding-left:62px}.score-wrap{position:relative;height:154px}.score-gauge{width:100%;height:100%}.score-value{position:absolute;left:50%;top:64%;transform:translate(-50%,-50%);font-size:42px;color:var(--green);font-weight:850;text-align:center}.score-value small{display:block;font-size:12px;color:var(--muted);margin-top:4px}.gauge-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:12;stroke-linecap:round}.gauge-seg{fill:none;stroke-width:12;stroke-linecap:round}.gauge-seg.red{stroke:var(--red)}.gauge-seg.orange{stroke:var(--orange)}.gauge-seg.green{stroke:var(--green)}.gauge-marker{stroke:#efe8d2;stroke-width:4;stroke-linecap:round}.gauge-tick{fill:var(--muted);font-size:10px}.status-badges{height:154px;display:flex;flex-direction:column;justify-content:center;gap:8px}.status-line{display:flex;align-items:center;gap:8px}.status-note{font-size:10px;color:var(--muted);font-weight:600}.top-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:20px 0 24px}.metric-card{padding:10px 24px 10px 0;display:grid;grid-template-columns:auto 104px;grid-template-rows:auto auto;column-gap:18px;align-items:end}.metric-card:first-child{padding-left:24px}.metric-card+.metric-card{padding-left:24px;border-left:1px solid rgba(255,255,255,.12)}.metric-value{font-size:22px;color:var(--text-strong);font-weight:800;margin-top:8px}.metric-spark{grid-column:2;grid-row:1/span 2;width:104px;height:38px;align-self:center}.pre-account-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:24px}.pre-leak-panel{grid-column:span 4}.pre-score-panel{grid-column:span 8}.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:16px;row-gap:26px}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}.section-head{display:flex;justify-content:space-between;margin-bottom:14px}.chart-box{height:220px;margin-top:8px}.account-chart{height:250px}.planned-risk-chart{height:252px}.svg-chart{width:100%;height:100%;display:block}.gridline{stroke:rgba(255,255,255,.055);stroke-width:1}.axis-label{fill:var(--muted);font-size:10px;font-weight:600}.legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:10px;color:var(--muted)}.leg{display:inline-flex;align-items:center;gap:6px}.sw{width:10px;height:10px;border-radius:3px;background:var(--blue)}.sw.green{background:var(--green)}.sw.yellow{background:var(--yellow)}.sw.red{background:var(--red)}.sw.gray{background:#66717b}.mini-leak-stack{display:grid;gap:26px;margin-top:38px;padding:0 10px 8px}.mini-leak-row{display:grid;grid-template-columns:128px minmax(0,1fr);gap:18px;align-items:center}.mini-leak-name{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850;white-space:nowrap}.mini-leak-bar{height:7px;width:100%;max-width:100%;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 30%,var(--yellow) 30% 60%,var(--orange) 60% 80%,var(--red) 80% 100%);position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);overflow:visible}.mini-leak-bar .marker{position:absolute;top:-7px;width:4px;height:21px;background:#e9e0b6;border-radius:4px;box-shadow:0 0 0 2px rgba(0,0,0,.48);transform:translateX(-2px)}.pre-leak-panel{min-height:270px;overflow:hidden}.pre-leak-panel h2{font-size:13px;letter-spacing:.1em;margin-bottom:8px}.analysis-panel{padding:28px 14px 30px;background:transparent;border:0;box-shadow:none}.analysis-panel h2{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.analysis-head-value{order:-1;font-size:16px;color:var(--text-strong);font-weight:850}.analysis-winrate{font-size:9px;color:var(--muted)}.analysis-winrate b{font-size:11px}.analysis-gauge-wrap{height:92px;margin-top:18px;display:grid;place-items:center}.analysis-gauge{width:100%;height:78px}.sl-protection-layout{display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:center}.donut-center{font-size:28px;fill:var(--green);font-weight:850}.donut-sub{font-size:10px;fill:var(--muted);letter-spacing:.12em}.timeline-dots{height:172px;width:100%}.legend-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:10px;color:var(--muted)}.legend-row{display:inline-flex;gap:6px;align-items:center}.sq{width:10px;height:10px;border-radius:3px}.risk-zone-summary{display:grid;grid-template-columns:auto auto;gap:96px;margin-top:-42px;margin-bottom:18px;padding-left:14px}.risk-zone-value{font-size:20px;color:var(--text-strong);font-weight:850}.risk-zone-value.up{color:var(--red)}.risk-zone-value.down{color:var(--green)}.risk-zone-label{font-size:10px;color:var(--muted);margin-top:5px;font-weight:750}.risk-cv-scale{width:190px;margin-top:8px;margin-left:auto;margin-right:20px}.risk-after-note{margin-top:38px;color:var(--muted);font-size:14px}.risk-after-note b{font-size:22px;color:var(--green);font-weight:850}.risk-after-note b.up{color:var(--red)}.risk-cv-title{font-size:10px;color:var(--text-strong);font-weight:850;letter-spacing:.07em;margin-bottom:5px}.risk-cv-scale-top{position:relative;height:20px}.risk-cv-line{position:absolute;left:0;right:0;top:12px;height:5px;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 50%,var(--yellow) 50% 78%,var(--red) 78% 100%)}.risk-cv-marker{position:absolute;top:0;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #efe8d2}.risk-cv-ticks,.risk-cv-labels{display:flex;justify-content:space-between;font-size:8px;color:var(--muted);font-weight:750;margin-top:2px}.findings-panel{background:transparent;border:0;box-shadow:none;padding:18px 10px}.finding-list{display:grid;gap:18px;margin-top:18px}.finding-list .item{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:center}.item-num{width:24px;height:24px;border-radius:7px;font-size:11px;background:transparent;border:1.5px solid currentColor;display:grid;place-items:center;font-weight:800}.item-num.good{color:var(--green)}.item-num.warn{color:var(--yellow)}.item-num.danger{color:var(--red)}.item-title{font-size:12px;line-height:1.28;font-weight:500;color:var(--text)}.item-sub{display:none}.footer{display:flex;justify-content:space-between;margin-top:14px;color:var(--muted);font-size:12px;border-top:1px solid var(--border-soft);padding-top:12px}.not-available{fill:var(--muted);font-size:13px;font-weight:700}.help{display:inline-grid;place-items:center;width:16px;height:16px;margin-left:6px;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:0;line-height:1;cursor:help;vertical-align:middle;text-transform:none}.help:hover{border-color:rgba(255,255,255,.34);color:var(--text-strong)}.qud-tooltip{position:fixed;z-index:9999;max-width:420px;padding:18px 20px;background:rgba(10,12,14,.96);border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 22px 60px rgba(0,0,0,.5);color:var(--text);font-size:13px;line-height:1.42;pointer-events:none}.qud-tooltip-title{font-size:14px;font-weight:850;color:var(--text-strong);margin-bottom:12px}.qud-tooltip b{display:block;margin-top:9px;margin-bottom:3px;color:#d5c27a;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.qud-tooltip p{margin:0 0 3px}.qud-tooltip .muted{color:var(--muted)}@media(max-width:1100px){.top-combined,.grid,.pre-account-grid,.top-metrics{display:block}.panel{margin-bottom:14px}}
+</style></head><body><main class="page">
+<section class="top"><div class="panel"><div class="top-combined"><div class="top-title-block"><div class="eyebrow">Trade Decision Audit Report</div><h1>QUD TDA Basic</h1><p class="subtitle" id="headerMeta">—</p></div><div><div class="score-wrap"><svg class="score-gauge" id="scoreGauge" viewBox="0 0 320 180"></svg><div class="score-value" id="scoreValue">—</div></div><div class="label" style="text-align:center">Trust Score</div></div><div><div class="status-badges"><div class="status-line"><span class="badge" id="riskMode">—</span><span class="status-note" id="riskStatusNote">risk</span></div><div class="status-line"><span class="badge neutral" id="trustZone">—</span><span class="status-note" id="trustStatusNote">trust</span></div><div class="status-line"><span class="badge neutral" id="scoreDelta">—</span><span class="status-note" id="previousPeriodNote">prev.period</span></div></div><div class="label" style="text-align:center">Trust status</div></div></div></div></section>
+<section class="top-metrics"><div class="metric-card"><div class="label">Win Ratio</div><div class="metric-value" id="topWinRatio">—</div><svg class="metric-spark" id="sparkWinRatio"></svg></div><div class="metric-card"><div class="label">Profit Factor</div><div class="metric-value" id="topProfitFactor">—</div><svg class="metric-spark" id="sparkProfitFactor"></svg></div><div class="metric-card"><div class="label">Average Risk %</div><div class="metric-value" id="topAverageRisk">—</div><svg class="metric-spark" id="sparkAverageRisk"></svg></div><div class="metric-card"><div class="label">SL Safe</div><div class="metric-value" id="topSlSafe">—</div><svg class="metric-spark" id="sparkSlSafe"></svg></div></section>
+<section class="pre-account-grid"><div class="panel pre-leak-panel"><h2>QUD Leak Map</h2><div class="mini-leak-stack" id="miniLeakGrid"></div></div><div class="panel pre-score-panel"><h2>TRUST SCORE OVER TIME</h2><div class="chart-box"><svg class="svg-chart" id="scoreTrend"></svg></div><div class="legend" id="scoreTrendLegend">
+  <span class="leg"><span class="sw"></span>Score</span>
+</div></div></section>
+<section class="grid">
+<div class="panel span-12"><div class="section-head"><h2>Account Balance & Equity</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box account-chart"><svg class="svg-chart" id="accountEquity"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Balance</span><span class="leg"><span class="sw gray"></span>Equity</span></div></div>
+<div class="panel span-6"><div class="section-head"><h2>Holding Time Efficiency</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box"><svg class="svg-chart" id="durationQuality"></svg></div><div class="legend"><span class="leg"><span class="sw green"></span>Above trader baseline</span><span class="leg"><span class="sw red"></span>Below trader baseline</span><span class="leg"><span class="sw gray"></span>Trader baseline</span></div></div>
+<div class="panel span-6"><div class="section-head"><h2>Instrument Contribution & Load</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box"><svg class="svg-chart" id="instrumentContribution"></svg></div><div class="legend"><span class="leg"><span class="sw green"></span>Win Contribution</span><span class="leg"><span class="sw"></span>Load Volume</span></div></div>
+<div class="span-4 analysis-panel"><h2>Direction Balance <span class="analysis-head-value" id="shortCoverValue">—</span><span class="analysis-winrate">Long / Short % <b id="shortWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="shortAnalysisGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Profitability <span class="analysis-head-value" id="profitFactorValue">—</span><span class="analysis-winrate">Wins / Losses <b id="totalWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="profitabilityGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Risk Expansion <span class="analysis-head-value" id="longCoverValue">—</span><span class="analysis-winrate">Reduced / Expanded <b id="longWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="longAnalysisGauge"></svg></div></div>
+<div class="panel span-8"><h2>Protected Trades Rate</h2><div class="sl-protection-layout"><svg id="slDonut" width="190" height="150"></svg><svg class="timeline-dots" id="slTimeline"></svg></div><div class="legend-list" id="slLegend"></div></div>
+<div class="panel span-4"><h2>Risk Zone Distribution <span class="label">VS PERSONAL BASELINE</span></h2><div class="chart-box"><svg class="svg-chart" id="scoreDonut"></svg></div><div class="risk-zone-summary" id="riskZoneSummary"></div><div class="legend" id="scoreLegend"></div></div>
+<div class="panel span-4"><h2>Risk After Loss <span class="label">CURRENT PERIOD</span></h2><div class="chart-box"><svg class="svg-chart" id="lossBarsTop"></svg></div><div class="item-sub" id="lossNoteTop" style="margin-top:46px"></div></div>
+<div class="panel span-8"><div class="section-head"><h2>Risk Consistency</h2><div class="risk-cv-scale" id="riskCvScale"></div></div><div class="chart-box"><svg class="svg-chart" id="riskLine"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Risk %</span><span class="leg"><span class="sw green"></span>Normal risk zone</span><span class="leg"><span class="sw yellow"></span>Median risk</span><span class="leg"><span class="sw red"></span>Above normal risk</span></div></div>
+<div class="panel span-8"><h2>PLANNED RISK VS ACTUAL LOSS</h2><div class="chart-box planned-risk-chart"><svg class="svg-chart" id="scatter"></svg></div><div class="legend"><span class="leg"><span class="sw" style="background:#c0c0bd"></span>Planned SL line</span><span class="leg"><span class="sw yellow"></span>Median risk</span><span class="leg"><span class="sw gray"></span>Actual loss within plan</span><span class="leg"><span class="sw red"></span>Excess loss above plan</span></div></div>
+<div class="panel span-4 findings-panel"><h2>5 Key Findings <span class="label">(Top 5)</span></h2><div class="finding-list" id="findings"></div></div>
+</section><div class="footer"><span id="footTrader">fx-qud.com</span><span id="generated">Generated: —</span></div></main>
+<script id="report-data" type="application/json">{
+  "report": {
+    "request_id": "REQ-AUTO-aud_00007-109245314",
+    "audit_id": "aud_00007",
+    "type": "AUDIT_7D",
+    "generated_at": "2026-07-12 08:42:13",
+    "version": "BASIC_AUDIT_v1"
+  },
+  "trader": {
+    "trader_id": "trd_109245314",
+    "account_login": 109245314
+  },
+  "period": {
+    "start": "2026-07-05",
+    "end": "2026-07-11",
+    "current_period": "2026-07-05 — 2026-07-11"
+  },
+  "score": {
+    "qud_tda_score": 0,
+    "weekly_quality_score": 35.5,
+    "history_trust_factor": 0.25,
+    "trust_zone": "pre QUD",
+    "risk_mode": "critical",
+    "trust_score_delta": null,
+    "display_class": "danger",
+    "zones": [
+      {
+        "from": 0,
+        "to": 40,
+        "label": "pre QUD",
+        "status": "pre_qud"
+      },
+      {
+        "from": 40,
+        "to": 80,
+        "label": "QUD Room",
+        "status": "qud_room"
+      },
+      {
+        "from": 80,
+        "to": 100,
+        "label": "QUD Elite",
+        "status": "qud_elite"
+      }
+    ],
+    "main_damage_source": "Block C"
+  },
+  "trends": {
+    "win_ratio_pct": [
+      {
+        "period": "2026-07-05 — 2026-07-11",
+        "value": 57.89,
+        "source": "current"
+      }
+    ],
+    "profit_factor": [
+      {
+        "period": "2026-07-05 — 2026-07-11",
+        "value": 1.45,
+        "source": "current"
+      }
+    ],
+    "average_risk_pct": [
+      {
+        "period": "2026-07-05 — 2026-07-11",
+        "value": 0.77,
+        "source": "current"
+      }
+    ],
+    "sl_safe_pct": [
+      {
+        "period": "2026-07-05 — 2026-07-11",
+        "value": 57.89,
+        "source": "current"
+      }
+    ]
+  },
+  "leaks": {
+    "risk_leak_score": 95,
+    "sl_leak_score": 90,
+    "behavior_leak_score": 100,
+    "execution_leak_score": 85,
+    "main_leak": "Behavior Leak",
+    "items": [
+      {
+        "name": "Risk Leak",
+        "score": 95
+      },
+      {
+        "name": "SL Leak",
+        "score": 90
+      },
+      {
+        "name": "Behavior Leak",
+        "score": 100
+      },
+      {
+        "name": "Execution Leak",
+        "score": 85
+      }
+    ]
+  },
+  "risk": {
+    "avg_pct": 0.77,
+    "median_pct": 0.29,
+    "max_pct": 2.6,
+    "min_pct": 0.05,
+    "std_pct": 0.86,
+    "cv_value": 1.11,
+    "cv": {
+      "value": 1.11,
+      "marker_pct": 100.0,
+      "label": "RISK CV",
+      "status": "critical",
+      "min_label": "0.0",
+      "mid_label": "0.5",
+      "max_label": "1.0+"
+    },
+    "personal_risk_baseline_pct": 0.29,
+    "personal_risk_low_bound_pct": 0.15,
+    "personal_risk_high_bound_pct": 0.44,
+    "risk_reduced_count": 3,
+    "risk_normal_count": 4,
+    "risk_expansion_count": 6,
+    "risk_expansion_pct": 46.15,
+    "risk_drift_count": 3,
+    "drift": {
+      "count": 3,
+      "value": 3,
+      "status": "expansion",
+      "label": "Risk Drift"
+    },
+    "zone_items": [
+      {
+        "label": "Reduced Risk",
+        "count": 3,
+        "pct": 23.08,
+        "status": "reduced"
+      },
+      {
+        "label": "Normal Risk",
+        "count": 4,
+        "pct": 30.77,
+        "status": "normal"
+      },
+      {
+        "label": "Risk Expansion",
+        "count": 6,
+        "pct": 46.15,
+        "status": "expansion"
+      }
+    ],
+    "trade_series": [
+      {
+        "trade_id": "aud_00007_109245314_9428884656",
+        "risk_pct": 0.15,
+        "timestamp": "2026-07-06 08:11:16",
+        "week": "W1",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9428904750",
+        "risk_pct": 0.5,
+        "timestamp": "2026-07-06 08:12:43",
+        "week": "W1",
+        "status": "expansion"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9443738770",
+        "risk_pct": 0.06,
+        "timestamp": "2026-07-06 21:09:02",
+        "week": "W1",
+        "status": "reduced"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9444661485",
+        "risk_pct": 1.21,
+        "timestamp": "2026-07-06 22:23:15",
+        "week": "W1",
+        "status": "expansion"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469520406",
+        "risk_pct": 0.05,
+        "timestamp": "2026-07-08 07:40:05",
+        "week": "W1",
+        "status": "reduced"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469630200",
+        "risk_pct": 0.29,
+        "timestamp": "2026-07-08 07:51:10",
+        "week": "W1",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469816516",
+        "risk_pct": 1.96,
+        "timestamp": "2026-07-08 08:07:50",
+        "week": "W1",
+        "status": "expansion"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9472826046",
+        "risk_pct": 2.6,
+        "timestamp": "2026-07-08 11:21:15",
+        "week": "W1",
+        "status": "expansion"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9491069976",
+        "risk_pct": 0.24,
+        "timestamp": "2026-07-09 07:33:21",
+        "week": "W1",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9491576250",
+        "risk_pct": 0.21,
+        "timestamp": "2026-07-09 08:19:49",
+        "week": "W1",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9495099385",
+        "risk_pct": 0.07,
+        "timestamp": "2026-07-09 12:05:23",
+        "week": "W1",
+        "status": "reduced"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9495614516",
+        "risk_pct": 0.92,
+        "timestamp": "2026-07-09 12:44:09",
+        "week": "W1",
+        "status": "expansion"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9505147970",
+        "risk_pct": 1.79,
+        "timestamp": "2026-07-09 21:39:16",
+        "week": "W1",
+        "status": "expansion"
+      }
+    ],
+    "trades_above_2pct": 1,
+    "trades_above_3pct": 0,
+    "valid_risk_trades_count": 13,
+    "data_status": "live"
+  },
+  "sl": {
+    "trades_without_sl_at_open": 19,
+    "trades_with_sl_at_open": 0,
+    "sl_set_within_30s_count": 13,
+    "sl_set_after_30s_count": 5,
+    "closed_without_sl_count": 1,
+    "avg_sl_install_delay_sec": 24.39,
+    "max_sl_install_delay_sec": 89.0,
+    "unsafe_trades_count": 8,
+    "sl_safe_count": 11,
+    "sl_safe_pct": 57.89,
+    "sl_changed_count": 15,
+    "sl_removed_count": 0,
+    "risk_increase_after_sl_change_count": 11,
+    "personal_risk_baseline_pct": 0.26315,
+    "sl_risk_high_bound_pct": 0.394725,
+    "sl_risk_expansion_after_change_count": 7,
+    "max_risk_after_sl_change_pct": 1.6,
+    "block_score": 20,
+    "main_issue": "Position closed without SL",
+    "protection_segments": [
+      {
+        "label": "Protected",
+        "value": 11,
+        "status": "safe"
+      },
+      {
+        "label": "Unsafe",
+        "value": 8,
+        "status": "danger"
+      }
+    ],
+    "event_timeline": [
+      {
+        "ticket": "9428884656",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-06 08:11:16"
+      },
+      {
+        "ticket": "9428884656",
+        "event": "SL_SET",
+        "timestamp": "2026-07-06 08:11:37"
+      },
+      {
+        "ticket": "9428904750",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-06 08:12:43"
+      },
+      {
+        "ticket": "9428904750",
+        "event": "SL_SET",
+        "timestamp": "2026-07-06 08:12:55"
+      },
+      {
+        "ticket": "9428904750",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-06 17:25:21"
+      },
+      {
+        "ticket": "9443738770",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-06 21:09:02"
+      },
+      {
+        "ticket": "9443738770",
+        "event": "SL_SET",
+        "timestamp": "2026-07-06 21:09:31"
+      },
+      {
+        "ticket": "9443738770",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-06 21:18:16"
+      },
+      {
+        "ticket": "9444661485",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-06 22:23:15"
+      },
+      {
+        "ticket": "9444661485",
+        "event": "SL_SET",
+        "timestamp": "2026-07-06 22:23:28"
+      },
+      {
+        "ticket": "9444661485",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-07 07:16:32"
+      },
+      {
+        "ticket": "9444661485",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-07 07:22:01"
+      },
+      {
+        "ticket": "9444661485",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-07 07:23:47"
+      },
+      {
+        "ticket": "9444661485",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-07 07:53:37"
+      },
+      {
+        "ticket": "9469271912",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-08 07:11:32"
+      },
+      {
+        "ticket": "9469271912",
+        "event": "SL_SET",
+        "timestamp": "2026-07-08 07:13:01"
+      },
+      {
+        "ticket": "9469384488",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-08 07:24:04"
+      },
+      {
+        "ticket": "9469384488",
+        "event": "SL_SET",
+        "timestamp": "2026-07-08 07:24:37"
+      },
+      {
+        "ticket": "9469520406",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-08 07:40:05"
+      },
+      {
+        "ticket": "9469520406",
+        "event": "SL_SET",
+        "timestamp": "2026-07-08 07:40:14"
+      },
+      {
+        "ticket": "9469630200",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-08 07:51:10"
+      },
+      {
+        "ticket": "9469630200",
+        "event": "SL_SET",
+        "timestamp": "2026-07-08 07:51:19"
+      },
+      {
+        "ticket": "9469816516",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-08 08:07:50"
+      },
+      {
+        "ticket": "9469816516",
+        "event": "SL_SET",
+        "timestamp": "2026-07-08 08:08:11"
+      },
+      {
+        "ticket": "9472824682",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-08 11:21:12"
+      },
+      {
+        "ticket": "9472826046",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-08 11:21:15"
+      },
+      {
+        "ticket": "9472826046",
+        "event": "SL_SET",
+        "timestamp": "2026-07-08 11:21:37"
+      },
+      {
+        "ticket": "9472824682",
+        "event": "SL_SET",
+        "timestamp": "2026-07-08 11:22:05"
+      },
+      {
+        "ticket": "9472826046",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-08 11:40:37"
+      },
+      {
+        "ticket": "9472824682",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-08 11:40:43"
+      },
+      {
+        "ticket": "9472824682",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-08 11:41:43"
+      },
+      {
+        "ticket": "9472826046",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-08 11:41:48"
+      },
+      {
+        "ticket": "9472826046",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-08 11:42:34"
+      },
+      {
+        "ticket": "9472824682",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-08 11:42:55"
+      },
+      {
+        "ticket": "9472826046",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-08 11:43:23"
+      },
+      {
+        "ticket": "9491069976",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-09 07:33:21"
+      },
+      {
+        "ticket": "9491069976",
+        "event": "SL_SET",
+        "timestamp": "2026-07-09 07:33:30"
+      },
+      {
+        "ticket": "9491170814",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-09 07:44:25"
+      },
+      {
+        "ticket": "9491170814",
+        "event": "SL_SET",
+        "timestamp": "2026-07-09 07:45:04"
+      },
+      {
+        "ticket": "9491170814",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-09 08:15:25"
+      },
+      {
+        "ticket": "9491576250",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-09 08:19:49"
+      },
+      {
+        "ticket": "9491576250",
+        "event": "SL_SET",
+        "timestamp": "2026-07-09 08:19:58"
+      },
+      {
+        "ticket": "9495099385",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-09 12:05:23"
+      },
+      {
+        "ticket": "9495099385",
+        "event": "SL_SET",
+        "timestamp": "2026-07-09 12:05:39"
+      },
+      {
+        "ticket": "9495099385",
+        "event": "SL_CHANGED",
+        "timestamp": "2026-07-09 12:09:31"
+      },
+      {
+        "ticket": "9495614516",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-09 12:44:09"
+      },
+      {
+        "ticket": "9495614516",
+        "event": "SL_SET",
+        "timestamp": "2026-07-09 12:44:16"
+      },
+      {
+        "ticket": "9501933912",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-09 18:02:29"
+      },
+      {
+        "ticket": "9505139158",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-09 21:38:24"
+      },
+      {
+        "ticket": "9505139158",
+        "event": "SL_SET",
+        "timestamp": "2026-07-09 21:38:55"
+      },
+      {
+        "ticket": "9505147970",
+        "event": "NO_SL_WARNING",
+        "timestamp": "2026-07-09 21:39:16"
+      },
+      {
+        "ticket": "9505147970",
+        "event": "SL_SET",
+        "timestamp": "2026-07-09 21:39:33"
+      }
+    ]
+  },
+  "behavior": {
+    "trade_after_loss_count": 8,
+    "risk_after_loss_avg_pct": 1.18,
+    "risk_after_win_avg_pct": 0.47,
+    "risk_after_1_loss_pct": 0.75,
+    "risk_after_2_losses_pct": 1.02,
+    "risk_after_3_losses_pct": 1.76,
+    "max_risk_after_loss_streak_pct": 2.6,
+    "risk_increase_after_loss_count": 5,
+    "position_size_increased_after_loss_count": 4,
+    "revenge_trading_signal_count": 4,
+    "avg_minutes_after_loss_to_next_trade": 53.32,
+    "min_minutes_after_loss_to_next_trade": 1.68,
+    "risk_after_loss_items": [
+      {
+        "label": "1 Loss",
+        "value": 0.75,
+        "status": "expansion"
+      },
+      {
+        "label": "2 Losses",
+        "value": 1.02,
+        "status": "expansion"
+      },
+      {
+        "label": "3+ Losses",
+        "value": 1.76,
+        "status": "expansion"
+      }
+    ],
+    "post_loss_summary": {
+      "baseline_pct": 0.29,
+      "high_bound_pct": 0.44,
+      "avg_risk_pct": 1.18,
+      "risk_drift_pct": 0.71,
+      "expansion_count": 4,
+      "expansion_pct": 66.67,
+      "revenge_signal_count": 4,
+      "status": "expansion"
+    }
+  },
+  "plan_fact": {
+    "trades_total": 19,
+    "trades_count": 13,
+    "excluded_trades_count": 6,
+    "valid_sample_pct": 68.42,
+    "planned_risk_avg_pct": 0.77,
+    "actual_loss_avg_pct": 5.17,
+    "deviation_avg_pct": 4.66,
+    "deviation_max_pct": 17.62,
+    "deviation_avg_abs_pct": 4.66,
+    "deviation_max_abs_pct": 17.62,
+    "negative_deviation_trades": 7,
+    "negative_deviation_trades_pct": 53.85,
+    "execution_leak_flag": true,
+    "data_status": "live",
+    "points": [
+      {
+        "trade_id": "aud_00007_109245314_9428884656",
+        "planned": 0.15,
+        "actual": 0.0,
+        "within_plan": 0.0,
+        "excess_loss": 0.0,
+        "status": "within_plan",
+        "week": "W1",
+        "timestamp": "2026-07-06 08:11:16"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9428904750",
+        "planned": 0.5,
+        "actual": 0.0,
+        "within_plan": 0.0,
+        "excess_loss": 0.0,
+        "status": "within_plan",
+        "week": "W1",
+        "timestamp": "2026-07-06 08:12:43"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9443738770",
+        "planned": 0.06,
+        "actual": 1.04,
+        "within_plan": 0.06,
+        "excess_loss": 0.99,
+        "status": "excess",
+        "week": "W1",
+        "timestamp": "2026-07-06 21:09:02"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9444661485",
+        "planned": 1.21,
+        "actual": 0.0,
+        "within_plan": 0.0,
+        "excess_loss": 0.0,
+        "status": "within_plan",
+        "week": "W1",
+        "timestamp": "2026-07-06 22:23:15"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469520406",
+        "planned": 0.05,
+        "actual": 0.53,
+        "within_plan": 0.05,
+        "excess_loss": 0.48,
+        "status": "excess",
+        "week": "W1",
+        "timestamp": "2026-07-08 07:40:05"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469630200",
+        "planned": 0.29,
+        "actual": 2.91,
+        "within_plan": 0.29,
+        "excess_loss": 2.62,
+        "status": "excess",
+        "week": "W1",
+        "timestamp": "2026-07-08 07:51:10"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469816516",
+        "planned": 1.96,
+        "actual": 19.58,
+        "within_plan": 1.96,
+        "excess_loss": 17.62,
+        "status": "excess",
+        "week": "W1",
+        "timestamp": "2026-07-08 08:07:50"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9472826046",
+        "planned": 2.6,
+        "actual": 0.0,
+        "within_plan": 0.0,
+        "excess_loss": 0.0,
+        "status": "within_plan",
+        "week": "W1",
+        "timestamp": "2026-07-08 11:21:15"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9491069976",
+        "planned": 0.24,
+        "actual": 0.0,
+        "within_plan": 0.0,
+        "excess_loss": 0.0,
+        "status": "within_plan",
+        "week": "W1",
+        "timestamp": "2026-07-09 07:33:21"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9491576250",
+        "planned": 0.21,
+        "actual": 2.11,
+        "within_plan": 0.21,
+        "excess_loss": 1.9,
+        "status": "excess",
+        "week": "W1",
+        "timestamp": "2026-07-09 08:19:49"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9495099385",
+        "planned": 0.07,
+        "actual": 0.82,
+        "within_plan": 0.07,
+        "excess_loss": 0.74,
+        "status": "excess",
+        "week": "W1",
+        "timestamp": "2026-07-09 12:05:23"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9495614516",
+        "planned": 0.92,
+        "actual": 9.19,
+        "within_plan": 0.92,
+        "excess_loss": 8.27,
+        "status": "excess",
+        "week": "W1",
+        "timestamp": "2026-07-09 12:44:09"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9505147970",
+        "planned": 1.79,
+        "actual": 0.0,
+        "within_plan": 0.0,
+        "excess_loss": 0.0,
+        "status": "within_plan",
+        "week": "W1",
+        "timestamp": "2026-07-09 21:39:16"
+      }
+    ]
+  },
+  "findings": {
+    "items": [
+      {
+        "text": "В течение недели зафиксирована сделка, закрытая без установленного Stop Loss.",
+        "severity": "critical",
+        "display_class": "danger",
+        "source_block": "Block B",
+        "metric": "closed_without_sl_count"
+      },
+      {
+        "text": "В течение недели зафиксированы сделки с риском выше 2% от счёта.",
+        "severity": "high",
+        "display_class": "warn",
+        "source_block": "Block A",
+        "metric": "trades_above_2pct"
+      },
+      {
+        "text": "В течение недели зафиксированы сделки, в которых Stop Loss был установлен позже допустимого окна 30 секунд.",
+        "severity": "high",
+        "display_class": "warn",
+        "source_block": "Block B",
+        "metric": "sl_set_after_30s_count"
+      },
+      {
+        "text": "После убыточных сделок зафиксированы быстрые повторные входы в рынок.",
+        "severity": "high",
+        "display_class": "warn",
+        "source_block": "Block C",
+        "metric": "revenge_trading_signal_count"
+      },
+      {
+        "text": "В части сделок фактический убыток оказался выше изначально запланированного риска.",
+        "severity": "high",
+        "display_class": "warn",
+        "source_block": "Block D",
+        "metric": "trades_with_negative_plan_fact_deviation"
+      }
+    ]
+  },
+  "technical_warning": {
+    "active": false,
+    "report_data_status": "VALID",
+    "data_quality_score": 100,
+    "issue": "data structure valid",
+    "missing_source": "not_available",
+    "period_coverage_pct": 100.0,
+    "minimum_sample_valid": true
+  },
+  "basic_stats": {
+    "average_win": 534.85,
+    "average_loss": 508.09,
+    "win_ratio": 57.89,
+    "profit_factor": 1.45,
+    "number_of_days": 3,
+    "total_trades_taken": 19,
+    "total_lots_used": 8.2,
+    "biggest_win": 1328.0,
+    "biggest_loss": 2014.5,
+    "net_profit": 1818.6
+  },
+  "account": {
+    "balance_equity_curve": [
+      {
+        "date": "2026-07-06",
+        "balance": 9948.5,
+        "equity": 9905.7,
+        "min_equity": 9887.5,
+        "max_equity": 10254.2,
+        "daily_profit_money": -51.5,
+        "daily_dd_max_pct": 1.21
+      },
+      {
+        "date": "2026-07-07",
+        "balance": 10554.98,
+        "equity": 10554.98,
+        "min_equity": 9777.58,
+        "max_equity": 10706.78,
+        "daily_profit_money": 606.48,
+        "daily_dd_max_pct": 1.96
+      },
+      {
+        "date": "2026-07-08",
+        "balance": 10850.98,
+        "equity": 10850.98,
+        "min_equity": 8052.98,
+        "max_equity": 11133.98,
+        "daily_profit_money": 296.0,
+        "daily_dd_max_pct": 23.7
+      },
+      {
+        "date": "2026-07-09",
+        "balance": 9393.68,
+        "equity": 9233.68,
+        "min_equity": 8429.68,
+        "max_equity": 10855.98,
+        "daily_profit_money": -1457.3,
+        "daily_dd_max_pct": 22.31
+      }
+    ]
+  },
+  "direction": {
+    "long_trades_count": 3,
+    "long_profit": -2155.7,
+    "long_win_rate": 0.0,
+    "short_trades_count": 16,
+    "short_profit": 3974.3,
+    "short_win_rate": 68.75,
+    "imbalance_flag": true
+  },
+  "profitability": {
+    "wins_count": 11,
+    "losses_count": 8,
+    "breakeven_count": 0,
+    "wins_pct": 57.89,
+    "losses_pct": 42.11,
+    "be_pct": 0.0
+  },
+  "duration": {
+    "pnl_by_trade_duration": [
+      {
+        "trade_id": "aud_00007_109245314_9428884656",
+        "symbol": "EURUSD",
+        "duration_min": 109.93,
+        "profit_money": 12.4,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9428904750",
+        "symbol": "XAUUSD",
+        "duration_min": 616.8,
+        "profit_money": 41.0,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9443738770",
+        "symbol": "XAUUSD",
+        "duration_min": 27.05,
+        "profit_money": -104.9,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9444661485",
+        "symbol": "XAUUSD",
+        "duration_min": 582.28,
+        "profit_money": 607.4,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469271912",
+        "symbol": "XAUUSD",
+        "duration_min": 1.6,
+        "profit_money": 45.0,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469384488",
+        "symbol": "XAUUSD",
+        "duration_min": 0.97,
+        "profit_money": 56.0,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469520406",
+        "symbol": "XAUUSD",
+        "duration_min": 1.63,
+        "profit_money": -57.0,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469630200",
+        "symbol": "XAUUSD",
+        "duration_min": 15.0,
+        "profit_money": -308.0,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9469816516",
+        "symbol": "XAUUSD",
+        "duration_min": 190.17,
+        "profit_money": -2014.5,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9472824682",
+        "symbol": "XAUUSD",
+        "duration_min": 21.73,
+        "profit_money": 1328.0,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9472826046",
+        "symbol": "XAUUSD",
+        "duration_min": 22.83,
+        "profit_money": 1246.5,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9491069976",
+        "symbol": "XAUUSD",
+        "duration_min": 1.6,
+        "profit_money": 5.0,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9491170814",
+        "symbol": "XAUUSD",
+        "duration_min": 75.92,
+        "profit_money": -328.0,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9491576250",
+        "symbol": "XAUUSD",
+        "duration_min": 40.52,
+        "profit_money": -229.4,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9495099385",
+        "symbol": "XAUUSD",
+        "duration_min": 35.73,
+        "profit_money": -84.2,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9495614516",
+        "symbol": "XAUUSD",
+        "duration_min": 144.63,
+        "profit_money": -938.7,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9501933912",
+        "symbol": "XAUUSD",
+        "duration_min": 0.3,
+        "profit_money": 118.0,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9505139158",
+        "symbol": "XAUUSD",
+        "duration_min": 421.3,
+        "profit_money": 1213.0,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00007_109245314_9505147970",
+        "symbol": "XAUUSD",
+        "duration_min": 420.57,
+        "profit_money": 1211.0,
+        "result_type": "win"
+      }
+    ],
+    "items": [
+      {
+        "name": "Winning Trades",
+        "duration_min": 199.99,
+        "deviation_pct": 39.16,
+        "status": "positive"
+      },
+      {
+        "name": "Losing Trades",
+        "duration_min": 66.33,
+        "deviation_pct": -53.84,
+        "status": "negative"
+      }
+    ]
+  },
+  "instrument": {
+    "profit_analysis": [
+      {
+        "symbol": "EURUSD",
+        "trades_count": 1,
+        "profit_money": 12.4
+      },
+      {
+        "symbol": "XAUUSD",
+        "trades_count": 18,
+        "profit_money": 1806.2
+      }
+    ],
+    "volume_analysis": [
+      {
+        "symbol": "EURUSD",
+        "trades_count": 1,
+        "volume": 0.1
+      },
+      {
+        "symbol": "XAUUSD",
+        "trades_count": 18,
+        "volume": 8.1
+      }
+    ],
+    "items": [
+      {
+        "symbol": "EURUSD",
+        "trades_count": 1,
+        "profit_money": 12.4,
+        "volume": 0.1,
+        "profit_share_pct": 0.68,
+        "volume_share_pct": 1.22,
+        "status": "positive"
+      },
+      {
+        "symbol": "XAUUSD",
+        "trades_count": 18,
+        "profit_money": 1806.2,
+        "volume": 8.1,
+        "profit_share_pct": 99.32,
+        "volume_share_pct": 98.78,
+        "status": "positive"
+      }
+    ]
+  },
+  "analysis": {
+    "items": [
+      {
+        "name": "Direction Balance",
+        "marker_pct": 84.21,
+        "display_value": "3 / 16",
+        "status": "warning",
+        "label_left": "Long",
+        "label_right": "Short",
+        "segments": [
+          {
+            "label": "Long",
+            "value": 3,
+            "pct": 15.79
+          },
+          {
+            "label": "Short",
+            "value": 16,
+            "pct": 84.21
+          }
+        ]
+      },
+      {
+        "name": "Profitability",
+        "marker_pct": 57.89,
+        "display_value": "57.89%",
+        "status": "live",
+        "label_left": "Losses",
+        "label_right": "Wins",
+        "segments": [
+          {
+            "label": "Wins",
+            "value": 11,
+            "pct": 57.89,
+            "status": "positive"
+          },
+          {
+            "label": "Losses",
+            "value": 8,
+            "pct": 42.11,
+            "status": "negative"
+          },
+          {
+            "label": "Breakeven",
+            "value": 0,
+            "pct": 0.0,
+            "status": "neutral"
+          }
+        ]
+      },
+      {
+        "name": "Risk Expansion",
+        "marker_pct": 46.15,
+        "display_value": "46.15%",
+        "status": "critical",
+        "label_left": "Reduced",
+        "label_right": "Expanded",
+        "segments": [
+          {
+            "label": "Reduced Risk",
+            "count": 3,
+            "pct": 23.08,
+            "status": "reduced"
+          },
+          {
+            "label": "Normal Risk",
+            "count": 4,
+            "pct": 30.77,
+            "status": "normal"
+          },
+          {
+            "label": "Risk Expansion",
+            "count": 6,
+            "pct": 46.15,
+            "status": "expansion"
+          }
+        ]
+      }
+    ]
+  },
+  "comparison": {
+    "previous_period": "not_available",
+    "current_period": "2026-07-05 — 2026-07-11",
+    "items": [
+      {
+        "metric": "QUD TDA Score",
+        "previous": "not_available",
+        "current": 0,
+        "change": "not_available",
+        "status": "not_available"
+      },
+      {
+        "metric": "Risk CV",
+        "previous": "not_available",
+        "current": 1.110033428,
+        "change": "not_available",
+        "status": "not_available"
+      },
+      {
+        "metric": "Avg Risk After Loss",
+        "previous": "not_available",
+        "current": 1.175454814,
+        "change": "not_available",
+        "status": "not_available"
+      },
+      {
+        "metric": "No-SL Trades",
+        "previous": "not_available",
+        "current": 1,
+        "change": "not_available",
+        "status": "not_available"
+      },
+      {
+        "metric": "Plan vs Fact Deviation",
+        "previous": "not_available",
+        "current": 4.659637212,
+        "change": "not_available",
+        "status": "not_available"
+      },
+      {
+        "metric": "Main Leak",
+        "previous": "not_available",
+        "current": "Behavior Leak",
+        "change": "not_available",
+        "status": "not_available"
+      }
+    ],
+    "score_history": [
+      {
+        "period": "2026-07-05 — 2026-07-11",
+        "value": 0.0,
+        "source": "current"
+      }
+    ]
+  }
+}</script>
+<script>
+const $=id=>document.getElementById(id), data=JSON.parse($('report-data').textContent);
+const num=v=>Number.isFinite(+v)?+v:0, clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const safeGet=(obj,path,fallback=null)=>{try{return path.split('.').reduce((acc,key)=>acc!=null?acc[key]:undefined,obj)??fallback}catch(e){return fallback}};
+const safeNum=(obj,path,fallback=0)=>{const v=safeGet(obj,path,fallback);return Number.isFinite(+v)?+v:fallback};
+const safeArray=(obj,path)=>{const v=safeGet(obj,path,[]);return Array.isArray(v)?v:[]};
+const safeText=(obj,path,fallback='—')=>{const v=safeGet(obj,path,fallback);return v===null||v===undefined||v===''?fallback:String(v)};
+const safeFirst=(obj,paths,fallback=null)=>{for(const path of paths){const v=safeGet(obj,path,null);if(v!==null&&v!==undefined&&v!=='')return v}return fallback};
+const blue=()=>css('--blue'), green=()=>css('--green'), red=()=>css('--red'), yellow=()=>css('--yellow'); function svgEl(n,a={}){const e=document.createElementNS('http://www.w3.org/2000/svg',n);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));return e} function clear(s){while(s&&s.firstChild)s.removeChild(s.firstChild)}const helpTexts={leakMap:['QUD Leak Map','Карта потерь качества торгового процесса по блокам: риск, защита сделки, поведение после убытков и исполнение.','Чем дальше маркер вправо, тем сильнее утечка качества. Зелёный — контроль, жёлтый — зона внимания, оранжевый/красный — заметная проблема.','Показывает, в каком блоке торговый процесс теряет доверие.'],trustScoreTrend:[
+  'Trust Score Over Time',
+  'Динамика Trust Score по неделям с учётом накопленной истории.',
+  'Цветовые зоны и их подписи берутся из методологии текущего отчёта. Линия показывает изменение Score по периодам.',
+  'Передаёт изменение качества торгового процесса во времени.'
+],accountEquity:['Account Balance & Equity','Динамика баланса и equity по реальным CSV-данным за период аудита.','Balance — закрытый результат. Equity — состояние счёта с учётом открытых позиций. Если линии совпадают, плавающей просадки в точках отчёта не было.','Показывает финансовую траекторию счёта без замены анализа качества решений.'],holdingTime:['Holding Time Efficiency','Эффективность сделок по времени удержания относительно win rate трейдера.','Зелёный бар — группа выше baseline win rate. Красный — ниже baseline. N/A — сделок в группе не было.','Показывает, какие горизонты удержания работают лучше или хуже средней нормы трейдера.'],instrumentContribution:['Instrument Contribution & Load','Сравнение вклада инструментов в выигрышные сделки и торговую нагрузку.','Win Contribution — доля выигрышных сделок инструмента. Load Volume — доля торгового объёма.','Показывает, где формируется результат и где сконцентрирована нагрузка.'],shortCover:[
+  'Short Cover Ratio',
+  'Насколько прибыльные short-сделки перекрывают убыточные short-сделки.',
+  'Шкала, зоны и статус берутся из данных текущего отчёта.',
+  'Показывает качество результата отдельно по short-направлению.'
+],profitFactor:[
+  'Profit Factor',
+  'Соотношение общей прибыли к общему убытку за период.',
+  'Шкала, зоны и статус берутся из данных текущего отчёта.',
+  'Показывает результативность, но не заменяет риск- и поведенческую оценку.'
+],longCover:[
+  'Long Cover Ratio',
+  'Насколько прибыльные long-сделки перекрывают убыточные long-сделки.',
+  'Шкала, зоны и статус берутся из данных текущего отчёта.',
+  'Показывает качество результата отдельно по long-направлению.'
+],protectedTrades:['Protected Trades Rate','Доля сделок, открытых с установленным Stop Loss, и стабильность защиты по неделям.','SAFE — сделки с корректным SL. No SL / SL Removed / SL Changed показывают нарушения защиты сделки.','Передаёт дисциплину защиты позиции.'],riskZone:['Risk Zone Distribution','Распределение сделок относительно персонального диапазона риска трейдера.','Normal Risk — внутри персонального диапазона. Risk Expansion — выше верхней границы. Reduced Risk — ниже рабочей зоны.','Показывает, насколько стабильно трейдер соблюдает собственный риск-профиль.'],riskAfterLoss:[
+  'Risk After Loss',
+  'Как менялся риск после убыточных сделок.',
+  'Значения, направление и статус каждого бара берутся из данных текущего отчёта. N/A означает отсутствие доступного наблюдения.',
+  'Показывает реакцию риск-профиля после убыточных сделок.'
+],riskConsistency:[
+  'Risk Consistency',
+  'Последовательность риска по каждой реальной сделке из CSV.',
+  'Линия показывает фактический риск по сделкам. Диапазоны, baseline и статусы точек берутся из данных текущего отчёта.',
+  'Показывает стабильность риск-дисциплины по фактической последовательности сделок.'
+],plannedRisk:[
+  'Planned Risk vs Actual Loss',
+  'Сравнение запланированного риска по SL с фактическим убытком по сделке.',
+  'План, фактический убыток, разделение сегментов и статусы берутся из данных текущего отчёта.',
+  'Показывает соответствие фактического убытка заранее установленному риску.'
+],findings:['5 Key Findings','Пять ключевых фактов по текущей отчётной неделе W4.','Findings описывают текущую неделю, а не весь исторический период. Это факты, не торговые рекомендации.','Передаёт краткий диагностический вывод по последней неделе аудита.']};
+
+function initHelp(){
+  const map=[['QUD LEAK MAP','leakMap'],['TRUST SCORE OVER TIME','trustScoreTrend'],['ACCOUNT BALANCE & EQUITY','accountEquity'],['HOLDING TIME EFFICIENCY','holdingTime'],['INSTRUMENT CONTRIBUTION & LOAD','instrumentContribution'],['SHORT COVER RATIO','shortCover'],['PROFIT FACTOR','profitFactor'],['LONG COVER RATIO','longCover'],['PROTECTED TRADES RATE','protectedTrades'],['RISK ZONE DISTRIBUTION','riskZone'],['RISK AFTER LOSS','riskAfterLoss'],['RISK CONSISTENCY','riskConsistency'],['PLANNED RISK VS ACTUAL LOSS','plannedRisk'],['5 KEY FINDINGS','findings']];
+
+  document.querySelectorAll('h2').forEach(h=>{
+    const raw=(h.childNodes[0]?.textContent||h.textContent||'').trim().toUpperCase();
+    const item=map.find(([label])=>raw.includes(label));
+    if(!item||h.querySelector('.help'))return;
+
+    const icon=document.createElement('span');
+    icon.className='help';
+    icon.dataset.help=item[1];
+    icon.textContent='?';
+
+    const before=h.querySelector('.analysis-head-value');
+    if(before)h.insertBefore(icon,before);
+    else h.appendChild(icon);
+  });
+
+  let tip;
+
+  document.querySelectorAll('.help[data-help]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      const key=el.dataset.help;
+      const external=safeGet(data,`help_texts.${key}`,null);
+      const fallback=helpTexts[key];
+
+      const t=external&&typeof external==='object'
+        ?[
+            external.title||fallback?.[0]||key,
+            external.what||external.description||fallback?.[1]||'not_available',
+            external.how_to_read||external.reading||fallback?.[2]||'not_available',
+            external.meaning||external.summary||fallback?.[3]||'not_available'
+          ]
+        :fallback;
+
+      if(!t)return;
+
+      tip=document.createElement('div');
+      tip.className='qud-tooltip';
+      tip.innerHTML=`<div class="qud-tooltip-title">${t[0]}</div><b>Что показывает</b><p>${t[1]}</p><b>Как читать цифры</b><p>${t[2]}</p><b>Что передаёт</b><p class="muted">${t[3]}</p>`;
+      document.body.appendChild(tip);
+
+      const r=el.getBoundingClientRect();
+      const left=Math.min(window.innerWidth-440,Math.max(16,r.left-20));
+      const top=Math.min(window.innerHeight-tip.offsetHeight-16,Math.max(16,r.bottom+12));
+      tip.style.left=left+'px';
+      tip.style.top=top+'px';
+    });
+
+    el.addEventListener('mouseleave',()=>{
+      if(tip){
+        tip.remove();
+        tip=null;
+      }
+    });
+  });
+}
+function scoreGauge(svg,score,zones=[]){
+  clear(svg);
+
+  const cx=160,cy=125,r=90,start=200,end=-20,total=start-end;
+
+  const polar=(a,rad=r)=>{
+    const z=Math.PI*a/180;
+    return{
+      x:cx+rad*Math.cos(z),
+      y:cy-rad*Math.sin(z)
+    };
+  };
+
+  const angle=v=>start-(clamp(Number(v),0,100)/100)*total;
+
+  const arc=(a1,a2,attrs={})=>{
+    const p1=polar(a1);
+    const p2=polar(a2);
+    const large=Math.abs(a1-a2)>180?1:0;
+    svg.appendChild(svgEl('path',{
+      d:`M ${p1.x} ${p1.y} A ${r} ${r} 0 ${large} 1 ${p2.x} ${p2.y}`,
+      fill:'none',
+      'stroke-width':12,
+      'stroke-linecap':'round',
+      ...attrs
+    }));
+  };
+
+  arc(start,end,{stroke:'rgba(255,255,255,.07)'});
+
+  const zoneRows=Array.isArray(zones)?zones.filter(zone=>
+    zone?.from!==null&&zone?.from!==undefined&&Number.isFinite(+zone.from)&&
+    zone?.to!==null&&zone?.to!==undefined&&Number.isFinite(+zone.to)
+  ):[];
+
+  const statusColor=status=>{
+    const s=String(status||'').toLowerCase();
+    if(s==='pre_qud'||s==='critical'||s==='danger'||s==='low')return red();
+    if(s==='qud_room'||s==='warning'||s==='attention'||s==='medium')return css('--orange');
+    if(s==='qud_elite'||s==='safe'||s==='good'||s==='high')return green();
+    return '#66717b';
+  };
+
+  zoneRows.forEach(zone=>{
+    arc(
+      angle(zone.from),
+      angle(zone.to),
+      {stroke:zone.color||statusColor(zone.status)}
+    );
+  });
+
+  const ticks=[...new Set(zoneRows.flatMap(zone=>[Number(zone.from),Number(zone.to)]))]
+    .filter(v=>Number.isFinite(v))
+    .sort((a,b)=>a-b);
+
+  (ticks.length?ticks:[0,100]).forEach(v=>{
+    const p=polar(angle(v),108);
+    svg.appendChild(svgEl('text',{
+      x:p.x,
+      y:p.y+4,
+      'text-anchor':'middle',
+      class:'gauge-tick'
+    })).textContent=v;
+  });
+
+  if(score===null||score===undefined||!Number.isFinite(+score))return;
+
+  const a=angle(score);
+  const p1=polar(a,r-8);
+  const p2=polar(a,r+8);
+
+  svg.appendChild(svgEl('line',{
+    x1:p1.x,
+    y1:p1.y,
+    x2:p2.x,
+    y2:p2.y,
+    class:'gauge-marker'
+  }));
+}
+function drawLine(svg,arr,opts={}){
+  clear(svg);
+
+  const rows=Array.isArray(arr)
+    ?arr
+      .map((item,i)=>({
+        x:item?.x||
+          item?.period||
+          item?.label||
+          String(i+1),
+        y:item?.y
+      }))
+      .filter(item=>
+        item.y!==null&&
+        item.y!==undefined&&
+        Number.isFinite(+item.y)
+      )
+      .map(item=>({
+        ...item,
+        y:Number(item.y)
+      }))
+    :[];
+
+  if(!rows.length){
+    svg.appendChild(
+      svgEl('text',{
+        x:20,
+        y:40,
+        class:'not-available'
+      })
+    ).textContent='not_available';
+
+    return;
+  }
+
+  const w=svg.clientWidth||700;
+  const h=svg.clientHeight||220;
+  const p={l:46,r:20,t:18,b:34};
+
+  const vals=rows.map(d=>d.y);
+
+  const minY=
+    opts.minY??
+    Math.min(0,...vals);
+
+  const maxY=
+    opts.maxY??
+    Math.max(1,...vals)*1.15;
+
+  const x=i=>
+    p.l+
+    (w-p.l-p.r)*
+    (rows.length<=1?0:i/(rows.length-1));
+
+  const y=v=>
+    h-p.b-
+    (h-p.t-p.b)*
+    (v-minY)/(maxY-minY||1);
+
+  for(let i=0;i<=4;i++){
+    const yy=
+      p.t+
+      (h-p.t-p.b)*
+      i/4;
+
+    svg.appendChild(
+      svgEl('line',{
+        x1:p.l,
+        y1:yy,
+        x2:w-p.r,
+        y2:yy,
+        class:'gridline'
+      })
+    );
+
+    svg.appendChild(
+      svgEl('text',{
+        x:4,
+        y:yy+4,
+        class:'axis-label'
+      })
+    ).textContent=
+      (
+        maxY-
+        (maxY-minY)*i/4
+      ).toFixed(opts.digits??0);
+  }
+
+  let d='';
+
+  rows.forEach((pt,i)=>{
+    d+=
+      (i?'L':'M')+
+      x(i)+' '+
+      y(pt.y);
+  });
+
+  svg.appendChild(
+    svgEl('path',{
+      d,
+      fill:'none',
+      stroke:opts.color||blue(),
+      'stroke-width':2,
+      'stroke-linecap':'round',
+      'stroke-linejoin':'round'
+    })
+  );
+
+  rows.forEach((pt,i)=>{
+    svg.appendChild(
+      svgEl('circle',{
+        cx:x(i),
+        cy:y(pt.y),
+        r:2.8,
+        fill:opts.color||blue(),
+        stroke:'#0b0d0f',
+        'stroke-width':1
+      })
+    );
+
+    if(
+      i%Math.ceil(rows.length/7)===0||
+      i===rows.length-1
+    ){
+      svg.appendChild(
+        svgEl('text',{
+          x:x(i),
+          y:h-8,
+          'text-anchor':'middle',
+          class:'axis-label'
+        })
+      ).textContent=pt.x;
+    }
+  });
+}
+function sparkMini(svg,arr,opts={}){
+  clear(svg);
+
+  const rows=Array.isArray(arr)
+    ?arr
+      .map((item,i)=>({
+        x:item?.x||
+          item?.period||
+          item?.label||
+          String(i+1),
+        y:item?.y
+      }))
+      .filter(item=>
+        item.y!==null&&
+        item.y!==undefined&&
+        Number.isFinite(+item.y)
+      )
+      .map(item=>({
+        ...item,
+        y:Number(item.y)
+      }))
+    :[];
+
+  if(!rows.length){
+    return;
+  }
+
+  const w=svg.clientWidth||104;
+  const h=svg.clientHeight||38;
+  const p={l:3,r:4,t:6,b:6};
+
+  const vals=rows.map(d=>d.y);
+
+  const minY=
+    opts.minY??
+    Math.min(...vals);
+
+  const maxY=
+    opts.maxY??
+    Math.max(...vals);
+
+  const x=i=>
+    p.l+
+    (w-p.l-p.r)*
+    (rows.length<=1?0:i/(rows.length-1));
+
+  const y=v=>
+    h-p.b-
+    (h-p.t-p.b)*
+    (v-minY)/(maxY-minY||1);
+
+  let d='';
+
+  rows.forEach((pt,i)=>{
+    d+=
+      (i?'L':'M')+
+      x(i)+' '+
+      y(pt.y);
+  });
+
+  svg.appendChild(
+    svgEl('path',{
+      d,
+      fill:'none',
+      stroke:blue(),
+      'stroke-width':1.7,
+      'stroke-linecap':'round',
+      'stroke-linejoin':'round'
+    })
+  );
+
+  const last=rows[rows.length-1];
+
+  svg.appendChild(
+    svgEl('circle',{
+      cx:x(rows.length-1),
+      cy:y(last.y),
+      r:2.2,
+      fill:blue()
+    })
+  );
+}
+function trustScoreTrend(svg,arr,zones=[]){
+  clear(svg);
+
+  const rows=Array.isArray(arr)
+    ?arr
+      .map((item,i)=>({
+        x:item?.x||item?.period||item?.label||String(i+1),
+        y:item?.y
+      }))
+      .filter(item=>
+        item.y!==null&&
+        item.y!==undefined&&
+        Number.isFinite(+item.y)
+      )
+      .map(item=>({...item,y:Number(item.y)}))
+    :[];
+
+  if(!rows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const w=svg.clientWidth||700;
+  const h=svg.clientHeight||220;
+  const p={l:58,r:24,t:18,b:34};
+  const minY=0;
+  const maxY=100;
+
+  const x=i=>p.l+(w-p.l-p.r)*(rows.length<=1?0:i/(rows.length-1));
+  const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY);
+
+  const zoneRows=Array.isArray(zones)?zones.filter(zone=>
+    zone?.from!==null&&zone?.from!==undefined&&Number.isFinite(+zone.from)&&
+    zone?.to!==null&&zone?.to!==undefined&&Number.isFinite(+zone.to)
+  ):[];
+
+  const statusColor=status=>{
+    const s=String(status||'').toLowerCase();
+    if(s==='pre_qud'||s==='critical'||s==='danger'||s==='low')return red();
+    if(s==='qud_room'||s==='warning'||s==='attention'||s==='medium')return css('--orange');
+    if(s==='qud_elite'||s==='safe'||s==='good'||s==='high')return green();
+    return '#66717b';
+  };
+
+  const ticks=[...new Set(zoneRows.flatMap(zone=>[Number(zone.from),Number(zone.to)]))]
+    .filter(v=>Number.isFinite(v))
+    .sort((a,b)=>a-b);
+
+  (ticks.length?ticks:[0,100]).forEach(v=>{
+    svg.appendChild(svgEl('line',{x1:p.l,y1:y(v),x2:w-p.r,y2:y(v),class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:y(v)+4,class:'axis-label'})).textContent=v;
+  });
+
+  const zoneX=p.l-22;
+  const zoneW=8;
+
+  zoneRows.forEach(zone=>{
+    const from=clamp(Number(zone.from),0,100);
+    const to=clamp(Number(zone.to),0,100);
+    const top=Math.max(from,to);
+    const bottom=Math.min(from,to);
+    svg.appendChild(svgEl('rect',{
+      x:zoneX,
+      y:y(top),
+      width:zoneW,
+      height:y(bottom)-y(top),
+      rx:3,
+      fill:zone.color||statusColor(zone.status),
+      opacity:.95
+    }));
+  });
+
+  let d='';
+  rows.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(clamp(pt.y,0,100)));
+
+  svg.appendChild(svgEl('path',{
+    d,
+    fill:'none',
+    stroke:blue(),
+    'stroke-width':2.4,
+    'stroke-linecap':'round',
+    'stroke-linejoin':'round'
+  }));
+
+  rows.forEach((pt,i)=>{
+    svg.appendChild(svgEl('circle',{
+      cx:x(i),
+      cy:y(clamp(pt.y,0,100)),
+      r:3.2,
+      fill:blue(),
+      stroke:'#0b0d0f',
+      'stroke-width':1.2
+    }));
+
+    svg.appendChild(svgEl('text',{
+      x:x(i),
+      y:h-8,
+      'text-anchor':'middle',
+      class:'axis-label'
+    })).textContent=pt.x;
+  });
+
+  const last=rows[rows.length-1];
+  svg.appendChild(svgEl('text',{
+    x:x(rows.length-1)-2,
+    y:y(clamp(last.y,0,100))-10,
+    'text-anchor':'middle',
+    class:'axis-label'
+  })).textContent=last.y.toFixed(2);
+}
+function accountChart(svg,hist){
+  clear(svg);
+  if(!hist||!hist.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const rows=hist.map((pt,i)=>({
+    day:pt?.day||pt?.date||pt?.label||String(i+1),
+    balance:pt?.balance!==null&&pt?.balance!==undefined&&Number.isFinite(+pt.balance)?Number(pt.balance):null,
+    equity:pt?.equity!==null&&pt?.equity!==undefined&&Number.isFinite(+pt.equity)?Number(pt.equity):null
+  })).filter(pt=>pt.balance!==null||pt.equity!==null);
+
+  if(!rows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:58,r:20,t:18,b:34};
+  const vals=rows.flatMap(pt=>[pt.balance,pt.equity]).filter(v=>v!==null&&Number.isFinite(v));
+  const rawMin=Math.min(...vals);
+  const rawMax=Math.max(...vals);
+  const spread=Math.max(rawMax-rawMin,Math.abs(rawMax||1)*0.01,1);
+  const padding=spread*0.12;
+  const visualMin=rawMin-padding;
+  const visualMax=rawMax+padding;
+  const roughStep=(visualMax-visualMin)/5;
+  const magnitude=Math.pow(10,Math.floor(Math.log10(Math.max(roughStep,1))));
+  const normalized=roughStep/magnitude;
+  const step=(normalized<=1?1:normalized<=2?2:normalized<=5?5:10)*magnitude;
+  const minY=Math.floor(visualMin/step)*step;
+  const maxY=Math.ceil(visualMax/step)*step;
+  const x=i=>p.l+(w-p.l-p.r)*(rows.length<=1?0:i/(rows.length-1));
+  const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);
+
+  for(let v=minY;v<=maxY+step*0.001;v+=step){
+    const yy=y(v);
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=Math.round(v).toString();
+  }
+
+  const makePath=key=>{
+    let d='';
+    let started=false;
+    rows.forEach((pt,i)=>{
+      const value=pt[key];
+      if(value===null)return;
+      d+=(started?'L':'M')+x(i)+' '+y(value);
+      started=true;
+    });
+    return d;
+  };
+
+  const balancePath=makePath('balance');
+  const equityPath=makePath('equity');
+  if(balancePath)svg.appendChild(svgEl('path',{d:balancePath,fill:'none',stroke:blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  if(equityPath)svg.appendChild(svgEl('path',{d:equityPath,fill:'none',stroke:'#66717b','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round','stroke-dasharray':'4 4'}));
+
+  rows.forEach((pt,i)=>{
+    if(i%Math.ceil(rows.length/7)===0||i===rows.length-1){
+      svg.appendChild(svgEl('text',{x:x(i),y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.day;
+    }
+  });
+}
+function bars(svg,rows,opts={}){
+  clear(svg);
+  const dataRows=Array.isArray(rows)?rows:[];
+  if(!dataRows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const w=svg.clientWidth||600,h=svg.clientHeight||220,p={l:42,r:24,t:18,b:60};
+  const vals=dataRows.map(r=>r?.value).filter(v=>v!==null&&v!==undefined&&Number.isFinite(+v)).map(Number);
+  const minY=opts.minY??Math.min(0,...vals);
+  const maxY=opts.maxY??Math.max(1,...vals.map(v=>Math.abs(v)))*1.18;
+  const x=i=>p.l+(w-p.l-p.r)*(i+.5)/dataRows.length;
+  const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);
+
+  for(let i=0;i<=4;i++){
+    const yy=p.t+(h-p.t-p.b)*i/4;
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+  }
+
+  svg.appendChild(svgEl('line',{x1:p.l,y1:y(0),x2:w-p.r,y2:y(0),stroke:'#66717b','stroke-width':1,'stroke-dasharray':'4 4'}));
+
+  if(opts.baselineLabel){
+    svg.appendChild(svgEl('text',{x:p.l-26,y:y(0)-8,'text-anchor':'start',class:'axis-label'})).textContent=opts.baselineLabel;
+  }
+
+  const statusColor=status=>{
+    const s=String(status||'').toLowerCase();
+    if(s==='above_baseline'||s==='good'||s==='positive'||s==='strong')return green();
+    if(s==='below_baseline'||s==='critical'||s==='danger'||s==='weak')return red();
+    if(s==='warning'||s==='attention'||s==='neutral')return yellow();
+    return '#66717b';
+  };
+
+  const bw=Math.min(34,(w-p.l-p.r)/dataRows.length*.38);
+  dataRows.forEach((r,i)=>{
+    const label=r?.label||r?.x||String(i+1);
+    const value=r?.value;
+    const status=r?.status||'not_available';
+
+    if(value===null||value===undefined||!Number.isFinite(+value)){
+      svg.appendChild(svgEl('text',{x:x(i),y:h-32,'text-anchor':'middle',class:'axis-label'})).textContent='N/A';
+    }else{
+      const numericValue=Number(value);
+      const top=y(Math.max(0,numericValue));
+      const bottom=y(Math.min(0,numericValue));
+      svg.appendChild(svgEl('rect',{x:x(i)-bw/2,y:top,width:bw,height:Math.max(2,bottom-top),rx:3,fill:statusColor(status),opacity:.9}));
+      svg.appendChild(svgEl('text',{x:x(i),y:numericValue>=0?top-7:bottom+15,'text-anchor':'middle',class:'axis-label'})).textContent=(numericValue>0?'+':'')+numericValue.toFixed(0)+'%';
+    }
+
+    svg.appendChild(svgEl('text',{x:x(i),y:h-12,'text-anchor':'middle',class:'axis-label'})).textContent=label;
+  });
+}
+function groupedBars(svg,groups){
+  clear(svg);
+  const rows=Array.isArray(groups)?groups:[];
+  if(!rows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:42,r:18,t:18,b:44};
+  const maxY=100;
+  const x=i=>p.l+(w-p.l-p.r)*(i+.5)/rows.length;
+  const y=v=>h-p.b-(h-p.t-p.b)*clamp(Number(v)||0,0,100)/maxY;
+
+  [0,20,40,60,80,100].forEach(v=>{
+    const yy=y(v);
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=v+'%';
+  });
+
+  const statusOpacity=status=>{
+    const s=String(status||'').toLowerCase();
+    if(s==='critical'||s==='danger'||s==='weak')return .55;
+    if(s==='warning'||s==='attention')return .75;
+    return .95;
+  };
+
+  const bw=18;
+  rows.forEach((r,i)=>{
+    const cx=x(i);
+    const symbol=r?.symbol||r?.label||String(i+1);
+    const profitShare=r?.profit_share_pct??r?.win_contribution_pct??null;
+    const volumeShare=r?.volume_share_pct??r?.load_volume_pct??null;
+    const opacity=statusOpacity(r?.status);
+
+    if(profitShare!==null&&profitShare!==undefined&&Number.isFinite(+profitShare)){
+      const winTop=y(profitShare);
+      svg.appendChild(svgEl('rect',{x:cx-bw-3,y:winTop,width:bw,height:h-p.b-winTop,rx:3,fill:green(),opacity}));
+      svg.appendChild(svgEl('text',{x:cx-bw/2-3,y:winTop-7,'text-anchor':'middle',class:'axis-label'})).textContent=Number(profitShare).toFixed(0)+'%';
+    }else{
+      svg.appendChild(svgEl('text',{x:cx-bw/2-3,y:h-p.b-8,'text-anchor':'middle',class:'axis-label'})).textContent='N/A';
+    }
+
+    if(volumeShare!==null&&volumeShare!==undefined&&Number.isFinite(+volumeShare)){
+      const loadTop=y(volumeShare);
+      svg.appendChild(svgEl('rect',{x:cx+3,y:loadTop,width:bw,height:h-p.b-loadTop,rx:3,fill:blue(),opacity}));
+      svg.appendChild(svgEl('text',{x:cx+bw/2+3,y:loadTop-7,'text-anchor':'middle',class:'axis-label'})).textContent=Number(volumeShare).toFixed(0)+'%';
+    }else{
+      svg.appendChild(svgEl('text',{x:cx+bw/2+3,y:h-p.b-8,'text-anchor':'middle',class:'axis-label'})).textContent='N/A';
+    }
+
+    svg.appendChild(svgEl('text',{x:cx,y:h-14,'text-anchor':'middle',class:'axis-label'})).textContent=symbol;
+  });
+}
+function analysisGauge(svg,item={}){
+  clear(svg);
+  svg.setAttribute('viewBox','0 0 280 92');
+
+  const markerPct=item?.marker_pct;
+  if(markerPct===null||markerPct===undefined||!Number.isFinite(+markerPct)){
+    svg.appendChild(svgEl('text',{x:140,y:50,'text-anchor':'middle',class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const x1=26,x2=254,y=48;
+  const x=pct=>x1+(x2-x1)*clamp(Number(pct),0,100)/100;
+  const rawSegments=Array.isArray(item?.segments)?item.segments:[];
+  let cumulativePct=0;
+  const segments=rawSegments.map((seg,index)=>{
+    const explicitFrom=seg?.from_pct!==null&&seg?.from_pct!==undefined&&Number.isFinite(+seg.from_pct);
+    const explicitTo=seg?.to_pct!==null&&seg?.to_pct!==undefined&&Number.isFinite(+seg.to_pct);
+    const pct=seg?.pct!==null&&seg?.pct!==undefined&&Number.isFinite(+seg.pct)?Number(seg.pct):null;
+    const from=explicitFrom?Number(seg.from_pct):cumulativePct;
+    const to=explicitTo?Number(seg.to_pct):(pct===null?from:from+pct);
+    cumulativePct=to;
+    return {...seg,from_pct:from,to_pct:to,_index:index};
+  }).filter(seg=>Number.isFinite(+seg.from_pct)&&Number.isFinite(+seg.to_pct)&&Number(seg.to_pct)>=Number(seg.from_pct));
+
+  if(segments.length){
+  segments.forEach(seg=>{
+    const from=Number(seg.from_pct);
+    const to=Number(seg.to_pct);
+    const status=String(seg?.status||'').toLowerCase();
+
+    const fallbackColors=[green(),blue(),yellow()];
+    const color=
+      status==='critical'||
+      status==='danger'||
+      status==='loss'||
+      status==='negative'||
+      status==='expansion'
+        ?red()
+        :status==='safe'||
+         status==='good'||
+         status==='edge'||
+         status==='positive'||
+         status==='reduced'
+          ?green()
+          :status==='warning'||
+           status==='attention'||
+           status==='normal'
+            ?yellow()
+            :fallbackColors[seg._index%fallbackColors.length];
+
+    svg.appendChild(
+      svgEl('rect',{
+        x:x(from),
+        y:y-4,
+        width:Math.max(0,x(to)-x(from)),
+        height:8,
+        fill:color,
+        rx:3
+      })
+    );
+  });
+}else{
+    svg.appendChild(svgEl('rect',{x:x1,y:y-4,width:x2-x1,height:8,fill:'#66717b',rx:3,opacity:.65}));
+  }
+
+  const markerX=x(markerPct);
+  const status=String(item?.status||'').toLowerCase();
+  const markerColor=status==='critical'||status==='danger'||status==='loss'?red():status==='safe'||status==='good'||status==='edge'?green():status==='warning'||status==='attention'?yellow():'#efe8d2';
+  svg.appendChild(svgEl('path',{d:`M ${markerX-7} ${y-21} L ${markerX+7} ${y-21} L ${markerX} ${y-10} Z`,fill:markerColor}));
+
+  const leftLabel=item?.label_left||item?.left_label||item?.zone_start_label||'';
+  const middleLabel=item?.middle_label||item?.threshold_label||'';
+  const rightLabel=item?.label_right||item?.right_label||item?.zone_end_label||'';
+
+  if(leftLabel)svg.appendChild(svgEl('text',{x:x1,y:y+30,'text-anchor':'start',class:'axis-label'})).textContent=leftLabel;
+  if(middleLabel)svg.appendChild(svgEl('text',{x:x(50),y:y+30,'text-anchor':'middle',class:'axis-label'})).textContent=middleLabel;
+  if(rightLabel)svg.appendChild(svgEl('text',{x:x2,y:y+30,'text-anchor':'end',class:'axis-label'})).textContent=rightLabel;
+}
+function donut(svg,segments,text,sub){
+  clear(svg);
+
+  svg.setAttribute(
+    'viewBox',
+    '0 0 220 150'
+  );
+
+  const rows=Array.isArray(segments)
+    ?segments
+      .map(item=>({
+        value:item?.value,
+        color:item?.color||'#66717b'
+      }))
+      .filter(item=>
+        item.value!==null&&
+        item.value!==undefined&&
+        Number.isFinite(+item.value)&&
+        Number(item.value)>=0
+      )
+      .map(item=>({
+        ...item,
+        value:Number(item.value)
+      }))
+    :[];
+
+  const cx=110;
+  const cy=112;
+  const r=76;
+  const sw=15;
+  const start=200;
+  const end=-20;
+  const totalAngle=start-end;
+
+  const polar=a=>{
+    const z=Math.PI*a/180;
+
+    return{
+      x:cx+r*Math.cos(z),
+      y:cy-r*Math.sin(z)
+    };
+  };
+
+  const arc=(a1,a2)=>{
+    const p1=polar(a1);
+    const p2=polar(a2);
+    const large=Math.abs(a1-a2)>180?1:0;
+
+    return(
+      `M ${p1.x} ${p1.y} `+
+      `A ${r} ${r} 0 ${large} 1 `+
+      `${p2.x} ${p2.y}`
+    );
+  };
+
+  svg.appendChild(
+    svgEl('path',{
+      d:arc(start,end),
+      fill:'none',
+      stroke:'rgba(255,255,255,.07)',
+      'stroke-width':sw,
+      'stroke-linecap':'round'
+    })
+  );
+
+  const total=
+    rows.reduce(
+      (sum,item)=>sum+item.value,
+      0
+    );
+
+  if(total>0){
+    let off=start;
+
+    rows.forEach(item=>{
+      const a=
+        item.value/
+        total*
+        totalAngle;
+
+      svg.appendChild(
+        svgEl('path',{
+          d:arc(off,off-a),
+          fill:'none',
+          stroke:item.color,
+          'stroke-width':sw
+        })
+      );
+
+      off-=a;
+    });
+  }
+
+  svg.appendChild(
+    svgEl('text',{
+      x:cx,
+      y:cy-4,
+      'text-anchor':'middle',
+      class:'donut-center'
+    })
+  ).textContent=text;
+
+  svg.appendChild(
+    svgEl('text',{
+      x:cx,
+      y:cy+22,
+      'text-anchor':'middle',
+      class:'donut-sub'
+    })
+  ).textContent=sub;
+}
+function slEventTimeline(svg,events){
+  clear(svg);
+  const rows=Array.isArray(events)?events.filter(item=>item&&item.event):[];
+  if(!rows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+  const w=svg.clientWidth||650,h=svg.clientHeight||172,p={l:18,r:18,t:26,b:34};
+  const x=i=>p.l+(w-p.l-p.r)*(rows.length<=1?0:i/(rows.length-1));
+  const colorFor=event=>{
+    const e=String(event||'').toUpperCase();
+    if(e.includes('NO_SL')||e.includes('REMOVED'))return red();
+    if(e.includes('CHANGED'))return yellow();
+    if(e.includes('SET')||e.includes('SAFE'))return green();
+    return blue();
+  };
+  svg.appendChild(svgEl('line',{x1:p.l,y1:h/2,x2:w-p.r,y2:h/2,stroke:'rgba(255,255,255,.12)','stroke-width':1}));
+  rows.forEach((item,i)=>{
+    const cx=x(i);
+    const cy=h/2+(i%2===0?-12:12);
+    svg.appendChild(svgEl('line',{x1:cx,y1:h/2,x2:cx,y2:cy,stroke:'rgba(255,255,255,.08)','stroke-width':1}));
+    svg.appendChild(svgEl('circle',{cx,cy,r:3.2,fill:colorFor(item.event),stroke:'#0b0d0f','stroke-width':1}));
+    if(i%Math.max(1,Math.ceil(rows.length/7))===0||i===rows.length-1){
+      const label=String(item.timestamp||item.ticket||i+1).slice(5,16);
+      svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=label;
+    }
+  });
+}
+
+function riskZone(svg,items){
+  clear(svg);
+  const rows=Array.isArray(items)?items:[];
+  if(!rows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const w=svg.clientWidth||360,h=svg.clientHeight||220,p={l:112,r:64,t:42,b:34};
+  const statusColor=status=>{
+    const s=String(status||'').toLowerCase();
+    if(s==='critical'||s==='danger'||s==='expansion')return red();
+    if(s==='normal'||s==='controlled'||s==='safe')return green();
+    if(s==='reduced'||s==='below_normal')return '#6f8fa5';
+    if(s==='warning'||s==='attention')return yellow();
+    return '#66717b';
+  };
+
+  rows.slice(0,3).forEach((item,i)=>{
+    const label=item?.label||item?.name||String(i+1);
+    const count=item?.count??item?.value??null;
+    const pct=item?.pct??item?.percentage??null;
+    const y=p.t+i*50;
+    const bw=pct!==null&&pct!==undefined&&Number.isFinite(+pct)?(w-p.l-p.r)*clamp(Number(pct),0,100)/100:0;
+
+    svg.appendChild(svgEl('text',{x:10,y:y+10,class:'axis-label'})).textContent=label;
+    svg.appendChild(svgEl('rect',{x:p.l,y,width:w-p.l-p.r,height:14,rx:3,fill:'rgba(255,255,255,.045)'}));
+    if(bw>0)svg.appendChild(svgEl('rect',{x:p.l,y,width:bw,height:14,rx:3,fill:statusColor(item?.status)}));
+    svg.appendChild(svgEl('text',{x:Math.min(p.l+bw+11,w-20),y:y+11,class:'axis-label'})).textContent=count==null?'N/A':String(count);
+  });
+}
+function riskCvScale(el,cv={}){
+  const value=cv?.value;
+  const markerPct=cv?.marker_pct;
+  const label=cv?.label||'RISK CV';
+  const status=String(cv?.status||'').toLowerCase();
+  const markerClass=status==='critical'||status==='danger'?'danger':status==='warning'||status==='attention'?'warn':status==='stable'||status==='controlled'||status==='safe'?'good':'neutral';
+  const markerColor=markerClass==='danger'?red():markerClass==='warn'?yellow():markerClass==='good'?green():'#efe8d2';
+  const marker=markerPct!==null&&markerPct!==undefined&&Number.isFinite(+markerPct)
+    ?`<div class="risk-cv-marker" style="left:calc(${clamp(Number(markerPct),0,100)}% - 6px);border-top-color:${markerColor}"></div>`
+    :'';
+
+  el.innerHTML=`
+    <div class="risk-cv-title">${label} ${value==null||!Number.isFinite(+value)?'not_available':Number(value).toFixed(2)}</div>
+    <div class="risk-cv-scale-top">
+      <div class="risk-cv-line"></div>
+      ${marker}
+    </div>
+    <div class="risk-cv-ticks">
+      <span>${cv?.min_label||'0.0'}</span>
+      <span>${cv?.mid_label||'0.5'}</span>
+      <span>${cv?.max_label||'1.0+'}</span>
+    </div>
+    <div class="risk-cv-labels">
+      <span>${cv?.left_zone_label||'Stable zone'}</span>
+      <span>${cv?.right_zone_label||'Unstable zone'}</span>
+    </div>`;
+}
+function riskConsistency(svg,series,limits={}){
+  clear(svg);
+  if(!series||!series.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const w=svg.clientWidth||780,h=svg.clientHeight||220,p={l:54,r:24,t:18,b:42};
+  const low=limits.low!==null&&limits.low!==undefined&&Number.isFinite(+limits.low)?Number(limits.low):null;
+  const baseline=limits.baseline!==null&&limits.baseline!==undefined&&Number.isFinite(+limits.baseline)?Number(limits.baseline):null;
+  const high=limits.high!==null&&limits.high!==undefined&&Number.isFinite(+limits.high)?Number(limits.high):null;
+  const rows=series.map((pt,i)=>({
+    trade_id:pt?.trade_id||String(i+1),
+    risk_pct:pt?.risk_pct!==null&&pt?.risk_pct!==undefined&&Number.isFinite(+pt.risk_pct)?Number(pt.risk_pct):null,
+    week:pt?.week||'',
+    status:pt?.status||pt?.risk_status||'not_available'
+  })).filter(pt=>pt.risk_pct!==null);
+
+  if(!rows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const vals=rows.map(x=>x.risk_pct);
+  const bounds=[low,baseline,high].filter(v=>v!==null&&Number.isFinite(v));
+  const minY=0;
+  const maxY=Math.max(1,Math.ceil(Math.max(...vals,...bounds)*10)/10);
+  const x=i=>p.l+(w-p.l-p.r)*(rows.length<=1?0:i/(rows.length-1));
+  const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);
+
+  for(let i=0;i<=4;i++){
+    const v=maxY*i/4;
+    const yy=y(v);
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=v.toFixed(1);
+  }
+
+  if(high!==null&&low!==null&&high>low){
+    svg.appendChild(svgEl('rect',{x:p.l,y:y(high),width:w-p.l-p.r,height:y(low)-y(high),fill:green(),opacity:.10}));
+  }
+
+  if(baseline!==null){
+    svg.appendChild(svgEl('line',{x1:p.l,y1:y(baseline),x2:w-p.r,y2:y(baseline),stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'}));
+  }
+
+  let d='';
+  rows.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(pt.risk_pct));
+  svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+
+  const pointColor=status=>{
+    const s=String(status||'').toLowerCase();
+    if(s==='critical'||s==='danger'||s==='expansion'||s==='above_normal')return red();
+    if(s==='normal'||s==='controlled'||s==='safe')return blue();
+    if(s==='reduced'||s==='below_normal')return '#6f8fa5';
+    return '#66717b';
+  };
+
+  rows.forEach((pt,i)=>{
+    svg.appendChild(svgEl('circle',{cx:x(i),cy:y(pt.risk_pct),r:3,fill:pointColor(pt.status),stroke:'#0b0d0f','stroke-width':1.1}));
+  });
+
+  const weeks=[];
+  rows.forEach((pt,i)=>{
+    if(!weeks.length||weeks[weeks.length-1].week!==pt.week)weeks.push({week:pt.week||String(i+1),start:i,end:i});
+    else weeks[weeks.length-1].end=i;
+  });
+
+  weeks.forEach(wk=>{
+    const cx=(x(wk.start)+x(wk.end))/2;
+    svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=wk.week;
+    if(wk.start>0)svg.appendChild(svgEl('line',{x1:x(wk.start),y1:p.t,x2:x(wk.start),y2:h-p.b,stroke:'rgba(255,255,255,.04)','stroke-width':1}));
+  });
+
+  svg.appendChild(svgEl('text',{x:4,y:p.t-6,class:'axis-label'})).textContent='Risk %';
+}
+function riskAfterLoss(svg,items,baseline){
+  clear(svg);
+  const rows=Array.isArray(items)?items.map((item,i)=>({
+    label:item?.label||item?.x||['1 Loss','2 Losses','3+ Losses'][i]||String(i+1),
+    value:item?.value??item?.y??null,
+    status:item?.status||'not_available'
+  })):[];
+
+  if(!rows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+
+  const w=svg.clientWidth||360,h=svg.clientHeight||220,p={l:116,r:28,t:22,b:58};
+  const normal=baseline!==null&&baseline!==undefined&&Number.isFinite(+baseline)?Number(baseline):null;
+  const geometryBaseline=normal??0;
+  const vals=rows.map(r=>r.value).filter(v=>v!==null&&v!==undefined&&Number.isFinite(+v)).map(Number);
+  const maxY=Math.max(...(normal===null?[]:[normal]),...vals,1)*1.2;
+  const minY=0;
+  const x=i=>p.l+(w-p.l-p.r)*(i+.5)/rows.length;
+  const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);
+
+  for(let i=0;i<=4;i++){
+    const yy=p.t+(h-p.t-p.b)*i/4;
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+  }
+
+  if(normal!==null){
+    svg.appendChild(svgEl('line',{x1:p.l,y1:y(normal),x2:w-p.r,y2:y(normal),stroke:'#66717b','stroke-width':1,'stroke-dasharray':'4 4'}));
+    svg.appendChild(svgEl('text',{x:8,y:y(normal)-8,'text-anchor':'start',class:'axis-label'})).textContent='Baseline '+normal.toFixed(2);
+  }
+
+  const statusColor=status=>{
+    const s=String(status||'').toLowerCase();
+    if(s==='critical'||s==='danger'||s==='expansion'||s==='above_baseline')return red();
+    if(s==='controlled'||s==='safe'||s==='reduced'||s==='below_baseline')return green();
+    if(s==='warning'||s==='attention')return yellow();
+    return '#66717b';
+  };
+
+  const bw=34;
+  rows.forEach((r,i)=>{
+    const cx=x(i);
+    if(r.value===null||r.value===undefined||!Number.isFinite(+r.value)){
+      svg.appendChild(svgEl('text',{x:cx,y:y(geometryBaseline)+18,'text-anchor':'middle',class:'axis-label'})).textContent='N/A';
+    }else{
+      const value=Number(r.value);
+      const top=y(Math.max(value,geometryBaseline));
+      const bottom=y(Math.min(value,geometryBaseline));
+      svg.appendChild(svgEl('rect',{x:cx-bw/2,y:top,width:bw,height:Math.max(2,bottom-top),rx:4,fill:statusColor(r.status),opacity:.9}));
+      svg.appendChild(svgEl('text',{x:cx,y:value>=geometryBaseline?top-9:bottom+16,'text-anchor':'middle',class:'axis-label'})).textContent=value.toFixed(2);
+    }
+    svg.appendChild(svgEl('text',{x:cx,y:h-14,'text-anchor':'middle',class:'axis-label'})).textContent=r.label;
+  });
+}
+function planFact(svg,points,baseline,weeks=[]){
+  clear(svg);
+
+  const rows=Array.isArray(points)?points.map((pt,i)=>({
+    trade_id:pt?.trade_id||String(i+1),
+    planned:pt?.planned??null,
+    actual:pt?.actual??null,
+    within_plan:pt?.within_plan??null,
+    excess_loss:pt?.excess_loss??null,
+    status:pt?.status||'not_available',
+    week:pt?.week||'',
+    label:pt?.label||pt?.trade_label||null
+  })).filter(pt=>
+    pt.planned!==null&&pt.planned!==undefined&&Number.isFinite(+pt.planned)&&
+    pt.actual!==null&&pt.actual!==undefined&&Number.isFinite(+pt.actual)
+  ):[];
+
+  const weekLabels=Array.isArray(weeks)&&weeks.length
+    ?weeks
+    :[...new Set(rows.map(pt=>pt.week).filter(Boolean))];
+
+  if(!rows.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='no eligible closed loss trades in period';
+    return;
+  }
+
+  const w=svg.clientWidth||780,h=svg.clientHeight||252,pad={l:58,r:26,t:24,b:48};
+  const vals=rows.flatMap(pt=>[pt.planned,pt.actual,pt.within_plan,pt.excess_loss,baseline]).filter(v=>v!==null&&v!==undefined&&Number.isFinite(+v)).map(Number);
+  const maxY=Math.max(2,Math.ceil(Math.max(...vals)*10)/10);
+  const minY=0;
+  const finalWeeks=weekLabels.length?weekLabels:['Current'];
+  const weekX=i=>pad.l+(w-pad.l-pad.r)*(finalWeeks.length<=1?0:i/(finalWeeks.length-1));
+  const y=v=>h-pad.b-(h-pad.t-pad.b)*(v-minY)/(maxY-minY||1);
+
+  for(let i=0;i<=4;i++){
+    const v=maxY*i/4;
+    const yy=y(v);
+    svg.appendChild(svgEl('line',{x1:pad.l,y1:yy,x2:w-pad.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:6,y:yy+4,class:'axis-label'})).textContent=v.toFixed(1);
+  }
+
+  svg.appendChild(svgEl('text',{x:6,y:pad.t-8,class:'axis-label'})).textContent='Loss %';
+
+  if(baseline!==null&&baseline!==undefined&&Number.isFinite(+baseline)){
+    svg.appendChild(svgEl('line',{x1:pad.l,y1:y(Number(baseline)),x2:w-pad.r,y2:y(Number(baseline)),stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'}));
+  }
+
+  finalWeeks.forEach((wk,wi)=>{
+    const cx=weekX(wi);
+    if(wi>0)svg.appendChild(svgEl('line',{x1:cx,y1:pad.t,x2:cx,y2:h-pad.b,stroke:'rgba(255,255,255,.04)','stroke-width':1}));
+    svg.appendChild(svgEl('text',{x:cx,y:h-12,'text-anchor':'middle',class:'axis-label'})).textContent=wk;
+    if(!rows.some(pt=>(pt.week||'Current')===wk)){
+      svg.appendChild(svgEl('text',{x:cx,y:y(Number.isFinite(+baseline)?Number(baseline):0)+18,'text-anchor':'middle',class:'axis-label'})).textContent='N/A';
+    }
+  });
+
+  const statusColor=status=>{
+    const s=String(status||'').toLowerCase();
+    if(s==='critical'||s==='danger'||s==='over_plan'||s==='excess')return red();
+    if(s==='within_plan'||s==='controlled'||s==='safe')return '#66717b';
+    if(s==='warning'||s==='attention')return yellow();
+    return '#66717b';
+  };
+
+  const bw=34,lossGap=42,placed=[];
+
+  finalWeeks.forEach((wk,wi)=>{
+    const list=rows.filter(pt=>(pt.week||'Current')===wk);
+    list.forEach((pt,li)=>{
+      const cx=weekX(wi)+(li-(list.length-1)/2)*lossGap;
+      const planned=Number(pt.planned);
+      const actual=Number(pt.actual);
+      const within=pt.within_plan!==null&&pt.within_plan!==undefined&&Number.isFinite(+pt.within_plan)?Number(pt.within_plan):null;
+      const excess=pt.excess_loss!==null&&pt.excess_loss!==undefined&&Number.isFinite(+pt.excess_loss)?Number(pt.excess_loss):null;
+      const baseY=y(0);
+
+      placed.push({...pt,cx,planned});
+
+      if(within!==null){
+        const withinTop=y(within);
+        svg.appendChild(svgEl('rect',{x:cx-bw/2,y:withinTop,width:bw,height:Math.max(2,baseY-withinTop),rx:3,fill:'#66717b',opacity:.92}));
+      }
+
+      if(excess!==null&&excess>0){
+        const excessTop=y(within===null?actual:within+excess);
+        const excessBottom=y(within===null?0:within);
+        svg.appendChild(svgEl('rect',{x:cx-bw/2,y:excessTop,width:bw,height:Math.max(2,excessBottom-excessTop),rx:3,fill:statusColor(pt.status),opacity:.92}));
+      }
+
+      if(within===null&&excess===null){
+        const actualTop=y(actual);
+        svg.appendChild(svgEl('rect',{x:cx-bw/2,y:actualTop,width:bw,height:Math.max(2,baseY-actualTop),rx:3,fill:statusColor(pt.status),opacity:.92}));
+      }
+
+      svg.appendChild(svgEl('text',{x:cx,y:y(actual)-8,'text-anchor':'middle',class:'axis-label'})).textContent=actual.toFixed(2)+'%';
+      svg.appendChild(svgEl('text',{x:cx,y:h-28,'text-anchor':'middle',class:'axis-label'})).textContent=pt.label||'L'+(li+1);
+    });
+  });
+
+  if(placed.length){
+    let d='';
+    placed.forEach((pt,i)=>d+=(i?'L':'M')+pt.cx+' '+y(pt.planned));
+    svg.appendChild(svgEl('path',{d,fill:'none',stroke:'#c0c0bd','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'}));
+    placed.forEach(pt=>svg.appendChild(svgEl('circle',{cx:pt.cx,cy:y(pt.planned),r:3,fill:'#c0c0bd',stroke:'#0b0d0f','stroke-width':1})));
+  }
+}
+function render(){
+  const d=data;
+
+  const auditIds=safeArray(d,'period.audit_ids');
+  const currentAuditId=auditIds.length
+    ?auditIds[auditIds.length-1]
+    :safeText(d,'report.audit_id','not_available');
+
+  const requestId=safeText(
+    d,
+    'report.request_id',
+    'not_available'
+  );
+
+  document.getElementById('headerMeta').textContent=
+    `${safeText(d,'trader.account_login')} · `+
+    `${currentAuditId} · `+
+    `${safeText(d,'trader.trader_id')} · `+
+    `${safeText(d,'period.current_period')} · `+
+    `${requestId}`;
+
+  document.getElementById('footTrader').textContent='fx-qud.com';
+
+  document.getElementById('generated').textContent=
+    'Generated: '+
+    safeText(d,'report.generated_at','not_available')+
+    ' · '+
+    safeText(d,'report.methodology_version',safeText(d,'report.version','not_available'));
+
+    const qRaw=
+  safeGet(
+    d,
+    'score.qud_tda_score',
+    null
+  );
+
+const q=
+  qRaw!==null&&
+  qRaw!==undefined&&
+  Number.isFinite(+qRaw)
+    ?Number(qRaw)
+    :null;
+
+const scoreZones=safeArray(d,'score.zones');
+
+const scoreLegend=$('scoreTrendLegend');
+
+if(scoreLegend){
+  const zoneLegendItems=
+    scoreZones.filter(zone=>
+      zone?.label||
+      zone?.name
+    );
+
+  scoreLegend.innerHTML=
+    `<span class="leg">`+
+      `<span class="sw"></span>`+
+      `Score`+
+    `</span>`+
+    zoneLegendItems.map(zone=>{
+      const status=
+        String(zone?.status||'').toLowerCase();
+
+      const color=
+        zone?.color||
+        (
+          status==='pre_qud'||
+          status==='critical'||
+          status==='danger'||
+          status==='low'
+            ?red()
+            :status==='qud_room'||
+             status==='warning'||
+             status==='attention'||
+             status==='medium'
+              ?css('--orange')
+              :status==='qud_elite'||
+               status==='safe'||
+               status==='good'||
+               status==='high'
+                ?green()
+                :'#66717b'
+        );
+
+      const label=
+        zone?.label||
+        zone?.name;
+
+      return(
+        `<span class="leg">`+
+          `<span class="sw" style="background:${color}"></span>`+
+          `${label}`+
+        `</span>`
+      );
+    }).join('');
+}
+
+document
+  .getElementById('scoreValue')
+  .innerHTML=
+    q===null
+      ?'—'
+      :Math.round(q);
+
+const scoreDisplayClass=String(safeGet(d,'score.display_class','neutral')).toLowerCase();
+$('scoreValue').style.color=
+  scoreDisplayClass==='danger'?red():
+  scoreDisplayClass==='warn'?yellow():
+  scoreDisplayClass==='good'?green():
+  'var(--text-strong)';
+
+scoreGauge(
+  $('scoreGauge'),
+  q,
+  scoreZones
+);
+
+const trustZone=safeText(
+  d,
+  'score.trust_zone',
+  'not_available'
+);
+
+$('trustZone').textContent=trustZone;
+$('trustZone').className='badge '+(scoreDisplayClass==='danger'?'danger':scoreDisplayClass==='warn'?'warn':scoreDisplayClass==='good'?'good':'neutral');
+
+const previousPeriod=safeText(
+  d,
+  'comparison.previous_period',
+  'not_available'
+);
+
+const scoreDeltaValue=safeGet(
+  d,
+  'score.trust_score_delta',
+  null
+);
+
+const hasScoreDelta=
+  scoreDeltaValue!==null&&
+  scoreDeltaValue!==undefined&&
+  Number.isFinite(+scoreDeltaValue);
+
+$('scoreDelta').textContent=
+  previousPeriod==='not_available'
+    ?'not_available'
+    :hasScoreDelta
+      ?`${Number(scoreDeltaValue)>=0?'↑':'↓'} ${Math.abs(Number(scoreDeltaValue)).toFixed(2)} SCORE`
+      :'not_available';
+
+const riskMode=safeText(
+  d,
+  'score.risk_mode',
+  'not_available'
+);
+
+$('riskMode').textContent=
+  riskMode==='not_available'
+    ?riskMode
+    :riskMode.toUpperCase();
+
+$('riskMode').className=
+  'badge '+
+  (
+    riskMode==='dangerous'||riskMode==='critical'
+      ?'danger'
+      :riskMode==='stable'||
+       riskMode==='controlled'||
+       riskMode==='low'
+        ?'good'
+        :riskMode==='not_available'
+          ?'neutral'
+          :'warn'
+  );
+
+$('riskStatusNote').textContent=safeText(
+  d,
+  'score.main_damage_source',
+  'not_available'
+);
+
+const weeklyQuality=safeGet(
+  d,
+  'score.weekly_quality_score',
+  null
+);
+
+const historyTrustFactor=safeGet(
+  d,
+  'score.history_trust_factor',
+  null
+);
+
+$('trustStatusNote').textContent=
+  `WQS ${weeklyQuality==null?'—':num(weeklyQuality).toFixed(2)} · `+
+  `HTF ${historyTrustFactor==null?'—':num(historyTrustFactor).toFixed(2)}`;
+
+$('previousPeriodNote').textContent=previousPeriod;
+
+const topWinRatio=safeFirst(d,['basic_stats.win_ratio','basic_stats.win_ratio_pct','profitability.win_ratio_pct','performance.win_ratio_pct'],null);
+const topProfitFactor=safeFirst(d,['basic_stats.profit_factor','profitability.profit_factor','performance.profit_factor'],null);
+const topAverageRisk=safeFirst(d,['risk.avg_pct'],null);
+const topSlSafe=safeFirst(d,['sl.sl_safe_pct'],null);
+
+$('topWinRatio').textContent=topWinRatio==null?'—':num(topWinRatio).toFixed(1)+'%';
+$('topProfitFactor').textContent=topProfitFactor==null?'—':num(topProfitFactor).toFixed(2);
+$('topAverageRisk').textContent=topAverageRisk==null?'—':num(topAverageRisk).toFixed(2)+'%';
+$('topSlSafe').textContent=topSlSafe==null?'—':num(topSlSafe).toFixed(1)+'%';
+const trends=safeGet(d,'trends',{});
+
+sparkMini(
+  $('sparkWinRatio'),
+  Array.isArray(trends.win_ratio_pct)
+  ?trends.win_ratio_pct.map((item,i)=>({
+      x:item?.x||item?.period||item?.label||String(i+1),
+      y:item?.y??item?.value??null
+    })).filter(item=>
+      item.y!==null&&
+      item.y!==undefined&&
+      Number.isFinite(+item.y)
+    )
+  :[]
+);
+
+sparkMini(
+  $('sparkProfitFactor'),
+  Array.isArray(trends.profit_factor)
+  ?trends.profit_factor.map((item,i)=>({
+      x:item?.x||item?.period||item?.label||String(i+1),
+      y:item?.y??item?.value??null
+    })).filter(item=>
+      item.y!==null&&
+      item.y!==undefined&&
+      Number.isFinite(+item.y)
+    )
+  :[]
+);
+
+sparkMini(
+  $('sparkAverageRisk'),
+  Array.isArray(trends.average_risk_pct)
+  ?trends.average_risk_pct.map((item,i)=>({
+      x:item?.x||item?.period||item?.label||String(i+1),
+      y:item?.y??item?.value??null
+    })).filter(item=>
+      item.y!==null&&
+      item.y!==undefined&&
+      Number.isFinite(+item.y)
+    )
+  :[]
+);
+
+sparkMini(
+  $('sparkSlSafe'),
+  Array.isArray(trends.sl_safe_pct)
+  ?trends.sl_safe_pct.map((item,i)=>({
+      x:item?.x||item?.period||item?.label||String(i+1),
+      y:item?.y??item?.value??null
+    })).filter(item=>
+      item.y!==null&&
+      item.y!==undefined&&
+      Number.isFinite(+item.y)
+    )
+  :[]
+);
+const leakItems=safeArray(d,'leaks.items');
+const leaks=leakItems.length
+  ?leakItems.slice(0,4).map(item=>({
+      name:item?.name||item?.title||item?.label||'Leak',
+      score:item?.score??item?.value??null,
+      status:item?.status||item?.zone||''
+    }))
+  :[
+      {
+        name:safeText(d,'leaks.risk_leak_name','Risk Leak'),
+        score:safeGet(d,'leaks.risk_leak_score',null),
+        status:safeText(d,'leaks.risk_leak_status','')
+      },
+      {
+        name:safeText(d,'leaks.sl_leak_name','SL Leak'),
+        score:safeGet(d,'leaks.sl_leak_score',null),
+        status:safeText(d,'leaks.sl_leak_status','')
+      },
+      {
+        name:safeText(d,'leaks.behavior_leak_name','Behavior Leak'),
+        score:safeGet(d,'leaks.behavior_leak_score',null),
+        status:safeText(d,'leaks.behavior_leak_status','')
+      },
+      {
+        name:safeText(d,'leaks.execution_leak_name','Execution Leak'),
+        score:safeGet(d,'leaks.execution_leak_score',null),
+        status:safeText(d,'leaks.execution_leak_status','')
+      }
+    ];
+
+$('miniLeakGrid').innerHTML=leaks.map(item=>{
+  const hasScore=item.score!==null&&item.score!==undefined&&Number.isFinite(+item.score);
+  const marker=hasScore?`<span class="marker" style="left:${clamp(num(item.score),0,100)}%"></span>`:'';
+  const status=item.status?` · ${item.status}`:'';
+  return`<div class="mini-leak-row"><div class="mini-leak-name">${item.name}${status}</div><div class="mini-leak-bar">${marker}</div></div>`;
+}).join('');
+const scoreHistory=safeArray(d,'comparison.score_history').map((item,i)=>({
+  x:item?.x||item?.period||item?.label||String(i+1),
+  y:item?.y??item?.score??item?.value??null
+})).filter(item=>item.y!==null&&item.y!==undefined&&Number.isFinite(+item.y));
+
+trustScoreTrend(
+  $('scoreTrend'),
+  scoreHistory,
+  scoreZones
+);
+const accountHistory=safeArray(d,'account.balance_equity_curve').length?safeArray(d,'account.balance_equity_curve'):safeArray(d,'account.history');
+accountChart($('accountEquity'),accountHistory);
+const durationItems=safeArray(d,'duration.items');
+const durationFallback=safeArray(d,'duration_quality.groups').map(g=>({
+  label:g?.avg_duration_label||'—',
+  value:g?.deviation_pct??null,
+  status:g?.status||'not_available'
+}));
+const durationRows=durationItems.length?durationItems.map(item=>({
+  label:item?.label||item?.name||item?.avg_duration_label||'—',
+  value:item?.deviation_pct??item?.value??null,
+  status:item?.status||'not_available'
+})):durationFallback;
+const durationBaseline=safeFirst(d,['duration.baseline_win_rate_pct','duration_quality.baseline_win_rate_pct'],null);
+bars(
+  $('durationQuality'),
+  durationRows,
+  {baselineLabel:durationItems.length?'Trader duration baseline':durationBaseline==null?'Trader Win Rate not_available':'Trader Win Rate '+num(durationBaseline).toFixed(1)+'%'}
+);
+const instrumentItems=safeArray(d,'instrument.items');
+const instrumentFallback=safeArray(d,'instrument_contribution.groups').map(item=>({
+  symbol:item?.symbol||'—',
+  profit_share_pct:item?.profit_share_pct??null,
+  volume_share_pct:item?.volume_share_pct??null,
+  status:item?.status||'not_available'
+}));
+groupedBars(
+  $('instrumentContribution'),
+  instrumentItems.length?instrumentItems:instrumentFallback
+);
+const analysisItems=safeArray(d,'analysis.items');
+const findAnalysisByName=(needle,fallback={})=>analysisItems.find(item=>
+  String(item?.name||item?.title||item?.id||'').toLowerCase().includes(needle)
+)||fallback;
+
+const directionItem=findAnalysisByName('direction',{});
+const profitabilityItem=findAnalysisByName('profitability',{});
+const expansionItem=findAnalysisByName('risk expansion',{});
+
+const directionSegments=Array.isArray(directionItem?.segments)?directionItem.segments:[];
+const profitabilitySegments=Array.isArray(profitabilityItem?.segments)?profitabilityItem.segments:[];
+const expansionSegments=Array.isArray(expansionItem?.segments)?expansionItem.segments:[];
+
+const segmentByLabel=(segments,label)=>segments.find(seg=>
+  String(seg?.label||'').toLowerCase().includes(label)
+)||{};
+
+const longSegment=segmentByLabel(directionSegments,'long');
+const shortSegment=segmentByLabel(directionSegments,'short');
+const winSegment=segmentByLabel(profitabilitySegments,'win');
+const lossSegment=segmentByLabel(profitabilitySegments,'loss');
+const reducedSegment=segmentByLabel(expansionSegments,'reduced');
+const expandedSegment=segmentByLabel(expansionSegments,'expansion');
+
+$('shortCoverValue').textContent=directionItem?.display_value||'—';
+$('profitFactorValue').textContent=profitabilityItem?.display_value||'—';
+$('longCoverValue').textContent=expansionItem?.display_value||'—';
+
+$('shortWinRateValue').textContent=
+  longSegment?.pct!=null&&shortSegment?.pct!=null
+    ?`${num(longSegment.pct).toFixed(1)}% / ${num(shortSegment.pct).toFixed(1)}%`
+    :'—';
+$('totalWinRateValue').textContent=
+  winSegment?.value!=null&&lossSegment?.value!=null
+    ?`${winSegment.value} / ${lossSegment.value}`
+    :'—';
+$('longWinRateValue').textContent=
+  reducedSegment?.count!=null&&expandedSegment?.count!=null
+    ?`${reducedSegment.count} / ${expandedSegment.count}`
+    :'—';
+
+analysisGauge($('shortAnalysisGauge'),directionItem);
+analysisGauge($('profitabilityGauge'),profitabilityItem);
+analysisGauge($('longAnalysisGauge'),expansionItem);
+
+const slSafePct=safeGet(d,'sl.sl_safe_pct',null);
+const protectionSegments=safeArray(d,'sl.protection_segments');
+const protectionTotal=protectionSegments.reduce((sum,item)=>sum+num(item?.count??item?.value??0),0);
+const slSeg=protectionSegments.length
+  ?protectionSegments.map(item=>({
+      label:item?.label||item?.name||'SL Segment',
+      value:item?.count??item?.value??0,
+      pct:item?.pct??item?.percentage??(protectionTotal>0?num(item?.count??item?.value??0)/protectionTotal*100:null),
+      color:item?.color||(
+        ['critical','danger'].includes(String(item?.status||'').toLowerCase())?red():
+        String(item?.status||'').toLowerCase()==='warning'?yellow():
+        String(item?.status||'').toLowerCase()==='safe'?green():
+        '#66717b'
+      )
+    }))
+  :[
+      {
+        label:'No SL',
+        value:safeNum(d,'sl.trades_without_sl_at_open',0),
+        pct:safeGet(d,'sl.trades_without_sl_at_open_pct',null),
+        color:red()
+      },
+      {
+        label:'SL Removed',
+        value:safeNum(d,'sl.sl_removed_count',0),
+        pct:safeGet(d,'sl.sl_removed_pct',null),
+        color:'#b87945'
+      },
+      {
+        label:'SL Changed',
+        value:safeNum(d,'sl.sl_changed_count',0),
+        pct:safeGet(d,'sl.sl_changed_pct',null),
+        color:yellow()
+      },
+      {
+        label:'SL Safe',
+        value:safeNum(d,'sl.sl_safe_count',0),
+        pct:safeGet(d,'sl.sl_safe_pct',null),
+        color:green()
+      }
+    ];
+
+donut(
+  $('slDonut'),
+  slSeg,
+  slSafePct==null?'—':num(slSafePct).toFixed(1)+'%',
+  'SAFE'
+);
+
+$('slLegend').innerHTML=slSeg.map(s=>
+  `<span class="legend-row">
+    <span class="sq" style="background:${s.color}"></span>
+    ${s.label} - ${s.pct==null?'not_available':num(s.pct).toFixed(1)+'%'}
+  </span>`
+).join('');
+
+const slProtectionTrend=safeArray(d,'sl.protection_rate_trend');
+if(slProtectionTrend.length){
+  drawLine(
+    $('slTimeline'),
+    slProtectionTrend.map(x=>({
+      x:x?.period||x?.label||'—',
+      y:x?.protected_rate_pct!==null&&x?.protected_rate_pct!==undefined&&Number.isFinite(+x.protected_rate_pct)
+        ?Number(x.protected_rate_pct)
+        :null
+    })).filter(x=>x.y!==null),
+    {minY:0,maxY:100,color:green()}
+  );
+}else{
+  slEventTimeline($('slTimeline'),safeArray(d,'sl.event_timeline'));
+}
+
+const riskZoneItems=safeArray(d,'risk.zone_items');
+const riskZoneFallback=[
+  {
+    label:'Reduced Risk',
+    count:safeGet(d,'risk.risk_reduced_count',null),
+    pct:safeGet(d,'risk.risk_reduced_pct',null),
+    status:'reduced'
+  },
+  {
+    label:'Normal Risk',
+    count:safeGet(d,'risk.risk_normal_count',null),
+    pct:safeGet(d,'risk.risk_normal_pct',null),
+    status:'normal'
+  },
+  {
+    label:'Risk Expansion',
+    count:safeGet(d,'risk.risk_expansion_count',null),
+    pct:safeGet(d,'risk.risk_expansion_pct',null),
+    status:'expansion'
+  }
+];
+riskZone(
+  $('scoreDonut'),
+  riskZoneItems.length?riskZoneItems:riskZoneFallback
+);
+
+const personalBaseline=safeGet(
+  d,
+  'risk.personal_risk_baseline_pct',
+  null
+);
+
+const riskDrift=safeGet(d,'risk.drift',{});
+const riskDriftValue=riskDrift?.value??safeGet(d,'risk.risk_drift_count',null);
+const riskDriftDisplay=riskDrift?.display_value||(riskDriftValue==null?'—':String(riskDriftValue));
+const riskDriftDirection=String(riskDrift?.direction||'').toLowerCase();
+const riskDriftStatus=String(riskDrift?.status||'').toLowerCase();
+const riskDriftClass=riskDriftStatus==='critical'||riskDriftStatus==='danger'?'up':riskDriftStatus==='safe'||riskDriftStatus==='controlled'?'down':'';
+const riskDriftArrow=riskDriftDirection==='up'?'↑ ':riskDriftDirection==='down'?'↓ ':'';
+
+$('riskZoneSummary').innerHTML=`
+  <div>
+    <div class="risk-zone-value">
+      ${personalBaseline==null?'—':num(personalBaseline).toFixed(2)+'%'}
+    </div>
+    <div class="risk-zone-label">Personal baseline</div>
+  </div>
+  <div>
+    <div class="risk-zone-value ${riskDriftClass}">
+      ${riskDriftArrow}${riskDriftDisplay}
+    </div>
+    <div class="risk-zone-label">Risk drift</div>
+  </div>
+`;
+
+$('scoreLegend').innerHTML=
+  '<span class="leg"><span class="sw green"></span>Normal Risk</span>'+
+  '<span class="leg"><span class="sw red"></span>Risk Expansion</span>';
+
+const riskAfterLossItems=safeArray(d,'behavior.risk_after_loss_items');
+const behaviorItems=riskAfterLossItems.length?riskAfterLossItems:[
+  {
+    label:'1 Loss',
+    value:safeGet(d,'behavior.risk_after_1_loss_pct',null),
+    status:safeText(d,'behavior.risk_after_1_loss_status','not_available')
+  },
+  {
+    label:'2 Losses',
+    value:safeGet(d,'behavior.risk_after_2_losses_pct',null),
+    status:safeText(d,'behavior.risk_after_2_losses_status','not_available')
+  },
+  {
+    label:'3+ Losses',
+    value:safeGet(d,'behavior.risk_after_3_losses_pct',null),
+    status:safeText(d,'behavior.risk_after_3_losses_status','not_available')
+  }
+];
+riskAfterLoss(
+  $('lossBarsTop'),
+  behaviorItems,
+  safeGet(d,'risk.personal_risk_baseline_pct',null)
+);
+
+const postLossSummary=safeGet(d,'behavior.post_loss_summary',{});
+
+const postLossValue=
+  postLossSummary?.value??
+  postLossSummary?.risk_drift_pct??
+  safeGet(d,'behavior.post_loss_risk_drift_pct',null);
+
+const postLossDisplay=
+  postLossSummary?.display_value||
+  (
+    postLossValue===null||
+    postLossValue===undefined||
+    !Number.isFinite(+postLossValue)
+      ?'not_available'
+      :`${Number(postLossValue)>0?'+':''}${Number(postLossValue).toFixed(2)}%`
+  );
+
+const postLossDirection=
+  String(postLossSummary?.direction||'').toLowerCase();
+
+const postLossStatus=
+  String(postLossSummary?.status||'').toLowerCase();
+
+const postLossClass=
+  postLossStatus==='critical'||
+  postLossStatus==='danger'||
+  postLossStatus==='expansion'
+    ?'up'
+    :'';
+
+const postLossArrow=
+  postLossDirection==='up'||(postLossDirection===''&&Number(postLossValue)>0)
+    ?'↑ '
+    :postLossDirection==='down'||(postLossDirection===''&&Number(postLossValue)<0)
+      ?'↓ '
+      :'';
+
+const postLossNote=
+  postLossSummary?.note||
+  safeText(
+    d,
+    'behavior.post_loss_note',
+    'Risk change after loss'
+  );
+
+$('lossNoteTop').className='risk-after-note';
+
+$('lossNoteTop').innerHTML=
+  `<b class="${postLossClass}">`+
+  `${postLossArrow}${postLossDisplay}`+
+  `</b><br>${postLossNote}`;
+
+riskCvScale(
+  $('riskCvScale'),
+  Object.keys(safeGet(d,'risk.cv',{})).length?safeGet(d,'risk.cv',{}):{
+    value:safeGet(d,'risk.cv_pct',null),
+    marker_pct:safeGet(d,'risk.cv_marker_pct',null),
+    status:safeText(d,'risk.cv_status','not_available'),
+    label:'RISK CV'
+  }
+);
+riskConsistency(
+  $('riskLine'),
+  safeArray(d,'risk.trade_series'),
+  {
+    low:safeGet(d,'risk.personal_risk_low_bound_pct',null),
+    baseline:safeGet(d,'risk.personal_risk_baseline_pct',null),
+    high:safeGet(d,'risk.personal_risk_high_bound_pct',null)
+  }
+);
+planFact(
+  $('scatter'),
+  safeArray(d,'plan_fact.points'),
+  safeGet(d,'risk.personal_risk_baseline_pct',null),
+  safeArray(d,'plan_fact.weeks')
+);
+const findingsItems=
+  safeArray(d,'findings.items').slice(0,5);
+
+  const findingClass=item=>{
+  const explicit=
+    String(item?.display_class||'').toLowerCase();
+
+  if(
+    explicit==='good'||
+    explicit==='warn'||
+    explicit==='danger'
+  ){
+    return explicit;
+  }
+
+  return 'warn';
+};
+
+$('findings').innerHTML=
+  findingsItems.length
+    ?findingsItems.map((item,i)=>{
+        const rank=item?.rank??i+1;
+        const text=
+          item?.title||
+          item?.text||
+          'not_available';
+
+        const cls=findingClass(item);
+
+        return`
+          <div class="item">
+            <div class="item-num ${cls}">
+              ${rank}
+            </div>
+            <div class="item-title">
+              ${text}
+            </div>
+          </div>
+        `;
+      }).join('')
+    :`
+      <div class="item">
+        <div class="item-num warn">—</div>
+        <div class="item-title">
+          not_available
+        </div>
+      </div>
+    `;
+
+}
+
+initHelp();
+render();
+</script></body></html>
