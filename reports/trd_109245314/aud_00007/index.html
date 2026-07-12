@@ -12,9 +12,9 @@
 <div class="panel span-12"><div class="section-head"><h2>Account Balance & Equity</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box account-chart"><svg class="svg-chart" id="accountEquity"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Balance</span><span class="leg"><span class="sw gray"></span>Equity</span></div></div>
 <div class="panel span-6"><div class="section-head"><h2>Holding Time Efficiency</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box"><svg class="svg-chart" id="durationQuality"></svg></div><div class="legend"><span class="leg"><span class="sw green"></span>Above trader baseline</span><span class="leg"><span class="sw red"></span>Below trader baseline</span><span class="leg"><span class="sw gray"></span>Trader baseline</span></div></div>
 <div class="panel span-6"><div class="section-head"><h2>Instrument Contribution & Load</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box"><svg class="svg-chart" id="instrumentContribution"></svg></div><div class="legend"><span class="leg"><span class="sw green"></span>Win Contribution</span><span class="leg"><span class="sw"></span>Load Volume</span></div></div>
-<div class="span-4 analysis-panel"><h2>Direction Balance <span class="analysis-head-value" id="shortCoverValue">—</span><span class="analysis-winrate">Long / Short % <b id="shortWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="shortAnalysisGauge"></svg></div></div>
-<div class="span-4 analysis-panel"><h2>Profitability <span class="analysis-head-value" id="profitFactorValue">—</span><span class="analysis-winrate">Wins / Losses <b id="totalWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="profitabilityGauge"></svg></div></div>
-<div class="span-4 analysis-panel"><h2>Risk Expansion <span class="analysis-head-value" id="longCoverValue">—</span><span class="analysis-winrate">Reduced / Expanded <b id="longWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="longAnalysisGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Direction Balance <span class="analysis-head-value" id="shortCoverValue">—</span><span class="analysis-winrate">Long / Short • <b id="shortWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="shortAnalysisGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Profitability <span class="analysis-head-value" id="profitFactorValue">—</span><span class="analysis-winrate">Wins / Losses • <b id="totalWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="profitabilityGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Risk Expansion <span class="analysis-head-value" id="longCoverValue">—</span><span class="analysis-winrate">Reduced / Normal / Expanded • <b id="longWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="longAnalysisGauge"></svg></div></div>
 <div class="panel span-8"><h2>Protected Trades Rate</h2><div class="sl-protection-layout"><svg id="slDonut" width="190" height="150"></svg><svg class="timeline-dots" id="slTimeline"></svg></div><div class="legend-list" id="slLegend"></div></div>
 <div class="panel span-4"><h2>Risk Zone Distribution <span class="label">VS PERSONAL BASELINE</span></h2><div class="chart-box"><svg class="svg-chart" id="scoreDonut"></svg></div><div class="risk-zone-summary" id="riskZoneSummary"></div><div class="legend" id="scoreLegend"></div></div>
 <div class="panel span-4"><h2>Risk After Loss <span class="label">CURRENT PERIOD</span></h2><div class="chart-box"><svg class="svg-chart" id="lossBarsTop"></svg></div><div class="item-sub" id="lossNoteTop" style="margin-top:46px"></div></div>
@@ -1889,50 +1889,143 @@ function analysisGauge(svg,item={}){
   svg.setAttribute('viewBox','0 0 280 92');
 
   const markerPct=item?.marker_pct;
-  if(markerPct===null||markerPct===undefined||!Number.isFinite(+markerPct)){
-    svg.appendChild(svgEl('text',{x:140,y:50,'text-anchor':'middle',class:'not-available'})).textContent='not_available';
+
+  if(
+    markerPct===null||
+    markerPct===undefined||
+    !Number.isFinite(+markerPct)
+  ){
+    svg.appendChild(
+      svgEl('text',{
+        x:140,
+        y:50,
+        'text-anchor':'middle',
+        class:'not-available'
+      })
+    ).textContent='not_available';
+
     return;
   }
 
-  const x1=26,x2=254,y=48;
-  const x=pct=>x1+(x2-x1)*clamp(Number(pct),0,100)/100;
-  const rawSegments=Array.isArray(item?.segments)?item.segments:[];
+  const x1=26;
+  const x2=254;
+  const y=48;
+
+  const x=pct=>
+    x1+
+    (x2-x1)*
+    clamp(Number(pct),0,100)/
+    100;
+
+  svg.appendChild(
+    svgEl('rect',{
+      x:x1,
+      y:y-4,
+      width:x2-x1,
+      height:8,
+      fill:'rgba(255,255,255,.07)',
+      rx:3
+    })
+  );
+
+  const rawSegments=
+    Array.isArray(item?.segments)
+      ?item.segments
+      :[];
+
   let cumulativePct=0;
-  const segments=rawSegments.map((seg,index)=>{
-    const explicitFrom=seg?.from_pct!==null&&seg?.from_pct!==undefined&&Number.isFinite(+seg.from_pct);
-    const explicitTo=seg?.to_pct!==null&&seg?.to_pct!==undefined&&Number.isFinite(+seg.to_pct);
-    const pct=seg?.pct!==null&&seg?.pct!==undefined&&Number.isFinite(+seg.pct)?Number(seg.pct):null;
-    const from=explicitFrom?Number(seg.from_pct):cumulativePct;
-    const to=explicitTo?Number(seg.to_pct):(pct===null?from:from+pct);
-    cumulativePct=to;
-    return {...seg,from_pct:from,to_pct:to,_index:index};
-  }).filter(seg=>Number.isFinite(+seg.from_pct)&&Number.isFinite(+seg.to_pct)&&Number(seg.to_pct)>=Number(seg.from_pct));
 
-  if(segments.length){
-  segments.forEach(seg=>{
-    const from=Number(seg.from_pct);
-    const to=Number(seg.to_pct);
-    const status=String(seg?.status||'').toLowerCase();
+  const segments=rawSegments
+    .map((seg,index)=>{
+      const explicitFrom=
+        seg?.from_pct!==null&&
+        seg?.from_pct!==undefined&&
+        Number.isFinite(+seg.from_pct);
 
-    const fallbackColors=[green(),blue(),yellow()];
-    const color=
+      const explicitTo=
+        seg?.to_pct!==null&&
+        seg?.to_pct!==undefined&&
+        Number.isFinite(+seg.to_pct);
+
+      const pct=
+        seg?.pct!==null&&
+        seg?.pct!==undefined&&
+        Number.isFinite(+seg.pct)
+          ?Number(seg.pct)
+          :null;
+
+      const from=
+        explicitFrom
+          ?Number(seg.from_pct)
+          :cumulativePct;
+
+      const to=
+        explicitTo
+          ?Number(seg.to_pct)
+          :(pct===null?from:from+pct);
+
+      cumulativePct=to;
+
+      return{
+        ...seg,
+        from_pct:from,
+        to_pct:to,
+        _index:index
+      };
+    })
+    .filter(seg=>
+      Number.isFinite(+seg.from_pct)&&
+      Number.isFinite(+seg.to_pct)&&
+      Number(seg.to_pct)>=Number(seg.from_pct)
+    );
+
+  const statusColor=(seg,index)=>{
+    if(seg?.color){
+      return seg.color;
+    }
+
+    const status=
+      String(seg?.status||'')
+        .toLowerCase();
+
+    if(
       status==='critical'||
       status==='danger'||
       status==='loss'||
       status==='negative'||
       status==='expansion'
-        ?red()
-        :status==='safe'||
-         status==='good'||
-         status==='edge'||
-         status==='positive'||
-         status==='reduced'
-          ?green()
-          :status==='warning'||
-           status==='attention'||
-           status==='normal'
-            ?yellow()
-            :fallbackColors[seg._index%fallbackColors.length];
+    ){
+      return red();
+    }
+
+    if(
+      status==='safe'||
+      status==='good'||
+      status==='edge'||
+      status==='positive'||
+      status==='reduced'
+    ){
+      return green();
+    }
+
+    if(
+      status==='warning'||
+      status==='attention'||
+      status==='normal'
+    ){
+      return yellow();
+    }
+
+    return[
+      green(),
+      blue(),
+      yellow()
+    ][index%3];
+  };
+
+  segments.forEach((seg,index)=>{
+    const from=Number(seg.from_pct);
+    const to=Number(seg.to_pct);
 
     svg.appendChild(
       svgEl('rect',{
@@ -1940,27 +2033,93 @@ function analysisGauge(svg,item={}){
         y:y-4,
         width:Math.max(0,x(to)-x(from)),
         height:8,
-        fill:color,
+        fill:statusColor(seg,index),
         rx:3
       })
     );
   });
-}else{
-    svg.appendChild(svgEl('rect',{x:x1,y:y-4,width:x2-x1,height:8,fill:'#66717b',rx:3,opacity:.65}));
-  }
 
   const markerX=x(markerPct);
-  const status=String(item?.status||'').toLowerCase();
-  const markerColor=status==='critical'||status==='danger'||status==='loss'?red():status==='safe'||status==='good'||status==='edge'?green():status==='warning'||status==='attention'?yellow():'#efe8d2';
-  svg.appendChild(svgEl('path',{d:`M ${markerX-7} ${y-21} L ${markerX+7} ${y-21} L ${markerX} ${y-10} Z`,fill:markerColor}));
+  const status=
+    String(item?.status||'')
+      .toLowerCase();
 
-  const leftLabel=item?.label_left||item?.left_label||item?.zone_start_label||'';
-  const middleLabel=item?.middle_label||item?.threshold_label||'';
-  const rightLabel=item?.label_right||item?.right_label||item?.zone_end_label||'';
+  const markerColor=
+    item?.marker_color||
+    (
+      status==='critical'||
+      status==='danger'||
+      status==='loss'
+        ?red()
+        :status==='safe'||
+         status==='good'||
+         status==='edge'
+          ?green()
+          :status==='warning'||
+           status==='attention'
+            ?yellow()
+            :'#efe8d2'
+    );
 
-  if(leftLabel)svg.appendChild(svgEl('text',{x:x1,y:y+30,'text-anchor':'start',class:'axis-label'})).textContent=leftLabel;
-  if(middleLabel)svg.appendChild(svgEl('text',{x:x(50),y:y+30,'text-anchor':'middle',class:'axis-label'})).textContent=middleLabel;
-  if(rightLabel)svg.appendChild(svgEl('text',{x:x2,y:y+30,'text-anchor':'end',class:'axis-label'})).textContent=rightLabel;
+  svg.appendChild(
+    svgEl('path',{
+      d:
+        `M ${markerX-7} ${y-21} `+
+        `L ${markerX+7} ${y-21} `+
+        `L ${markerX} ${y-10} Z`,
+      fill:markerColor
+    })
+  );
+
+  const leftLabel=
+    item?.label_left||
+    item?.left_label||
+    item?.zone_start_label||
+    '';
+
+  const middleLabel=
+    item?.middle_label||
+    item?.threshold_label||
+    '';
+
+  const rightLabel=
+    item?.label_right||
+    item?.right_label||
+    item?.zone_end_label||
+    '';
+
+  if(leftLabel){
+    svg.appendChild(
+      svgEl('text',{
+        x:x1,
+        y:y+30,
+        'text-anchor':'start',
+        class:'axis-label'
+      })
+    ).textContent=leftLabel;
+  }
+
+  if(middleLabel){
+    svg.appendChild(
+      svgEl('text',{
+        x:x(50),
+        y:y+30,
+        'text-anchor':'middle',
+        class:'axis-label'
+      })
+    ).textContent=middleLabel;
+  }
+
+  if(rightLabel){
+    svg.appendChild(
+      svgEl('text',{
+        x:x2,
+        y:y+30,
+        'text-anchor':'end',
+        class:'axis-label'
+      })
+    ).textContent=rightLabel;
+  }
 }
 function donut(svg,segments,text,sub){
   clear(svg);
@@ -2073,6 +2232,154 @@ function donut(svg,segments,text,sub){
     })
   ).textContent=sub;
 }
+function protectedRateTrend(svg,items){
+  clear(svg);
+  svg.setAttribute('viewBox','0 0 760 180');
+
+  const rows=
+    Array.isArray(items)
+      ?items
+        .map((item,index)=>{
+          const value=
+            item?.value??
+            item?.protected_rate_pct??
+            item?.sl_safe_pct??
+            item?.y;
+
+          return{
+            label:
+              item?.week||
+              `W${index+1}`,
+            period:
+              item?.period||
+              item?.label||
+              '',
+            value:
+              value!==null&&
+              value!==undefined&&
+              Number.isFinite(+value)
+                ?Number(value)
+                :null
+          };
+        })
+        .filter(item=>item.value!==null)
+      :[];
+
+  if(!rows.length){
+    svg.appendChild(
+      svgEl('text',{
+        x:20,
+        y:40,
+        class:'not-available'
+      })
+    ).textContent='not_available';
+
+    return;
+  }
+
+  const w=760;
+  const h=180;
+  const p={
+    l:58,
+    r:26,
+    t:20,
+    b:38
+  };
+
+  const x=index=>
+    rows.length===1
+      ?p.l+(w-p.l-p.r)/2
+      :p.l+
+       (w-p.l-p.r)*
+       index/
+       (rows.length-1);
+
+  const y=value=>
+    h-p.b-
+    (h-p.t-p.b)*
+    clamp(Number(value),0,100)/
+    100;
+
+  [0,25,50,75,100].forEach(value=>{
+    const yy=y(value);
+
+    svg.appendChild(
+      svgEl('line',{
+        x1:p.l,
+        y1:yy,
+        x2:w-p.r,
+        y2:yy,
+        class:'gridline'
+      })
+    );
+
+    svg.appendChild(
+      svgEl('text',{
+        x:8,
+        y:yy+4,
+        class:'axis-label'
+      })
+    ).textContent=value;
+  });
+
+  if(rows.length>1){
+    let path='';
+
+    rows.forEach((item,index)=>{
+      path+=
+        (index?'L':'M')+
+        x(index)+' '+
+        y(item.value);
+    });
+
+    svg.appendChild(
+      svgEl('path',{
+        d:path,
+        fill:'none',
+        stroke:green(),
+        'stroke-width':2.4,
+        'stroke-linecap':'round',
+        'stroke-linejoin':'round'
+      })
+    );
+  }
+
+  rows.forEach((item,index)=>{
+    const cx=x(index);
+    const cy=y(item.value);
+
+    svg.appendChild(
+      svgEl('circle',{
+        cx,
+        cy,
+        r:4,
+        fill:green(),
+        stroke:'#0b0d0f',
+        'stroke-width':1.5
+      })
+    );
+
+    svg.appendChild(
+      svgEl('text',{
+        x:cx,
+        y:cy-10,
+        'text-anchor':'middle',
+        class:'axis-label'
+      })
+    ).textContent=
+      item.value.toFixed(1)+'%';
+
+    svg.appendChild(
+      svgEl('text',{
+        x:cx,
+        y:h-10,
+        'text-anchor':'middle',
+        class:'axis-label'
+      })
+    ).textContent=item.label;
+  });
+}
+
 function slEventTimeline(svg,events){
   clear(svg);
   const rows=Array.isArray(events)?events.filter(item=>item&&item.event):[];
@@ -2746,41 +3053,178 @@ const directionItem=findAnalysisByName('direction',{});
 const profitabilityItem=findAnalysisByName('profitability',{});
 const expansionItem=findAnalysisByName('risk expansion',{});
 
-const directionSegments=Array.isArray(directionItem?.segments)?directionItem.segments:[];
-const profitabilitySegments=Array.isArray(profitabilityItem?.segments)?profitabilityItem.segments:[];
-const expansionSegments=Array.isArray(expansionItem?.segments)?expansionItem.segments:[];
+const directionSegments=
+  Array.isArray(directionItem?.segments)
+    ?directionItem.segments
+    :[];
 
-const segmentByLabel=(segments,label)=>segments.find(seg=>
-  String(seg?.label||'').toLowerCase().includes(label)
-)||{};
+const profitabilitySegments=
+  Array.isArray(profitabilityItem?.segments)
+    ?profitabilityItem.segments
+    :[];
 
-const longSegment=segmentByLabel(directionSegments,'long');
-const shortSegment=segmentByLabel(directionSegments,'short');
-const winSegment=segmentByLabel(profitabilitySegments,'win');
-const lossSegment=segmentByLabel(profitabilitySegments,'loss');
-const reducedSegment=segmentByLabel(expansionSegments,'reduced');
-const expandedSegment=segmentByLabel(expansionSegments,'expansion');
+const expansionSegments=
+  Array.isArray(expansionItem?.segments)
+    ?expansionItem.segments
+    :[];
 
-$('shortCoverValue').textContent=directionItem?.display_value||'—';
-$('profitFactorValue').textContent=profitabilityItem?.display_value||'—';
-$('longCoverValue').textContent=expansionItem?.display_value||'—';
+const segmentByLabel=(segments,label)=>
+  segments.find(seg=>
+    String(seg?.label||'')
+      .toLowerCase()
+      .includes(label)
+  )||{};
+
+const longSegment=
+  segmentByLabel(
+    directionSegments,
+    'long'
+  );
+
+const shortSegment=
+  segmentByLabel(
+    directionSegments,
+    'short'
+  );
+
+const winSegment=
+  segmentByLabel(
+    profitabilitySegments,
+    'win'
+  );
+
+const lossSegment=
+  segmentByLabel(
+    profitabilitySegments,
+    'loss'
+  );
+
+const reducedSegment=
+  segmentByLabel(
+    expansionSegments,
+    'reduced'
+  );
+
+const normalSegment=
+  segmentByLabel(
+    expansionSegments,
+    'normal'
+  );
+
+const expandedSegment=
+  segmentByLabel(
+    expansionSegments,
+    'expansion'
+  );
+
+$('shortCoverValue').textContent=
+  directionItem?.display_value||
+  '—';
+
+$('profitFactorValue').textContent=
+  profitabilityItem?.display_value||
+  '—';
+
+$('longCoverValue').textContent=
+  expansionItem?.display_value||
+  '—';
 
 $('shortWinRateValue').textContent=
-  longSegment?.pct!=null&&shortSegment?.pct!=null
+  longSegment?.pct!=null&&
+  shortSegment?.pct!=null
     ?`${num(longSegment.pct).toFixed(1)}% / ${num(shortSegment.pct).toFixed(1)}%`
     :'—';
+
 $('totalWinRateValue').textContent=
-  winSegment?.value!=null&&lossSegment?.value!=null
+  winSegment?.value!=null&&
+  lossSegment?.value!=null
     ?`${winSegment.value} / ${lossSegment.value}`
     :'—';
+
 $('longWinRateValue').textContent=
-  reducedSegment?.count!=null&&expandedSegment?.count!=null
-    ?`${reducedSegment.count} / ${expandedSegment.count}`
+  reducedSegment?.count!=null&&
+  normalSegment?.count!=null&&
+  expandedSegment?.count!=null
+    ?`${reducedSegment.count} / ${normalSegment.count} / ${expandedSegment.count}`
     :'—';
 
-analysisGauge($('shortAnalysisGauge'),directionItem);
-analysisGauge($('profitabilityGauge'),profitabilityItem);
-analysisGauge($('longAnalysisGauge'),expansionItem);
+const directionGaugeItem={
+  ...directionItem,
+  label_left:'Long',
+  middle_label:'',
+  label_right:'Short',
+  segments:[
+    {
+      label:'Long',
+      pct:longSegment?.pct,
+      color:green()
+    },
+    {
+      label:'Short',
+      pct:shortSegment?.pct,
+      color:blue()
+    }
+  ]
+};
+
+const profitabilityGaugeItem={
+  ...profitabilityItem,
+  label_left:'Losses',
+  middle_label:'',
+  label_right:'Wins',
+  marker_color:'#efe8d2',
+  segments:[
+    {
+      label:'Losses',
+      pct:lossSegment?.pct,
+      color:red()
+    },
+    {
+      label:'Wins',
+      pct:winSegment?.pct,
+      color:green()
+    }
+  ]
+};
+
+const expansionGaugeItem={
+  ...expansionItem,
+  label_left:'Reduced',
+  middle_label:'Normal',
+  label_right:'Expanded',
+  segments:[
+    {
+      label:'Reduced',
+      pct:reducedSegment?.pct,
+      color:green()
+    },
+    {
+      label:'Normal',
+      pct:normalSegment?.pct,
+      color:yellow()
+    },
+    {
+      label:'Expanded',
+      pct:expandedSegment?.pct,
+      color:red()
+    }
+  ]
+};
+
+analysisGauge(
+  $('shortAnalysisGauge'),
+  directionGaugeItem
+);
+
+analysisGauge(
+  $('profitabilityGauge'),
+  profitabilityGaugeItem
+);
+
+analysisGauge(
+  $('longAnalysisGauge'),
+  expansionGaugeItem
+);
 
 const slSafePct=safeGet(d,'sl.sl_safe_pct',null);
 const protectionSegments=safeArray(d,'sl.protection_segments');
@@ -2838,21 +3282,59 @@ $('slLegend').innerHTML=slSeg.map(s=>
   </span>`
 ).join('');
 
-const slProtectionTrend=safeArray(d,'sl.protection_rate_trend');
-if(slProtectionTrend.length){
-  drawLine(
-    $('slTimeline'),
-    slProtectionTrend.map(x=>({
-      x:x?.period||x?.label||'—',
-      y:x?.protected_rate_pct!==null&&x?.protected_rate_pct!==undefined&&Number.isFinite(+x.protected_rate_pct)
-        ?Number(x.protected_rate_pct)
-        :null
-    })).filter(x=>x.y!==null),
-    {minY:0,maxY:100,color:green()}
+const slProtectionTrend=
+  safeArray(
+    d,
+    'sl.protection_rate_trend'
   );
-}else{
-  slEventTimeline($('slTimeline'),safeArray(d,'sl.event_timeline'));
-}
+
+const slSafeHistory=
+  safeArray(
+    d,
+    'trends.sl_safe_pct'
+  );
+
+const protectedTrendRows=
+  slProtectionTrend.length
+    ?slProtectionTrend.map(item=>({
+        period:
+          item?.period||
+          item?.label||
+          '',
+        value:
+          item?.protected_rate_pct??
+          item?.value??
+          null
+      }))
+    :slSafeHistory.length
+      ?slSafeHistory.map(item=>({
+          period:
+            item?.period||
+            item?.label||
+            '',
+          value:
+            item?.value??
+            item?.sl_safe_pct??
+            null
+        }))
+      :slSafePct==null
+        ?[]
+        :[
+            {
+              period:
+                safeText(
+                  d,
+                  'period.current_period',
+                  ''
+                ),
+              value:slSafePct
+            }
+          ];
+
+protectedRateTrend(
+  $('slTimeline'),
+  protectedTrendRows
+);
 
 const riskZoneItems=safeArray(d,'risk.zone_items');
 const riskZoneFallback=[
