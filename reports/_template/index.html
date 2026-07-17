@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><title>QUD TDA Report</title>
+<style>
+:root{--bg:#0b0d0f;--panel:#111315;--text:#c6c6c6;--text-strong:#f0f0ed;--muted:#8a8a8a;--blue:#8fa6c8;--green:#6fa56f;--yellow:#bda351;--orange:#b87945;--red:#b4514b;--border-soft:#1f2428}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 30% -10%,#151b21 0%,#0b0d0f 44%,#08090a 100%);color:var(--text);font-family:Inter,Arial,sans-serif}.page{max-width:1240px;margin:0 auto;padding:20px 22px}.panel{background:linear-gradient(180deg,rgba(17,20,22,.72),rgba(10,12,14,.82));border:1px solid rgba(255,255,255,.06);border-radius:0;padding:14px;box-shadow:0 10px 28px rgba(0,0,0,.14);position:relative;overflow:visible}h1{font-size:24px;margin:0 0 6px;color:var(--text-strong)}h2{font-size:12px;margin:0 0 6px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:800}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#d5c27a;font-weight:700;margin-bottom:8px}.subtitle{margin:0;color:var(--muted);font-size:13px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}.badge{display:inline-flex;border:1px solid rgba(189,163,81,.45);border-radius:999px;padding:5px 10px;color:#d5c27a;background:rgba(189,163,81,.06);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.badge.good{border-color:rgba(111,165,111,.45);color:#8ec58e;background:rgba(111,165,111,.07)}.badge.warn{border-color:rgba(189,163,81,.45);color:#d5c27a;background:rgba(189,163,81,.07)}.badge.danger{border-color:rgba(180,81,75,.5);color:#d97f78;background:rgba(180,81,75,.08)}.badge.neutral{border-color:rgba(143,166,200,.35);color:var(--blue);background:rgba(143,166,200,.07)}.top{margin-bottom:12px}.top-combined{display:grid;grid-template-columns:1.75fr .7fr .7fr;gap:24px;align-items:center}.top-title-block{padding-left:62px}.score-wrap{position:relative;height:154px}.score-gauge{width:100%;height:100%}.score-value{position:absolute;left:50%;top:64%;transform:translate(-50%,-50%);font-size:42px;color:var(--green);font-weight:850;text-align:center}.score-value small{display:block;font-size:12px;color:var(--muted);margin-top:4px}.gauge-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:12;stroke-linecap:round}.gauge-seg{fill:none;stroke-width:12;stroke-linecap:round}.gauge-seg.red{stroke:var(--red)}.gauge-seg.orange{stroke:var(--orange)}.gauge-seg.green{stroke:var(--green)}.gauge-marker{stroke:#efe8d2;stroke-width:4;stroke-linecap:round}.gauge-tick{fill:var(--muted);font-size:10px}.status-badges{height:154px;display:flex;flex-direction:column;justify-content:center;gap:8px}.status-line{display:flex;align-items:center;gap:8px}.status-note{font-size:10px;color:var(--muted);font-weight:600}.top-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:20px 0 24px}.metric-card{padding:10px 24px 10px 0;display:grid;grid-template-columns:auto 104px;grid-template-rows:auto auto;column-gap:18px;align-items:end}.metric-card:first-child{padding-left:24px}.metric-card+.metric-card{padding-left:24px;border-left:1px solid rgba(255,255,255,.12)}.metric-value{font-size:22px;color:var(--text-strong);font-weight:800;margin-top:8px}.metric-spark{grid-column:2;grid-row:1/span 2;width:104px;height:38px;align-self:center}.pre-account-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:24px}.pre-leak-panel{grid-column:span 4;min-height:270px;overflow:hidden}.pre-score-panel{grid-column:span 8}.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:16px;row-gap:26px}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}.section-head{display:flex;justify-content:space-between;margin-bottom:14px}.chart-box{height:220px;margin-top:8px}.account-chart{height:250px}.planned-risk-chart{height:252px}.svg-chart{width:100%;height:100%;display:block}.gridline{stroke:rgba(255,255,255,.055);stroke-width:1}.axis-label{fill:var(--muted);font-size:10px;font-weight:600}.legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:10px;color:var(--muted)}.leg{display:inline-flex;align-items:center;gap:6px}.sw{width:10px;height:10px;border-radius:3px;background:var(--blue)}.sw.green{background:var(--green)}.sw.yellow{background:var(--yellow)}.sw.red{background:var(--red)}.sw.gray{background:#66717b}.mini-leak-stack{display:grid;gap:26px;margin-top:38px;padding:0 10px 8px}.mini-leak-row{display:grid;grid-template-columns:128px minmax(0,1fr);gap:18px;align-items:center}.mini-leak-name{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850;white-space:nowrap}.mini-leak-bar{height:7px;width:100%;max-width:100%;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 30%,var(--yellow) 30% 60%,var(--orange) 60% 80%,var(--red) 80% 100%);position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);overflow:visible}.mini-leak-bar .marker{position:absolute;top:-7px;width:4px;height:21px;background:#e9e0b6;border-radius:4px;box-shadow:0 0 0 2px rgba(0,0,0,.48);transform:translateX(-2px)}.pre-leak-panel h2{font-size:13px;letter-spacing:.1em;margin-bottom:8px}.analysis-panel{padding:28px 14px 30px;background:transparent;border:0;box-shadow:none}.analysis-panel h2{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.analysis-head-value{order:-1;font-size:16px;color:var(--text-strong);font-weight:850}.analysis-winrate{font-size:9px;color:var(--muted)}.analysis-winrate b{font-size:11px}.analysis-gauge-wrap{height:92px;margin-top:18px;display:grid;place-items:center}.analysis-gauge{width:100%;height:78px}.sl-protection-layout{display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:center}.donut-center{font-size:28px;fill:var(--green);font-weight:850}.donut-sub{font-size:10px;fill:var(--muted);letter-spacing:.12em}.timeline-dots{height:172px;width:100%}.legend-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:10px;color:var(--muted)}.legend-row{display:inline-flex;gap:6px;align-items:center}.sq{width:10px;height:10px;border-radius:3px}.risk-zone-summary{position:relative;z-index:1;display:flex;justify-content:flex-start;align-items:center;gap:58px;margin-top:-50px;margin-bottom:16px;padding:0 0 0 10px;text-align:left}.risk-zone-summary>div{min-width:104px}.risk-zone-value{font-size:20px;color:var(--text-strong);font-weight:850}.risk-zone-value.up{color:var(--red)}.risk-zone-value.down{color:var(--green)}.risk-zone-value.neutral{color:var(--muted)}.risk-zone-label{font-size:10px;color:var(--muted);margin-top:5px;font-weight:750}.risk-cv-scale{width:190px;margin-top:8px;margin-left:auto;margin-right:20px}.risk-after-note{margin-top:38px;color:var(--muted);font-size:14px}.risk-after-note b{font-size:22px;color:var(--green);font-weight:850}.risk-after-note b.up{color:var(--red)}.risk-cv-title{font-size:10px;color:var(--text-strong);font-weight:850;letter-spacing:.07em;margin-bottom:5px}.risk-cv-scale-top{position:relative;height:20px}.risk-cv-line{position:absolute;left:0;right:0;top:12px;height:5px;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 50%,var(--yellow) 50% 78%,var(--red) 78% 100%)}.risk-cv-marker{position:absolute;top:0;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #efe8d2}.risk-cv-ticks,.risk-cv-labels{display:flex;justify-content:space-between;font-size:8px;color:var(--muted);font-weight:750;margin-top:2px}.findings-panel{background:transparent;border:0;box-shadow:none;padding:18px 10px}.finding-list{display:grid;gap:18px;margin-top:18px}.finding-list .item{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:center}.item-num{width:24px;height:24px;border-radius:7px;font-size:11px;background:transparent;border:1.5px solid currentColor;display:grid;place-items:center;font-weight:800}.item-num.good{color:var(--green)}.item-num.warn{color:var(--yellow)}.item-num.danger{color:var(--red)}.item-title{font-size:12px;line-height:1.28;font-weight:500;color:var(--text)}.item-sub{display:none}.footer{display:flex;justify-content:space-between;margin-top:14px;color:var(--muted);font-size:12px;border-top:1px solid var(--border-soft);padding-top:12px}.not-available{fill:var(--muted);font-size:13px;font-weight:700}.help{display:inline-grid;place-items:center;width:16px;height:16px;margin-left:6px;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:0;line-height:1;cursor:help;vertical-align:middle;text-transform:none}.help:hover{border-color:rgba(255,255,255,.34);color:var(--text-strong)}.qud-tooltip{position:fixed;z-index:9999;max-width:420px;padding:18px 20px;background:rgba(10,12,14,.96);border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 22px 60px rgba(0,0,0,.5);color:var(--text);font-size:13px;line-height:1.42;pointer-events:none}.qud-tooltip-title{font-size:14px;font-weight:850;color:var(--text-strong);margin-bottom:12px}.qud-tooltip b{display:block;margin-top:9px;margin-bottom:3px;color:#d5c27a;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.qud-tooltip p{margin:0 0 3px}.qud-tooltip .muted{color:var(--muted)}@media(max-width:1100px){.top-combined,.grid,.pre-account-grid,.top-metrics{display:block}.panel{margin-bottom:14px}}
+.risk-zone-value.baseline{color:var(--green)}.footer a{color:inherit;text-decoration:none}.footer a:hover{color:var(--text-strong);text-decoration:underline}
+</style></head><body><main class="page">
+<section class="top"><div class="panel"><div class="top-combined"><div class="top-title-block"><div class="eyebrow">Trade Decision Audit Report</div><h1>—</h1><p class="subtitle" id="headerMeta">—</p></div><div><div class="score-wrap"><svg class="score-gauge" id="scoreGauge" viewBox="0 0 320 180"></svg><div class="score-value" id="scoreValue">—</div></div><div class="label" style="text-align:center">Trust Score</div></div><div><div class="status-badges"><div class="status-line"><span class="badge" id="riskMode">—</span><span class="status-note">risk</span></div><div class="status-line"><span class="badge neutral" id="trustZone">—</span><span class="status-note">trust</span></div><div class="status-line"><span class="badge neutral" id="scoreDelta">—</span><span class="status-note">prev.period</span></div></div><div class="label" style="text-align:center">Trust status</div></div></div></div></section>
+<section class="top-metrics"><div class="metric-card"><div class="label">Win Ratio</div><div class="metric-value" id="topWinRatio">—</div><svg class="metric-spark" id="sparkWinRatio"></svg></div><div class="metric-card"><div class="label">Profit Factor</div><div class="metric-value" id="topProfitFactor">—</div><svg class="metric-spark" id="sparkProfitFactor"></svg></div><div class="metric-card"><div class="label">Average Risk %</div><div class="metric-value" id="topAverageRisk">—</div><svg class="metric-spark" id="sparkAverageRisk"></svg></div><div class="metric-card"><div class="label">SL Safe</div><div class="metric-value" id="topSlSafe">—</div><svg class="metric-spark" id="sparkSlSafe"></svg></div></section>
+<section class="pre-account-grid"><div class="panel pre-leak-panel"><h2>QUD Leak Map</h2><div class="mini-leak-stack" id="miniLeakGrid"></div></div><div class="panel pre-score-panel"><h2>TRUST SCORE OVER TIME</h2><div class="chart-box"><svg class="svg-chart" id="scoreTrend"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Score</span><span class="leg"><span class="sw red"></span>pre QUD</span><span class="leg"><span class="sw" style="background:var(--orange)"></span>QUD Room</span><span class="leg"><span class="sw green"></span>QUD Elite</span></div></div></section>
+<section class="grid">
+<div class="panel span-12"><div class="section-head"><h2>Account Balance & Equity</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box account-chart"><svg class="svg-chart" id="accountEquity"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Balance</span><span class="leg"><span class="sw gray"></span>Equity</span></div></div>
+<div class="panel span-6"><div class="section-head"><h2>Holding Time Efficiency</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box"><svg class="svg-chart" id="durationQuality"></svg></div><div class="legend"><span class="leg"><span class="sw green"></span>Above trader baseline</span><span class="leg"><span class="sw red"></span>Below trader baseline</span><span class="leg"><span class="sw gray"></span>Trader baseline</span></div></div>
+<div class="panel span-6"><div class="section-head"><h2>Instrument Contribution & Load</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box"><svg class="svg-chart" id="instrumentContribution"></svg></div><div class="legend"><span class="leg"><span class="sw green"></span>Win Contribution</span><span class="leg"><span class="sw"></span>Load Volume</span></div></div>
+<div class="span-4 analysis-panel"><h2>Short Cover Ratio <span class="analysis-head-value" id="shortCoverValue">—</span><span class="analysis-winrate">Win Rate % <b id="shortWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="shortAnalysisGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Profit Factor <span class="analysis-head-value" id="profitFactorValue">—</span><span class="analysis-winrate">Win Rate % <b id="totalWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="profitabilityGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Long Cover Ratio <span class="analysis-head-value" id="longCoverValue">—</span><span class="analysis-winrate">Win Rate % <b id="longWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="longAnalysisGauge"></svg></div></div>
+<div class="panel span-8"><h2>Protected Trades Rate</h2><div class="sl-protection-layout"><svg id="slDonut" width="190" height="150"></svg><svg class="timeline-dots" id="slTimeline"></svg></div><div class="legend-list" id="slLegend"></div></div>
+<div class="panel span-4"><h2>Risk Zone Distribution <span class="label">VS PERSONAL BASELINE</span></h2><div class="chart-box"><svg class="svg-chart" id="scoreDonut"></svg></div><div class="risk-zone-summary" id="riskZoneSummary"></div></div>
+<div class="panel span-4"><h2>Risk After Loss <span class="label" id="riskAfterLossPeriod">WEEK</span></h2><div class="chart-box"><svg class="svg-chart" id="lossBarsTop"></svg></div><div class="item-sub" id="lossNoteTop" style="margin-top:46px"></div></div>
+<div class="panel span-8"><div class="section-head"><h2>Risk Consistency</h2><div class="risk-cv-scale" id="riskCvScale"></div></div><div class="chart-box"><svg class="svg-chart" id="riskLine"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Risk %</span><span class="leg"><span class="sw green"></span>Normal risk zone</span><span class="leg"><span class="sw yellow"></span>Median risk</span><span class="leg"><span class="sw red"></span>Above normal risk</span></div></div>
+<div class="panel span-8"><h2>PLANNED RISK VS ACTUAL LOSS</h2><div class="chart-box planned-risk-chart"><svg class="svg-chart" id="scatter"></svg></div><div class="legend"><span class="leg"><span class="sw" style="background:#c0c0bd"></span>Planned SL line</span><span class="leg"><span class="sw yellow"></span>Median risk</span><span class="leg"><span class="sw gray"></span>Actual loss within plan</span><span class="leg"><span class="sw red"></span>Excess loss above plan</span></div></div>
+<div class="panel span-4 findings-panel"><h2>5 Key Findings <span class="label" id="findingsPeriod">WEEK</span></h2><div class="finding-list" id="findings"></div></div>
+</section><div class="footer"><a id="footTrader" href="https://fx-qud.com/" target="_blank" rel="noopener noreferrer">fx-qud.com</a><span id="generated">Generated: —</span></div></main>
+<script id="report-data" type="application/json">
+__QUD_REPORT_JSON__
+</script>
+<script>
+const $=id=>document.getElementById(id);
+const data=JSON.parse($('report-data').textContent);
+const num=value=>{
+  if(value===null||value===undefined||value===''){
+    throw new TypeError('Expected numeric report value');
+  }
+  const parsed=Number(value);
+  if(!Number.isFinite(parsed)){
+    throw new TypeError('Invalid numeric report value: '+String(value));
+  }
+  return parsed;
+};
+const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+const css=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const blue=()=>css('--blue');
+const green=()=>css('--green');
+const red=()=>css('--red');
+const yellow=()=>css('--yellow');
+
+function pathValue(root,path){
+  return path.split('.').reduce((value,key)=>
+    value!==null&&value!==undefined&&Object.prototype.hasOwnProperty.call(value,key)
+      ?value[key]
+      :undefined
+  ,root);
+}
+
+function assertReportContract(report){
+  const requiredValues=[
+    'report.audit_id','report.display_name','report.generated_at','report.version',
+    'trader.account_login','trader.trader_id',
+    'period.start','period.end','period.current_period',
+    'score.qud_tda_score','score.risk_mode','score.trust_zone','score.trust_score_delta',
+    'duration.holding_time_efficiency','instrument_contribution','analysis',
+    'sl.protection_summary','risk.zone_distribution','risk.cv',
+    'behavior.post_loss_summary','plan_fact','findings'
+  ];
+  const requiredArrays=[
+    'score.zones','trends.win_ratio_pct','trends.profit_factor',
+    'trends.average_risk_pct','trends.sl_safe_pct',
+    'comparison.score_history','account.balance_series','account.equity_series',
+    'duration.holding_time_efficiency.groups','instrument_contribution.groups',
+    'sl.protection_summary.segments','risk.zone_distribution.zone_items',
+    'risk.trade_series','behavior.risk_after_loss_items',
+    'plan_fact.points','findings.items'
+  ];
+  const missing=requiredValues.filter(path=>pathValue(report,path)===undefined);
+  const invalidArrays=requiredArrays.filter(path=>!Array.isArray(pathValue(report,path)));
+  if(missing.length||invalidArrays.length){
+    throw new Error(
+      'Invalid QUD report JSON contract. Missing: '+
+      [...missing,...invalidArrays].join(', ')
+    );
+  }
+  const displayClasses=['danger','warn','good','neutral'];
+  if(!displayClasses.includes(report.score.display_class)){
+    throw new Error('Invalid score.display_class');
+  }
+  report.findings.items.forEach((item,index)=>{
+    if(!displayClasses.includes(item.display_class)){
+      throw new Error(`Invalid findings.items[${index}].display_class`);
+    }
+  });
+}
+
+function svgEl(name,attributes={}){
+  const element=document.createElementNS('http://www.w3.org/2000/svg',name);
+  Object.entries(attributes).forEach(([key,value])=>element.setAttribute(key,value));
+  return element;
+}
+
+function clear(element){
+  while(element&&element.firstChild)element.removeChild(element.firstChild);
+}
+
+function htmlEl(name,className,text){
+  const element=document.createElement(name);
+  if(className)element.className=className;
+  if(text!==undefined)element.textContent=String(text);
+  return element;
+}
+
+assertReportContract(data);
+
+const helpTexts={leakMap:['QUD Leak Map','Карта потерь качества торгового процесса по блокам: риск, защита сделки, поведение после убытков и исполнение.','Чем дальше маркер вправо, тем сильнее утечка качества. Зелёный — контроль, жёлтый — зона внимания, оранжевый/красный — заметная проблема.','Показывает, в каком блоке торговый процесс теряет доверие.'],trustScoreTrend:['Trust Score Over Time','Динамика Trust Score по неделям с учётом накопленной истории.','0–39 — pre QUD, 40–79 — QUD Room, 80–100 — QUD Elite. Линия показывает изменение качества от недели к неделе.','Передаёт изменение качества торгового процесса во времени.'],accountEquity:['Account Balance & Equity','Динамика баланса и equity по реальным CSV-данным за период аудита.','Balance — закрытый результат. Equity — состояние счёта с учётом открытых позиций. Если линии совпадают, плавающей просадки в точках отчёта не было.','Показывает финансовую траекторию счёта без замены анализа качества решений.'],holdingTime:['Holding Time Efficiency','Эффективность удержания сделок в разных диапазонах времени в сравнении с общим Win Rate трейдера за весь накопленный период до даты окончания отчёта.','Пунктирная линия — общий Win Rate трейдера.<br><br>Зелёный бар — положительный результат выше общего Win Rate.<br>Красный бар — отрицательный ниже общего Win Rate.<br><br>Значение над баром показывает разницу в процентных пунктах от Win Rate группы.','График помогает определить, какие диапазоны удержания исторически были наиболее и наименее эффективными.'],instrumentContribution:['Instrument Contribution & Load','Сравнение вклада инструментов в выигрышные сделки и торговую нагрузку.','Win Contribution — доля выигрышных сделок инструмента. Load Volume — доля торгового объёма.','Показывает, где формируется результат и где сконцентрирована нагрузка.'],shortCover:['Short Cover Ratio','Насколько прибыльные short-сделки перекрывают убыточные short-сделки.','Выше 1.0 — Edge zone. Ниже 1.0 — Loss zone.','Показывает качество результата отдельно по short-направлению.'],profitFactor:['Profit Factor','Соотношение общей прибыли к общему убытку за период.','Выше 1.0 — прибыль перекрывает убытки. Ниже 1.0 — убытки превышают прибыль.','Показывает результативность, но не заменяет риск- и поведенческую оценку.'],longCover:['Long Cover Ratio','Насколько прибыльные long-сделки перекрывают убыточные long-сделки.','Выше 1.0 — Edge zone. Ниже 1.0 — Loss zone.','Показывает качество результата отдельно по long-направлению.'],protectedTrades:['Protected Trades Rate','Доля сделок, открытых с установленным Stop Loss, и стабильность защиты по неделям.','SAFE — сделки с корректным SL. No SL / SL Removed / SL Changed показывают нарушения защиты сделки.','Передаёт дисциплину защиты позиции.'],riskZone:['Risk Zone Distribution','Распределение сделок относительно типичного уровня риска трейдера. Personal baseline — медианный риск по всем сделкам за анализируемый период.','Normal Risk — сделки внутри персонального диапазона. Risk Expansion — выше верхней границы. Reduced Risk — ниже рабочей зоны.<br><br><strong>Risk Drift</strong> показывает, насколько часто трейдер повышал или снижал риск относительно своего обычного уровня.','Показывает, сохраняет ли трейдер обычный уровень риска или чаще отклоняется в сторону его повышения либо снижения.'],riskAfterLoss:['Risk After Loss','Данные за последнюю завершённую отчётную неделю, накопительная история здесь не учитывается.','<strong>Risk Drift</strong> показывает изменение среднего риска после серии убытков относительно <strong>Normal Risk</strong>.<br><br>Бар ниже Normal Risk — снижение риска после убытка. Бар выше Normal Risk — повышение риска после убытка. N/A — такой серии убытков не было.','Показывает наличие или отсутствие повышения риска после убытков.'],riskConsistency:['Risk Consistency','Последовательность риска по всем реальным сделкам за накопленный период до даты окончания отчёта.','Голубая линия — риск по сделкам. Зелёная зона — Normal Risk. Жёлтый пунктир — медианный риск. Красная точка — выход выше Normal Risk.<br><br><strong>Risk CV</strong> показывает стабильность размера риска: чем ближе значение к 0, тем риск стабильнее; 1.0 и выше означает сильный разброс.','Показывает, насколько последовательно трейдер контролирует размер риска на протяжении всей накопленной истории.'],plannedRisk:['Planned Risk vs Actual Loss','Сравнение запланированного риска по SL с фактическим убытком по сделке.','Серая зона — убыток в рамках плана. Красный сегмент — превышение плана. Белая линия — planned SL. Жёлтый пунктир — median risk.','Показывает, были ли убытки в рамках заранее установленного риска.'],findings:['5 Key Findings','Пять ключевых фактов по текущей отчётной неделе.','Findings описывают текущую неделю, а не весь исторический период. Это факты, не торговые рекомендации.','Передаёт краткий диагностический вывод по последней неделе аудита.']};
+
+function appendHelpText(container,content){
+  String(content)
+    .split(/(<br><br>|<br>|<strong>.*?<\/strong>)/g)
+    .filter(Boolean)
+    .forEach(token=>{
+      if(token==='<br>'){
+        container.appendChild(document.createElement('br'));
+      }else if(token==='<br><br>'){
+        container.append(
+          document.createElement('br'),
+          document.createElement('br')
+        );
+      }else if(token.startsWith('<strong>')&&token.endsWith('</strong>')){
+        container.appendChild(
+          htmlEl('strong','',token.slice(8,-9))
+        );
+      }else{
+        container.appendChild(document.createTextNode(token));
+      }
+    });
+}
+
+function initHelp(){
+  const map=[
+    ['QUD LEAK MAP','leakMap'],
+    ['TRUST SCORE OVER TIME','trustScoreTrend'],
+    ['ACCOUNT BALANCE & EQUITY','accountEquity'],
+    ['HOLDING TIME EFFICIENCY','holdingTime'],
+    ['INSTRUMENT CONTRIBUTION & LOAD','instrumentContribution'],
+    ['SHORT COVER RATIO','shortCover'],
+    ['PROFIT FACTOR','profitFactor'],
+    ['LONG COVER RATIO','longCover'],
+    ['PROTECTED TRADES RATE','protectedTrades'],
+    ['RISK ZONE DISTRIBUTION','riskZone'],
+    ['RISK AFTER LOSS','riskAfterLoss'],
+    ['RISK CONSISTENCY','riskConsistency'],
+    ['PLANNED RISK VS ACTUAL LOSS','plannedRisk'],
+    ['5 KEY FINDINGS','findings']
+  ];
+  document.querySelectorAll('h2').forEach(heading=>{
+    const raw=(heading.childNodes[0]?.textContent||heading.textContent||'')
+      .trim()
+      .toUpperCase();
+    const item=map.find(([label])=>raw.includes(label));
+    if(!item||heading.querySelector('.help'))return;
+    const icon=htmlEl('span','help','?');
+    icon.dataset.help=item[1];
+    const winRate=heading.querySelector('.analysis-winrate');
+    const before=heading.querySelector('.analysis-head-value');
+    if(winRate)heading.appendChild(icon);
+    else if(before)heading.insertBefore(icon,before);
+    else heading.appendChild(icon);
+  });
+
+  let tooltip;
+  document.querySelectorAll('.help[data-help]').forEach(icon=>{
+    icon.addEventListener('mouseenter',()=>{
+      const content=helpTexts[icon.dataset.help];
+      if(!content)return;
+      const readingTitle=
+        icon.dataset.help==='holdingTime'
+          ?'Как читать график'
+          :'Как читать цифры';
+      tooltip=htmlEl('div','qud-tooltip');
+      tooltip.appendChild(htmlEl('div','qud-tooltip-title',content[0]));
+      [
+        ['Что показывает',content[1],''],
+        [readingTitle,content[2],''],
+        ['Что передаёт',content[3],'muted']
+      ].forEach(([title,text,className])=>{
+        tooltip.appendChild(htmlEl('b','',title));
+        const paragraph=htmlEl('p',className);
+        appendHelpText(paragraph,text);
+        tooltip.appendChild(paragraph);
+      });
+      document.body.appendChild(tooltip);
+      const rect=icon.getBoundingClientRect();
+      const left=Math.min(
+        window.innerWidth-440,
+        Math.max(16,rect.left-20)
+      );
+      const top=Math.min(
+        window.innerHeight-tooltip.offsetHeight-16,
+        Math.max(16,rect.bottom+12)
+      );
+      tooltip.style.left=left+'px';
+      tooltip.style.top=top+'px';
+    });
+    icon.addEventListener('mouseleave',()=>{
+      if(tooltip){
+        tooltip.remove();
+        tooltip=null;
+      }
+    });
+  });
+}
+function scoreGauge(svg,score,zones){clear(svg);const cx=160,cy=125,r=90,start=200,end=-20,total=start-end;const polar=(a,rad=r)=>{const z=Math.PI*a/180;return{x:cx+rad*Math.cos(z),y:cy-rad*Math.sin(z)}};const angle=v=>start-(v/100)*total;const arc=(a1,a2,cls)=>{const p1=polar(a1),p2=polar(a2),large=Math.abs(a1-a2)>180?1:0;svg.appendChild(svgEl('path',{d:`M ${p1.x} ${p1.y} A ${r} ${r} 0 ${large} 1 ${p2.x} ${p2.y}`,class:cls}))};const activeZones=zones;const zoneClass=status=>status==='pre_qud'?'red':status==='qud_elite'?'green':'orange';arc(start,end,'gauge-track');activeZones.forEach(zone=>arc(angle(clamp(Number(zone.from),0,100)),angle(clamp(Number(zone.to),0,100)),`gauge-seg ${zoneClass(zone.status)}`));const ticks=[...new Set(activeZones.flatMap(zone=>[Number(zone.from),Number(zone.to)]).filter(Number.isFinite))].sort((a,b)=>a-b);ticks.forEach(v=>{const p=polar(angle(clamp(v,0,100)),108);svg.appendChild(svgEl('text',{x:p.x,y:p.y+4,'text-anchor':'middle',class:'gauge-tick'})).textContent=v});const a=angle(clamp(score,0,100)),p1=polar(a,r-8),p2=polar(a,r+8);svg.appendChild(svgEl('line',{x1:p1.x,y1:p1.y,x2:p2.x,y2:p2.y,class:'gauge-marker'}))}
+function drawLine(svg,arr,opts={}){
+  clear(svg);
+  if(!arr||!arr.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+  const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:46,r:20,t:18,b:34};
+  const vals=arr.map(d=>num(d.y));
+  const minY=opts.minY??Math.min(0,...vals),maxY=opts.maxY??Math.max(1,...vals)*1.15;
+  const x=i=>p.l+(w-p.l-p.r)*(arr.length<=1?0:i/(arr.length-1));
+  const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);
+  for(let i=0;i<=4;i++){
+    const yy=p.t+(h-p.t-p.b)*i/4;
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=(maxY-(maxY-minY)*i/4).toFixed(opts.digits??0);
+  }
+  let path='';
+  arr.forEach((pt,i)=>path+=(i?'L':'M')+x(i)+' '+y(num(pt.y)));
+  svg.appendChild(svgEl('path',{d:path,fill:'none',stroke:opts.color||blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+  const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
+  const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});
+  tooltip.appendChild(tooltipRect);
+  tooltip.appendChild(tooltipText);
+  arr.forEach((pt,i)=>{
+    const cx=x(i),cy=y(num(pt.y));
+    const circle=svgEl('circle',{cx,cy,r:3.2,fill:opts.color||blue(),stroke:'#0b0d0f','stroke-width':1});
+    circle.style.cursor='pointer';
+    circle.addEventListener('mouseenter',()=>{
+      const label=String(pt.x||('W'+(i+1)))+': '+num(pt.y).toFixed(1)+'%';
+      const width=Math.max(78,label.length*6.2+16);
+      const left=Math.max(p.l,Math.min(w-p.r-width,cx-width/2));
+      const top=Math.max(p.t,cy-34);
+      tooltipRect.setAttribute('x',left);
+      tooltipRect.setAttribute('y',top);
+      tooltipRect.setAttribute('width',width);
+      tooltipRect.setAttribute('height',24);
+      tooltipText.setAttribute('x',left+8);
+      tooltipText.setAttribute('y',top+16);
+      tooltipText.textContent=label;
+      tooltip.setAttribute('visibility','visible');
+    });
+    circle.addEventListener('mouseleave',()=>tooltip.setAttribute('visibility','hidden'));
+    svg.appendChild(circle);
+    if(i%Math.ceil(arr.length/7)===0||i===arr.length-1){
+      svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.x;
+    }
+  });
+  svg.appendChild(tooltip);
+}
+function sparkMini(svg,arr,opts={}){clear(svg);if(!arr||!arr.length)return;const w=svg.clientWidth||104,h=svg.clientHeight||38,p={l:3,r:4,t:6,b:6};const vals=arr.map(d=>Number(d.y)).filter(Number.isFinite);if(!vals.length)return;const minY=Math.min(opts.minY??Math.min(...vals),...vals),maxY=Math.max(opts.maxY??Math.max(...vals),...vals);const x=i=>arr.length<=1?p.l+(w-p.l-p.r)/2:p.l+(w-p.l-p.r)*i/(arr.length-1);const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);let d='';arr.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(Number(pt.y)));svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':1.7,'stroke-linecap':'round','stroke-linejoin':'round'}));const last=arr[arr.length-1];svg.appendChild(svgEl('circle',{cx:x(arr.length-1),cy:y(Number(last.y)),r:2.2,fill:blue()}));}
+function renderTopMetric(valueId,sparkId,series,formatter,scale){const points=(Array.isArray(series)?series:[]).filter(point=>point&&Number.isFinite(Number(point.value))).map(point=>({x:String(point.period||''),y:Number(point.value)}));const latest=points.length?points[points.length-1]:null;$(valueId).textContent=latest?formatter(latest.y):'not_available';sparkMini($(sparkId),points,scale);}
+function trustScoreTrend(svg){clear(svg);const rawHistory=data.comparison.score_history;const arr=rawHistory.filter(point=>point&&Number.isFinite(Number(point.value))).map((point,index)=>({x:'W'+(index+1),y:clamp(Number(point.value),0,100),period:String(point.period||'')}));if(!arr.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}const zones=data.score.zones.map(zone=>({from:clamp(Number(zone.from),0,100),to:clamp(Number(zone.to),0,100),status:String(zone.status||'')})).filter(zone=>Number.isFinite(zone.from)&&Number.isFinite(zone.to)&&zone.to>zone.from).sort((a,b)=>a.from-b.from);const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:58,r:24,t:18,b:34};const minY=0,maxY=100;const x=i=>p.l+(w-p.l-p.r)*(arr.length<=1?0:i/(arr.length-1));const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY);const zoneX=p.l-22,zoneW=8;const zoneColor=status=>status==='pre_qud'?red():status==='qud_elite'?green():css('--orange');const ticks=[...new Set(zones.flatMap(zone=>[zone.from,zone.to]))].sort((a,b)=>a-b);ticks.forEach(v=>{svg.appendChild(svgEl('line',{x1:p.l,y1:y(v),x2:w-p.r,y2:y(v),class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:y(v)+4,class:'axis-label'})).textContent=v});zones.forEach(zone=>svg.appendChild(svgEl('rect',{x:zoneX,y:y(zone.to),width:zoneW,height:y(zone.from)-y(zone.to),rx:3,fill:zoneColor(zone.status),opacity:.95})));let d='';arr.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(pt.y));svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':2.4,'stroke-linecap':'round','stroke-linejoin':'round'}));arr.forEach((pt,i)=>{svg.appendChild(svgEl('circle',{cx:x(i),cy:y(pt.y),r:3.2,fill:blue(),stroke:'#0b0d0f','stroke-width':1.2}));svg.appendChild(svgEl('text',{x:x(i),y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.x});const last=arr[arr.length-1];svg.appendChild(svgEl('text',{x:x(arr.length-1)-2,y:y(last.y)-10,'text-anchor':'middle',class:'axis-label'})).textContent=last.y.toFixed(2)}
+function parseAccountTime(value){
+  const text=String(value||'').trim();
+  const match=text.match(/^(\d{4})[.\-/](\d{2})[.\-/](\d{2})(?:[ T](\d{1,2}):(\d{2}):(\d{2}))?$/);
+  if(!match)return null;
+  const normalized=`${match[1]}-${match[2]}-${match[3]}T${String(match[4]||'00').padStart(2,'0')}:${match[5]||'00'}:${match[6]||'00'}`;
+  const timestamp=Date.parse(normalized);
+  return Number.isFinite(timestamp)?timestamp:null;
+}
+function niceMoneyStep(range,targetTicks=5){
+  const raw=Math.max(range,1)/Math.max(targetTicks,1);
+  const power=Math.pow(10,Math.floor(Math.log10(raw)));
+  const fraction=raw/power;
+  const nice=fraction<=1?1:fraction<=2?2:fraction<=5?5:10;
+  return nice*power;
+}
+function accountChart(svg,account){
+  clear(svg);
+  const balanceInput=account.balance_series;
+  const equityInput=account.equity_series;
+  const normalize=(items,key)=>items.map((point,index)=>({
+    timestamp:parseAccountTime(point&&point.timestamp),
+    value:Number(point&&point[key]),
+    position_ticket:String(point&&point.position_ticket||''),
+    order:index
+  })).filter(point=>point.timestamp!==null&&Number.isFinite(point.value)).sort((a,b)=>a.timestamp-b.timestamp||a.order-b.order);
+  const balance=normalize(balanceInput,'balance');
+  const equity=normalize(equityInput,'equity');
+  if(!balance.length&&!equity.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+  const w=svg.clientWidth||700,h=svg.clientHeight||250,p={l:64,r:22,t:18,b:36};
+  const all=[...balance,...equity];
+  let minTime=Math.min(...all.map(point=>point.timestamp));
+  let maxTime=Math.max(...all.map(point=>point.timestamp));
+  if(minTime===maxTime)maxTime=minTime+86400000;
+  const values=all.map(point=>point.value);
+  const low=Math.min(...values),high=Math.max(...values);
+  const padding=Math.max((high-low)*0.08,Math.abs(high||1)*0.01,1);
+  const step=niceMoneyStep((high+padding)-(low-padding),5);
+  const minY=Math.floor((low-padding)/step)*step;
+  let maxY=Math.ceil((high+padding)/step)*step;
+  if(maxY<=minY)maxY=minY+step;
+  const x=time=>p.l+(w-p.l-p.r)*(time-minTime)/(maxTime-minTime);
+  const y=value=>h-p.b-(h-p.t-p.b)*(value-minY)/(maxY-minY);
+  const moneyTick=new Intl.NumberFormat('en-US',{useGrouping:false,maximumFractionDigits:step<1?2:step<10?1:0});
+  for(let value=minY;value<=maxY+step*0.25;value+=step){
+    const yy=y(value);
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=moneyTick.format(value);
+  }
+  const spanDays=(maxTime-minTime)/86400000;
+  const intervalDays=spanDays<=14?1:spanDays<=120?7:spanDays<=730?30:90;
+  const ticks=[];
+  const addTick=time=>{
+    const date=new Date(time);
+    const key=`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    if(ticks.length&&ticks[ticks.length-1].key===key)ticks[ticks.length-1]={time,key};
+    else ticks.push({time,key});
+  };
+  addTick(minTime);
+  const cursor=new Date(minTime);
+  cursor.setHours(0,0,0,0);
+  cursor.setDate(cursor.getDate()+intervalDays);
+  while(cursor.getTime()<maxTime){addTick(cursor.getTime());cursor.setDate(cursor.getDate()+intervalDays)}
+  addTick(maxTime);
+  const dateLabel=new Intl.DateTimeFormat('en-US',{month:'short',day:'2-digit'});
+  ticks.forEach((tick,index)=>{
+    const anchor=index===0?'start':index===ticks.length-1?'end':'middle';
+    svg.appendChild(svgEl('text',{x:x(tick.time),y:h-9,'text-anchor':anchor,class:'axis-label'})).textContent=dateLabel.format(new Date(tick.time));
+  });
+  if(equity.length){
+    let equityPath='';
+    equity.forEach((point,index)=>equityPath+=(index?'L':'M')+x(point.timestamp)+' '+y(point.value));
+    svg.appendChild(svgEl('path',{d:equityPath,fill:'none',stroke:'#66717b','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round','stroke-dasharray':'4 4'}));
+  }
+  if(balance.length){
+    let balancePath='';
+    balance.forEach((point,index)=>balancePath+=(index?'L':'M')+x(point.timestamp)+' '+y(point.value));
+    svg.appendChild(svgEl('path',{d:balancePath,fill:'none',stroke:blue(),'stroke-width':2.2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+    const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+    const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
+    const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});
+    tooltip.appendChild(tooltipRect);
+    tooltip.appendChild(tooltipText);
+    balance.forEach(point=>{
+      const cx=x(point.timestamp),cy=y(point.value);
+      const circle=svgEl('circle',{cx,cy,r:3.2,fill:blue(),stroke:'#0b0d0f','stroke-width':1.2});
+      circle.style.cursor='pointer';
+      circle.addEventListener('mouseenter',()=>{
+        const label=`Balance: ${new Intl.NumberFormat('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}).format(point.value)}`;
+        const width=Math.max(112,label.length*6.2+16);
+        const left=Math.max(p.l,Math.min(w-p.r-width,cx-width/2));
+        const top=Math.max(p.t,cy-34);
+        tooltipRect.setAttribute('x',left);tooltipRect.setAttribute('y',top);tooltipRect.setAttribute('width',width);tooltipRect.setAttribute('height',24);
+        tooltipText.setAttribute('x',left+8);tooltipText.setAttribute('y',top+16);tooltipText.textContent=label;
+        tooltip.setAttribute('visibility','visible');
+      });
+      circle.addEventListener('mouseleave',()=>tooltip.setAttribute('visibility','hidden'));
+      svg.appendChild(circle);
+    });
+    svg.appendChild(tooltip);
+  }
+}
+function formatHoldingDuration(value){
+  const total=Math.max(0,Math.round(num(value)));
+  if(total<60)return total+'m';
+  const days=Math.floor(total/1440);
+  const hours=Math.floor((total%1440)/60);
+  const minutes=total%60;
+  if(days)return days+'d '+hours+'h';
+  return hours+'h '+minutes+'m';
+}
+function holdingTimeEfficiencyBars(svg,model,baselineValue){
+  const groups=model.groups;
+  const baseline=Number(baselineValue);
+  const rows=groups.map(group=>{
+    const winRate=Number(group&&group.win_rate_pct);
+    const minDuration=Number(group&&group.duration_min);
+    const maxDuration=Number(group&&group.duration_max);
+    const valid=Number.isFinite(winRate)&&Number.isFinite(baseline);
+    return{
+      x:Number.isFinite(minDuration)&&Number.isFinite(maxDuration)
+        ?formatHoldingDuration(minDuration)+'–'+formatHoldingDuration(maxDuration)
+        :'N/A',
+      y:valid?winRate-baseline:null
+    };
+  });
+  bars(svg,rows,{
+    baselineLabel:Number.isFinite(baseline)?'Trader Win Rate '+baseline.toFixed(1)+'%':''
+  });
+}
+function bars(svg,rows,opts={}){clear(svg);const w=svg.clientWidth||600,h=svg.clientHeight||220,p={l:42,r:24,t:18,b:60};const vals=rows.map(r=>r.y==null?0:r.y);const minY=opts.minY??Math.min(0,...vals),maxY=opts.maxY??Math.max(1,...vals)*1.18;const barAreaLeft=Math.min(w-p.r-36,Math.max(170,w*.18)),barAreaRight=w-p.r-18,compactSpan=Math.min(barAreaRight-barAreaLeft,Math.max(0,(rows.length-1)*180)),barLeft=(barAreaLeft+barAreaRight-compactSpan)/2,barRight=barLeft+compactSpan;const x=i=>rows.length<=1?(barLeft+barRight)/2:barLeft+(barRight-barLeft)*i/(rows.length-1);const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);for(let i=0;i<=4;i++){const yy=p.t+(h-p.t-p.b)*i/4;svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}))}svg.appendChild(svgEl('line',{x1:p.l,y1:y(0),x2:w-p.r,y2:y(0),stroke:'#66717b','stroke-width':1,'stroke-dasharray':'4 4'}));if(opts.baselineLabel){svg.appendChild(svgEl('text',{x:p.l-26,y:y(0)-8,'text-anchor':'start',class:'axis-label'})).textContent=opts.baselineLabel}const bw=Math.min(34,Math.max(24,(barRight-barLeft)/Math.max(rows.length,1)*.38));rows.forEach((r,i)=>{if(r.y==null){svg.appendChild(svgEl('text',{x:x(i),y:h-32,'text-anchor':'middle',class:'axis-label'})).textContent='N/A'}else{const top=y(Math.max(0,r.y)),bot=y(Math.min(0,r.y));svg.appendChild(svgEl('rect',{x:x(i)-bw/2,y:top,width:bw,height:Math.max(2,bot-top),rx:3,fill:r.y>=0?green():red(),opacity:.9}));svg.appendChild(svgEl('text',{x:x(i),y:(r.y>=0?top-7:bot+15),'text-anchor':'middle',class:'axis-label'})).textContent=(r.y>0?'+':'')+r.y.toFixed(0)+'%'}svg.appendChild(svgEl('text',{x:x(i),y:h-12,'text-anchor':'middle',class:'axis-label'})).textContent=r.x})}
+function groupedBars(svg,groups){clear(svg);const w=svg.clientWidth||700,h=svg.clientHeight||220,p={l:42,r:18,t:18,b:44};if(!groups.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}const rows=groups.map(g=>({symbol:g.symbol,win:clamp(num(g.win_contribution_pct),0,100),load:clamp(num(g.load_volume_pct),0,100)}));const maxY=100;const x=i=>p.l+(w-p.l-p.r)*(i+.5)/rows.length;const y=v=>h-p.b-(h-p.t-p.b)*v/maxY;[0,20,40,60,80,100].forEach(v=>{const yy=y(v);svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=v+'%'});const bw=18;rows.forEach((r,i)=>{const cx=x(i);const winTop=y(r.win),loadTop=y(r.load);svg.appendChild(svgEl('rect',{x:cx-bw-3,y:winTop,width:bw,height:h-p.b-winTop,rx:3,fill:green()}));svg.appendChild(svgEl('text',{x:cx-bw/2-3,y:winTop-7,'text-anchor':'middle',class:'axis-label'})).textContent=Math.round(r.win)+'%';svg.appendChild(svgEl('rect',{x:cx+3,y:loadTop,width:bw,height:h-p.b-loadTop,rx:3,fill:blue(),opacity:.9}));svg.appendChild(svgEl('text',{x:cx+bw/2+3,y:loadTop-7,'text-anchor':'middle',class:'axis-label'})).textContent=Math.round(r.load)+'%';svg.appendChild(svgEl('text',{x:cx,y:h-14,'text-anchor':'middle',class:'axis-label'})).textContent=r.symbol})}
+function analysisGauge(svg,value){clear(svg);svg.setAttribute('viewBox','0 0 280 92');const x1=26,x2=254,y=48,split=1,max=2;const x=v=>x1+(x2-x1)*(clamp(v,0,max)/max);svg.appendChild(svgEl('rect',{x:x1,y:y-4,width:x(split)-x1,height:8,fill:red(),rx:3}));svg.appendChild(svgEl('rect',{x:x(split),y:y-4,width:x2-x(split),height:8,fill:green(),rx:3}));svg.appendChild(svgEl('line',{x1:x(split),y1:y-14,x2:x(split),y2:y+14,stroke:'#050607','stroke-width':4}));const cx=x(clamp(value,0,max));svg.appendChild(svgEl('path',{d:`M ${cx-7} ${y-21} L ${cx+7} ${y-21} L ${cx} ${y-10} Z`,fill:'#efe8d2'}));svg.appendChild(svgEl('text',{x:x1,y:y+30,'text-anchor':'start',class:'axis-label'})).textContent='Loss zone';svg.appendChild(svgEl('text',{x:x(split),y:y+30,'text-anchor':'middle',class:'axis-label'})).textContent='1.0';svg.appendChild(svgEl('text',{x:x2,y:y+30,'text-anchor':'end',class:'axis-label'})).textContent='Edge zone'}
+function donut(svg,segments,text,sub){
+  clear(svg);
+  svg.setAttribute('viewBox','0 0 220 150');
+  const cx=110,cy=112,r=76,sw=15,start=200,end=-20,totalAngle=start-end;
+  const polar=(a,rad=r)=>{const z=Math.PI*a/180;return{x:cx+rad*Math.cos(z),y:cy-rad*Math.sin(z)}};
+  const arc=(a1,a2)=>{const p1=polar(a1),p2=polar(a2),large=Math.abs(a1-a2)>180?1:0;return'M '+p1.x+' '+p1.y+' A '+r+' '+r+' 0 '+large+' 1 '+p2.x+' '+p2.y};
+  svg.appendChild(svgEl('path',{d:arc(start,end),fill:'none',stroke:'rgba(255,255,255,.07)','stroke-width':sw,'stroke-linecap':'round'}));
+  const visible=segments.filter(segment=>num(segment.value)>0);
+  const total=visible.reduce((sum,segment)=>sum+num(segment.value),0)||1;
+  let offset=start;
+  const boundaries=[];
+  visible.forEach((segment,index)=>{
+    const angle=num(segment.value)/total*totalAngle;
+    svg.appendChild(svgEl('path',{d:arc(offset,offset-angle),fill:'none',stroke:segment.color,'stroke-width':sw,'stroke-linecap':'butt'}));
+    offset-=angle;
+    if(index<visible.length-1)boundaries.push(offset);
+  });
+  if(visible.length){
+    const firstPoint=polar(start),lastPoint=polar(end);
+    svg.appendChild(svgEl('circle',{cx:firstPoint.x,cy:firstPoint.y,r:sw/2,fill:visible[0].color}));
+    svg.appendChild(svgEl('circle',{cx:lastPoint.x,cy:lastPoint.y,r:sw/2,fill:visible[visible.length-1].color}));
+  }
+  boundaries.forEach(angle=>{
+    const inner=polar(angle,r-sw/2-0.5),outer=polar(angle,r+sw/2+0.5);
+    svg.appendChild(svgEl('line',{x1:inner.x,y1:inner.y,x2:outer.x,y2:outer.y,stroke:'#07090b','stroke-width':1.5,'stroke-linecap':'round'}));
+  });
+  svg.appendChild(svgEl('text',{x:cx,y:cy-4,'text-anchor':'middle',class:'donut-center'})).textContent=text;
+  svg.appendChild(svgEl('text',{x:cx,y:cy+22,'text-anchor':'middle',class:'donut-sub'})).textContent=sub;
+}
+function riskZone(svg,risk){
+  const colorByStatus={reduced:'#6f8fa5',normal:green(),expansion:red()};
+  const rows=risk.zone_items.map(item=>({
+    label:item.label,
+    value:num(item.count),
+    color:colorByStatus[item.status]||colorByStatus.normal
+  }));
+  clear(svg);
+  const w=svg.clientWidth||360,h=svg.clientHeight||220,p={l:112,r:64,t:42,b:34},max=Math.max(1,...rows.map(x=>x.value));
+  rows.forEach((s,i)=>{
+    const y=p.t+i*50,bw=(w-p.l-p.r)*s.value/max;
+    svg.appendChild(svgEl('text',{x:10,y:y+10,class:'axis-label'})).textContent=s.label;
+    svg.appendChild(svgEl('rect',{x:p.l,y,width:w-p.l-p.r,height:14,rx:3,fill:'rgba(255,255,255,.045)'}));
+    svg.appendChild(svgEl('rect',{x:p.l,y,width:bw,height:14,rx:3,fill:s.color}));
+    svg.appendChild(svgEl('text',{x:Math.min(p.l+bw+11,w-20),y:y+11,class:'axis-label'})).textContent=s.value;
+  });
+}
+function riskCvScale(el,cv){
+  el.replaceChildren();
+  const raw=Number(cv.value);
+  const left=clamp(Number(cv.marker_pct),0,100);
+  const title=htmlEl('div','risk-cv-title',`${cv.label} ${raw.toFixed(2)}`);
+  const scale=htmlEl('div','risk-cv-scale-top');
+  const line=htmlEl('div','risk-cv-line');
+  const marker=htmlEl('div','risk-cv-marker');
+  marker.style.left=`calc(${left}% - 6px)`;
+  scale.append(line,marker);
+  const ticks=htmlEl('div','risk-cv-ticks');
+  ticks.append(
+    htmlEl('span','',cv.min_label),
+    htmlEl('span','',cv.mid_label),
+    htmlEl('span','',cv.max_label)
+  );
+  const labels=htmlEl('div','risk-cv-labels');
+  labels.append(
+    htmlEl('span','','Stable zone'),
+    htmlEl('span','','Unstable zone')
+  );
+  el.append(title,scale,ticks,labels);
+}
+function riskConsistency(svg,series){
+  clear(svg);
+  if(!series||!series.length){
+    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
+    return;
+  }
+  const w=svg.clientWidth||780,h=svg.clientHeight||220,p={l:54,r:24,t:18,b:42};
+  const low=num(data.risk.personal_risk_low_bound_pct);
+  const high=num(data.risk.personal_risk_high_bound_pct);
+  const median=num(data.risk.personal_risk_baseline_pct);
+  const vals=series.map(point=>num(point.risk_pct));
+  const targetMax=Math.max(...vals,high,0.1)*1.12;
+  const roughStep=targetMax/4;
+  const magnitude=Math.pow(10,Math.floor(Math.log10(roughStep||1)));
+  const normalized=roughStep/magnitude;
+  const niceFactor=normalized<=1?1:normalized<=2?2:normalized<=2.5?2.5:normalized<=5?5:10;
+  const tickStep=niceFactor*magnitude;
+  const minY=0,maxY=Math.max(tickStep,Math.ceil(targetMax/tickStep)*tickStep);
+  const x=i=>p.l+(w-p.l-p.r)*(series.length<=1?0:i/(series.length-1));
+  const y=value=>h-p.b-(h-p.t-p.b)*(value-minY)/(maxY-minY||1);
+  for(let value=0;value<=maxY+tickStep/100;value+=tickStep){
+    const yy=y(value);
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=value.toFixed(tickStep<1?1:0);
+  }
+  svg.appendChild(svgEl('rect',{
+    x:p.l,y:y(high),width:w-p.l-p.r,height:y(low)-y(high),fill:green(),opacity:.10
+  }));
+  svg.appendChild(svgEl('line',{
+    x1:p.l,y1:y(median),x2:w-p.r,y2:y(median),
+    stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'
+  }));
+  let path='';
+  series.forEach((point,index)=>{
+    path+=(index?'L':'M')+x(index)+' '+y(num(point.risk_pct));
+  });
+  svg.appendChild(svgEl('path',{
+    d:path,fill:'none',stroke:blue(),'stroke-width':2,
+    'stroke-linecap':'round','stroke-linejoin':'round'
+  }));
+  const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+  const tooltipRect=svgEl('rect',{
+    rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1
+  });
+  const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});
+  tooltip.append(tooltipRect,tooltipText);
+  series.forEach((point,index)=>{
+    const risk=num(point.risk_pct);
+    const status=String(point.status||'').toLowerCase();
+    const isExpansion=status?status==='expansion':risk>high;
+    const cx=x(index),cy=y(risk);
+    const circle=svgEl('circle',{
+      cx,cy,r:3,fill:isExpansion?red():blue(),stroke:'#0b0d0f','stroke-width':1.1
+    });
+    circle.style.cursor='pointer';
+    circle.addEventListener('mouseenter',()=>{
+      const label=`Risk ${risk.toFixed(2)}%`;
+      const width=Math.max(76,label.length*6.2+16);
+      const left=clamp(cx-width/2,p.l,w-p.r-width);
+      const top=Math.max(p.t,cy-34);
+      tooltipRect.setAttribute('x',left);
+      tooltipRect.setAttribute('y',top);
+      tooltipRect.setAttribute('width',width);
+      tooltipRect.setAttribute('height',24);
+      tooltipText.setAttribute('x',left+8);
+      tooltipText.setAttribute('y',top+16);
+      tooltipText.textContent=label;
+      tooltip.setAttribute('visibility','visible');
+    });
+    circle.addEventListener('mouseleave',()=>tooltip.setAttribute('visibility','hidden'));
+    svg.appendChild(circle);
+  });
+  const weeks=[];
+  series.forEach((point,index)=>{
+    if(!weeks.length||weeks[weeks.length-1].week!==point.week){
+      weeks.push({week:point.week,start:index,end:index});
+    }else{
+      weeks[weeks.length-1].end=index;
+    }
+  });
+  weeks.forEach(week=>{
+    const cx=(x(week.start)+x(week.end))/2;
+    svg.appendChild(svgEl('text',{
+      x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'
+    })).textContent=week.week;
+    if(week.start>0){
+      svg.appendChild(svgEl('line',{
+        x1:x(week.start),y1:p.t,x2:x(week.start),y2:h-p.b,
+        stroke:'rgba(255,255,255,.04)','stroke-width':1
+      }));
+    }
+  });
+  svg.appendChild(svgEl('text',{x:4,y:p.t-6,class:'axis-label'})).textContent='Risk %';
+  svg.appendChild(tooltip);
+}
+function riskAfterLoss(svg,behavior){
+  clear(svg);
+  const summary=behavior.post_loss_summary;
+  const rows=behavior.risk_after_loss_items;
+  const normal=Number(summary.baseline_pct);
+  const w=svg.clientWidth||360,h=svg.clientHeight||220,p={l:116,r:28,t:22,b:58};
+  const vals=rows
+    .map(row=>row.value)
+    .filter(value=>value!==null&&value!==undefined&&Number.isFinite(Number(value)))
+    .map(Number);
+  const maxY=Math.max(normal*1.35,...vals,2);
+  const x=index=>p.l+(w-p.l-p.r)*(index+.5)/rows.length;
+  const y=value=>h-p.b-(h-p.t-p.b)*Number(value)/(maxY||1);
+  for(let i=0;i<=4;i++){
+    const yy=p.t+(h-p.t-p.b)*i/4;
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+  }
+  svg.appendChild(svgEl('line',{
+    x1:p.l,y1:y(normal),x2:w-p.r,y2:y(normal),
+    stroke:'#66717b','stroke-width':1,'stroke-dasharray':'4 4'
+  }));
+  const baselineLabel=svgEl('text',{
+    x:8,y:y(normal)-8,'text-anchor':'start',class:'axis-label'
+  });
+  baselineLabel.textContent='Normal risk '+normal.toFixed(2);
+  svg.appendChild(baselineLabel);
+  const colorByStatus={expansion:red(),reduced:green(),normal:blue()};
+  const bw=34;
+  rows.forEach((row,index)=>{
+    const cx=x(index);
+    const available=row.value!==null&&
+      row.value!==undefined&&
+      Number.isFinite(Number(row.value));
+    if(!available){
+      const missing=svgEl('text',{
+        x:cx,y:y(normal)+18,'text-anchor':'middle',class:'axis-label'
+      });
+      missing.textContent='N/A';
+      svg.appendChild(missing);
+    }else{
+      const value=Number(row.value);
+      const status=String(row.status);
+      const top=y(Math.max(value,normal)),bottom=y(Math.min(value,normal));
+      const color=colorByStatus[status];
+      svg.appendChild(svgEl('rect',{
+        x:cx-bw/2,y:top,width:bw,height:Math.max(2,bottom-top),
+        rx:4,fill:color,opacity:.9
+      }));
+      const valueLabel=svgEl('text',{
+        x:cx,y:value>normal?top-9:bottom+16,
+        'text-anchor':'middle',class:'axis-label'
+      });
+      valueLabel.textContent=value.toFixed(1);
+      svg.appendChild(valueLabel);
+    }
+    const groupLabel=svgEl('text',{
+      x:cx,y:h-14,'text-anchor':'middle',class:'axis-label'
+    });
+    groupLabel.textContent=row.label;
+    svg.appendChild(groupLabel);
+  });
+}
+function formatReportWeek(period){
+  const start=String(period&&period.start||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const end=String(period&&period.end||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!start||!end)throw new Error('Invalid report period date format');
+  const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const startMonth=months[Number(start[2])-1];
+  const endMonth=months[Number(end[2])-1];
+  if(start[1]===end[1]&&start[2]===end[2]){
+    return `WEEK · ${startMonth} ${start[3]}–${end[3]}, ${end[1]}`;
+  }
+  if(start[1]===end[1]){
+    return `WEEK · ${startMonth} ${start[3]}–${endMonth} ${end[3]}, ${end[1]}`;
+  }
+  return `WEEK · ${startMonth} ${start[3]}, ${start[1]}–${endMonth} ${end[3]}, ${end[1]}`;
+}
+const riskAfterLossPeriod=$('riskAfterLossPeriod');
+if(riskAfterLossPeriod){
+  riskAfterLossPeriod.textContent=formatReportWeek(data.period);
+}
+const findingsPeriod=$('findingsPeriod');
+if(findingsPeriod){
+  findingsPeriod.textContent=formatReportWeek(data.period);
+}
+function planFact(svg,sourcePoints,base){
+  clear(svg);
+  const points=Array.isArray(sourcePoints)
+    ?sourcePoints.map((point,index)=>({...point,_idx:index}))
+    :[];
+  const riskWeeks=Array.isArray(data.risk&&data.risk.trade_series)
+    ?data.risk.trade_series.map(point=>point.week)
+    :[];
+  const pointWeeks=points.map(point=>point.week);
+  const weeks=[...new Set([...riskWeeks,...pointWeeks].filter(Boolean))];
+  const w=svg.clientWidth||780,h=svg.clientHeight||252;
+  const pad={l:74,r:28,t:24,b:48};
+  if(!points.length){
+    svg.appendChild(svgEl('text',{
+      x:20,y:40,class:'not-available'
+    })).textContent='no closed loss trades in period';
+    return;
+  }
+  const values=points.flatMap(point=>[
+    num(point.planned),
+    num(point.actual),
+    num(base)
+  ]);
+  const targetMax=Math.max(...values,0.1)*1.12;
+  const roughStep=targetMax/4;
+  const magnitude=Math.pow(10,Math.floor(Math.log10(roughStep||1)));
+  const normalized=roughStep/magnitude;
+  const niceFactor=normalized<=1?1:normalized<=2?2:normalized<=2.5?2.5:normalized<=5?5:10;
+  const tickStep=niceFactor*magnitude;
+  const minY=0,maxY=Math.max(tickStep,Math.ceil(targetMax/tickStep)*tickStep);
+  const y=value=>h-pad.b-(h-pad.t-pad.b)*(value-minY)/(maxY-minY||1);
+  for(let value=0;value<=maxY+tickStep/100;value+=tickStep){
+    const yy=y(value);
+    svg.appendChild(svgEl('line',{
+      x1:pad.l,y1:yy,x2:w-pad.r,y2:yy,class:'gridline'
+    }));
+    svg.appendChild(svgEl('text',{
+      x:6,y:yy+4,class:'axis-label'
+    })).textContent=value.toFixed(tickStep<1?1:0);
+  }
+  svg.appendChild(svgEl('text',{
+    x:6,y:pad.t-8,class:'axis-label'
+  })).textContent='Loss %';
+  svg.appendChild(svgEl('line',{
+    x1:pad.l,y1:y(num(base)),x2:w-pad.r,y2:y(num(base)),
+    stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'
+  }));
+  const plotWidth=w-pad.l-pad.r;
+  const weekWidth=plotWidth/weeks.length;
+  const groups=weeks.map((week,index)=>({
+    week,
+    index,
+    points:points.filter(point=>point.week===week)
+  }));
+  const maxWeekLosses=Math.max(1,...groups.map(group=>group.points.length));
+  const denseSlot=weekWidth/maxWeekLosses;
+  const barWidth=clamp(denseSlot*.56,7,42);
+  const placed=[];
+  groups.forEach(group=>{
+    const start=pad.l+group.index*weekWidth;
+    const center=start+weekWidth/2;
+    if(group.index>0){
+      svg.appendChild(svgEl('line',{
+        x1:start,y1:pad.t,x2:start,y2:h-pad.b,
+        stroke:'rgba(255,255,255,.04)','stroke-width':1
+      }));
+    }
+    svg.appendChild(svgEl('text',{
+      x:center,y:h-12,'text-anchor':'middle',class:'axis-label'
+    })).textContent=group.week;
+    if(!group.points.length){
+      svg.appendChild(svgEl('text',{
+        x:center,y:y(num(base))+18,'text-anchor':'middle',class:'axis-label'
+      })).textContent='N/A';
+      return;
+    }
+    const slot=weekWidth/group.points.length;
+    group.points.forEach((point,index)=>{
+      const cx=start+slot*(index+.5);
+      placed.push({...point,cx});
+    });
+  });
+  placed.sort((a,b)=>a._idx-b._idx);
+  placed.forEach(point=>{
+    const planned=num(point.planned);
+    const actual=num(point.actual);
+    const within=num(point.within_plan);
+    const excess=num(point.excess_loss);
+    const baseY=y(0);
+    const withinTop=y(within);
+    const actualTop=y(actual);
+    const group=svgEl('g');
+    group.style.cursor='pointer';
+    group.appendChild(svgEl('rect',{
+      x:point.cx-barWidth/2,y:withinTop,width:barWidth,
+      height:Math.max(2,baseY-withinTop),rx:3,fill:'#66717b',opacity:.92
+    }));
+    if(excess>0){
+      group.appendChild(svgEl('rect',{
+        x:point.cx-barWidth/2,y:actualTop,width:barWidth,
+        height:Math.max(2,withinTop-actualTop),rx:3,fill:red(),opacity:.92
+      }));
+    }
+    const valueLabel=svgEl('text',{
+      x:point.cx,y:Math.max(pad.t+10,actualTop-8),
+      'text-anchor':'middle',class:'axis-label',visibility:'hidden'
+    });
+    valueLabel.textContent=actual.toFixed(2)+'%';
+    group.appendChild(valueLabel);
+    group.addEventListener('mouseenter',()=>valueLabel.setAttribute('visibility','visible'));
+    group.addEventListener('mouseleave',()=>valueLabel.setAttribute('visibility','hidden'));
+    svg.appendChild(group);
+  });
+  if(placed.length){
+    let path='';
+    placed.forEach((point,index)=>{
+      path+=(index?'L':'M')+point.cx+' '+y(num(point.planned));
+    });
+    svg.appendChild(svgEl('path',{
+      d:path,fill:'none',stroke:'#c0c0bd','stroke-width':1.8,
+      'stroke-linecap':'round','stroke-linejoin':'round'
+    }));
+    const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+    const tooltipRect=svgEl('rect',{
+      rx:5,fill:'rgba(10,12,14,.96)',
+      stroke:'rgba(255,255,255,.18)','stroke-width':1
+    });
+    const tooltipText=svgEl('text',{
+      fill:'#f0f0ed','font-size':10,'font-weight':700
+    });
+    tooltip.append(tooltipRect,tooltipText);
+    placed.forEach(point=>{
+      const cy=y(num(point.planned));
+      const circle=svgEl('circle',{
+        cx:point.cx,cy,r:3,fill:'#c0c0bd',
+        stroke:'#0b0d0f','stroke-width':1
+      });
+      circle.style.cursor='pointer';
+      circle.addEventListener('mouseenter',()=>{
+        const label=`Planned risk ${num(point.planned).toFixed(2)}%`;
+        const width=Math.max(112,label.length*6.2+16);
+        const left=clamp(point.cx-width/2,pad.l,w-pad.r-width);
+        const top=Math.max(pad.t,cy-34);
+        tooltipRect.setAttribute('x',left);
+        tooltipRect.setAttribute('y',top);
+        tooltipRect.setAttribute('width',width);
+        tooltipRect.setAttribute('height',24);
+        tooltipText.setAttribute('x',left+8);
+        tooltipText.setAttribute('y',top+16);
+        tooltipText.textContent=label;
+        tooltip.setAttribute('visibility','visible');
+      });
+      circle.addEventListener('mouseleave',()=>tooltip.setAttribute('visibility','hidden'));
+      svg.appendChild(circle);
+    });
+    svg.appendChild(tooltip);
+  }
+}
+function renderReportHeader(reportData){
+  const displayName=String(reportData.report.display_name);
+  document.querySelector('.top-title-block h1').textContent=displayName;
+  $('headerMeta').textContent=
+    `${reportData.trader.account_login} · ${reportData.report.audit_id} · `+
+    `${reportData.trader.trader_id} · ${reportData.period.current_period}`;
+  document.title=`${displayName} — Trade Decision Audit Report`;
+}
+
+function renderLeakMap(container,leaks){
+  container.replaceChildren();
+  [
+    ['Risk Leak',leaks.risk_leak_score],
+    ['SL Leak',leaks.sl_leak_score],
+    ['Behavior Leak',leaks.behavior_leak_score],
+    ['Execution Leak',leaks.execution_leak_score]
+  ].forEach(([name,value])=>{
+    const row=htmlEl('div','mini-leak-row');
+    const label=htmlEl('div','mini-leak-name',name);
+    const bar=htmlEl('div','mini-leak-bar');
+    const marker=htmlEl('span','marker');
+    marker.style.left=clamp(Number(value),0,100)+'%';
+    bar.appendChild(marker);
+    row.append(label,bar);
+    container.appendChild(row);
+  });
+}
+
+function renderSlLegend(container,segments){
+  container.replaceChildren();
+  segments.forEach(segment=>{
+    const row=htmlEl('span','legend-row');
+    const swatch=htmlEl('span','sq');
+    swatch.style.background=segment.color;
+    row.append(
+      swatch,
+      document.createTextNode(`${segment.label} - ${Number(segment.pct).toFixed(1)}%`)
+    );
+    container.appendChild(row);
+  });
+}
+
+function renderRiskZoneSummary(container,distribution){
+  container.replaceChildren();
+  const baseline=Number(distribution.personal_risk_baseline_pct);
+  const drift=Number(distribution.drift.pct);
+  const driftClass=drift>0?'up':drift<0?'down':'neutral';
+  const driftArrow=drift>0?'↑':drift<0?'↓':'→';
+  const baselineBlock=htmlEl('div');
+  baselineBlock.append(
+    htmlEl('div','risk-zone-value baseline',baseline.toFixed(2)+'%'),
+    htmlEl('div','risk-zone-label','Personal baseline')
+  );
+  const driftBlock=htmlEl('div');
+  driftBlock.append(
+    htmlEl(
+      'div',
+      'risk-zone-value '+driftClass,
+      `${driftArrow} ${Math.abs(drift).toFixed(1)}%`
+    ),
+    htmlEl('div','risk-zone-label','Risk drift')
+  );
+  container.append(baselineBlock,driftBlock);
+}
+
+function renderRiskAfterLossNote(container,summary){
+  const drift=Number(summary.risk_drift_pct);
+  container.replaceChildren();
+  container.className='risk-after-note';
+  container.appendChild(document.createTextNode('Risk drift: '));
+  const value=htmlEl(
+    'b',
+    drift>0?'up':'',
+    `${drift>0?'↑ +':drift<0?'↓ ':'→ '}${Math.abs(drift).toFixed(2)}%`
+  );
+  container.appendChild(value);
+}
+
+function renderFindings(container,items){
+  container.replaceChildren();
+  items.forEach((item,index)=>{
+    const row=htmlEl('div','item');
+    const number=htmlEl(
+      'div',
+      'item-num '+item.display_class,
+      Number.isFinite(Number(item.rank))?Number(item.rank):index+1
+    );
+    const body=htmlEl('div');
+    body.appendChild(htmlEl('div','item-title',item.text));
+    row.append(number,body);
+    container.appendChild(row);
+  });
+}
+
+function render(){
+  const d=data;
+  renderReportHeader(d);
+  $('generated').textContent=`Generated: ${d.report.generated_at} · ${d.report.version}`;
+
+  const score=d.score;
+  const q=clamp(Number(score.qud_tda_score),0,100);
+  const trustClass=score.display_class;
+  const scoreValue=$('scoreValue');
+  scoreValue.textContent=String(Math.round(q));
+  scoreValue.style.fontSize='42px';
+  scoreValue.style.color=
+    trustClass==='danger'?'var(--red)':
+    trustClass==='warn'?'var(--yellow)':
+    trustClass==='good'?'var(--green)':'var(--blue)';
+  scoreGauge($('scoreGauge'),q,score.zones);
+
+  const riskModeValue=String(score.risk_mode);
+  const riskClass=
+    riskModeValue==='critical'||riskModeValue==='dangerous'?'danger':
+    riskModeValue==='low'||riskModeValue==='protected'?'good':'warn';
+  $('riskMode').textContent=riskModeValue.toUpperCase();
+  $('riskMode').className='badge '+riskClass;
+  $('trustZone').textContent=String(score.trust_zone).toUpperCase();
+  $('trustZone').className='badge '+trustClass;
+
+  const deltaAvailable=Number.isFinite(Number(score.trust_score_delta));
+  if(deltaAvailable){
+    const delta=Number(score.trust_score_delta);
+    const label=Math.abs(delta)>=1
+      ?String(Math.round(Math.abs(delta)))
+      :Math.abs(delta).toFixed(1);
+    $('scoreDelta').textContent=
+      delta>0?`↑ ${label} SCORE`:delta<0?`↓ ${label} SCORE`:'0 SCORE';
+    $('scoreDelta').className='badge '+(delta===0?'neutral':delta>0?'good':'danger');
+  }else{
+    $('scoreDelta').textContent='not_available';
+    $('scoreDelta').className='badge neutral';
+  }
+
+  const trends=d.trends;
+  renderTopMetric('topWinRatio','sparkWinRatio',trends.win_ratio_pct,value=>value.toFixed(1)+'%',{minY:0,maxY:100});
+  renderTopMetric('topProfitFactor','sparkProfitFactor',trends.profit_factor,value=>value.toFixed(2),{minY:0,maxY:5});
+  renderTopMetric('topAverageRisk','sparkAverageRisk',trends.average_risk_pct,value=>value.toFixed(2)+'%',{minY:0,maxY:3});
+  renderTopMetric('topSlSafe','sparkSlSafe',trends.sl_safe_pct,value=>value.toFixed(1)+'%',{minY:0,maxY:100});
+
+  renderLeakMap($('miniLeakGrid'),d.leaks);
+  trustScoreTrend($('scoreTrend'));
+  accountChart($('accountEquity'),d.account);
+  holdingTimeEfficiencyBars(
+    $('durationQuality'),
+    d.duration.holding_time_efficiency,
+    d.duration.holding_time_efficiency.baseline_win_rate_pct
+  );
+  groupedBars($('instrumentContribution'),d.instrument_contribution.groups);
+
+  $('shortCoverValue').textContent=Number(d.analysis.short_cover_ratio).toFixed(2)+'x';
+  $('profitFactorValue').textContent=Number(d.analysis.profit_factor).toFixed(2);
+  $('longCoverValue').textContent=Number(d.analysis.long_cover_ratio).toFixed(2)+'x';
+  $('shortWinRateValue').textContent=Number(d.analysis.short_win_rate_pct).toFixed(1)+'%';
+  $('totalWinRateValue').textContent=Number(d.analysis.total_win_rate_pct).toFixed(1)+'%';
+  $('longWinRateValue').textContent=Number(d.analysis.long_win_rate_pct).toFixed(1)+'%';
+  analysisGauge($('shortAnalysisGauge'),Number(d.analysis.short_cover_ratio));
+  analysisGauge($('profitabilityGauge'),Number(d.analysis.profit_factor));
+  analysisGauge($('longAnalysisGauge'),Number(d.analysis.long_cover_ratio));
+
+  const colorByStatus={
+    danger:red(),
+    removed:'#b87945',
+    changed:yellow(),
+    safe:green()
+  };
+  const protection=d.sl.protection_summary;
+  const slSegments=protection.segments.map(segment=>({
+    ...segment,
+    color:colorByStatus[segment.status]
+  }));
+  donut(
+    $('slDonut'),
+    slSegments,
+    Number(protection.sl_safe_pct).toFixed(1)+'%',
+    'SAFE'
+  );
+  renderSlLegend($('slLegend'),slSegments);
+  const protectionTrend=trends.sl_safe_pct
+    .filter(point=>point&&Number.isFinite(Number(point.value)))
+    .map((point,index)=>({
+      x:'W'+(index+1),
+      y:Number(point.value),
+      period:String(point.period||'')
+    }));
+  drawLine($('slTimeline'),protectionTrend,{minY:0,maxY:100,color:green()});
+
+  const riskDistribution=d.risk.zone_distribution;
+  riskZone($('scoreDonut'),riskDistribution);
+  renderRiskZoneSummary($('riskZoneSummary'),riskDistribution);
+  riskAfterLoss($('lossBarsTop'),d.behavior);
+  renderRiskAfterLossNote($('lossNoteTop'),d.behavior.post_loss_summary);
+  riskCvScale($('riskCvScale'),d.risk.cv);
+  riskConsistency($('riskLine'),d.risk.trade_series);
+  planFact($('scatter'),d.plan_fact.points,d.risk.personal_risk_baseline_pct);
+  renderFindings($('findings'),d.findings.items);
+}
+
+render();
+initHelp();
+</script>
+</body></html>
