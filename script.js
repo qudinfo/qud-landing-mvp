@@ -1,6 +1,14 @@
 // QUD Landing — entry point and referral code payload support
 
 (() => {
+  const mobileStyles = document.createElement('link');
+
+  mobileStyles.rel = 'stylesheet';
+  mobileStyles.href = 'mobile.css';
+  mobileStyles.media = '(max-width: 760px)';
+
+  document.head.appendChild(mobileStyles);
+
   const REFERRAL_INPUT_SELECTOR =
     '.contacts-form input[name="referral_code"]';
 
