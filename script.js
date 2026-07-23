@@ -918,6 +918,9 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
   const emailInput = form.querySelector('input[name="email"]');
   const telegramInput = form.querySelector('input[name="telegram"]');
   const messageInput = form.querySelector('textarea[name="message"]');
+  const referralCodeInput = form.querySelector(
+    'input[name="referral_code"]'
+  );
   const consentInput = form.querySelector('input[name="consent"]');
   const submitButton = form.querySelector('button[type="submit"]');
 
