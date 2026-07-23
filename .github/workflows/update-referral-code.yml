@@ -1,0 +1,68 @@
+name: Update referral code payload
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/update-referral-code.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update script.js
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('script.js')
+          text = path.read_text(encoding='utf-8')
+
+          listener_anchor = "  const submitButton = form.querySelector('button[type=\"submit\"]');"
+          listener_block = """  const submitButton = form.querySelector('button[type=\"submit\"]');
+
+  referralCodeInput?.addEventListener('input', () => {
+    referralCodeInput.value = referralCodeInput.value
+      .toUpperCase()
+      .replace(/\\s+/g, '');
+  });"""
+
+          if listener_block not in text:
+            if text.count(listener_anchor) != 1:
+              raise SystemExit('submitButton anchor not found exactly once')
+            text = text.replace(listener_anchor, listener_block, 1)
+
+          payload_anchor = """      message: messageInput.value.trim(),
+      consent: consentInput.checked,"""
+          payload_block = """      message: messageInput.value.trim(),
+      referral_code: referralCodeInput?.value.trim().toUpperCase() || '',
+      consent: consentInput.checked,"""
+
+          if payload_block not in text:
+            if text.count(payload_anchor) != 1:
+              raise SystemExit('payload anchor not found exactly once')
+            text = text.replace(payload_anchor, payload_block, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit update
+        run: |
+          if git diff --quiet -- script.js; then
+            echo 'No changes required.'
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add script.js
+          git commit -m 'Add referral code to lead payload'
+          git push
