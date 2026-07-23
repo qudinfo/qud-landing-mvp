@@ -1,0 +1,225 @@
+/* QUD mobile layout fixes — approved scope only */
+
+@media (max-width: 760px) {
+  .hero-grid > *,
+  .audit-layout > *,
+  .traders-layout > *,
+  .investors-layout > *,
+  .about-layout > *,
+  .contacts-layout > *,
+  .about-bridge > *,
+  .about-process-line > *,
+  .about-benefits-grid > *,
+  .about-security-list > *,
+  .contacts-form-row > *,
+  .contacts-role-options > * {
+    min-width: 0;
+  }
+
+  .about-intro,
+  .about-bridge,
+  .about-security,
+  .about-process,
+  .about-benefits,
+  .about-final {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .about-bridge {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  .about-bridge-side:first-child,
+  .about-bridge-side:last-child {
+    transform: none;
+  }
+
+  .about-bridge-center {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .about-flow-arrow,
+  .about-orbit-node {
+    display: none;
+  }
+
+  .about-orbit {
+    width: min(78vw, 300px);
+    height: min(78vw, 300px);
+    margin: 0 auto;
+    background:
+      repeating-radial-gradient(
+        circle at center,
+        rgba(214, 180, 106, 0.13) 0 1px,
+        transparent 1px 48px
+      );
+  }
+
+  .about-orbit::before {
+    inset: 38px;
+  }
+
+  .about-orbit::after {
+    inset: 78px;
+  }
+
+  .about-orbit-core {
+    width: 138px;
+    height: 138px;
+  }
+
+  .about-orbit-core strong {
+    font-size: 34px;
+  }
+
+  .about-security {
+    margin-top: 0;
+  }
+
+  .about-security-list,
+  .about-benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .about-security-list div,
+  .about-benefit {
+    padding: 0 0 14px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border-muted);
+  }
+
+  .about-security-list div:last-child,
+  .about-benefit:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .about-process-line {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .about-process-step {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .about-process-step:not(:last-child)::after {
+    display: none;
+  }
+
+  .contacts-left-compact {
+    min-height: 0;
+  }
+
+  .contacts-form-card-compact {
+    padding: 24px 18px 26px;
+  }
+
+  .contacts-form-card-compact .contacts-role-options {
+    grid-template-columns: 1fr;
+  }
+
+  .contacts-form-card-compact .contacts-role-option {
+    justify-content: flex-start;
+  }
+
+  .contacts-consent {
+    grid-template-columns: 18px minmax(0, 1fr) !important;
+  }
+
+  .contacts-form-card-compact .contacts-consent input[type="checkbox"] {
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    min-height: 18px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-appearance: checkbox;
+    appearance: auto;
+  }
+
+  .investors-process-inline .process-carousel {
+    height: auto;
+    display: grid;
+    gap: 18px;
+    overflow: visible;
+  }
+
+  .investors-process-inline .process-orbit-item,
+  .investors-process-inline .process-orbit-item.is-active,
+  .investors-process-inline .process-orbit-item.is-next,
+  .investors-process-inline .process-orbit-item.is-prev,
+  .investors-process-inline .process-orbit-item.is-back {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: 70px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    justify-items: start;
+    text-align: left;
+    transform: none;
+    opacity: 1;
+    filter: none;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .investors-process-inline .process-orbit-icon {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+
+  .investors-process-inline .process-orbit-item strong {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+  }
+
+  .investors-process-inline .process-orbit-item p,
+  .investors-process-inline .process-orbit-item.is-next p,
+  .investors-process-inline .process-orbit-item.is-prev p,
+  .investors-process-inline .process-orbit-item.is-back p {
+    grid-column: 2;
+    grid-row: 2;
+    display: block;
+    max-width: 100%;
+    margin-top: 6px;
+  }
+
+  .investors-final-card-single .investors-final-main {
+    min-height: 0;
+    padding: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 14px;
+  }
+
+  .investors-final-card-single .investors-final-icon {
+    position: relative;
+    left: auto;
+    top: auto;
+    flex: 0 0 42px;
+    transform: none;
+  }
+
+  .investors-final-card-single .investors-final-main p {
+    font-size: 14px;
+    text-align: left;
+  }
+}
