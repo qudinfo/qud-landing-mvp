@@ -66,3 +66,5 @@ jobs:
           git add script.js
           git commit -m 'Add referral code to lead payload'
           git push
+
+# one-time trigger
