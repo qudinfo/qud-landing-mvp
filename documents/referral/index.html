@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Регламент использования QUD Referral Code
+  </title>
+
+  <meta
+    name="description"
+    content="Регламент использования QUD Referral Code и предоставления реферальных вознаграждений. Редакция v0.3."
+  >
+
+  <!-- Страница доступна по прямой ссылке,
+       но не предлагается поисковым системам для индексации. -->
+  <meta
+    name="robots"
+    content="noindex, nofollow"
+  >
+
+  <link
+    rel="canonical"
+    href="https://fx-qud.com/documents/referral/"
+  >
+
+  <style>
+    :root {
+      --bg-main: #0b0d0f;
+      --bg-section: #111315;
+      --bg-card: #141719;
+      --bg-card-soft: #15181b;
+
+      --border-soft: #2a2f34;
+      --border-muted: #1f2428;
+
+      --text-main: #f0f0ed;
+      --text-muted: #9a9da1;
+      --text-soft: #6f7378;
+
+      --accent: #dba351;
+      --accent-hover: #e4b866;
+      --accent-soft: rgba(219, 163, 81, 0.08);
+      --accent-border: rgba(219, 163, 81, 0.32);
+
+      --success: #6fa56f;
+      --danger: #b4514b;
+
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 14px;
+
+      --container: 1260px;
+      --header-height: 76px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      margin: 0;
+
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at top left,
+          rgba(219, 163, 81, 0.045),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at top right,
+          rgba(143, 166, 200, 0.035),
+          transparent 34%
+        ),
+        linear-gradient(
+          180deg,
+          #0b0d0f 0%,
+          #0f1113 48%,
+          #0b0d0f 100%
+        );
+
+      color: var(--text-main);
+      line-height: 1.65;
+    }
+
+    ::selection {
+      background: rgba(219, 163, 81, 0.25);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    p {
+      margin: 0 0 18px;
+      color: var(--text-muted);
+    }
+
+    strong {
+      color: var(--text-main);
+      font-weight: 650;
+    }
+
+    .container {
+      width: min(
+        calc(100% - 40px),
+        var(--container)
+      );
+
+      margin: 0 auto;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+
+      padding: 10px 14px;
+
+      background: var(--accent);
+      color: #16130d;
+
+      border-radius: var(--radius-sm);
+
+      font-size: 13px;
+      font-weight: 700;
+
+      transform: translateY(-150%);
+      transition: transform 0.2s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    /* Header */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      height: var(--header-height);
+
+      border-bottom:
+        1px solid rgba(255, 255, 255, 0.06);
+
+      background: rgba(15, 19, 18, 0.9);
+      backdrop-filter: blur(16px);
+    }
+
+    .header-inner {
+      height: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 28px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 16px;
+
+      white-space: nowrap;
+    }
+
+    .logo-main {
+      color: var(--accent);
+
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .logo-sub {
+      color: var(--text-muted);
+
+      font-size: 11px;
+      font-weight: 700;
+
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .header-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 42px;
+      padding: 0 18px;
+
+      border:
+        1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
+
+      color: var(--text-main);
+      background: transparent;
+
+      font-size: 13px;
+      font-weight: 650;
+
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .header-link:hover {
+      color: var(--accent);
+
+      border-color:
+        rgba(219, 163, 81, 0.55);
+
+      background:
+        rgba(219, 163, 81, 0.04);
+    }
+
+    /* Hero */
+
+    .document-hero {
+      padding: 78px 0 62px;
+
+      border-bottom:
+        1px solid var(--border-muted);
+    }
+
+    .document-hero-inner {
+      max-width: 900px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+
+      width: fit-content;
+      margin-bottom: 22px;
+      padding: 7px 11px;
+
+      border:
+        1px solid rgba(219, 163, 81, 0.45);
+
+      border-radius: var(--radius-sm);
+
+      color: var(--accent);
+
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1;
+
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+
+      color: var(--text-main);
+
+      letter-spacing: -0.025em;
+    }
+
+    h1 {
+      max-width: 920px;
+
+      font-size:
+        clamp(34px, 5vw, 62px);
+
+      line-height: 1.03;
+    }
+
+    .hero-description {
+      max-width: 760px;
+      margin-top: 28px;
+
+      color: var(--text-muted);
+
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .document-version {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+
+      min-height: 34px;
+      padding: 0 12px;
+
+      border:
+        1px solid var(--border-soft);
+
+      border-radius: var(--radius-sm);
+
+      background:
+        rgba(255, 255, 255, 0.02);
+
+      color: var(--text-muted);
+
+      font-size: 12px;
+      font-weight: 650;
+
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .version-badge.is-accent {
+      border-color: var(--accent-border);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* Summary */
+
+    .summary-section {
+      padding: 42px 0;
+
+      border-bottom:
+        1px solid var(--border-muted);
+    }
+
+    .summary-card {
+      padding: 26px;
+
+      border:
+        1px solid var(--border-soft);
+
+      border-radius: var(--radius-lg);
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.035),
+          rgba(255, 255, 255, 0.01)
+        ),
+        var(--bg-card);
+
+      box-shadow:
+        0 28px 70px rgba(0, 0, 0, 0.2);
+    }
+
+    .summary-card h2 {
+      margin-bottom: 20px;
+
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .summary-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 12px;
+    }
+
+    .summary-item {
+      min-height: 118px;
+      padding: 18px;
+
+      border:
+        1px solid var(--border-muted);
+
+      border-radius: var(--radius-md);
+
+      background: var(--bg-card-soft);
+    }
+
+    .summary-item span {
+      display: block;
+      margin-bottom: 9px;
+
+      color: var(--accent);
+
+      font-size: 11px;
+      font-weight: 700;
+
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .summary-item p {
+      margin: 0;
+
+      color: var(--text-main);
+
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    /* Document layout */
+
+    .document-area {
+      padding: 66px 0 100px;
+    }
+
+    .document-layout {
+      display: grid;
+
+      grid-template-columns:
+        270px minmax(0, 820px);
+
+      justify-content: space-between;
+
+      gap: 70px;
+      align-items: start;
+    }
+
+    .document-navigation {
+      position: sticky;
+      top: 104px;
+
+      padding: 20px;
+
+      border:
+        1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
+
+      background:
+        rgba(20, 23, 25, 0.82);
+
+      backdrop-filter: blur(12px);
+    }
+
+    .document-navigation strong {
+      display: block;
+      margin-bottom: 14px;
+
+      color: var(--text-main);
+
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .document-navigation nav {
+      display: grid;
+      gap: 3px;
+    }
+
+    .document-navigation a {
+      display: block;
+
+      padding: 7px 9px;
+
+      border-radius: 5px;
+
+      color: var(--text-muted);
+
+      font-size: 12px;
+      line-height: 1.35;
+
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .document-navigation a:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .regulation {
+      min-width: 0;
+    }
+
+    .regulation-section {
+      padding: 0 0 48px;
+      margin-bottom: 48px;
+
+      border-bottom:
+        1px solid var(--border-muted);
+    }
+
+    .regulation-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-number {
+      display: inline-flex;
+      margin-bottom: 12px;
+
+      color: var(--accent);
+
+      font-size: 12px;
+      font-weight: 700;
+
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .regulation-section h2 {
+      margin-bottom: 26px;
+
+      font-size:
+        clamp(24px, 3vw, 32px);
+
+      line-height: 1.18;
+    }
+
+    .regulation-section h3 {
+      margin: 30px 0 14px;
+
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .regulation-section ul {
+      display: grid;
+      gap: 11px;
+
+      margin: 20px 0 24px;
+      padding: 0;
+
+      list-style: none;
+    }
+
+    .regulation-section li {
+      position: relative;
+
+      padding-left: 22px;
+
+      color: var(--text-muted);
+
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .regulation-section li::before {
+      content: "";
+
+      position: absolute;
+      top: 11px;
+      left: 1px;
+
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+      background: var(--accent);
+
+      opacity: 0.82;
+    }
+
+    .key-statement {
+      margin: 26px 0;
+      padding: 21px 22px;
+
+      border:
+        1px solid var(--accent-border);
+
+      border-left:
+        3px solid var(--accent);
+
+      border-radius: var(--radius-md);
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(219, 163, 81, 0.075),
+          rgba(219, 163, 81, 0.018)
+        );
+    }
+
+    .key-statement span {
+      display: block;
+      margin-bottom: 8px;
+
+      color: var(--accent);
+
+      font-size: 11px;
+      font-weight: 700;
+
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .key-statement strong {
+      display: block;
+
+      font-size:
+        clamp(17px, 2vw, 21px);
+
+      line-height: 1.45;
+    }
+
+    .neutral-note {
+      margin: 24px 0;
+      padding: 20px 22px;
+
+      border:
+        1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
+
+      background: var(--bg-card);
+    }
+
+    .neutral-note p:last-child {
+      margin-bottom: 0;
+    }
+
+    .example-block {
+      margin: 24px 0;
+      padding: 22px;
+
+      border:
+        1px solid var(--border-soft);
+
+      border-radius: var(--radius-md);
+
+      background:
+        rgba(255, 255, 255, 0.018);
+    }
+
+    .example-block > strong {
+      display: block;
+      margin-bottom: 14px;
+
+      color: var(--accent);
+
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .term {
+      color: var(--text-main);
+      font-weight: 650;
+    }
+
+    /* Footer */
+
+    .site-footer {
+      padding: 34px 0;
+
+      border-top:
+        1px solid var(--border-muted);
+
+      background:
+        rgba(8, 10, 11, 0.5);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 24px;
+    }
+
+    .footer-logo {
+      color: var(--accent);
+
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-meta {
+      color: var(--text-soft);
+
+      font-size: 12px;
+      text-align: right;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 1000px) {
+      .document-layout {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      .document-navigation {
+        position: static;
+      }
+
+      .document-navigation nav {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root {
+        --header-height: 68px;
+      }
+
+      .container {
+        width:
+          min(calc(100% - 28px), var(--container));
+      }
+
+      .logo-sub {
+        display: none;
+      }
+
+      .header-link {
+        min-height: 38px;
+        padding: 0 13px;
+
+        font-size: 12px;
+      }
+
+      .document-hero {
+        padding: 54px 0 44px;
+      }
+
+      .hero-description {
+        font-size: 16px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .document-area {
+        padding: 46px 0 72px;
+      }
+
+      .document-navigation nav {
+        grid-template-columns: 1fr;
+      }
+
+      .regulation-section {
+        padding-bottom: 38px;
+        margin-bottom: 38px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer-meta {
+        text-align: left;
+      }
+    }
+
+    @media print {
+      .site-header,
+      .document-navigation,
+      .site-footer,
+      .skip-link {
+        display: none;
+      }
+
+      body {
+        background: #ffffff;
+        color: #111111;
+      }
+
+      .document-hero,
+      .summary-section,
+      .document-area {
+        padding:
+          24px 0;
+      }
+
+      .document-layout {
+        display: block;
+      }
+
+      h1,
+      h2,
+      h3,
+      strong,
+      .summary-item p {
+        color: #111111;
+      }
+
+      p,
+      li {
+        color: #333333 !important;
+      }
+
+      .summary-card,
+      .summary-item,
+      .key-statement,
+      .neutral-note,
+      .example-block {
+        background: #ffffff;
+        box-shadow: none;
+        border-color: #cccccc;
+      }
+
+      .regulation-section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a
+    href="#document-content"
+    class="skip-link"
+  >
+    Перейти к регламенту
+  </a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a
+        href="/"
+        class="logo"
+        aria-label="Перейти на основной сайт QUD"
+      >
+        <span class="logo-main">QUD</span>
+
+        <span class="logo-sub">
+          RISK · DISCIPLINE · TRUST
+        </span>
+      </a>
+
+      <a
+        href="/"
+        class="header-link"
+      >
+        Основной сайт
+      </a>
+    </div>
+  </header>
+
+  <main id="document-content">
+
+    <section class="document-hero">
+      <div class="container">
+        <div class="document-hero-inner">
+
+          <div class="eyebrow">
+            QUD Referral Program
+          </div>
+
+          <h1>
+            Регламент использования
+            QUD Referral Code
+            и предоставления
+            реферальных вознаграждений
+          </h1>
+
+          <p class="hero-description">
+            Настоящий Регламент определяет условия
+            участия трейдеров в закрытой реферальной
+            программе QUD, порядок использования
+            Strategy ID и Referral Code, а также правила
+            предоставления вознаграждений и бонусов.
+          </p>
+
+          <div class="document-version">
+            <span class="version-badge is-accent">
+              Редакция v0.3
+            </span>
+
+            <span class="version-badge">
+              QUD Referral
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="summary-section">
+      <div class="container">
+
+        <div class="summary-card">
+          <h2>Ключевые условия программы</h2>
+
+          <div class="summary-grid">
+
+            <div class="summary-item">
+              <span>Участие</span>
+
+              <p>
+                Referral Code предоставляется только
+                владельцу стратегии с присвоенным
+                Strategy ID.
+              </p>
+            </div>
+
+            <div class="summary-item">
+              <span>Активность</span>
+
+              <p>
+                Для действия кода необходимо сохранять
+                подписку, торговую активность и статус
+                QUD Room или QUD Elite.
+              </p>
+            </div>
+
+            <div class="summary-item">
+              <span>Вознаграждение</span>
+
+              <p>
+                За одного нового уникального трейдера
+                предоставляется только одно
+                реферальное вознаграждение.
+              </p>
+            </div>
+
+            <div class="summary-item">
+              <span>QUD Room</span>
+
+              <p>
+                Один подтверждённый новый участник —
+                один бесплатный месяц подписки QUD.
+              </p>
+            </div>
+
+            <div class="summary-item">
+              <span>QUD Elite</span>
+
+              <p>
+                Вознаграждение определяется в виде
+                процента от первой подтверждённой
+                покупки TDA Basic.
+              </p>
+            </div>
+
+            <div class="summary-item">
+              <span>Приглашённый трейдер</span>
+
+              <p>
+                После первой отчётной недели получает
+                возможность сопоставить свои показатели
+                со средними значениями трейдеров QUD.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="document-area">
+      <div class="container document-layout">
+
+        <aside class="document-navigation">
+          <strong>Содержание</strong>
+
+          <nav aria-label="Разделы регламента">
+            <a href="#section-1">1. Общие положения</a>
+            <a href="#section-2">2. Условия участия</a>
+            <a href="#section-3">3. Strategy ID</a>
+            <a href="#section-4">4. Referral Code</a>
+            <a href="#section-5">5. Условия действия</a>
+            <a href="#section-6">6. Порядок использования</a>
+            <a href="#section-7">7. Условия вознаграждения</a>
+            <a href="#section-8">8. Вознаграждение QUD Room</a>
+            <a href="#section-9">9. Вознаграждение QUD Elite</a>
+            <a href="#section-10">10. Бонус приглашённому</a>
+            <a href="#section-11">11. Подтверждение</a>
+            <a href="#section-12">12. Возврат оплаты</a>
+            <a href="#section-13">13. Нарушения</a>
+            <a href="#section-14">14. Изменение условий</a>
+            <a href="#section-15">15. Принятие условий</a>
+          </nav>
+        </aside>
+
+        <article class="regulation">
+
+          <!-- 1 -->
+
+          <section
+            id="section-1"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 01
+            </span>
+
+            <h2>Общие положения</h2>
+
+            <p>
+              <strong>QUD Referral Program</strong> —
+              закрытая реферальная программа для трейдеров,
+              которые сформировали подтверждённую
+              накопительную торговую историю в QUD.
+            </p>
+
+            <p>
+              Программа позволяет владельцу торговой
+              стратегии приглашать новых трейдеров
+              к подключению TDA Basic и получать
+              вознаграждение за каждого нового
+              приглашённого трейдера, выполнившего
+              условия настоящего Регламента.
+            </p>
+
+            <div class="key-statement">
+              <span>Основной принцип</span>
+
+              <strong>
+                Участие в реферальной программе
+                не предоставляется автоматически
+                всем пользователям QUD.
+              </strong>
+            </div>
+          </section>
+
+          <!-- 2 -->
+
+          <section
+            id="section-2"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 02
+            </span>
+
+            <h2>
+              Условия участия в реферальной программе
+            </h2>
+
+            <p>
+              Участвовать в QUD Referral Program может
+              только трейдер, торговой стратегии которого
+              присвоен персональный
+              <span class="term">Strategy ID</span>.
+            </p>
+
+            <p>
+              Первичное присвоение Strategy ID возможно
+              только при одновременном выполнении
+              следующих условий:
+            </p>
+
+            <ul>
+              <li>
+                трейдер непрерывно торгует и формирует
+                накопительную историю в QUD не менее
+                двух месяцев;
+              </li>
+
+              <li>
+                торговая стратегия находится в QUD Room;
+              </li>
+
+              <li>
+                QUD располагает достаточным объёмом
+                торговых данных для подтверждения
+                непрерывности накопительной истории;
+              </li>
+
+              <li>
+                у трейдера отсутствуют нарушения,
+                препятствующие участию в программе.
+              </li>
+            </ul>
+
+            <p>
+              После перехода стратегии из QUD Room
+              в QUD Elite право на участие
+              в реферальной программе сохраняется.
+            </p>
+          </section>
+
+          <!-- 3 -->
+
+          <section
+            id="section-3"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 03
+            </span>
+
+            <h2>Strategy ID</h2>
+
+            <p>
+              <span class="term">Strategy ID</span> —
+              постоянный идентификатор торговой стратегии
+              внутри QUD.
+            </p>
+
+            <p>Strategy ID:</p>
+
+            <ul>
+              <li>
+                связывает торговую стратегию
+                с её накопительной историей;
+              </li>
+
+              <li>
+                используется для внутренней идентификации
+                данных, отчётов и статуса стратегии;
+              </li>
+
+              <li>
+                является конфиденциальным;
+              </li>
+
+              <li>
+                не должен публиковаться или передаваться
+                третьим лицам.
+              </li>
+            </ul>
+
+            <div class="key-statement">
+              <span>Обязательное условие</span>
+
+              <strong>
+                Наличие Strategy ID является обязательным
+                условием получения Referral Code.
+              </strong>
+            </div>
+          </section>
+
+          <!-- 4 -->
+
+          <section
+            id="section-4"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 04
+            </span>
+
+            <h2>Referral Code</h2>
+
+            <p>
+              <span class="term">Referral Code</span> —
+              персональный код владельца торговой стратегии,
+              предназначенный для приглашения новых
+              трейдеров в TDA Basic.
+            </p>
+
+            <p>Referral Code:</p>
+
+            <ul>
+              <li>
+                связан с конкретным Strategy ID;
+              </li>
+
+              <li>
+                принадлежит конкретному владельцу;
+              </li>
+
+              <li>
+                может передаваться потенциальным
+                участникам TDA Basic;
+              </li>
+
+              <li>
+                может использоваться многократно
+                для приглашения разных трейдеров;
+              </li>
+
+              <li>
+                не может быть передан другому владельцу.
+              </li>
+            </ul>
+
+            <div class="neutral-note">
+              <p>
+                Один Referral Code может использоваться
+                для приглашения неограниченного количества
+                разных трейдеров при соблюдении условий
+                настоящего Регламента.
+              </p>
+            </div>
+          </section>
+
+          <!-- 5 -->
+
+          <section
+            id="section-5"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 05
+            </span>
+
+            <h2>
+              Условия действия Referral Code
+            </h2>
+
+            <p>
+              Для продолжения участия в реферальной
+              программе владелец Referral Code должен
+              одновременно соблюдать следующие условия:
+            </p>
+
+            <ul>
+              <li>
+                иметь действующую оплаченную подписку
+                на TDA Basic либо на другой платный
+                отчётный продукт QUD, включённый
+                в реферальную программу;
+              </li>
+
+              <li>
+                продолжать торговую деятельность;
+              </li>
+
+              <li>
+                формировать новые торговые данные
+                и поддерживать актуальность
+                накопительной истории;
+              </li>
+
+              <li>
+                находиться в QUD Room или QUD Elite;
+              </li>
+
+              <li>
+                соблюдать настоящий Регламент.
+              </li>
+            </ul>
+
+            <div class="key-statement">
+              <span>Ограничение</span>
+
+              <strong>
+                Сам факт наличия Strategy ID или ранее
+                полученного Referral Code не предоставляет
+                бессрочного права на участие в программе.
+              </strong>
+            </div>
+
+            <p>
+              Действие Referral Code может быть временно
+              приостановлено, если его владелец:
+            </p>
+
+            <ul>
+              <li>
+                прекратил оплачивать подписку
+                на отчётный продукт QUD;
+              </li>
+
+              <li>
+                прекратил торговую деятельность;
+              </li>
+
+              <li>
+                в течение продолжительного периода
+                не формирует новые торговые данные;
+              </li>
+
+              <li>
+                покинул QUD Room или QUD Elite;
+              </li>
+
+              <li>
+                нарушил условия настоящего Регламента.
+              </li>
+            </ul>
+
+            <p>
+              Периоды отсутствия сделок, обусловленные
+              особенностями торговой стратегии, могут
+              рассматриваться QUD индивидуально.
+            </p>
+
+            <p>
+              После восстановления оплаченной подписки,
+              торговой активности и допустимого уровня
+              участия действие Referral Code может быть
+              восстановлено.
+            </p>
+
+            <p>
+              Ранее подтверждённые вознаграждения
+              сохраняются. Новые подключения,
+              совершённые в период приостановки
+              Referral Code, могут не учитываться.
+            </p>
+          </section>
+
+          <!-- 6 -->
+
+          <section
+            id="section-6"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 06
+            </span>
+
+            <h2>
+              Порядок использования Referral Code
+            </h2>
+
+            <p>
+              Приглашённый трейдер должен указать
+              Referral Code при первом подключении
+              и первой оплате TDA Basic.
+            </p>
+
+            <div class="key-statement">
+              <span>Важно</span>
+
+              <strong>
+                Referral Code нельзя добавить к покупке
+                после подтверждения оплаты.
+              </strong>
+            </div>
+
+            <p>
+              Один приглашённый трейдер учитывается
+              в реферальной программе только один раз.
+            </p>
+
+            <p>
+              Повторные оплаты, продления подписки
+              или приобретение других продуктов
+              тем же приглашённым трейдером не создают
+              нового вознаграждения, если QUD отдельно
+              не установил иные условия.
+            </p>
+
+            <p>Не допускаются:</p>
+
+            <ul>
+              <li>
+                использование владельцем собственного
+                Referral Code;
+              </li>
+
+              <li>
+                создание повторных аккаунтов
+                одним человеком;
+              </li>
+
+              <li>
+                использование нескольких email
+                для повторного получения вознаграждений
+                или бонусов;
+              </li>
+
+              <li>
+                закрепление одного приглашённого трейдера
+                одновременно за несколькими Referral Code;
+              </li>
+
+              <li>
+                использование чужих персональных данных;
+              </li>
+
+              <li>
+                фиктивные покупки или подключения.
+              </li>
+            </ul>
+
+            <p>
+              QUD вправе проверять уникальность
+              приглашённого трейдера по доступным
+              идентификационным и торговым данным.
+            </p>
+          </section>
+
+          <!-- 7 -->
+
+          <section
+            id="section-7"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 07
+            </span>
+
+            <h2>
+              Условия вознаграждения владельца
+              Referral Code
+            </h2>
+
+            <p>
+              Право на вознаграждение возникает после
+              первой подтверждённой оплаты TDA Basic
+              новым уникальным приглашённым трейдером.
+            </p>
+
+            <p>
+              Для получения вознаграждения должны
+              одновременно выполняться следующие условия:
+            </p>
+
+            <ul>
+              <li>
+                Referral Code действовал на момент
+                подключения приглашённого трейдера;
+              </li>
+
+              <li>
+                владелец Referral Code имел действующую
+                оплаченную подписку QUD;
+              </li>
+
+              <li>
+                владелец продолжал торговую деятельность;
+              </li>
+
+              <li>
+                приглашённый трейдер впервые подключился
+                к TDA Basic;
+              </li>
+
+              <li>
+                приглашённый трейдер указал Referral Code
+                до подтверждения оплаты;
+              </li>
+
+              <li>
+                оплата TDA Basic была получена
+                и подтверждена;
+              </li>
+
+              <li>
+                приглашённый трейдер ранее не учитывался
+                в реферальной программе;
+              </li>
+
+              <li>
+                отсутствуют признаки дублирования,
+                фиктивной регистрации или другого
+                нарушения.
+              </li>
+            </ul>
+
+            <div class="key-statement">
+              <span>Правило начисления</span>
+
+              <strong>
+                За одного уникального приглашённого
+                трейдера владелец получает только
+                одно вознаграждение.
+              </strong>
+            </div>
+
+            <p>
+              Тип вознаграждения определяется уровнем
+              владельца Referral Code на дату подтверждения
+              первой покупки приглашённого трейдера.
+            </p>
+          </section>
+
+          <!-- 8 -->
+
+          <section
+            id="section-8"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 08
+            </span>
+
+            <h2>
+              Вознаграждение владельца в QUD Room
+            </h2>
+
+            <p>
+              Владелец Referral Code, находящийся
+              в QUD Room, получает за каждого нового
+              приглашённого трейдера:
+            </p>
+
+            <div class="key-statement">
+              <span>Вознаграждение QUD Room</span>
+
+              <strong>
+                Бесплатное продление своей подписки QUD
+                на один месяц.
+              </strong>
+            </div>
+
+            <p>
+              Один новый приглашённый трейдер, впервые
+              оплативший TDA Basic, предоставляет владельцу
+              один дополнительный бесплатный месяц
+              подписки.
+            </p>
+
+            <p>
+              Бесплатные месяцы могут накапливаться
+              без ограничения по общему количеству,
+              однако использовать их можно не более
+              трёх месяцев подряд.
+            </p>
+
+            <p>
+              После использования трёх бесплатных месяцев
+              подряд владелец должен самостоятельно
+              оплатить не менее одного полного месяца
+              подписки.
+            </p>
+
+            <p>
+              После самостоятельно оплаченного месяца
+              владелец может использовать следующий блок
+              накопленных бесплатных месяцев — снова
+              не более трёх месяцев подряд.
+            </p>
+
+            <p>Неиспользованные бесплатные месяцы:</p>
+
+            <ul>
+              <li>не сгорают;</li>
+
+              <li>
+                сохраняются на балансе владельца;
+              </li>
+
+              <li>
+                переносятся на следующий доступный период;
+              </li>
+
+              <li>
+                используются после выполнения условия
+                об одном самостоятельно оплаченном месяце
+                между бесплатными блоками.
+              </li>
+            </ul>
+
+            <div class="example-block">
+              <strong>Пример</strong>
+
+              <ul>
+                <li>
+                  три приглашённых трейдера —
+                  три бесплатных месяца подряд;
+                </li>
+
+                <li>
+                  после них владелец самостоятельно
+                  оплачивает один месяц;
+                </li>
+
+                <li>
+                  затем может использовать следующие
+                  накопленные бесплатные месяцы —
+                  снова не более трёх подряд.
+                </li>
+              </ul>
+            </div>
+
+            <p>
+              Если накоплено более трёх бесплатных
+              месяцев, оставшиеся месяцы сохраняются
+              до следующего доступного периода.
+            </p>
+
+            <p>Бесплатное продление:</p>
+
+            <ul>
+              <li>
+                применяется после завершения текущего
+                оплаченного периода;
+              </li>
+
+              <li>
+                не выплачивается денежными средствами;
+              </li>
+
+              <li>
+                не обменивается на денежный эквивалент;
+              </li>
+
+              <li>
+                не передаётся другому лицу;
+              </li>
+
+              <li>
+                не может быть продано или подарено.
+              </li>
+            </ul>
+          </section>
+
+          <!-- 9 -->
+
+          <section
+            id="section-9"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 09
+            </span>
+
+            <h2>
+              Вознаграждение владельца в QUD Elite
+            </h2>
+
+            <p>
+              Владелец Referral Code, находящийся
+              в QUD Elite, получает за каждого нового
+              приглашённого трейдера:
+            </p>
+
+            <div class="key-statement">
+              <span>Вознаграждение QUD Elite</span>
+
+              <strong>
+                Денежное вознаграждение в виде процента
+                от суммы его первой подтверждённой
+                покупки TDA Basic.
+              </strong>
+            </div>
+
+            <p>
+              Размер процента устанавливается действующими
+              условиями QUD Elite и сообщается владельцу
+              отдельно.
+            </p>
+
+            <p>
+              Процентное вознаграждение рассчитывается
+              только от первой подтверждённой покупки
+              TDA Basic приглашённого трейдера.
+            </p>
+
+            <p>
+              Повторные оплаты и продления того же
+              приглашённого трейдера не создают повторной
+              процентной выплаты, если QUD отдельно
+              не утвердил другие условия.
+            </p>
+
+            <p>
+              Порядок, способ и срок выплаты сообщаются
+              владельцу Referral Code в рамках условий
+              QUD Elite.
+            </p>
+          </section>
+
+          <!-- 10 -->
+
+          <section
+            id="section-10"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 10
+            </span>
+
+            <h2>
+              Бонус приглашённому трейдеру
+            </h2>
+
+            <p>
+              Трейдер, который использовал действующий
+              Referral Code при первом подключении
+              и первой оплате TDA Basic, получает
+              специальный бонус.
+            </p>
+
+            <div class="key-statement">
+              <span>Бонус приглашённому трейдеру</span>
+
+              <strong>
+                После первой отчётной недели трейдер
+                сможет сравнить свои показатели
+                со средними значениями трейдеров QUD.
+              </strong>
+            </div>
+
+            <p>
+              Приглашённому трейдеру предоставляются:
+            </p>
+
+            <ul>
+              <li>
+                его показатели за первую отчётную неделю;
+              </li>
+
+              <li>
+                соответствующие средние значения
+                трейдеров QUD.
+              </li>
+            </ul>
+
+            <p>
+              QUD предоставляет только фактические
+              значения показателей.
+            </p>
+
+            <p>QUD:</p>
+
+            <ul>
+              <li>
+                не оценивает различия между показателями;
+              </li>
+
+              <li>
+                не определяет, какие значения являются
+                правильными или неправильными;
+              </li>
+
+              <li>
+                не формирует рейтинг приглашённого
+                трейдера;
+              </li>
+
+              <li>
+                не делает выводов о качестве его
+                торговой стратегии;
+              </li>
+
+              <li>
+                не предоставляет торговых рекомендаций;
+              </li>
+
+              <li>
+                не указывает, каким образом трейдер
+                должен изменить свою торговлю.
+              </li>
+            </ul>
+
+            <div class="neutral-note">
+              <p>
+                <strong>
+                  Все выводы и интерпретации трейдер
+                  делает самостоятельно.
+                </strong>
+              </p>
+            </div>
+
+            <p>Бонус:</p>
+
+            <ul>
+              <li>
+                предоставляется один раз;
+              </li>
+
+              <li>
+                предоставляется после первой полноценной
+                отчётной недели;
+              </li>
+
+              <li>
+                доступен только при использовании
+                Referral Code во время первого
+                подключения;
+              </li>
+
+              <li>
+                не предоставляется при добавлении
+                Referral Code после оплаты;
+              </li>
+
+              <li>
+                не имеет денежного эквивалента;
+              </li>
+
+              <li>
+                не заменяется другим продуктом
+                или услугой.
+              </li>
+            </ul>
+          </section>
+
+          <!-- 11 -->
+
+          <section
+            id="section-11"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 11
+            </span>
+
+            <h2>
+              Подтверждение вознаграждений и бонусов
+            </h2>
+
+            <p>QUD самостоятельно фиксирует:</p>
+
+            <ul>
+              <li>
+                факт использования Referral Code;
+              </li>
+
+              <li>
+                подтверждение первой оплаты TDA Basic;
+              </li>
+
+              <li>
+                уникальность приглашённого трейдера;
+              </li>
+
+              <li>
+                право владельца на вознаграждение;
+              </li>
+
+              <li>
+                тип вознаграждения владельца;
+              </li>
+
+              <li>
+                количество накопленных бесплатных месяцев;
+              </li>
+
+              <li>
+                количество использованных подряд
+                бесплатных месяцев;
+              </li>
+
+              <li>
+                наличие обязательного самостоятельно
+                оплаченного месяца между бесплатными
+                блоками;
+              </li>
+
+              <li>
+                готовность сравнительных показателей
+                приглашённого трейдера;
+              </li>
+
+              <li>
+                факт предоставления вознаграждения;
+              </li>
+
+              <li>
+                факт направления сравнительных показателей.
+              </li>
+            </ul>
+
+            <div class="key-statement">
+              <span>Подтверждение QUD</span>
+
+              <strong>
+                Вознаграждение владельца или бонус
+                приглашённому трейдеру считаются
+                предоставленными только после их
+                подтверждения со стороны QUD.
+              </strong>
+            </div>
+          </section>
+
+          <!-- 12 -->
+
+          <section
+            id="section-12"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 12
+            </span>
+
+            <h2>
+              Возврат оплаты и отмена вознаграждения
+            </h2>
+
+            <p>
+              Если оплата приглашённого трейдера была
+              возвращена, отменена или признана
+              недействительной, QUD вправе отменить
+              связанное с ней вознаграждение.
+            </p>
+
+            <p>
+              Если бесплатный месяц уже был начислен,
+              QUD вправе скорректировать количество
+              накопленных месяцев или срок последующего
+              продления.
+            </p>
+
+            <p>
+              Если денежное вознаграждение ещё не было
+              выплачено, оно может быть отменено.
+            </p>
+
+            <p>
+              Если нарушение выявлено после выплаты,
+              QUD вправе учесть соответствующую сумму
+              при последующих выплатах.
+            </p>
+          </section>
+
+          <!-- 13 -->
+
+          <section
+            id="section-13"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 13
+            </span>
+
+            <h2>
+              Нарушения условий программы
+            </h2>
+
+            <p>Нарушением считается:</p>
+
+            <ul>
+              <li>
+                самостоятельное использование владельцем
+                собственного Referral Code;
+              </li>
+
+              <li>
+                создание фиктивных или повторных аккаунтов;
+              </li>
+
+              <li>
+                использование нескольких email
+                одним человеком;
+              </li>
+
+              <li>
+                предоставление недостоверной информации;
+              </li>
+
+              <li>
+                попытка получить несколько вознаграждений
+                за одного трейдера;
+              </li>
+
+              <li>
+                имитация торговой активности исключительно
+                для сохранения участия в программе;
+              </li>
+
+              <li>
+                передача Strategy ID третьим лицам;
+              </li>
+
+              <li>
+                продажа или передача права
+                на вознаграждение;
+              </li>
+
+              <li>
+                иное злоупотребление условиями программы.
+              </li>
+            </ul>
+
+            <p>
+              При выявлении нарушения QUD вправе:
+            </p>
+
+            <ul>
+              <li>
+                временно приостановить действие
+                Referral Code;
+              </li>
+
+              <li>
+                полностью прекратить участие владельца
+                в программе;
+              </li>
+
+              <li>
+                отменить неподтверждённое вознаграждение;
+              </li>
+
+              <li>
+                исключить отдельное подключение
+                из реферальной программы;
+              </li>
+
+              <li>
+                отказать в повторном восстановлении
+                действия Referral Code.
+              </li>
+            </ul>
+          </section>
+
+          <!-- 14 -->
+
+          <section
+            id="section-14"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 14
+            </span>
+
+            <h2>
+              Изменение условий программы
+            </h2>
+
+            <p>QUD вправе изменять:</p>
+
+            <ul>
+              <li>
+                условия участия в реферальной программе;
+              </li>
+
+              <li>
+                требования к торговой активности;
+              </li>
+
+              <li>
+                перечень продуктов, включённых
+                в программу;
+              </li>
+
+              <li>
+                форму и размер вознаграждения;
+              </li>
+
+              <li>
+                порядок использования накопленных
+                бесплатных месяцев;
+              </li>
+
+              <li>
+                процентное вознаграждение для QUD Elite;
+              </li>
+
+              <li>
+                содержание бонуса приглашённому трейдеру;
+              </li>
+
+              <li>
+                порядок подтверждения и предоставления
+                вознаграждений.
+              </li>
+            </ul>
+
+            <p>
+              Новые условия применяются к подключениям,
+              совершённым после вступления изменений
+              в силу.
+            </p>
+
+            <p>
+              Ранее подтверждённые вознаграждения
+              сохраняются, если их отмена не связана
+              с возвратом оплаты, дублированием аккаунтов
+              или нарушением настоящего Регламента.
+            </p>
+          </section>
+
+          <!-- 15 -->
+
+          <section
+            id="section-15"
+            class="regulation-section"
+          >
+            <span class="section-number">
+              Раздел 15
+            </span>
+
+            <h2>Принятие условий</h2>
+
+            <p>
+              Получение и использование Referral Code
+              означает, что его владелец:
+            </p>
+
+            <ul>
+              <li>
+                ознакомился с настоящим Регламентом;
+              </li>
+
+              <li>
+                понимает условия участия;
+              </li>
+
+              <li>
+                принимает правила предоставления
+                вознаграждений;
+              </li>
+
+              <li>
+                обязуется поддерживать действующую
+                подписку и торговую активность;
+              </li>
+
+              <li>
+                соглашается с правом QUD проверять
+                соблюдение условий программы.
+              </li>
+            </ul>
+
+            <div class="key-statement">
+              <span>Принятие Регламента</span>
+
+              <strong>
+                Передача Referral Code приглашённому
+                трейдеру допускается только в рамках
+                настоящего Регламента.
+              </strong>
+            </div>
+          </section>
+
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+
+      <a
+        href="/"
+        class="footer-logo"
+        aria-label="QUD"
+      >
+        QUD
+      </a>
+
+      <div class="footer-meta">
+        QUD Referral Program<br>
+        Регламент v0.3
+      </div>
+
+    </div>
+  </footer>
+</body>
+</html>
