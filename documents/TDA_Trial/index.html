@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Регламент прохождения TDA Trial Audit</title>
+
+  <meta
+    name="description"
+    content="Регламент прохождения бесплатной диагностики торгового процесса TDA Trial Audit. Редакция v.0.1."
+  >
+
+  <meta name="robots" content="noindex, nofollow">
+
+  <link
+    rel="canonical"
+    href="https://fx-qud.com/documents/TDA_Trial/"
+  >
+
+  <style>
+    :root {
+      --bg-main: #0b0d0f;
+      --bg-section: #101315;
+      --bg-soft: #141719;
+
+      --border-main: #252b30;
+      --border-soft: #1d2226;
+
+      --text-main: #f0f0ed;
+      --text-muted: #a0a3a7;
+      --text-soft: #73777c;
+
+      --accent: #dba351;
+      --accent-soft: rgba(219, 163, 81, 0.08);
+      --accent-border: rgba(219, 163, 81, 0.34);
+
+      --container: 1180px;
+      --content: 790px;
+      --header-height: 74px;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 96px;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(
+          circle at 12% 0%,
+          rgba(219, 163, 81, 0.04),
+          transparent 28%
+        ),
+        linear-gradient(
+          180deg,
+          #0b0d0f 0%,
+          #0f1113 48%,
+          #0b0d0f 100%
+        );
+      line-height: 1.68;
+    }
+
+    ::selection {
+      background: rgba(219, 163, 81, 0.24);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    p {
+      margin: 0 0 17px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    strong {
+      color: var(--text-main);
+      font-weight: 650;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--container));
+      margin: 0 auto;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      padding: 9px 13px;
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      color: #17130d;
+      font-size: 12px;
+      font-weight: 700;
+      transform: translateY(-150%);
+      transition: transform 0.2s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    /* Header */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      min-height: var(--header-height);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+      background: rgba(13, 17, 16, 0.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .header-inner {
+      min-height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 10px 0;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 14px;
+      white-space: nowrap;
+    }
+
+    .logo-main {
+      color: var(--accent);
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .logo-sub {
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .header-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .header-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid var(--border-main);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 650;
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .header-link:hover,
+    .header-link:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Hero */
+
+    .document-hero {
+      padding: 62px 0 52px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .hero-inner {
+      max-width: 800px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      margin-bottom: 20px;
+      padding: 6px 10px;
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius-sm);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(32px, 4vw, 43px);
+      line-height: 1.12;
+      font-weight: 730;
+    }
+
+    .hero-description {
+      max-width: 690px;
+      margin-top: 22px;
+      color: var(--text-muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .document-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .meta-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 31px;
+      padding: 0 11px;
+      border: 1px solid var(--border-main);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.018);
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .meta-badge.is-accent {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+    }
+
+    /* Key facts */
+
+    .facts-section {
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .facts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-left: 1px solid var(--border-soft);
+    }
+
+    .fact {
+      min-height: 150px;
+      padding: 34px 30px;
+      border-right: 1px solid var(--border-soft);
+      background: rgba(255, 255, 255, 0.008);
+    }
+
+    .fact-label {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .fact p {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* Main document */
+
+    .document-area {
+      padding: 58px 0 92px;
+    }
+
+    .document-layout {
+      display: grid;
+      grid-template-columns: 245px minmax(0, var(--content));
+      justify-content: space-between;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .document-navigation {
+      position: sticky;
+      top: 98px;
+      padding: 18px 0;
+      border-top: 1px solid var(--border-main);
+      border-bottom: 1px solid var(--border-main);
+    }
+
+    .document-navigation strong {
+      display: block;
+      margin-bottom: 11px;
+      color: var(--text-main);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .document-navigation nav {
+      display: grid;
+      gap: 2px;
+    }
+
+    .document-navigation a {
+      display: block;
+      padding: 7px 8px;
+      border-radius: 5px;
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.38;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .document-navigation a:hover,
+    .document-navigation a:focus-visible {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .regulation {
+      min-width: 0;
+    }
+
+    .regulation-section {
+      padding-bottom: 42px;
+      margin-bottom: 42px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .regulation-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-number {
+      display: inline-flex;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .regulation-section h2 {
+      margin-bottom: 22px;
+      font-size: clamp(21px, 2.4vw, 26px);
+      line-height: 1.25;
+      font-weight: 680;
+    }
+
+    .regulation-section h3 {
+      margin: 26px 0 12px;
+      font-size: 17px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .regulation-section ul {
+      display: grid;
+      gap: 9px;
+      margin: 18px 0 22px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .regulation-section li {
+      position: relative;
+      padding-left: 20px;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .regulation-section li::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 1px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.8;
+    }
+
+    .inline-link {
+      color: var(--text-main);
+      border-bottom: 1px solid var(--accent-border);
+      transition: color 0.2s ease;
+    }
+
+    .inline-link:hover,
+    .inline-link:focus-visible {
+      color: var(--accent);
+    }
+
+    .note {
+      margin: 24px 0;
+      padding: 2px 0 2px 18px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .note-label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .note p {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .cycle {
+      display: grid;
+      gap: 0;
+      margin: 22px 0;
+      border-top: 1px solid var(--border-main);
+    }
+
+    .cycle-row {
+      display: grid;
+      grid-template-columns: 165px 1fr;
+      gap: 22px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-main);
+    }
+
+    .cycle-row strong {
+      font-size: 14px;
+    }
+
+    .cycle-row span {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Footer */
+
+    .site-footer {
+      padding: 30px 0;
+      border-top: 1px solid var(--border-soft);
+      background: rgba(8, 10, 11, 0.45);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      color: var(--accent);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-meta {
+      color: var(--text-soft);
+      font-size: 11px;
+      text-align: right;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 940px) {
+      .document-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .document-navigation {
+        position: static;
+      }
+
+      .document-navigation nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(calc(100% - 28px), var(--container));
+      }
+
+      .site-header,
+      .header-inner {
+        min-height: auto;
+      }
+
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        padding: 13px 0;
+      }
+
+      .logo-sub {
+        display: none;
+      }
+
+      .header-links {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .header-link {
+        min-height: 34px;
+        padding: 0 11px;
+        font-size: 11px;
+      }
+
+      .document-hero {
+        padding: 44px 0 40px;
+      }
+
+      h1 {
+        font-size: 29px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .facts-grid {
+        grid-template-columns: 1fr;
+        border-left: 0;
+      }
+
+      .fact {
+        min-height: auto;
+        padding: 24px 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--border-soft);
+        background: transparent;
+      }
+
+      .facts-section .container {
+        width: min(calc(100% - 28px), var(--container));
+      }
+
+      .document-area {
+        padding: 42px 0 68px;
+      }
+
+      .document-navigation nav {
+        grid-template-columns: 1fr;
+      }
+
+      .cycle-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer-meta {
+        text-align: left;
+      }
+    }
+
+    @media print {
+      .site-header,
+      .document-navigation,
+      .site-footer,
+      .skip-link {
+        display: none;
+      }
+
+      body {
+        color: #111111;
+        background: #ffffff;
+      }
+
+      .document-hero,
+      .document-area {
+        padding: 22px 0;
+      }
+
+      .facts-section {
+        border-color: #cccccc;
+      }
+
+      .facts-grid,
+      .fact,
+      .cycle,
+      .cycle-row {
+        border-color: #cccccc;
+      }
+
+      .document-layout {
+        display: block;
+      }
+
+      h1,
+      h2,
+      h3,
+      strong,
+      .fact p,
+      .note p {
+        color: #111111;
+      }
+
+      p,
+      li,
+      .cycle-row span {
+        color: #333333 !important;
+      }
+
+      .regulation-section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#document-content" class="skip-link">
+    Перейти к регламенту
+  </a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Перейти на основной сайт QUD">
+        <span class="logo-main">QUD</span>
+        <span class="logo-sub">RISK · DISCIPLINE · TRUST</span>
+      </a>
+
+      <nav class="header-links" aria-label="Полезные ссылки">
+        <a href="/" class="header-link">Основной сайт</a>
+
+        <a
+          href="https://web.metatrader.app/terminal"
+          class="header-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WebTrader
+        </a>
+
+        <a
+          href="https://www.metatrader5.com/ru/download"
+          class="header-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          MetaTrader
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="document-content">
+    <section class="document-hero">
+      <div class="container">
+        <div class="hero-inner">
+          <div class="eyebrow">QUD TDA</div>
+
+          <h1>
+            Регламент прохождения<br>
+            TDA Trial Audit
+          </h1>
+
+          <p class="hero-description">
+            Бесплатная диагностика торгового процесса на основе данных MT5
+            за одну торговую неделю.
+          </p>
+
+          <div class="document-meta">
+            <span class="meta-badge is-accent">Редакция v.0.1</span>
+            <span class="meta-badge">TDA Trial Audit</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="facts-section" aria-label="Ключевые условия">
+      <div class="container">
+        <div class="facts-grid">
+          <div class="fact">
+            <span class="fact-label">Стоимость</span>
+            <p>Бесплатно</p>
+          </div>
+
+          <div class="fact">
+            <span class="fact-label">Период наблюдения</span>
+            <p>Одна торговая неделя</p>
+          </div>
+
+          <div class="fact">
+            <span class="fact-label">Результат</span>
+            <p>Итоговый диагностический отчёт</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="document-area">
+      <div class="container document-layout">
+        <aside class="document-navigation">
+          <strong>Содержание</strong>
+
+          <nav aria-label="Разделы регламента">
+            <a href="#section-1">1. Что такое TDA Trial Audit</a>
+            <a href="#section-2">2. Как подключается Trial</a>
+            <a href="#section-3">3. Как проходит Trial</a>
+            <a href="#section-4">4. Торговые условия</a>
+            <a href="#section-5">5. Что получает трейдер</a>
+            <a href="#section-6">6. Минимальная активность</a>
+            <a href="#section-7">7. Стоимость</a>
+            <a href="#section-8">8. История и данные</a>
+            <a href="#section-9">9. Ограничения</a>
+          </nav>
+        </aside>
+
+        <article class="regulation">
+          <section id="section-1" class="regulation-section">
+            <span class="section-number">Раздел 01</span>
+            <h2>Что такое TDA Trial Audit</h2>
+
+            <p>
+              <strong>TDA Trial Audit</strong> — это бесплатная диагностика
+              торгового процесса трейдера на основе данных MT5.
+            </p>
+
+            <p>
+              Система фиксирует не только базовую статистику сделок, но и сам
+              процесс торговли: действия с риском, работу со Stop Loss,
+              изменения позиций, факторы просадки, поведение внутри сделки и
+              отклонения от торговой дисциплины.
+            </p>
+
+            <p>
+              TDA Trial Audit не управляет счётом трейдера, не открывает и не
+              закрывает сделки, не изменяет позиции, не предоставляет торговые
+              сигналы и не является инвестиционной рекомендацией.
+            </p>
+
+            <div class="note">
+              <span class="note-label">Цель Trial</span>
+              <p>
+                Дать трейдеру первичный диагностический срез торгового процесса
+                за одну торговую неделю на основе собранных данных.
+              </p>
+            </div>
+          </section>
+
+          <section id="section-2" class="regulation-section">
+            <span class="section-number">Раздел 02</span>
+            <h2>Как подключается TDA Trial Audit</h2>
+
+            <p>
+              Для подключения QUD предоставляет трейдеру доступ к демо-счёту
+              MT5:
+            </p>
+
+            <ul>
+              <li>сервер брокера;</li>
+              <li>логин MT5;</li>
+              <li>торговый пароль.</li>
+            </ul>
+
+            <p>
+              Для наблюдения и чтения торговых данных QUD использует отдельный
+              Investor password. Этот доступ не позволяет QUD торговать,
+              изменять позиции или управлять счётом.
+            </p>
+
+            <div class="note">
+              <span class="note-label">Доступ QUD</span>
+              <p>
+                QUD использует Investor password только для наблюдения и чтения
+                данных.
+              </p>
+            </div>
+
+            <p>
+              Если торговый пароль был утерян, QUD не сможет его восстановить.
+              Если Investor password был изменён трейдером, QUD не сможет
+              собирать актуальные диагностические данные торгового процесса.
+            </p>
+
+            <p>
+              Доступ к демо-счёту MT5 предоставляется по субботам или
+              воскресеньям.
+            </p>
+
+            <p>
+              Для торговли на предоставленном демо-счёте трейдер может
+              использовать браузерный
+              <a
+                href="https://web.metatrader.app/terminal"
+                class="inline-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >WebTrader</a>
+              или установленный терминал
+              <a
+                href="https://www.metatrader5.com/ru/download"
+                class="inline-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >MetaTrader 5</a>.
+              Выбор платформы не влияет на порядок прохождения Trial и сбор
+              диагностических данных.
+            </p>
+          </section>
+
+          <section id="section-3" class="regulation-section">
+            <span class="section-number">Раздел 03</span>
+            <h2>Как проходит TDA Trial Audit</h2>
+
+            <p>
+              Период наблюдения проходит в течение торговой недели — с
+              понедельника по пятницу. Общий цикл Trial, включая подключение и
+              подготовку отчёта, составляет до семи календарных дней.
+            </p>
+
+            <div class="cycle" aria-label="Цикл TDA Trial Audit">
+              <div class="cycle-row">
+                <strong>Понедельник</strong>
+                <span>Старт торговой недели и начало сбора данных.</span>
+              </div>
+
+              <div class="cycle-row">
+                <strong>Понедельник–пятница</strong>
+                <span>Трейдер торгует в обычном режиме.</span>
+              </div>
+
+              <div class="cycle-row">
+                <strong>Суббота / воскресенье</strong>
+                <span>Обработка данных и подготовка отчёта.</span>
+              </div>
+
+              <div class="cycle-row">
+                <strong>Суббота / воскресенье</strong>
+                <span>Передача итогового диагностического отчёта.</span>
+              </div>
+            </div>
+
+            <p>
+              Если подключение было выполнено не с начала торговой недели,
+              диагностический отчёт формируется по доступному периоду
+              наблюдения.
+            </p>
+          </section>
+
+          <section id="section-4" class="regulation-section">
+            <span class="section-number">Раздел 04</span>
+            <h2>Торговые условия</h2>
+
+            <p>
+              Во время TDA Trial Audit трейдер использует свою торговую
+              стратегию без ограничений со стороны QUD.
+            </p>
+
+            <p>Трейдер самостоятельно выбирает:</p>
+
+            <ul>
+              <li>торговые инструменты;</li>
+              <li>количество сделок;</li>
+              <li>объём позиции;</li>
+              <li>риск на сделку;</li>
+              <li>точки входа и выхода;</li>
+              <li>использование Stop Loss и Take Profit;</li>
+              <li>стиль торговли;</li>
+              <li>время удержания позиции.</li>
+            </ul>
+
+            <div class="note">
+              <span class="note-label">Самостоятельная торговля</span>
+              <p>
+                QUD не ограничивает стратегию трейдера и не вмешивается в его
+                торговые решения.
+              </p>
+            </div>
+
+            <p>
+              Все торговые действия трейдер совершает самостоятельно и несёт
+              личную ответственность за результат своей торговли.
+            </p>
+          </section>
+
+          <section id="section-5" class="regulation-section">
+            <span class="section-number">Раздел 05</span>
+            <h2>Что получает трейдер</h2>
+
+            <p>
+              По итогам TDA Trial Audit трейдер получает диагностический отчёт
+              по своему торговому процессу.
+            </p>
+
+            <p>В отчёте отражаются:</p>
+
+            <ul>
+              <li>общая картина торговой недели;</li>
+              <li>базовые риск-метрики;</li>
+              <li>работа со Stop Loss;</li>
+              <li>события внутри сделок;</li>
+              <li>торговая дисциплина;</li>
+              <li>ключевые данные по процессу;</li>
+              <li>зафиксированные особенности торгового поведения;</li>
+              <li>зоны внимания для самостоятельного анализа.</li>
+            </ul>
+          </section>
+
+          <section id="section-6" class="regulation-section">
+            <span class="section-number">Раздел 06</span>
+            <h2>Минимальная торговая активность</h2>
+
+            <p>
+              Для более точной диагностики желательно наличие торговой
+              активности в течение недели.
+            </p>
+
+            <p>
+              Рекомендуемый минимум — 5–7 торговых действий за период Trial.
+              Чем больше торговой истории сформировано за период наблюдения,
+              тем полнее будет итоговый анализ.
+            </p>
+
+            <p>
+              Если торговой активности недостаточно, отчёт может быть
+              ограниченным, поскольку системе будет недостаточно данных для
+              полноценного диагностического среза.
+            </p>
+          </section>
+
+          <section id="section-7" class="regulation-section">
+            <span class="section-number">Раздел 07</span>
+            <h2>Стоимость TDA Trial Audit</h2>
+
+            <div class="note">
+              <span class="note-label">Стоимость</span>
+              <p>TDA Trial Audit предоставляется бесплатно.</p>
+            </div>
+
+            <p>
+              Срок Trial — до семи календарных дней, включая одну торговую
+              неделю наблюдения и подготовку итогового отчёта.
+            </p>
+
+            <p>В Trial входит:</p>
+
+            <ul>
+              <li>подключение одного MT5-счёта;</li>
+              <li>сбор данных в течение торговой недели;</li>
+              <li>фиксация торговых событий;</li>
+              <li>обработка данных после завершения недели;</li>
+              <li>итоговый диагностический отчёт.</li>
+            </ul>
+
+            <p>
+              Trial не является платной подпиской и не создаёт обязательств по
+              дальнейшему использованию TDA Basic.
+            </p>
+          </section>
+
+          <section id="section-8" class="regulation-section">
+            <span class="section-number">Раздел 08</span>
+            <h2>История и дальнейшее использование данных</h2>
+
+            <p>
+              Данные, собранные в рамках TDA Trial Audit, используются для
+              подготовки первичного диагностического отчёта.
+            </p>
+
+            <p>
+              Если трейдер после Trial переходит на TDA Basic, последующие
+              отчёты позволяют формировать последовательную историю торгового
+              процесса по неделям и накапливать Trust Score.
+            </p>
+
+            <p>Накопление истории позволяет:</p>
+
+            <ul>
+              <li>видеть динамику торгового поведения от недели к неделе;</li>
+              <li>оценивать устойчивость риск-дисциплины во времени;</li>
+              <li>фиксировать повторяемость торговых решений;</li>
+              <li>анализировать стратегию по серии торговых периодов;</li>
+              <li>выявлять особенности торгового процесса;</li>
+              <li>формировать более объективную картину дисциплины;</li>
+              <li>накапливать историю доверия внутри QUD;</li>
+              <li>создавать базу для дальнейшего сотрудничества с QUD;</li>
+              <li>использовать накопленную статистику как подтверждение торгового процесса;</li>
+              <li>готовиться к потенциальному взаимодействию с капиталом в будущем.</li>
+            </ul>
+
+            <div class="note">
+              <span class="note-label">Важно</span>
+              <p>
+                Прохождение Trial или использование TDA Basic не гарантирует
+                предоставление капитала, инвестиций или допуска к управлению
+                средствами.
+              </p>
+            </div>
+
+            <p>
+              Решение о любом дальнейшем сотрудничестве принимается отдельно
+              на основании накопленной истории, качества торгового процесса,
+              риск-дисциплины и других факторов, которые определяются
+              отдельными условиями QUD.
+            </p>
+          </section>
+
+          <section id="section-9" class="regulation-section">
+            <span class="section-number">Раздел 09</span>
+            <h2>Ограничения</h2>
+
+            <p>
+              QUD не является брокером, управляющим капиталом или
+              инвестиционным советником.
+            </p>
+
+            <p>TDA Trial Audit:</p>
+
+            <ul>
+              <li>не принимает торговые решения за трейдера;</li>
+              <li>не вмешивается в торговлю;</li>
+              <li>не ограничивает торговую стратегию;</li>
+              <li>не гарантирует прибыль;</li>
+              <li>не формирует рейтинг трейдера или его стратегии;</li>
+              <li>не гарантирует дальнейшее сотрудничество;</li>
+              <li>не гарантирует предоставление капитала;</li>
+              <li>не заменяет личную ответственность трейдера за сделки.</li>
+            </ul>
+
+            <p>
+              TDA Trial Audit является аналитическим инструментом для
+              диагностики торгового процесса.
+            </p>
+          </section>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="/" class="footer-logo" aria-label="QUD">QUD</a>
+
+      <div class="footer-meta">
+        TDA Trial Audit<br>
+        Регламент v.0.1
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
