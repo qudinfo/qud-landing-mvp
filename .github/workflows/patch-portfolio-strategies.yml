@@ -84,3 +84,5 @@ jobs:
           git add portal/portfolio/backend/apps-script/Code.gs .github/workflows/patch-portfolio-strategies.yml
           git commit -m "Add strategies payload to portfolio API"
           git push
+
+# Trigger after workflow registration
