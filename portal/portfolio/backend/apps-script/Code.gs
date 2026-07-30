@@ -231,7 +231,8 @@ function createStrategyRequest_(body) {
     const requestId = generateUniqueRequestId_(requestTable.objects);
     const appendRow = firstEmptyRowInColumn_(requestsSheet, 1, 2);
 
-    // The latest request for this strategy is replaced by the new one.
+    // Keep the current slot intact until the new row exists and passes QA.
+    const previousLatestRows = [];
     if (headerMap.is_latest_strategy_request !== undefined) {
       requestTable.objects.forEach((row, index) => {
         if (
@@ -239,7 +240,7 @@ function createStrategyRequest_(body) {
           String(row.strategy_id) === strategyId &&
           toBoolean_(row.is_latest_strategy_request)
         ) {
-          requestsSheet.getRange(index + 2, headerMap.is_latest_strategy_request + 1).setValue(false);
+          previousLatestRows.push(index + 2);
         }
       });
     }
@@ -280,7 +281,23 @@ function createStrategyRequest_(body) {
       .find((row) => String(row.request_id) === requestId);
 
     if (!createdRequest) {
+      requestsSheet.getRange(appendRow, 1, 1, values.length).clearContent();
+      if (headerMap.is_latest_strategy_request !== undefined) {
+        requestsSheet
+          .getRange(appendRow, headerMap.is_latest_strategy_request + 1)
+          .clearContent();
+      }
+      SpreadsheetApp.flush();
       throw apiError_('REQUEST_QA_FAILED', 500);
+    }
+
+    if (headerMap.is_latest_strategy_request !== undefined) {
+      previousLatestRows.forEach((rowNumber) => {
+        requestsSheet
+          .getRange(rowNumber, headerMap.is_latest_strategy_request + 1)
+          .setValue(false);
+      });
+      SpreadsheetApp.flush();
     }
 
     return {
