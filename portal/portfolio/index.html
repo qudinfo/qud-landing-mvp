@@ -83,6 +83,7 @@
     }
 
     h1, h2, h3, p { margin-top: 0; }
+
     h1 {
       max-width: 720px;
       margin-bottom: 18px;
@@ -107,6 +108,7 @@
     }
 
     .access-panel { max-width: 560px; padding: 32px; }
+
     .panel-heading {
       display: flex;
       align-items: flex-start;
@@ -201,22 +203,6 @@
       line-height: 1.5;
     }
 
-    .diagnostic {
-      display: none;
-      max-width: 100%;
-      margin: 14px 0 0;
-      padding: 12px;
-      border: 1px solid #5a3b3b;
-      border-radius: 3px;
-      background: #0c0e10;
-      color: #d7b0b0;
-      font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      user-select: text;
-    }
-
-    .diagnostic.is-visible { display: block; }
     .workspace[hidden], .access-view[hidden] { display: none; }
 
     .workspace-header {
@@ -337,7 +323,6 @@
           <button class="primary-button" id="login-button" type="submit">Войти</button>
         </div>
         <p class="form-message" id="access-message" role="alert"></p>
-        <pre class="diagnostic" id="diagnostic" aria-live="polite"></pre>
       </form>
     </section>
 
@@ -431,30 +416,10 @@
       const accessForm = document.getElementById('access-form');
       const accessKey = document.getElementById('access-key');
       const accessMessage = document.getElementById('access-message');
-      const diagnostic = document.getElementById('diagnostic');
       const loginButton = document.getElementById('login-button');
       const logoutButton = document.getElementById('logout-button');
       const portfolioForm = document.getElementById('portfolio-form');
       const portfolioMessage = document.getElementById('portfolio-message');
-
-      function clearDiagnostic() {
-        diagnostic.textContent = '';
-        diagnostic.classList.remove('is-visible');
-      }
-
-      function showDiagnostic(details) {
-        const safeDetails = {
-          time_utc: new Date().toISOString(),
-          page_origin: window.location.origin,
-          endpoint: SESSION_ENDPOINT,
-          ...details
-        };
-
-        diagnostic.textContent = Object.entries(safeDetails)
-          .map(([key, value]) => `${key}: ${String(value ?? '')}`)
-          .join('\n');
-        diagnostic.classList.add('is-visible');
-      }
 
       function showAccess(message = '') {
         workspace.hidden = true;
@@ -464,7 +429,6 @@
       }
 
       function showWorkspace() {
-        clearDiagnostic();
         accessMessage.textContent = '';
         accessView.hidden = true;
         workspace.hidden = false;
@@ -481,22 +445,15 @@
         logoutButton.textContent = isPending ? 'Выход…' : 'Выйти';
       }
 
-      async function readResponse(response) {
-        const text = await response.text();
-        let data = null;
-
+      async function readJson(response) {
         try {
-          data = text ? JSON.parse(text) : null;
+          return await response.json();
         } catch {
-          data = null;
+          return null;
         }
-
-        return { text, data };
       }
 
       async function checkSession() {
-        clearDiagnostic();
-
         try {
           const response = await fetch(SESSION_ENDPOINT, {
             method: 'GET',
@@ -505,28 +462,22 @@
             headers: { Accept: 'application/json' }
           });
 
-          const payload = await readResponse(response);
+          const data = await readJson(response);
 
-          if (response.ok && payload.data?.ok === true && payload.data?.authenticated === true) {
+          if (response.ok && data?.ok === true && data?.authenticated === true) {
             showWorkspace();
             return;
           }
 
           showAccess();
-        } catch (error) {
+        } catch {
           showAccess('Не удалось проверить защищённую сессию. Повторите вход.');
-          showDiagnostic({
-            phase: 'session_check',
-            error_name: error?.name || 'UnknownError',
-            error_message: error?.message || String(error)
-          });
         }
       }
 
       accessForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         accessMessage.textContent = '';
-        clearDiagnostic();
 
         const key = accessKey.value.trim();
         if (!key) {
@@ -549,9 +500,9 @@
             body: JSON.stringify({ access_key: key })
           });
 
-          const payload = await readResponse(response);
+          const data = await readJson(response);
 
-          if (response.ok && payload.data?.ok === true && payload.data?.authenticated === true) {
+          if (response.ok && data?.ok === true && data?.authenticated === true) {
             accessKey.value = '';
             showWorkspace();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -563,23 +514,8 @@
           } else {
             accessMessage.textContent = 'Ключ доступа не принят.';
           }
-
-          showDiagnostic({
-            phase: 'login_response',
-            http_status: response.status,
-            http_status_text: response.statusText,
-            response_type: response.type,
-            content_type: response.headers.get('content-type') || '',
-            response_body: payload.text.slice(0, 2000) || '(empty)'
-          });
-        } catch (error) {
+        } catch {
           accessMessage.textContent = 'Не удалось подключиться к защищённому сервису.';
-          showDiagnostic({
-            phase: 'login_fetch',
-            error_name: error?.name || 'UnknownError',
-            error_message: error?.message || String(error),
-            online: navigator.onLine
-          });
         } finally {
           accessKey.value = '';
           setLoginPending(false);
@@ -599,16 +535,15 @@
             headers: { Accept: 'application/json' }
           });
 
-          const payload = await readResponse(response);
-          if (!response.ok || payload.data?.ok !== true) {
-            throw new Error(`Logout failed: HTTP ${response.status}`);
+          const data = await readJson(response);
+          if (!response.ok || data?.ok !== true) {
+            throw new Error('Logout failed');
           }
 
           showAccess();
-          clearDiagnostic();
           window.scrollTo({ top: 0, behavior: 'smooth' });
           accessKey.focus();
-        } catch (error) {
+        } catch {
           portfolioMessage.textContent = 'Не удалось завершить защищённую сессию. Повторите выход.';
         } finally {
           setLogoutPending(false);
