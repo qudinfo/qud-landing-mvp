@@ -349,9 +349,10 @@
           <div class="form-grid">
             <div class="field field-wide">
               <label for="strategy-id">Strategy ID</label>
-              <select id="strategy-id" name="strategy_id">
-                <option value="QST-CAUZ-MPE9">QST-CAUZ-MPE9</option>
+              <select id="strategy-id" name="strategy_id" disabled>
+                <option value="">Загрузка доступных стратегий…</option>
               </select>
+              <span class="field-note" id="strategy-status" aria-live="polite">Получение списка из защищённого источника.</span>
             </div>
 
             <div class="field">
@@ -380,7 +381,7 @@
           </div>
 
           <div class="form-actions">
-            <button class="primary-button" type="submit">Создать портфель</button>
+            <button class="primary-button" id="create-portfolio-button" type="submit" disabled>Создать портфель</button>
           </div>
           <p class="form-message" id="portfolio-message" role="status"></p>
         </form>
@@ -401,7 +402,7 @@
             </div>
           </div>
 
-          <p class="prototype-note">Авторизация подключена. Создание портфеля и передача его параметров пока отключены.</p>
+          <p class="prototype-note">Список стратегий подключён. Создание портфеля и передача его параметров пока отключены.</p>
         </aside>
       </div>
     </section>
@@ -410,6 +411,7 @@
   <script>
     (() => {
       const SESSION_ENDPOINT = '/portal/vp/session';
+      const STRATEGIES_ENDPOINT = '/portal/vp/strategies';
 
       const accessView = document.getElementById('access-view');
       const workspace = document.getElementById('workspace');
@@ -420,12 +422,23 @@
       const logoutButton = document.getElementById('logout-button');
       const portfolioForm = document.getElementById('portfolio-form');
       const portfolioMessage = document.getElementById('portfolio-message');
+      const strategySelect = document.getElementById('strategy-id');
+      const strategyStatus = document.getElementById('strategy-status');
+      const createPortfolioButton = document.getElementById('create-portfolio-button');
+
+      function resetStrategies(message = 'Получение списка из защищённого источника.') {
+        strategySelect.disabled = true;
+        strategySelect.replaceChildren(new Option('Загрузка доступных стратегий…', ''));
+        strategyStatus.textContent = message;
+        createPortfolioButton.disabled = true;
+      }
 
       function showAccess(message = '') {
         workspace.hidden = true;
         accessView.hidden = false;
         portfolioMessage.textContent = '';
         accessMessage.textContent = message;
+        resetStrategies();
       }
 
       function showWorkspace() {
@@ -453,6 +466,79 @@
         }
       }
 
+      function extractStrategies(data) {
+        let source = [];
+
+        if (Array.isArray(data)) source = data;
+        else if (Array.isArray(data?.strategies)) source = data.strategies;
+        else if (Array.isArray(data?.items)) source = data.items;
+        else if (Array.isArray(data?.data)) source = data.data;
+
+        const uniqueIds = new Set();
+
+        for (const item of source) {
+          const strategyId = typeof item === 'string'
+            ? item.trim()
+            : String(item?.strategy_id ?? item?.strategyId ?? item?.id ?? '').trim();
+
+          if (strategyId) uniqueIds.add(strategyId);
+        }
+
+        return [...uniqueIds];
+      }
+
+      async function loadStrategies() {
+        resetStrategies('Загрузка доступных стратегий…');
+
+        try {
+          const response = await fetch(STRATEGIES_ENDPOINT, {
+            method: 'GET',
+            credentials: 'same-origin',
+            cache: 'no-store',
+            headers: { Accept: 'application/json' }
+          });
+
+          const data = await readJson(response);
+
+          if (response.status === 401 || response.status === 403) {
+            showAccess('Защищённая сессия завершена. Введите ключ повторно.');
+            accessKey.focus();
+            return false;
+          }
+
+          if (!response.ok || data?.ok === false) {
+            throw new Error('Strategies request failed');
+          }
+
+          const strategies = extractStrategies(data);
+
+          if (!strategies.length) {
+            strategySelect.replaceChildren(new Option('Нет доступных стратегий', ''));
+            strategyStatus.textContent = 'В защищённом источнике сейчас нет доступных стратегий.';
+            createPortfolioButton.disabled = true;
+            return false;
+          }
+
+          strategySelect.replaceChildren(...strategies.map((strategyId) => new Option(strategyId, strategyId)));
+          strategySelect.disabled = false;
+          strategyStatus.textContent = strategies.length === 1
+            ? 'Доступна 1 стратегия.'
+            : `Доступно стратегий: ${strategies.length}.`;
+          createPortfolioButton.disabled = false;
+          return true;
+        } catch {
+          strategySelect.replaceChildren(new Option('Не удалось загрузить стратегии', ''));
+          strategyStatus.textContent = 'Не удалось получить список. Обновите страницу и повторите попытку.';
+          createPortfolioButton.disabled = true;
+          return false;
+        }
+      }
+
+      async function openWorkspace() {
+        showWorkspace();
+        await loadStrategies();
+      }
+
       async function checkSession() {
         try {
           const response = await fetch(SESSION_ENDPOINT, {
@@ -465,7 +551,7 @@
           const data = await readJson(response);
 
           if (response.ok && data?.ok === true && data?.authenticated === true) {
-            showWorkspace();
+            await openWorkspace();
             return;
           }
 
@@ -504,7 +590,7 @@
 
           if (response.ok && data?.ok === true && data?.authenticated === true) {
             accessKey.value = '';
-            showWorkspace();
+            await openWorkspace();
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
           }
@@ -552,7 +638,9 @@
 
       portfolioForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        portfolioMessage.textContent = 'Расчётный модуль будет подключён на следующем этапе.';
+        portfolioMessage.textContent = strategySelect.value
+          ? 'Расчётный модуль будет подключён на следующем этапе.'
+          : 'Сначала загрузите доступную стратегию.';
       });
 
       checkSession();
