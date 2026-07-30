@@ -16,7 +16,8 @@ const QUD_VP_CONFIG = Object.freeze({
   minAllocatedBalanceUsd: 100,
   maxAllocatedBalanceUsd: 10000000,
   minDrawdownPct: 1,
-  maxDrawdownPct: 50
+  maxDrawdownPct: 50,
+  maxIdempotencyKeyLength: 128
 });
 
 function doGet(e) {
@@ -60,8 +61,7 @@ function doPost(e) {
       throw apiError_('UNKNOWN_ACTION', 400);
     }
 
-    const result = createStrategyRequest_(body);
-    return jsonResponse_(result);
+    return jsonResponse_(createStrategyRequest_(body));
   } catch (error) {
     return errorResponse_(error);
   }
@@ -71,11 +71,7 @@ function getPortfoliosForSubscriber_(subscriberId) {
   const portfolios = readObjects_(QUD_VP_CONFIG.sheets.apiPortfolios)
     .filter((row) => String(row.subscriber_id) === subscriberId);
 
-  return {
-    ok: true,
-    portfolios: portfolios,
-    items: portfolios
-  };
+  return { ok: true, portfolios: portfolios, items: portfolios };
 }
 
 function getPortfolioPayload_(subscriberId, portfolioId) {
@@ -88,23 +84,18 @@ function getPortfolioPayload_(subscriberId, portfolioId) {
 
   const slots = readObjects_(QUD_VP_CONFIG.sheets.apiSlots)
     .filter((row) => String(row.portfolio_id) === portfolioId);
-
   const requests = readObjects_(QUD_VP_CONFIG.sheets.apiRequests)
     .filter((row) => String(row.portfolio_id) === portfolioId);
-
   const strategyHistory = readObjects_(QUD_VP_CONFIG.sheets.apiStrategyHistory)
     .filter((row) => String(row.portfolio_id) === portfolioId);
-
   const portfolioHistory = readObjects_(QUD_VP_CONFIG.sheets.apiPortfolioHistory)
     .filter((row) => String(row.portfolio_id) === portfolioId);
-
   const availability = readObjects_(QUD_VP_CONFIG.sheets.apiAvailability)
     .filter((row) => String(row.portfolio_id) === portfolioId);
 
   const primarySlot = slots.find((row) => String(row.status) === 'ACTIVE') || slots[0] || null;
   const compatibilityPortfolio = Object.assign({}, portfolio);
 
-  // Temporary compatibility layer for the current single-strategy frontend.
   if (primarySlot) {
     compatibilityPortfolio.strategy_id = primarySlot.strategy_id;
     compatibilityPortfolio.start_balance_usd = primarySlot.allocated_balance_usd;
@@ -117,7 +108,6 @@ function getPortfolioPayload_(subscriberId, portfolioId) {
   const compatibilityHistory = primarySlot
     ? strategyHistory.filter((row) => String(row.request_id) === String(primarySlot.request_id))
     : portfolioHistory;
-
   const strategies = slots.map((slot) => Object.assign({}, slot, {
     history: strategyHistory.filter(
       (row) => String(row.request_id) === String(slot.request_id)
@@ -150,7 +140,6 @@ function getAvailableStrategies_(subscriberId, portfolioId) {
 
   const rows = readObjects_(QUD_VP_CONFIG.sheets.apiAvailability)
     .filter((row) => String(row.portfolio_id) === portfolioId);
-
   const available = rows.filter((row) => toBoolean_(row.is_available));
 
   return {
@@ -174,6 +163,9 @@ function createStrategyRequest_(body) {
   );
   const maxDrawdown = finiteNumber_(body.max_drawdown_limit_pct, 'max_drawdown_limit_pct');
 
+  if (idempotencyKey.length > QUD_VP_CONFIG.maxIdempotencyKeyLength) {
+    throw apiError_('IDEMPOTENCY_KEY_TOO_LONG', 400);
+  }
   validateRequestParameters_(allocatedBalance, maxDrawdown, periodCode);
 
   const lock = LockService.getScriptLock();
@@ -184,26 +176,37 @@ function createStrategyRequest_(body) {
 
     const requestsSheet = getSheet_(QUD_VP_CONFIG.sheets.requests);
     const requestTable = readSheetTable_(requestsSheet);
-    const headers = requestTable.headers;
-    const headerMap = headerMap_(headers);
-
-    const existingByIdempotency = requestTable.objects.find(
+    const headerMap = headerMap_(requestTable.headers);
+    const existingIndex = requestTable.objects.findIndex(
       (row) => String(row.idempotency_key) === idempotencyKey
     );
 
-    if (existingByIdempotency) {
-      if (
-        String(existingByIdempotency.subscriber_id) !== subscriberId ||
-        String(existingByIdempotency.portfolio_id) !== portfolioId
-      ) {
-        throw apiError_('IDEMPOTENCY_KEY_CONFLICT', 409);
+    if (existingIndex >= 0) {
+      const existing = requestTable.objects[existingIndex];
+      const samePayload =
+        String(existing.subscriber_id) === subscriberId &&
+        String(existing.portfolio_id) === portfolioId &&
+        String(existing.strategy_id) === strategyId &&
+        Number(existing.allocated_balance_usd) === allocatedBalance &&
+        Number(existing.max_drawdown_limit_pct) === maxDrawdown &&
+        String(existing.period_code) === periodCode;
+
+      if (!samePayload) throw apiError_('IDEMPOTENCY_KEY_CONFLICT', 409);
+      if (String(existing.qa_status) !== 'OK') throw apiError_('IDEMPOTENCY_RECORD_INVALID', 409);
+
+      if (String(existing.status) === 'ACTIVE' && !toBoolean_(existing.is_latest_strategy_request)) {
+        const previousRows = collectLatestRows_(requestTable.objects, portfolioId, strategyId);
+        switchLatestRequest_(requestsSheet, headerMap, previousRows, existingIndex + 2);
       }
+
+      const replayRequest = readObjects_(QUD_VP_CONFIG.sheets.apiRequests)
+        .find((row) => String(row.request_id) === String(existing.request_id));
 
       return {
         ok: true,
         created: false,
         idempotent_replay: true,
-        request: existingByIdempotency,
+        request: replayRequest || existing,
         portfolio_payload: getPortfolioPayload_(subscriberId, portfolioId)
       };
     }
@@ -238,21 +241,7 @@ function createStrategyRequest_(body) {
     const endDate = calculateEndDate_(now, periodCode);
     const requestId = generateUniqueRequestId_(requestTable.objects);
     const appendRow = firstEmptyRowInColumn_(requestsSheet, 1, 2);
-
-    // Keep the current slot intact until the new row exists and passes QA.
-    const previousLatestRows = [];
-    if (headerMap.is_latest_strategy_request !== undefined) {
-      requestTable.objects.forEach((row, index) => {
-        if (
-          String(row.portfolio_id) === portfolioId &&
-          String(row.strategy_id) === strategyId &&
-          toBoolean_(row.is_latest_strategy_request)
-        ) {
-          previousLatestRows.push(index + 2);
-        }
-      });
-    }
-
+    const previousLatestRows = collectLatestRows_(requestTable.objects, portfolioId, strategyId);
     const values = [
       requestId,
       portfolioId,
@@ -275,14 +264,8 @@ function createStrategyRequest_(body) {
       ''
     ];
 
+    // The new request is not latest yet, so aggregate formulas cannot double-count it.
     requestsSheet.getRange(appendRow, 1, 1, values.length).setValues([values]);
-
-    if (headerMap.is_latest_strategy_request !== undefined) {
-      requestsSheet
-        .getRange(appendRow, headerMap.is_latest_strategy_request + 1)
-        .setValue(true);
-    }
-
     SpreadsheetApp.flush();
 
     const createdRequest = readObjects_(QUD_VP_CONFIG.sheets.apiRequests)
@@ -290,23 +273,12 @@ function createStrategyRequest_(body) {
 
     if (!createdRequest) {
       requestsSheet.getRange(appendRow, 1, 1, values.length).clearContent();
-      if (headerMap.is_latest_strategy_request !== undefined) {
-        requestsSheet
-          .getRange(appendRow, headerMap.is_latest_strategy_request + 1)
-          .clearContent();
-      }
       SpreadsheetApp.flush();
       throw apiError_('REQUEST_QA_FAILED', 500);
     }
 
-    if (headerMap.is_latest_strategy_request !== undefined) {
-      previousLatestRows.forEach((rowNumber) => {
-        requestsSheet
-          .getRange(rowNumber, headerMap.is_latest_strategy_request + 1)
-          .setValue(false);
-      });
-      SpreadsheetApp.flush();
-    }
+    // Replace old/new latest flags in one range write.
+    switchLatestRequest_(requestsSheet, headerMap, previousLatestRows, appendRow);
 
     return {
       ok: true,
@@ -318,6 +290,41 @@ function createStrategyRequest_(body) {
   } finally {
     lock.releaseLock();
   }
+}
+
+function collectLatestRows_(objects, portfolioId, strategyId) {
+  const rows = [];
+  objects.forEach((row, index) => {
+    if (
+      String(row.portfolio_id) === portfolioId &&
+      String(row.strategy_id) === strategyId &&
+      toBoolean_(row.is_latest_strategy_request)
+    ) {
+      rows.push(index + 2);
+    }
+  });
+  return rows;
+}
+
+function switchLatestRequest_(sheet, headerMap, previousRows, newRow) {
+  if (headerMap.is_latest_strategy_request === undefined) {
+    throw apiError_('MISSING_LATEST_REQUEST_COLUMN', 500);
+  }
+
+  const affectedRows = Array.from(new Set(previousRows.concat([newRow]))).sort((a, b) => a - b);
+  const firstRow = affectedRows[0];
+  const lastRow = affectedRows[affectedRows.length - 1];
+  const column = headerMap.is_latest_strategy_request + 1;
+  const range = sheet.getRange(firstRow, column, lastRow - firstRow + 1, 1);
+  const values = range.getValues();
+
+  previousRows.forEach((rowNumber) => {
+    values[rowNumber - firstRow][0] = false;
+  });
+  values[newRow - firstRow][0] = true;
+
+  range.setValues(values);
+  SpreadsheetApp.flush();
 }
 
 function assertPortfolioOwnership_(subscriberId, portfolioId) {
