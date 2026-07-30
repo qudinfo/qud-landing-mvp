@@ -20,6 +20,7 @@
       --accent: #dba351;
       --accent-hover: #e4b368;
       --danger: #c96f6f;
+      --success: #8fb99a;
       --radius: 4px;
       --content: 1120px;
     }
@@ -218,7 +219,7 @@
 
     .workspace-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
       gap: 24px;
       align-items: start;
     }
@@ -253,8 +254,132 @@
     }
 
     .result-state strong { display: block; margin-bottom: 10px; font-size: 16px; font-weight: 600; }
-    .result-state p { max-width: 300px; margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .result-state p { max-width: 320px; margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
     .prototype-note { margin-top: 18px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+
+    .portfolio-view[hidden] { display: none; }
+
+    .portfolio-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .portfolio-id {
+      min-width: 0;
+      color: var(--muted-strong);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      overflow-wrap: anywhere;
+    }
+
+    .status-badge {
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      padding: 6px 9px;
+      color: var(--muted-strong);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .status-badge.is-active { border-color: #3b5542; color: var(--success); }
+    .status-badge.is-stopped { border-color: #664343; color: var(--danger); }
+
+    .result-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .result-metric {
+      min-height: 92px;
+      border: 1px solid var(--border-soft);
+      background: #101315;
+      padding: 14px;
+    }
+
+    .result-metric span {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .result-metric strong {
+      display: block;
+      font-size: 20px;
+      font-weight: 550;
+      letter-spacing: -0.02em;
+      overflow-wrap: anywhere;
+    }
+
+    .portfolio-meta {
+      display: grid;
+      gap: 0;
+      border: 1px solid var(--border-soft);
+      margin-bottom: 20px;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 0.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      padding: 11px 13px;
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .meta-row:last-child { border-bottom: 0; }
+    .meta-row span { color: var(--muted); }
+    .meta-row strong { color: var(--muted-strong); font-weight: 550; text-align: right; overflow-wrap: anywhere; }
+
+    .history-block h3 {
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .history-scroll { overflow-x: auto; }
+
+    .history-table {
+      width: 100%;
+      min-width: 620px;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .history-table th,
+    .history-table td {
+      border-bottom: 1px solid var(--border-soft);
+      padding: 10px 9px;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .history-table th:first-child,
+    .history-table td:first-child { text-align: left; }
+
+    .history-table th {
+      color: var(--muted);
+      font-weight: 550;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .history-table td { color: var(--muted-strong); }
+    .history-empty { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 
     @media (max-width: 820px) {
       main { padding-top: 44px; }
@@ -269,10 +394,12 @@
       .brand-product, .header-status { display: none; }
       main { padding-bottom: 56px; }
       .access-panel, .form-panel, .result-panel { padding: 22px; }
-      .form-grid { grid-template-columns: 1fr; }
+      .form-grid, .result-metrics { grid-template-columns: 1fr; }
       .field-wide { grid-column: auto; }
       .metric-hint, .form-actions, .access-actions { align-items: stretch; flex-direction: column; }
       .primary-button, .secondary-button { width: 100%; }
+      .meta-row { grid-template-columns: 1fr; gap: 5px; }
+      .meta-row strong { text-align: left; }
     }
   </style>
 </head>
@@ -376,7 +503,7 @@
           </div>
 
           <div class="metric-hint">
-            <span>Риск на сделку рассчитывается по истории стратегии и не изменяется пользователем.</span>
+            <span>Один портфель создаётся только для одной выбранной стратегии.</span>
             <span>Расчёт обновляется по завершённым периодам.</span>
           </div>
 
@@ -395,14 +522,53 @@
             <span class="step-mark" aria-hidden="true">03</span>
           </div>
 
-          <div class="result-state">
+          <div class="result-state" id="result-state">
             <div>
-              <strong>Портфель ещё не создан</strong>
-              <p>После подключения расчётного модуля здесь появятся баланс, доходность, просадка и история периодов.</p>
+              <strong>Ожидание данных портфеля</strong>
+              <p>Для просмотра существующей записи откройте кабинет по защищённой ссылке с параметром Portfolio ID.</p>
             </div>
           </div>
 
-          <p class="prototype-note">Список стратегий подключён. Создание портфеля и передача его параметров пока отключены.</p>
+          <div class="portfolio-view" id="portfolio-view" hidden>
+            <div class="portfolio-topline">
+              <span class="portfolio-id" id="result-portfolio-id">—</span>
+              <span class="status-badge" id="result-status">—</span>
+            </div>
+
+            <div class="result-metrics">
+              <div class="result-metric">
+                <span>Текущий баланс</span>
+                <strong id="result-balance">—</strong>
+              </div>
+              <div class="result-metric">
+                <span>Результат, USD</span>
+                <strong id="result-return-usd">—</strong>
+              </div>
+              <div class="result-metric">
+                <span>Доходность</span>
+                <strong id="result-return-pct">—</strong>
+              </div>
+              <div class="result-metric">
+                <span>Текущая просадка</span>
+                <strong id="result-drawdown">—</strong>
+              </div>
+            </div>
+
+            <div class="portfolio-meta">
+              <div class="meta-row"><span>Strategy ID</span><strong id="result-strategy-id">—</strong></div>
+              <div class="meta-row"><span>Стартовый баланс</span><strong id="result-start-balance">—</strong></div>
+              <div class="meta-row"><span>Лимит просадки</span><strong id="result-dd-limit">—</strong></div>
+              <div class="meta-row"><span>Период наблюдения</span><strong id="result-period">—</strong></div>
+              <div class="meta-row"><span>Последний применённый период</span><strong id="result-last-period">—</strong></div>
+            </div>
+
+            <section class="history-block" aria-labelledby="history-title">
+              <h3 id="history-title">История периодов</h3>
+              <div id="history-container"></div>
+            </section>
+          </div>
+
+          <p class="prototype-note">Режим чтения: данные загружаются из защищённого источника. Новые записи не создаются.</p>
         </aside>
       </div>
     </section>
@@ -412,6 +578,7 @@
     (() => {
       const SESSION_ENDPOINT = '/portal/vp/session';
       const STRATEGIES_ENDPOINT = '/portal/vp/strategies';
+      const PORTFOLIO_ENDPOINT = '/portal/vp/portfolio';
 
       const accessView = document.getElementById('access-view');
       const workspace = document.getElementById('workspace');
@@ -425,6 +592,35 @@
       const strategySelect = document.getElementById('strategy-id');
       const strategyStatus = document.getElementById('strategy-status');
       const createPortfolioButton = document.getElementById('create-portfolio-button');
+      const resultState = document.getElementById('result-state');
+      const portfolioView = document.getElementById('portfolio-view');
+      const historyContainer = document.getElementById('history-container');
+
+      const resultFields = {
+        portfolioId: document.getElementById('result-portfolio-id'),
+        status: document.getElementById('result-status'),
+        balance: document.getElementById('result-balance'),
+        returnUsd: document.getElementById('result-return-usd'),
+        returnPct: document.getElementById('result-return-pct'),
+        drawdown: document.getElementById('result-drawdown'),
+        strategyId: document.getElementById('result-strategy-id'),
+        startBalance: document.getElementById('result-start-balance'),
+        ddLimit: document.getElementById('result-dd-limit'),
+        period: document.getElementById('result-period'),
+        lastPeriod: document.getElementById('result-last-period')
+      };
+
+      const numberFormatter = new Intl.NumberFormat('ru-RU', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+      const dateFormatter = new Intl.DateTimeFormat('ru-RU', {
+        timeZone: 'UTC',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
 
       function resetStrategies(message = 'Получение списка из защищённого источника.') {
         strategySelect.disabled = true;
@@ -466,25 +662,165 @@
         }
       }
 
+      function valueFrom(object, names) {
+        for (const name of names) {
+          if (object && object[name] !== undefined && object[name] !== null && object[name] !== '') {
+            return object[name];
+          }
+        }
+        return null;
+      }
+
+      function formatMoney(value) {
+        const number = Number(value);
+        return Number.isFinite(number) ? `$${numberFormatter.format(number)}` : '—';
+      }
+
+      function formatSignedMoney(value) {
+        const number = Number(value);
+        if (!Number.isFinite(number)) return '—';
+        const sign = number > 0 ? '+' : '';
+        return `${sign}$${numberFormatter.format(number)}`;
+      }
+
+      function formatPercent(value, signed = false) {
+        const number = Number(value);
+        if (!Number.isFinite(number)) return '—';
+        const sign = signed && number > 0 ? '+' : '';
+        return `${sign}${numberFormatter.format(number)}%`;
+      }
+
+      function formatDate(value) {
+        if (value === null || value === undefined || value === '') return '—';
+        const date = new Date(value);
+        return Number.isNaN(date.getTime()) ? String(value) : dateFormatter.format(date);
+      }
+
       function extractStrategies(data) {
         let source = [];
-
         if (Array.isArray(data)) source = data;
         else if (Array.isArray(data?.strategies)) source = data.strategies;
         else if (Array.isArray(data?.items)) source = data.items;
         else if (Array.isArray(data?.data)) source = data.data;
 
         const uniqueIds = new Set();
-
         for (const item of source) {
           const strategyId = typeof item === 'string'
             ? item.trim()
             : String(item?.strategy_id ?? item?.strategyId ?? item?.id ?? '').trim();
-
           if (strategyId) uniqueIds.add(strategyId);
         }
-
         return [...uniqueIds];
+      }
+
+      function extractPortfolioPayload(data) {
+        const candidates = [
+          data?.portfolio,
+          data?.data?.portfolio,
+          data?.data,
+          data
+        ];
+
+        const portfolio = candidates.find((candidate) => {
+          if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) return false;
+          return valueFrom(candidate, ['portfolio_id', 'portfolioId']) !== null;
+        });
+
+        if (!portfolio) return null;
+
+        const historyCandidates = [
+          data?.history,
+          data?.portfolio_history,
+          data?.data?.history,
+          data?.data?.portfolio_history,
+          portfolio?.history,
+          portfolio?.portfolio_history
+        ];
+
+        const history = historyCandidates.find(Array.isArray) || [];
+        return { portfolio, history };
+      }
+
+      function setResultMessage(title, message) {
+        portfolioView.hidden = true;
+        resultState.hidden = false;
+        resultState.innerHTML = '';
+        const wrapper = document.createElement('div');
+        const strong = document.createElement('strong');
+        const paragraph = document.createElement('p');
+        strong.textContent = title;
+        paragraph.textContent = message;
+        wrapper.append(strong, paragraph);
+        resultState.append(wrapper);
+      }
+
+      function renderHistory(history) {
+        historyContainer.replaceChildren();
+
+        if (!history.length) {
+          const empty = document.createElement('p');
+          empty.className = 'history-empty';
+          empty.textContent = 'Завершённые периоды пока отсутствуют.';
+          historyContainer.append(empty);
+          return;
+        }
+
+        const scroll = document.createElement('div');
+        scroll.className = 'history-scroll';
+        const table = document.createElement('table');
+        table.className = 'history-table';
+        table.innerHTML = '<thead><tr><th>Дата</th><th>Открытие</th><th>Период</th><th>P/L</th><th>Закрытие</th><th>DD</th><th>Статус</th></tr></thead>';
+        const tbody = document.createElement('tbody');
+
+        for (const row of history) {
+          const tr = document.createElement('tr');
+          const values = [
+            formatDate(valueFrom(row, ['period_end_utc', 'periodEndUtc', 'period_end'])),
+            formatMoney(valueFrom(row, ['opening_balance_usd', 'openingBalanceUsd'])),
+            formatPercent(valueFrom(row, ['period_return_pct', 'periodReturnPct']), true),
+            formatSignedMoney(valueFrom(row, ['profit_loss_usd', 'profitLossUsd'])),
+            formatMoney(valueFrom(row, ['closing_balance_usd', 'closingBalanceUsd'])),
+            formatPercent(valueFrom(row, ['drawdown_pct', 'drawdownPct'])),
+            valueFrom(row, ['status_after_update', 'statusAfterUpdate', 'status']) ?? '—'
+          ];
+
+          for (const value of values) {
+            const td = document.createElement('td');
+            td.textContent = String(value);
+            tr.append(td);
+          }
+          tbody.append(tr);
+        }
+
+        table.append(tbody);
+        scroll.append(table);
+        historyContainer.append(scroll);
+      }
+
+      function renderPortfolio(portfolio, history) {
+        const status = String(valueFrom(portfolio, ['status']) ?? '—');
+        const startDate = valueFrom(portfolio, ['start_date_utc', 'startDateUtc']);
+        const endDate = valueFrom(portfolio, ['end_date_utc', 'endDateUtc']);
+
+        resultFields.portfolioId.textContent = String(valueFrom(portfolio, ['portfolio_id', 'portfolioId']) ?? '—');
+        resultFields.status.textContent = status;
+        resultFields.status.className = 'status-badge';
+        if (status === 'ACTIVE') resultFields.status.classList.add('is-active');
+        if (status === 'STOPPED_DD') resultFields.status.classList.add('is-stopped');
+
+        resultFields.balance.textContent = formatMoney(valueFrom(portfolio, ['current_balance_usd', 'currentBalanceUsd']));
+        resultFields.returnUsd.textContent = formatSignedMoney(valueFrom(portfolio, ['portfolio_return_usd', 'portfolioReturnUsd']));
+        resultFields.returnPct.textContent = formatPercent(valueFrom(portfolio, ['portfolio_return_pct', 'portfolioReturnPct']), true);
+        resultFields.drawdown.textContent = formatPercent(valueFrom(portfolio, ['current_drawdown_pct', 'currentDrawdownPct']));
+        resultFields.strategyId.textContent = String(valueFrom(portfolio, ['strategy_id', 'strategyId']) ?? '—');
+        resultFields.startBalance.textContent = formatMoney(valueFrom(portfolio, ['start_balance_usd', 'startBalanceUsd']));
+        resultFields.ddLimit.textContent = formatPercent(valueFrom(portfolio, ['max_drawdown_limit_pct', 'maxDrawdownLimitPct']));
+        resultFields.period.textContent = `${formatDate(startDate)} — ${formatDate(endDate)}`;
+        resultFields.lastPeriod.textContent = formatDate(valueFrom(portfolio, ['last_applied_period_end_utc', 'lastAppliedPeriodEndUtc']));
+
+        renderHistory(history);
+        resultState.hidden = true;
+        portfolioView.hidden = false;
       }
 
       async function loadStrategies() {
@@ -506,12 +842,9 @@
             return false;
           }
 
-          if (!response.ok || data?.ok === false) {
-            throw new Error('Strategies request failed');
-          }
+          if (!response.ok || data?.ok === false) throw new Error('Strategies request failed');
 
           const strategies = extractStrategies(data);
-
           if (!strategies.length) {
             strategySelect.replaceChildren(new Option('Нет доступных стратегий', ''));
             strategyStatus.textContent = 'В защищённом источнике сейчас нет доступных стратегий.';
@@ -522,8 +855,8 @@
           strategySelect.replaceChildren(...strategies.map((strategyId) => new Option(strategyId, strategyId)));
           strategySelect.disabled = false;
           strategyStatus.textContent = strategies.length === 1
-            ? 'Доступна 1 стратегия.'
-            : `Доступно стратегий: ${strategies.length}.`;
+            ? 'Доступна 1 стратегия. Можно выбрать только одну.'
+            : `Доступно стратегий: ${strategies.length}. Можно выбрать только одну.`;
           createPortfolioButton.disabled = false;
           return true;
         } catch {
@@ -534,9 +867,56 @@
         }
       }
 
+      async function loadPortfolioFromQuery() {
+        const portfolioId = new URLSearchParams(window.location.search).get('portfolio_id')?.trim();
+        if (!portfolioId) {
+          setResultMessage(
+            'Портфель не выбран',
+            'Откройте защищённую ссылку, содержащую параметр portfolio_id.'
+          );
+          return false;
+        }
+
+        setResultMessage('Загрузка портфеля…', 'Получение текущего состояния из защищённого источника.');
+
+        try {
+          const url = `${PORTFOLIO_ENDPOINT}?portfolio_id=${encodeURIComponent(portfolioId)}`;
+          const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'same-origin',
+            cache: 'no-store',
+            headers: { Accept: 'application/json' }
+          });
+
+          const data = await readJson(response);
+
+          if (response.status === 401 || response.status === 403) {
+            showAccess('Защищённая сессия завершена. Введите ключ повторно.');
+            accessKey.focus();
+            return false;
+          }
+
+          if (response.status === 404) {
+            setResultMessage('Портфель не найден', `Запись ${portfolioId} отсутствует в защищённом источнике.`);
+            return false;
+          }
+
+          if (!response.ok || data?.ok === false) throw new Error('Portfolio request failed');
+
+          const payload = extractPortfolioPayload(data);
+          if (!payload) throw new Error('Portfolio payload missing');
+
+          renderPortfolio(payload.portfolio, payload.history);
+          return true;
+        } catch {
+          setResultMessage('Не удалось загрузить портфель', 'Обновите страницу и повторите попытку.');
+          return false;
+        }
+      }
+
       async function openWorkspace() {
         showWorkspace();
-        await loadStrategies();
+        await Promise.all([loadStrategies(), loadPortfolioFromQuery()]);
       }
 
       async function checkSession() {
@@ -549,12 +929,10 @@
           });
 
           const data = await readJson(response);
-
           if (response.ok && data?.ok === true && data?.authenticated === true) {
             await openWorkspace();
             return;
           }
-
           showAccess();
         } catch {
           showAccess('Не удалось проверить защищённую сессию. Повторите вход.');
@@ -587,7 +965,6 @@
           });
 
           const data = await readJson(response);
-
           if (response.ok && data?.ok === true && data?.authenticated === true) {
             accessKey.value = '';
             await openWorkspace();
@@ -595,11 +972,9 @@
             return;
           }
 
-          if (response.status === 429) {
-            accessMessage.textContent = 'Слишком много попыток. Повторите позднее.';
-          } else {
-            accessMessage.textContent = 'Ключ доступа не принят.';
-          }
+          accessMessage.textContent = response.status === 429
+            ? 'Слишком много попыток. Повторите позднее.'
+            : 'Ключ доступа не принят.';
         } catch {
           accessMessage.textContent = 'Не удалось подключиться к защищённому сервису.';
         } finally {
@@ -622,9 +997,7 @@
           });
 
           const data = await readJson(response);
-          if (!response.ok || data?.ok !== true) {
-            throw new Error('Logout failed');
-          }
+          if (!response.ok || data?.ok !== true) throw new Error('Logout failed');
 
           showAccess();
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -638,9 +1011,7 @@
 
       portfolioForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        portfolioMessage.textContent = strategySelect.value
-          ? 'Расчётный модуль будет подключён на следующем этапе.'
-          : 'Сначала загрузите доступную стратегию.';
+        portfolioMessage.textContent = 'Создание новых записей будет подключено после утверждения отображения.';
       });
 
       checkSession();
