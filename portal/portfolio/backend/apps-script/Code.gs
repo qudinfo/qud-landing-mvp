@@ -118,9 +118,16 @@ function getPortfolioPayload_(subscriberId, portfolioId) {
     ? strategyHistory.filter((row) => String(row.request_id) === String(primarySlot.request_id))
     : portfolioHistory;
 
+  const strategies = slots.map((slot) => Object.assign({}, slot, {
+    history: strategyHistory.filter(
+      (row) => String(row.request_id) === String(slot.request_id)
+    )
+  }));
+
   return {
     ok: true,
     portfolio: compatibilityPortfolio,
+    strategies: strategies,
     strategy_slots: slots,
     strategy_requests: requests,
     strategy_history: strategyHistory,
@@ -129,6 +136,7 @@ function getPortfolioPayload_(subscriberId, portfolioId) {
     history: compatibilityHistory,
     data: {
       portfolio: compatibilityPortfolio,
+      strategies: strategies,
       strategy_slots: slots,
       strategy_requests: requests,
       strategy_history: strategyHistory,
