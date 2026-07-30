@@ -25,7 +25,6 @@
     }
 
     * { box-sizing: border-box; }
-
     html { background: var(--bg); }
 
     body {
@@ -41,11 +40,7 @@
 
     button, input, select { font: inherit; }
     button { cursor: pointer; }
-
-    button:disabled {
-      cursor: wait;
-      opacity: 0.62;
-    }
+    button:disabled { cursor: wait; opacity: 0.62; }
 
     .site-header {
       min-height: 72px;
@@ -63,29 +58,12 @@
       gap: 24px;
     }
 
-    .brand {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-    }
-
-    .brand-mark {
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-    }
-
-    .brand-product {
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .header-status {
+    .brand { display: flex; align-items: baseline; gap: 12px; }
+    .brand-mark { font-size: 14px; font-weight: 700; letter-spacing: 0.2em; }
+    .brand-product, .header-status {
       color: var(--muted);
       font-size: 12px;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
     }
 
@@ -105,7 +83,6 @@
     }
 
     h1, h2, h3, p { margin-top: 0; }
-
     h1 {
       max-width: 720px;
       margin-bottom: 18px;
@@ -129,11 +106,7 @@
       background: var(--panel);
     }
 
-    .access-panel {
-      max-width: 560px;
-      padding: 32px;
-    }
-
+    .access-panel { max-width: 560px; padding: 32px; }
     .panel-heading {
       display: flex;
       align-items: flex-start;
@@ -167,18 +140,9 @@
       font-size: 12px;
     }
 
-    .field {
-      display: grid;
-      gap: 10px;
-    }
-
+    .field { display: grid; gap: 10px; }
     .field + .field { margin-top: 20px; }
-
-    label {
-      color: var(--muted-strong);
-      font-size: 13px;
-      font-weight: 550;
-    }
+    label { color: var(--muted-strong); font-size: 13px; font-weight: 550; }
 
     input, select {
       width: 100%;
@@ -198,12 +162,7 @@
     }
 
     input::placeholder { color: #606971; }
-
-    .field-note {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
+    .field-note { color: var(--muted); font-size: 12px; line-height: 1.5; }
 
     .primary-button, .secondary-button {
       min-height: 46px;
@@ -230,18 +189,8 @@
       color: var(--muted-strong);
     }
 
-    .secondary-button:hover:not(:disabled) {
-      border-color: #454c52;
-      color: var(--text);
-    }
-
-    .access-actions {
-      margin-top: 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
+    .secondary-button:hover:not(:disabled) { border-color: #454c52; color: var(--text); }
+    .access-actions { margin-top: 24px; display: flex; align-items: center; gap: 16px; }
     .access-actions .primary-button { min-width: 148px; }
 
     .form-message {
@@ -252,6 +201,22 @@
       line-height: 1.5;
     }
 
+    .diagnostic {
+      display: none;
+      max-width: 100%;
+      margin: 14px 0 0;
+      padding: 12px;
+      border: 1px solid #5a3b3b;
+      border-radius: 3px;
+      background: #0c0e10;
+      color: #d7b0b0;
+      font: 11px/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      user-select: text;
+    }
+
+    .diagnostic.is-visible { display: block; }
     .workspace[hidden], .access-view[hidden] { display: none; }
 
     .workspace-header {
@@ -262,16 +227,8 @@
       margin-bottom: 28px;
     }
 
-    .workspace-header h1 {
-      margin-bottom: 10px;
-      font-size: clamp(32px, 5vw, 52px);
-    }
-
-    .workspace-header p {
-      margin-bottom: 0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .workspace-header h1 { margin-bottom: 10px; font-size: clamp(32px, 5vw, 52px); }
+    .workspace-header p { margin-bottom: 0; color: var(--muted); line-height: 1.6; }
 
     .workspace-grid {
       display: grid;
@@ -281,13 +238,7 @@
     }
 
     .form-panel, .result-panel { padding: 30px; }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-    }
-
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
     .form-grid .field + .field { margin-top: 0; }
     .field-wide { grid-column: 1 / -1; }
 
@@ -303,19 +254,8 @@
       line-height: 1.5;
     }
 
-    .form-actions {
-      margin-top: 26px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .result-panel {
-      position: sticky;
-      top: 24px;
-      min-height: 420px;
-      background: var(--panel-strong);
-    }
+    .form-actions { margin-top: 26px; display: flex; align-items: center; gap: 14px; }
+    .result-panel { position: sticky; top: 24px; min-height: 420px; background: var(--panel-strong); }
 
     .result-state {
       min-height: 280px;
@@ -326,62 +266,26 @@
       text-align: center;
     }
 
-    .result-state strong {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .result-state p {
-      max-width: 300px;
-      margin-bottom: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .prototype-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.5;
-    }
+    .result-state strong { display: block; margin-bottom: 10px; font-size: 16px; font-weight: 600; }
+    .result-state p { max-width: 300px; margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .prototype-note { margin-top: 18px; color: var(--muted); font-size: 11px; line-height: 1.5; }
 
     @media (max-width: 820px) {
       main { padding-top: 44px; }
-
-      .workspace-header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
+      .workspace-header { align-items: flex-start; flex-direction: column; }
       .workspace-grid { grid-template-columns: 1fr; }
-
-      .result-panel {
-        position: static;
-        min-height: 360px;
-      }
+      .result-panel { position: static; min-height: 360px; }
     }
 
     @media (max-width: 600px) {
-      .header-inner, main {
-        width: min(calc(100% - 28px), var(--content));
-      }
-
+      .header-inner, main { width: min(calc(100% - 28px), var(--content)); }
       .site-header, .header-inner { min-height: 64px; }
       .brand-product, .header-status { display: none; }
       main { padding-bottom: 56px; }
-
       .access-panel, .form-panel, .result-panel { padding: 22px; }
       .form-grid { grid-template-columns: 1fr; }
       .field-wide { grid-column: auto; }
-
-      .metric-hint, .form-actions, .access-actions {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
+      .metric-hint, .form-actions, .access-actions { align-items: stretch; flex-direction: column; }
       .primary-button, .secondary-button { width: 100%; }
     }
   </style>
@@ -433,6 +337,7 @@
           <button class="primary-button" id="login-button" type="submit">Войти</button>
         </div>
         <p class="form-message" id="access-message" role="alert"></p>
+        <pre class="diagnostic" id="diagnostic" aria-live="polite"></pre>
       </form>
     </section>
 
@@ -526,10 +431,30 @@
       const accessForm = document.getElementById('access-form');
       const accessKey = document.getElementById('access-key');
       const accessMessage = document.getElementById('access-message');
+      const diagnostic = document.getElementById('diagnostic');
       const loginButton = document.getElementById('login-button');
       const logoutButton = document.getElementById('logout-button');
       const portfolioForm = document.getElementById('portfolio-form');
       const portfolioMessage = document.getElementById('portfolio-message');
+
+      function clearDiagnostic() {
+        diagnostic.textContent = '';
+        diagnostic.classList.remove('is-visible');
+      }
+
+      function showDiagnostic(details) {
+        const safeDetails = {
+          time_utc: new Date().toISOString(),
+          page_origin: window.location.origin,
+          endpoint: SESSION_ENDPOINT,
+          ...details
+        };
+
+        diagnostic.textContent = Object.entries(safeDetails)
+          .map(([key, value]) => `${key}: ${String(value ?? '')}`)
+          .join('\n');
+        diagnostic.classList.add('is-visible');
+      }
 
       function showAccess(message = '') {
         workspace.hidden = true;
@@ -539,6 +464,7 @@
       }
 
       function showWorkspace() {
+        clearDiagnostic();
         accessMessage.textContent = '';
         accessView.hidden = true;
         workspace.hidden = false;
@@ -555,15 +481,22 @@
         logoutButton.textContent = isPending ? 'Выход…' : 'Выйти';
       }
 
-      async function readJson(response) {
+      async function readResponse(response) {
+        const text = await response.text();
+        let data = null;
+
         try {
-          return await response.json();
+          data = text ? JSON.parse(text) : null;
         } catch {
-          return null;
+          data = null;
         }
+
+        return { text, data };
       }
 
       async function checkSession() {
+        clearDiagnostic();
+
         try {
           const response = await fetch(SESSION_ENDPOINT, {
             method: 'GET',
@@ -572,22 +505,28 @@
             headers: { Accept: 'application/json' }
           });
 
-          const data = await readJson(response);
+          const payload = await readResponse(response);
 
-          if (response.ok && data?.ok === true && data?.authenticated === true) {
+          if (response.ok && payload.data?.ok === true && payload.data?.authenticated === true) {
             showWorkspace();
             return;
           }
 
           showAccess();
-        } catch {
+        } catch (error) {
           showAccess('Не удалось проверить защищённую сессию. Повторите вход.');
+          showDiagnostic({
+            phase: 'session_check',
+            error_name: error?.name || 'UnknownError',
+            error_message: error?.message || String(error)
+          });
         }
       }
 
       accessForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         accessMessage.textContent = '';
+        clearDiagnostic();
 
         const key = accessKey.value.trim();
         if (!key) {
@@ -610,9 +549,9 @@
             body: JSON.stringify({ access_key: key })
           });
 
-          const data = await readJson(response);
+          const payload = await readResponse(response);
 
-          if (response.ok && data?.ok === true && data?.authenticated === true) {
+          if (response.ok && payload.data?.ok === true && payload.data?.authenticated === true) {
             accessKey.value = '';
             showWorkspace();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -624,8 +563,23 @@
           } else {
             accessMessage.textContent = 'Ключ доступа не принят.';
           }
-        } catch {
+
+          showDiagnostic({
+            phase: 'login_response',
+            http_status: response.status,
+            http_status_text: response.statusText,
+            response_type: response.type,
+            content_type: response.headers.get('content-type') || '',
+            response_body: payload.text.slice(0, 2000) || '(empty)'
+          });
+        } catch (error) {
           accessMessage.textContent = 'Не удалось подключиться к защищённому сервису.';
+          showDiagnostic({
+            phase: 'login_fetch',
+            error_name: error?.name || 'UnknownError',
+            error_message: error?.message || String(error),
+            online: navigator.onLine
+          });
         } finally {
           accessKey.value = '';
           setLoginPending(false);
@@ -645,15 +599,16 @@
             headers: { Accept: 'application/json' }
           });
 
-          const data = await readJson(response);
-          if (!response.ok || data?.ok !== true) {
-            throw new Error('Logout failed');
+          const payload = await readResponse(response);
+          if (!response.ok || payload.data?.ok !== true) {
+            throw new Error(`Logout failed: HTTP ${response.status}`);
           }
 
           showAccess();
+          clearDiagnostic();
           window.scrollTo({ top: 0, behavior: 'smooth' });
           accessKey.focus();
-        } catch {
+        } catch (error) {
           portfolioMessage.textContent = 'Не удалось завершить защищённую сессию. Повторите выход.';
         } finally {
           setLogoutPending(false);
