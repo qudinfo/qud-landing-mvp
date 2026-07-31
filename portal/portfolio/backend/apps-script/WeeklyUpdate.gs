@@ -2,6 +2,7 @@ const QUD_VP_WEEKLY_CONFIG = Object.freeze({
   spreadsheetId: '1XVsMiFtpLSuB7z4OcQ1heDj4oD2JhJ_Su3QwyzSQyG8',
   sheets: Object.freeze({
     portfolios: 'portfolios',
+    apiPortfolios: 'api_portfolios',
     requests: 'portfolio_strategy_requests',
     sourcePeriods: 'strategy_period_history',
     strategyHistory: 'portfolio_strategy_history',
@@ -14,13 +15,62 @@ const QUD_VP_WEEKLY_CONFIG = Object.freeze({
  *
  * Applies only complete WEEK periods already present in QUD Virtual Portfolio.
  * The main QUD spreadsheet is never opened or modified by this module.
+ *
+ * The consistency guard is part of this entry point and cannot be bypassed by
+ * choosing the legacy function name from the Apps Script function selector.
  */
 function runQudVirtualPortfolioWeeklyUpdate() {
   const lock = LockService.getScriptLock();
   lock.waitLock(30000);
 
+  const startedAtMs = Date.now();
   try {
-    return vpw_run_();
+    const result = vpw_run_();
+    const validation = vpw_assertConsistencyWithRetry_({
+      historyRowsSinceMs: startedAtMs,
+      requireRunHistory: Number(result.applied_strategy_periods) > 0,
+      compareHistory: Number(result.applied_strategy_periods) > 0,
+      mode: 'WEEKLY_RUN'
+    });
+
+    result.validated_portfolios = validation.validated_portfolios;
+    result.validated_history_snapshots = validation.validated_history_snapshots;
+    return result;
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/**
+ * Backward-compatible entry point.
+ * It delegates to the guarded production function, so the check cannot be skipped.
+ */
+function runQudVirtualPortfolioWeeklyUpdateValidated() {
+  return runQudVirtualPortfolioWeeklyUpdate();
+}
+
+/**
+ * Read-only current-state check.
+ *
+ * Does not change financial data, request states, timestamps, or history.
+ * Compares `portfolios`, `api_portfolios`, and the latest `portfolio_history`
+ * snapshot for every portfolio.
+ */
+function runQudVirtualPortfolioConsistencyCheck() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+
+  try {
+    const result = vpw_assertConsistencyWithRetry_({
+      historyRowsSinceMs: null,
+      requireRunHistory: false,
+      compareHistory: true,
+      mode: 'READ_ONLY_CURRENT_STATE'
+    });
+
+    result.ok = true;
+    result.checked_at_utc = new Date().toISOString();
+    return result;
   } finally {
     lock.releaseLock();
   }
@@ -57,11 +107,19 @@ function vpw_run_() {
     portfolioTable.objects.map((row) => [String(row.portfolio_id), row])
   );
   const latestRequests = requestTable.objects.filter((row) => (
-    vpw_boolean_(row.is_latest_strategy_request) && String(row.status) !== 'CANCELLED'
+    vpw_boolean_(row.is_latest_strategy_request) &&
+    String(row.status) !== 'CANCELLED'
   ));
-  const activeRequests = latestRequests.filter((row) => String(row.status) === 'ACTIVE');
+  const activeRequests = latestRequests.filter(
+    (row) => String(row.status) === 'ACTIVE'
+  );
   const periodsByStrategy = vpw_groupSourcePeriods_(sourcePeriodTable.objects);
-  const events = vpw_buildEvents_(activeRequests, periodsByStrategy, strategyHistoryKeys, today);
+  const events = vpw_buildEvents_(
+    activeRequests,
+    periodsByStrategy,
+    strategyHistoryKeys,
+    today
+  );
   const groups = vpw_groupEventsByPeriod_(events);
 
   let appliedStrategyPeriods = 0;
@@ -77,7 +135,10 @@ function vpw_run_() {
     group.forEach((event) => {
       const portfolioId = String(event.request.portfolio_id);
       if (!openingByPortfolio.has(portfolioId)) {
-        openingByPortfolio.set(portfolioId, vpw_aggregatePortfolio_(latestRequests, portfolioId));
+        openingByPortfolio.set(
+          portfolioId,
+          vpw_aggregatePortfolio_(latestRequests, portfolioId)
+        );
       }
     });
 
@@ -131,14 +192,18 @@ function vpw_run_() {
 
       request.current_balance_usd = closingBalance;
       request.peak_balance_usd = peakBalance;
-      request.strategy_return_usd = closingBalance - Number(request.allocated_balance_usd);
+      request.strategy_return_usd =
+        closingBalance - Number(request.allocated_balance_usd);
       request.strategy_return_pct = Number(request.allocated_balance_usd) > 0
-        ? request.strategy_return_usd / Number(request.allocated_balance_usd) * 100
+        ? request.strategy_return_usd /
+          Number(request.allocated_balance_usd) * 100
         : 0;
       request.current_drawdown_pct = drawdownPct;
       request.last_applied_period_end_utc = periodEndKey;
       request.status = statusAfterUpdate;
-      if (statusAfterUpdate !== 'ACTIVE') request.completed_at_utc = appliedAt;
+      if (statusAfterUpdate !== 'ACTIVE') {
+        request.completed_at_utc = appliedAt;
+      }
 
       vpw_writeRequestState_(requestSheet, requestTable.headers, request);
       strategyHistoryKeys.add(historyKey);
@@ -150,10 +215,15 @@ function vpw_run_() {
 
     appliedPortfolioIds.forEach((portfolioId) => {
       const portfolio = portfoliosById.get(portfolioId);
-      if (!portfolio) throw new Error('PORTFOLIO_NOT_FOUND_' + portfolioId);
+      if (!portfolio) {
+        throw new Error('PORTFOLIO_NOT_FOUND_' + portfolioId);
+      }
 
       const openingAggregate = openingByPortfolio.get(portfolioId);
-      const closingAggregate = vpw_aggregatePortfolio_(latestRequests, portfolioId);
+      const closingAggregate = vpw_aggregatePortfolio_(
+        latestRequests,
+        portfolioId
+      );
       const historyKey = portfolioId + '|' + periodEndKey;
       const existingHistory = portfolioHistoryByKey.get(historyKey) || null;
       const openingBalance = existingHistory
@@ -161,16 +231,26 @@ function vpw_run_() {
         : openingAggregate.currentBalance;
       const previousPeak = Math.max(
         Number(portfolio.peak_balance_usd) || 0,
-        existingHistory ? Number(existingHistory.peak_balance_usd) || 0 : 0,
+        existingHistory
+          ? Number(existingHistory.peak_balance_usd) || 0
+          : 0,
         openingBalance
       );
-      const peakBalance = Math.max(previousPeak, closingAggregate.currentBalance);
-      const portfolioReturnUsd = closingAggregate.currentBalance - closingAggregate.totalAllocated;
+      const peakBalance = Math.max(
+        previousPeak,
+        closingAggregate.currentBalance
+      );
+      const portfolioReturnUsd =
+        closingAggregate.currentBalance - closingAggregate.totalAllocated;
       const portfolioReturnPct = closingAggregate.totalAllocated > 0
         ? portfolioReturnUsd / closingAggregate.totalAllocated * 100
         : 0;
       const drawdownPct = peakBalance > 0
-        ? Math.max(0, (peakBalance - closingAggregate.currentBalance) / peakBalance * 100)
+        ? Math.max(
+            0,
+            (peakBalance - closingAggregate.currentBalance) /
+              peakBalance * 100
+          )
         : 0;
       const updatedAt = new Date().toISOString();
       const historyValues = [
@@ -190,10 +270,17 @@ function vpw_run_() {
       ];
 
       if (existingHistory) {
-        vpw_replaceAndAssert_(portfolioHistorySheet, existingHistory._rowNumber, historyValues);
+        vpw_replaceAndAssert_(
+          portfolioHistorySheet,
+          existingHistory._rowNumber,
+          historyValues
+        );
         updatedPortfolioSnapshots += 1;
       } else {
-        const rowNumber = vpw_appendAndAssert_(portfolioHistorySheet, historyValues);
+        const rowNumber = vpw_appendAndAssert_(
+          portfolioHistorySheet,
+          historyValues
+        );
         portfolioHistoryByKey.set(historyKey, {
           _rowNumber: rowNumber,
           portfolio_id: portfolioId,
@@ -204,10 +291,14 @@ function vpw_run_() {
         createdPortfolioSnapshots += 1;
       }
 
-      // Preserve permanent KPI formulas in columns D:J.
+      // Columns D:J contain permanent KPI formulas. Only the timestamp is written.
       portfolio.peak_balance_usd = peakBalance;
       portfolio.last_recalc_utc = updatedAt;
-      vpw_touchPortfolio_(portfolioSheet, portfolioTable.headers, portfolio);
+      vpw_touchPortfolio_(
+        portfolioSheet,
+        portfolioTable.headers,
+        portfolio
+      );
     });
 
     SpreadsheetApp.flush();
@@ -227,7 +318,11 @@ function vpw_run_() {
   const finalTimestamp = new Date().toISOString();
   portfoliosById.forEach((portfolio) => {
     portfolio.last_recalc_utc = finalTimestamp;
-    vpw_touchPortfolio_(portfolioSheet, portfolioTable.headers, portfolio);
+    vpw_touchPortfolio_(
+      portfolioSheet,
+      portfolioTable.headers,
+      portfolio
+    );
   });
 
   SpreadsheetApp.flush();
@@ -256,7 +351,10 @@ function vpw_groupSourcePeriods_(periods) {
   });
 
   result.forEach((rows) => {
-    rows.sort((a, b) => vpw_date_(a.period_end_utc) - vpw_date_(b.period_end_utc));
+    rows.sort(
+      (a, b) =>
+        vpw_date_(a.period_end_utc) - vpw_date_(b.period_end_utc)
+    );
   });
 
   return result;
@@ -269,7 +367,8 @@ function vpw_buildEvents_(requests, periodsByStrategy, historyKeys, today) {
     const requestId = String(request.request_id);
     const startDate = vpw_date_(request.start_date_utc);
     const endDate = vpw_date_(request.end_date_utc);
-    const periods = periodsByStrategy.get(String(request.strategy_id)) || [];
+    const periods =
+      periodsByStrategy.get(String(request.strategy_id)) || [];
 
     periods.forEach((period) => {
       const periodStart = vpw_date_(period.period_start_utc);
@@ -294,7 +393,9 @@ function vpw_buildEvents_(requests, periodsByStrategy, historyKeys, today) {
   events.sort((a, b) => {
     const byDate = a.periodEndDate - b.periodEndDate;
     if (byDate !== 0) return byDate;
-    return String(a.request.request_id).localeCompare(String(b.request.request_id));
+    return String(a.request.request_id).localeCompare(
+      String(b.request.request_id)
+    );
   });
 
   return events;
@@ -302,10 +403,14 @@ function vpw_buildEvents_(requests, periodsByStrategy, historyKeys, today) {
 
 function vpw_groupEventsByPeriod_(events) {
   const groups = new Map();
+
   events.forEach((event) => {
-    if (!groups.has(event.periodEndKey)) groups.set(event.periodEndKey, []);
+    if (!groups.has(event.periodEndKey)) {
+      groups.set(event.periodEndKey, []);
+    }
     groups.get(event.periodEndKey).push(event);
   });
+
   return groups;
 }
 
@@ -316,11 +421,19 @@ function vpw_aggregatePortfolio_(latestRequests, portfolioId) {
       String(request.status) !== 'CANCELLED'
     ))
     .reduce((result, request) => {
-      result.totalAllocated += Number(request.allocated_balance_usd) || 0;
-      result.currentBalance += Number(request.current_balance_usd) || 0;
-      if (String(request.status) === 'ACTIVE') result.activeCount += 1;
+      result.totalAllocated +=
+        Number(request.allocated_balance_usd) || 0;
+      result.currentBalance +=
+        Number(request.current_balance_usd) || 0;
+      if (String(request.status) === 'ACTIVE') {
+        result.activeCount += 1;
+      }
       return result;
-    }, { totalAllocated: 0, currentBalance: 0, activeCount: 0 });
+    }, {
+      totalAllocated: 0,
+      currentBalance: 0,
+      activeCount: 0
+    });
 }
 
 function vpw_writeRequestState_(sheet, headers, request) {
@@ -337,14 +450,24 @@ function vpw_writeRequestState_(sheet, headers, request) {
   };
 
   Object.keys(values).forEach((header) => {
-    if (map[header] === undefined) throw new Error('MISSING_REQUEST_COLUMN_' + header);
-    sheet.getRange(request._rowNumber, map[header] + 1).setValue(values[header]);
+    if (map[header] === undefined) {
+      throw new Error('MISSING_REQUEST_COLUMN_' + header);
+    }
+    sheet
+      .getRange(request._rowNumber, map[header] + 1)
+      .setValue(values[header]);
   });
 }
 
 function vpw_touchPortfolio_(sheet, headers, portfolio) {
   const map = vpw_headerMap_(headers);
-  if (map.last_recalc_utc === undefined) throw new Error('MISSING_PORTFOLIO_COLUMN_last_recalc_utc');
+
+  if (map.last_recalc_utc === undefined) {
+    throw new Error(
+      'MISSING_PORTFOLIO_COLUMN_last_recalc_utc'
+    );
+  }
+
   sheet
     .getRange(portfolio._rowNumber, map.last_recalc_utc + 1)
     .setValue(portfolio.last_recalc_utc);
@@ -352,44 +475,451 @@ function vpw_touchPortfolio_(sheet, headers, portfolio) {
 
 function vpw_appendAndAssert_(sheet, values) {
   const rowNumber = vpw_firstEmptyRow_(sheet, 1, 2);
-  sheet.getRange(rowNumber, 1, 1, values.length).setValues([values]);
+  sheet
+    .getRange(rowNumber, 1, 1, values.length)
+    .setValues([values]);
   SpreadsheetApp.flush();
   vpw_assertQa_(sheet, rowNumber, values.length);
   return rowNumber;
 }
 
 function vpw_replaceAndAssert_(sheet, rowNumber, values) {
-  sheet.getRange(rowNumber, 1, 1, values.length).setValues([values]);
+  sheet
+    .getRange(rowNumber, 1, 1, values.length)
+    .setValues([values]);
   SpreadsheetApp.flush();
   vpw_assertQa_(sheet, rowNumber, values.length);
 }
 
 function vpw_assertQa_(sheet, rowNumber, dataWidth) {
-  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  const map = vpw_headerMap_(headers.map((value) => String(value).trim()));
-  if (map.qa_status === undefined) throw new Error('MISSING_QA_STATUS_' + sheet.getName());
+  const headers = sheet
+    .getRange(1, 1, 1, sheet.getLastColumn())
+    .getValues()[0];
+  const map = vpw_headerMap_(
+    headers.map((value) => String(value).trim())
+  );
+
+  if (map.qa_status === undefined) {
+    throw new Error('MISSING_QA_STATUS_' + sheet.getName());
+  }
 
   let status = '';
   for (let attempt = 0; attempt < 3; attempt += 1) {
     SpreadsheetApp.flush();
-    status = String(sheet.getRange(rowNumber, map.qa_status + 1).getDisplayValue()).trim();
+    status = String(
+      sheet
+        .getRange(rowNumber, map.qa_status + 1)
+        .getDisplayValue()
+    ).trim();
+
     if (status) break;
     Utilities.sleep(100);
   }
 
   if (status !== 'OK') {
-    sheet.getRange(rowNumber, 1, 1, dataWidth).clearContent();
+    sheet
+      .getRange(rowNumber, 1, 1, dataWidth)
+      .clearContent();
     SpreadsheetApp.flush();
-    throw new Error('QA_FAILED_' + sheet.getName() + '_ROW_' + rowNumber + '_' + status);
+    throw new Error(
+      'QA_FAILED_' +
+      sheet.getName() +
+      '_ROW_' +
+      rowNumber +
+      '_' +
+      status
+    );
   }
+}
+
+/**
+ * Retries formula-backed comparisons to avoid a false mismatch while Sheets
+ * is still recalculating after SpreadsheetApp.flush().
+ */
+function vpw_assertConsistencyWithRetry_(options) {
+  let result = null;
+
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    SpreadsheetApp.flush();
+    if (attempt > 0) Utilities.sleep(250);
+
+    result = vpw_collectConsistency_(options);
+    if (result.mismatches.length === 0) {
+      return {
+        mode: options.mode,
+        validated_portfolios: result.validatedPortfolios,
+        validated_history_snapshots:
+          result.validatedHistorySnapshots
+      };
+    }
+  }
+
+  throw new Error(
+    'PORTFOLIO_CONSISTENCY_FAILED_' +
+    options.mode +
+    '_' +
+    JSON.stringify(result.mismatches.slice(0, 25))
+  );
+}
+
+function vpw_collectConsistency_(options) {
+  const spreadsheet = SpreadsheetApp.openById(
+    QUD_VP_WEEKLY_CONFIG.spreadsheetId
+  );
+  const portfolioTable = vpw_readTable_(
+    vpw_sheet_(
+      spreadsheet,
+      QUD_VP_WEEKLY_CONFIG.sheets.portfolios
+    )
+  );
+  const apiPortfolioTable = vpw_readTable_(
+    vpw_sheet_(
+      spreadsheet,
+      QUD_VP_WEEKLY_CONFIG.sheets.apiPortfolios
+    )
+  );
+  const historyTable = vpw_readTable_(
+    vpw_sheet_(
+      spreadsheet,
+      QUD_VP_WEEKLY_CONFIG.sheets.portfolioHistory
+    )
+  );
+
+  const mismatches = [];
+  const portfolioById = vpw_mapById_(
+    portfolioTable.objects,
+    'portfolio_id',
+    mismatches,
+    'PORTFOLIOS'
+  );
+  const apiById = vpw_mapById_(
+    apiPortfolioTable.objects,
+    'portfolio_id',
+    mismatches,
+    'API_PORTFOLIOS'
+  );
+
+  vpw_assertSameIdSet_(
+    portfolioById,
+    apiById,
+    mismatches,
+    'PORTFOLIOS',
+    'API_PORTFOLIOS'
+  );
+
+  const apiPairs = [
+    ['portfolio_id', 'portfolio_id', 'TEXT'],
+    ['subscriber_id', 'subscriber_id', 'TEXT'],
+    ['status', 'status', 'TEXT'],
+    ['total_allocated_usd', 'total_allocated_usd', 'NUMBER'],
+    ['current_balance_usd', 'current_balance_usd', 'NUMBER'],
+    ['peak_balance_usd', 'peak_balance_usd', 'NUMBER'],
+    ['portfolio_return_usd', 'portfolio_return_usd', 'NUMBER'],
+    ['portfolio_return_pct', 'portfolio_return_pct', 'NUMBER'],
+    ['current_drawdown_pct', 'current_drawdown_pct', 'NUMBER'],
+    ['active_strategies_count', 'active_strategies_count', 'NUMBER']
+  ];
+
+  portfolioById.forEach((portfolioRow, portfolioId) => {
+    const apiRow = apiById.get(portfolioId);
+    if (!apiRow) return;
+
+    vpw_compareRows_(
+      portfolioRow,
+      apiRow,
+      apiPairs,
+      mismatches,
+      'PORTFOLIOS',
+      'API_PORTFOLIOS',
+      portfolioId
+    );
+  });
+
+  let candidateHistoryRows = historyTable.objects.slice();
+
+  if (options.historyRowsSinceMs !== null) {
+    const lowerBound = Number(options.historyRowsSinceMs) - 1000;
+    candidateHistoryRows = candidateHistoryRows.filter((row) => {
+      const value = Date.parse(String(row.updated_at_utc || ''));
+      return Number.isFinite(value) && value >= lowerBound;
+    });
+  }
+
+  if (
+    options.requireRunHistory &&
+    candidateHistoryRows.length === 0
+  ) {
+    mismatches.push({
+      type: 'RUN_HISTORY_MISSING',
+      history_rows_since_ms: options.historyRowsSinceMs
+    });
+  }
+
+  const latestHistoryByPortfolio =
+    vpw_latestHistoryByPortfolio_(candidateHistoryRows);
+
+  if (options.compareHistory) {
+    // Portfolio history is a financial snapshot. Request expiration can change
+    // active-count/status after the snapshot without changing its financial KPI,
+    // so those two operational fields are intentionally checked only between
+    // `portfolios` and `api_portfolios`.
+    const historyPairs = [
+      ['portfolio_id', 'portfolio_id', 'TEXT'],
+      ['total_allocated_usd', 'total_allocated_usd', 'NUMBER'],
+      ['current_balance_usd', 'closing_balance_usd', 'NUMBER'],
+      ['peak_balance_usd', 'peak_balance_usd', 'NUMBER'],
+      ['portfolio_return_usd', 'portfolio_return_usd', 'NUMBER'],
+      ['portfolio_return_pct', 'portfolio_return_pct', 'NUMBER'],
+      ['current_drawdown_pct', 'drawdown_pct', 'NUMBER']
+    ];
+
+    const historyPortfolioIds =
+      options.historyRowsSinceMs === null
+        ? Array.from(portfolioById.keys())
+        : Array.from(latestHistoryByPortfolio.keys());
+
+    historyPortfolioIds.forEach((portfolioId) => {
+      const portfolioRow = portfolioById.get(portfolioId);
+      const historyRow = latestHistoryByPortfolio.get(portfolioId);
+
+      if (!portfolioRow) {
+        mismatches.push({
+          type: 'PORTFOLIO_MISSING_FOR_HISTORY',
+          portfolio_id: portfolioId
+        });
+        return;
+      }
+
+      if (!historyRow) {
+        mismatches.push({
+          type: 'LATEST_HISTORY_MISSING',
+          portfolio_id: portfolioId,
+          history_scope:
+            options.historyRowsSinceMs === null
+              ? 'ALL'
+              : 'CURRENT_RUN'
+        });
+        return;
+      }
+
+      vpw_compareRows_(
+        portfolioRow,
+        historyRow,
+        historyPairs,
+        mismatches,
+        'PORTFOLIOS',
+        'PORTFOLIO_HISTORY',
+        portfolioId
+      );
+
+      const apiRow = apiById.get(portfolioId);
+      if (apiRow) {
+        vpw_compareRows_(
+          apiRow,
+          historyRow,
+          historyPairs,
+          mismatches,
+          'API_PORTFOLIOS',
+          'PORTFOLIO_HISTORY',
+          portfolioId
+        );
+      }
+    });
+  }
+
+  return {
+    mismatches: mismatches,
+    validatedPortfolios: portfolioById.size,
+    validatedHistorySnapshots:
+      options.compareHistory
+        ? latestHistoryByPortfolio.size
+        : 0
+  };
+}
+
+function vpw_compareRows_(
+  leftRow,
+  rightRow,
+  pairs,
+  mismatches,
+  leftName,
+  rightName,
+  portfolioId
+) {
+  pairs.forEach((pair) => {
+    const leftField = pair[0];
+    const rightField = pair[1];
+    const valueType = pair[2];
+    const leftValue = leftRow[leftField];
+    const rightValue = rightRow[rightField];
+    const matches = valueType === 'NUMBER'
+      ? vpw_numbersClose_(leftValue, rightValue)
+      : String(leftValue).trim() ===
+        String(rightValue).trim();
+
+    if (!matches) {
+      mismatches.push({
+        type: 'VALUE_MISMATCH',
+        portfolio_id: portfolioId,
+        left_table: leftName,
+        left_field: leftField,
+        left_value: leftValue,
+        right_table: rightName,
+        right_field: rightField,
+        right_value: rightValue
+      });
+    }
+  });
+}
+
+function vpw_mapById_(
+  rows,
+  idField,
+  mismatches,
+  tableName
+) {
+  const result = new Map();
+
+  rows.forEach((row) => {
+    const id = String(row[idField] || '').trim();
+
+    if (!id) {
+      mismatches.push({
+        type: 'EMPTY_ID',
+        table: tableName,
+        row_number: row._rowNumber
+      });
+      return;
+    }
+
+    if (result.has(id)) {
+      mismatches.push({
+        type: 'DUPLICATE_ID',
+        table: tableName,
+        id: id
+      });
+      return;
+    }
+
+    result.set(id, row);
+  });
+
+  return result;
+}
+
+function vpw_assertSameIdSet_(
+  leftMap,
+  rightMap,
+  mismatches,
+  leftName,
+  rightName
+) {
+  leftMap.forEach((unused, id) => {
+    if (!rightMap.has(id)) {
+      mismatches.push({
+        type: 'ID_MISSING',
+        id: id,
+        present_in: leftName,
+        missing_from: rightName
+      });
+    }
+  });
+
+  rightMap.forEach((unused, id) => {
+    if (!leftMap.has(id)) {
+      mismatches.push({
+        type: 'ID_MISSING',
+        id: id,
+        present_in: rightName,
+        missing_from: leftName
+      });
+    }
+  });
+}
+
+function vpw_latestHistoryByPortfolio_(rows) {
+  const result = new Map();
+
+  rows.forEach((row) => {
+    const portfolioId = String(row.portfolio_id || '').trim();
+    if (!portfolioId) return;
+
+    const existing = result.get(portfolioId);
+    if (!existing || vpw_historyIsLater_(row, existing)) {
+      result.set(portfolioId, row);
+    }
+  });
+
+  return result;
+}
+
+function vpw_historyIsLater_(candidate, existing) {
+  let candidatePeriod = 0;
+  let existingPeriod = 0;
+
+  try {
+    candidatePeriod = vpw_date_(candidate.period_end_utc);
+  } catch (error) {
+    candidatePeriod = 0;
+  }
+
+  try {
+    existingPeriod = vpw_date_(existing.period_end_utc);
+  } catch (error) {
+    existingPeriod = 0;
+  }
+
+  if (candidatePeriod !== existingPeriod) {
+    return candidatePeriod > existingPeriod;
+  }
+
+  const candidateUpdatedAt = Date.parse(
+    String(candidate.updated_at_utc || '')
+  );
+  const existingUpdatedAt = Date.parse(
+    String(existing.updated_at_utc || '')
+  );
+
+  return (
+    (Number.isFinite(candidateUpdatedAt)
+      ? candidateUpdatedAt
+      : 0) >
+    (Number.isFinite(existingUpdatedAt)
+      ? existingUpdatedAt
+      : 0)
+  );
+}
+
+function vpw_numbersClose_(left, right) {
+  const leftNumber = Number(left);
+  const rightNumber = Number(right);
+
+  if (
+    !Number.isFinite(leftNumber) ||
+    !Number.isFinite(rightNumber)
+  ) {
+    return false;
+  }
+
+  const tolerance =
+    Math.max(
+      1,
+      Math.abs(leftNumber),
+      Math.abs(rightNumber)
+    ) * 1e-9;
+
+  return Math.abs(leftNumber - rightNumber) <= tolerance;
 }
 
 function vpw_readTable_(sheet) {
   const values = sheet.getDataRange().getValues();
   if (!values.length) return { headers: [], objects: [] };
-  const headers = values[0].map((value) => String(value).trim());
 
-  const objects = values.slice(1)
+  const headers = values[0].map(
+    (value) => String(value).trim()
+  );
+  const objects = values
+    .slice(1)
     .map((row, index) => {
       const object = { _rowNumber: index + 2 };
       headers.forEach((header, column) => {
@@ -399,28 +929,51 @@ function vpw_readTable_(sheet) {
     })
     .filter((object) => {
       const firstHeader = headers[0];
-      return firstHeader && object[firstHeader] !== '' && object[firstHeader] !== null;
+      return (
+        firstHeader &&
+        object[firstHeader] !== '' &&
+        object[firstHeader] !== null
+      );
     });
 
   return { headers: headers, objects: objects };
 }
 
 function vpw_firstEmptyRow_(sheet, column, startRow) {
-  const lastRow = Math.max(sheet.getLastRow(), startRow - 1);
+  const lastRow = Math.max(
+    sheet.getLastRow(),
+    startRow - 1
+  );
   if (lastRow < startRow) return startRow;
 
-  const values = sheet.getRange(startRow, column, lastRow - startRow + 1, 1).getValues();
+  const values = sheet
+    .getRange(
+      startRow,
+      column,
+      lastRow - startRow + 1,
+      1
+    )
+    .getValues();
+
   for (let index = 0; index < values.length; index += 1) {
-    if (values[index][0] === '' || values[index][0] === null) return startRow + index;
+    if (
+      values[index][0] === '' ||
+      values[index][0] === null
+    ) {
+      return startRow + index;
+    }
   }
+
   return lastRow + 1;
 }
 
 function vpw_headerMap_(headers) {
   const map = {};
+
   headers.forEach((header, index) => {
     if (header) map[header] = index;
   });
+
   return map;
 }
 
@@ -437,19 +990,45 @@ function vpw_boolean_(value) {
 
 function vpw_date_(value) {
   if (value instanceof Date) {
-    return Date.UTC(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate());
+    return Date.UTC(
+      value.getUTCFullYear(),
+      value.getUTCMonth(),
+      value.getUTCDate()
+    );
+  }
+
+  if (
+    typeof value === 'number' &&
+    Number.isFinite(value)
+  ) {
+    const sheetsEpoch = Date.UTC(1899, 11, 30);
+    return sheetsEpoch + Math.round(value) * 86400000;
   }
 
   const text = String(value || '').trim();
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(text);
+
   if (!match) throw new Error('INVALID_DATE_' + text);
-  return Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+
+  return Date.UTC(
+    Number(match[1]),
+    Number(match[2]) - 1,
+    Number(match[3])
+  );
 }
 
 function vpw_utcDate_(date) {
-  return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  return Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate()
+  );
 }
 
 function vpw_dateKey_(value) {
-  return Utilities.formatDate(new Date(vpw_date_(value)), 'UTC', 'yyyy-MM-dd');
+  return Utilities.formatDate(
+    new Date(vpw_date_(value)),
+    'UTC',
+    'yyyy-MM-dd'
+  );
 }
