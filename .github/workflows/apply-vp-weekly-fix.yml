@@ -1,0 +1,35 @@
+name: Apply VP weekly fix
+
+on:
+  push:
+    branches:
+      - vp-weekly-history-rebuild-v3
+    paths:
+      - tools/vp_weekly_trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.head_commit.message != 'Apply weekly history rebuild fix'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Apply source transformation
+        run: python3 tools/apply_vp_weekly_fix.py
+      - name: Validate JavaScript syntax
+        run: |
+          cp portal/portfolio/backend/apps-script/WeeklyUpdate.gs /tmp/WeeklyUpdate.js
+          node --check /tmp/WeeklyUpdate.js
+      - name: Commit generated source
+        run: |
+          rm tools/apply_vp_weekly_fix.py tools/vp_weekly_trigger.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Apply weekly history rebuild fix'
+          git push
