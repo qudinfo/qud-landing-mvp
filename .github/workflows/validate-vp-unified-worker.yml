@@ -1,0 +1,55 @@
+name: Validate VP unified Worker
+
+on:
+  pull_request:
+    paths:
+      - 'portal/portfolio/backend/worker/site-edge-vp-mvp.js'
+      - 'portal/portfolio/backend/worker/SITE_EDGE_VP_MVP_DEPLOY.md'
+      - '.github/workflows/validate-vp-unified-worker.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Worker syntax and safety markers
+        run: |
+          cp portal/portfolio/backend/worker/site-edge-vp-mvp.js /tmp/site-edge-vp-mvp.mjs
+          node --check /tmp/site-edge-vp-mvp.mjs
+          python3 - <<'PY'
+          from pathlib import Path
+
+          source = Path('portal/portfolio/backend/worker/site-edge-vp-mvp.js').read_text()
+          required = [
+              "'/portal/vp/session'",
+              "'/portal/vp/diagnostics'",
+              "'/portal/vp/portfolios'",
+              "'/portal/vp/portfolio'",
+              "'/portal/vp/strategies'",
+              'QUD_VP_ACCESS_KEY',
+              'QUD_VP_APPS_SCRIPT_URL',
+              'QUD_VP_PROXY_SECRET',
+              'TEST-SUBSCRIBER-001',
+              'QVP-20260728-00B2',
+              'HttpOnly',
+              'SameSite=Strict',
+              'assertOwnedPortfolio'
+          ]
+          for marker in required:
+              if marker not in source:
+                  raise SystemExit(f'missing required Worker marker: {marker}')
+
+          forbidden = [
+              'QUD_VP_ACCESS_KEY =',
+              'QUD_VP_PROXY_SECRET =',
+              'script.google.com/macros/s/'
+          ]
+          for marker in forbidden:
+              if marker in source:
+                  raise SystemExit(f'possible embedded secret or URL: {marker}')
+
+          print('unified VP Worker validated')
+          PY
