@@ -118,3 +118,11 @@ Secrets must never be committed to GitHub.
 All temporary records use the `TST-` prefix and exist only in the QUD Virtual Portfolio spreadsheet.
 After the full test cycle, remove test history first, then test requests, test strategy periods, snapshot and registry rows.
 The real strategy `QST-CAUZ-MPE9` and portfolio `QVP-20260728-00B2` must remain unchanged.
+
+## MVP stage 1 rules
+
+- minimum virtual allocation per strategy request is USD 1,000;
+- available-strategy and portfolio responses include the latest profitability and quality metrics from `strategy_snapshot`;
+- all date-only fields are normalized to `YYYY-MM-DD` before JSON serialization;
+- test strategies create request IDs with the `TST-QSR-` prefix;
+- the read-only consistency check validates current portfolio formulas from latest requests and validates closed weekly history independently, so a new allocation before the next weekly close is not treated as an error.
