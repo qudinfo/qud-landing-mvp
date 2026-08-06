@@ -55,7 +55,8 @@ jobs:
           PY
       - name: Commit generated source
         run: |
-          rm tools/apply_vp_worker_compat.py tools/vp_worker_compat_trigger.txt .github/workflows/apply-vp-worker-compat.yml
+          git checkout -- .github/workflows/validate-vp-mvp.yml
+          rm -f tools/apply_vp_worker_compat.py tools/vp_worker_compat_trigger.txt tools/vp_worker_compat_trigger_2.txt tools/README-vp-worker-compat.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
