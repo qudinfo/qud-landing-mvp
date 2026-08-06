@@ -5,7 +5,22 @@ const JSON_HEADERS = Object.freeze({
 });
 
 /**
+ * Returns true only for protected Virtual Portfolio data routes.
+ * The session route must remain handled by the existing authentication code.
+ */
+export function isPortfolioApiRequest(request) {
+  const path = new URL(request.url).pathname;
+  return path.startsWith('/portal/vp/') && path !== '/portal/vp/session';
+}
+
+/**
  * Attach this handler after the existing QUD session validation.
+ *
+ * Production dispatch example:
+ *   if (isPortfolioApiRequest(request)) {
+ *     const session = await requireExistingQudSession(request, env);
+ *     return handlePortfolioApi(request, env, session);
+ *   }
  *
  * Required env bindings:
  *   QUD_VP_APPS_SCRIPT_URL - deployed Apps Script /exec URL
