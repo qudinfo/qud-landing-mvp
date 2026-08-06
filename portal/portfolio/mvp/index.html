@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="color-scheme" content="dark">
+  <title>QUD Virtual Portfolio — MVP</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark">QUD</span>
+        <span class="brand-product">Virtual Portfolio</span>
+      </div>
+      <span class="header-status" id="header-status">Защищённый кабинет</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="access-view" id="access-view" aria-labelledby="access-title">
+      <p class="eyebrow">Virtual Portfolio</p>
+      <h1 id="access-title">Наблюдайте, как могла бы изменяться сумма капитала.</h1>
+      <p class="lead">Выберите проверенную стратегию, срок и допустимую просадку. Расчёт обновляется после подтверждения итогов каждой недели.</p>
+
+      <form class="panel access-panel" id="access-form" novalidate>
+        <div class="panel-heading">
+          <div>
+            <h2>Вход в личный кабинет</h2>
+            <p>Введите персональный ключ, предоставленный QUD.</p>
+          </div>
+          <span class="step-mark" aria-hidden="true">01</span>
+        </div>
+        <div class="field">
+          <label for="access-key">Ключ доступа</label>
+          <input id="access-key" name="access_key" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+          <span class="field-note">Ключ открывает защищённую сессию и не сохраняется на странице.</span>
+        </div>
+        <button class="primary-button access-button" id="login-button" type="submit">Войти</button>
+        <p class="form-message" id="access-message" role="alert"></p>
+      </form>
+    </section>
+
+    <section class="workspace" id="workspace" hidden aria-labelledby="workspace-title">
+      <div class="workspace-header">
+        <div>
+          <p class="eyebrow">Virtual Portfolio</p>
+          <h1 id="workspace-title">Личный кабинет</h1>
+          <p>Виртуальная модель движения капитала по подтверждённой истории выбранных стратегий.</p>
+        </div>
+        <div class="workspace-actions">
+          <span class="update-label" id="update-label">Данные загружаются…</span>
+          <button class="secondary-button" id="logout-button" type="button">Выйти</button>
+        </div>
+      </div>
+
+      <section class="panel summary-panel" aria-labelledby="summary-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="summary-title">Общий портфель</h2>
+            <p id="portfolio-identity">Получение портфеля…</p>
+          </div>
+          <span class="status-badge" id="portfolio-status">—</span>
+        </div>
+
+        <div class="summary-metrics">
+          <article class="metric-card"><span>Распределено</span><strong id="metric-allocated">—</strong></article>
+          <article class="metric-card"><span>Текущий баланс</span><strong id="metric-balance">—</strong></article>
+          <article class="metric-card"><span>Результат</span><strong id="metric-return-usd">—</strong></article>
+          <article class="metric-card"><span>Доходность</span><strong id="metric-return-pct">—</strong></article>
+          <article class="metric-card"><span>Просадка</span><strong id="metric-drawdown">—</strong></article>
+          <article class="metric-card"><span>Активные стратегии</span><strong id="metric-active">—</strong></article>
+        </div>
+
+        <section class="chart-card" aria-labelledby="portfolio-chart-title">
+          <div class="chart-header">
+            <div>
+              <h3 id="portfolio-chart-title">Тренд баланса</h3>
+              <p>Каждая точка соответствует завершённой расчётной неделе.</p>
+            </div>
+            <span id="portfolio-chart-count">0 недель</span>
+          </div>
+          <div class="chart-stage" id="portfolio-chart"></div>
+        </section>
+      </section>
+
+      <div class="dashboard-grid">
+        <aside class="panel strategy-sidebar" aria-label="Стратегии портфеля">
+          <div class="section-heading compact">
+            <div>
+              <h2>Мои стратегии</h2>
+              <p>Выберите стратегию для просмотра.</p>
+            </div>
+          </div>
+          <div class="strategy-list" id="strategy-list"></div>
+          <button class="primary-button add-strategy-button" id="toggle-observation" type="button">Добавить стратегию</button>
+
+          <form class="observation-form" id="observation-form" hidden novalidate>
+            <div class="form-title-row">
+              <div>
+                <h3>Новое наблюдение</h3>
+                <p>Параметры нельзя изменить после запуска.</p>
+              </div>
+              <button class="icon-button" id="close-observation" type="button" aria-label="Закрыть форму">×</button>
+            </div>
+
+            <div class="field">
+              <label for="strategy-select">Стратегия</label>
+              <select id="strategy-select" name="strategy_id" required>
+                <option value="">Загрузка…</option>
+              </select>
+              <span class="field-note" id="strategy-availability-note">Получение доступных стратегий.</span>
+            </div>
+
+            <section class="strategy-preview" id="strategy-preview" hidden aria-label="Показатели выбранной стратегии">
+              <div><span>Доходность</span><strong id="preview-return">—</strong></div>
+              <div><span>Макс. просадка</span><strong id="preview-dd">—</strong></div>
+              <div><span>Сделки</span><strong id="preview-trades">—</strong></div>
+              <div><span>Win Rate</span><strong id="preview-winrate">—</strong></div>
+              <div><span>Profit Factor</span><strong id="preview-pf">—</strong></div>
+              <div><span>Trust Score</span><strong id="preview-trust">—</strong></div>
+            </section>
+
+            <div class="field">
+              <label for="capital-input">Сумма капитала, USD</label>
+              <input id="capital-input" name="start_balance_usd" type="number" min="1000" step="100" value="1000" required>
+              <span class="field-note">Минимальная сумма — $1 000.</span>
+            </div>
+
+            <div class="form-columns">
+              <div class="field">
+                <label for="period-select">Период</label>
+                <select id="period-select" name="period" required>
+                  <option value="2_weeks">2 недели</option>
+                  <option value="1_month">1 месяц</option>
+                  <option value="3_months">3 месяца</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="drawdown-input">Лимит просадки, %</label>
+                <input id="drawdown-input" name="max_drawdown_limit_pct" type="number" min="1" max="50" step="0.5" value="7" required>
+              </div>
+            </div>
+
+            <button class="primary-button submit-observation" id="submit-observation" type="submit">Начать наблюдение</button>
+            <p class="form-message" id="observation-message" role="status"></p>
+          </form>
+        </aside>
+
+        <section class="panel strategy-detail" aria-labelledby="strategy-detail-title">
+          <div class="empty-state" id="strategy-empty-state">
+            <div>
+              <strong>Выберите стратегию</strong>
+              <p>Здесь появятся условия наблюдения, результат и история недель.</p>
+            </div>
+          </div>
+
+          <div id="strategy-content" hidden>
+            <div class="section-heading">
+              <div>
+                <p class="detail-kicker">Выбранная стратегия</p>
+                <h2 id="strategy-detail-title">—</h2>
+                <p id="strategy-request-id">—</p>
+              </div>
+              <span class="status-badge" id="strategy-status">—</span>
+            </div>
+
+            <h3 class="subheading">Ваше наблюдение</h3>
+            <div class="detail-metrics">
+              <article><span>Выделено</span><strong id="detail-allocated">—</strong></article>
+              <article><span>Текущий баланс</span><strong id="detail-balance">—</strong></article>
+              <article><span>Результат</span><strong id="detail-return">—</strong></article>
+              <article><span>Просадка</span><strong id="detail-drawdown">—</strong></article>
+              <article><span>Лимит</span><strong id="detail-limit">—</strong></article>
+              <article><span>Период</span><strong id="detail-period">—</strong></article>
+            </div>
+
+            <h3 class="subheading">Базовые показатели стратегии</h3>
+            <div class="detail-metrics quality-metrics">
+              <article><span>Доходность истории</span><strong id="quality-return">—</strong></article>
+              <article><span>Макс. просадка</span><strong id="quality-dd">—</strong></article>
+              <article><span>Закрытые сделки</span><strong id="quality-trades">—</strong></article>
+              <article><span>Win Rate</span><strong id="quality-winrate">—</strong></article>
+              <article><span>Profit Factor</span><strong id="quality-pf">—</strong></article>
+              <article><span>Trust Score</span><strong id="quality-trust">—</strong></article>
+            </div>
+
+            <section class="chart-card strategy-chart-card" aria-labelledby="strategy-chart-title">
+              <div class="chart-header">
+                <div>
+                  <h3 id="strategy-chart-title">История баланса стратегии</h3>
+                  <p>Только завершённые недельные обновления.</p>
+                </div>
+                <span id="strategy-chart-count">0 недель</span>
+              </div>
+              <div class="chart-stage small" id="strategy-chart"></div>
+            </section>
+
+            <section class="history-section" aria-labelledby="history-title">
+              <h3 id="history-title">Недельная история</h3>
+              <div id="history-container"></div>
+            </section>
+          </div>
+        </section>
+      </div>
+
+      <p class="disclaimer">Виртуальный портфель не подключает реальные денежные средства и не является инвестиционной рекомендацией. Он показывает модель применения подтверждённой истории стратегии к заданной сумме.</p>
+    </section>
+  </main>
+
+  <template id="empty-chart-template">
+    <div class="chart-empty">
+      <div>
+        <strong>Первая точка ещё не сформирована</strong>
+        <p>График появится после завершения первого подтверждённого недельного периода.</p>
+      </div>
+    </div>
+  </template>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+name: Validate VP MVP workspace
+
+on:
+  pull_request:
+    paths:
+      - 'portal/portfolio/mvp/**'
+      - '.github/workflows/validate-vp-mvp.yml'
+  push:
+    branches:
+      - vp-mvp-stage2-ui
+    paths:
+      - 'portal/portfolio/mvp/**'
+      - '.github/workflows/validate-vp-mvp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: node --check portal/portfolio/mvp/app.js
+      - name: Validate HTML bindings and safety
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          root = Path('portal/portfolio/mvp')
+          html = (root / 'index.html').read_text()
+          js = (root / 'app.js').read_text()
+
+          required_files = ['./styles.css', './app.js']
+          for item in required_files:
+              if item not in html:
+                  raise SystemExit(f'missing asset reference: {item}')
+
+          ids = set(re.findall(r'id="([^"]+)"', html))
+          used = set(re.findall(r"getElementById\('([^']+)'\)", js))
+          missing = sorted(used - ids)
+          if missing:
+              raise SystemExit('missing HTML ids: ' + ', '.join(missing))
+
+          forbidden = ['subscriber_id', 'QUD_VP_PROXY_SECRET', 'proxy_secret']
+          for token in forbidden:
+              if token in js:
+                  raise SystemExit(f'forbidden browser token: {token}')
+
+          required_endpoints = [
+              '/portal/vp/session',
+              '/portal/vp/portfolios',
+              '/portal/vp/portfolio',
+              '/portal/vp/strategies'
+          ]
+          for endpoint in required_endpoints:
+              if endpoint not in js:
+                  raise SystemExit(f'missing endpoint: {endpoint}')
+
+          if 'min="1000"' not in html or 'capital < 1000' not in js:
+              raise SystemExit('USD 1,000 minimum is not enforced in both UI and JS')
+
+          print(f'validated {len(used)} DOM bindings')
+          PY
