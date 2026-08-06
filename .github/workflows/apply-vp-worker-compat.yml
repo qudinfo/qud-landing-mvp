@@ -1,64 +1,53 @@
-name: Apply VP Worker compatibility
+name: Validate VP Worker compatibility
 
 on:
-  push:
-    branches:
-      - vp-mvp-worker-compat
-    paths:
-      - tools/vp_worker_compat_trigger.txt
   pull_request:
-    branches:
-      - main
     paths:
-      - tools/vp_worker_compat_trigger.txt
-      - tools/apply_vp_worker_compat.py
+      - 'portal/portfolio/mvp/**'
+      - 'portal/portfolio/backend/worker/**'
       - '.github/workflows/apply-vp-worker-compat.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  apply:
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref || github.ref_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Apply compatibility patch
-        run: python3 tools/apply_vp_worker_compat.py
-      - name: Validate source
+      - name: Validate browser and Worker compatibility
         run: |
           node --check portal/portfolio/mvp/app.js
           python3 - <<'PY'
           from pathlib import Path
+
           js = Path('portal/portfolio/mvp/app.js').read_text()
           worker = Path('portal/portfolio/backend/worker/portfolio-api.js').read_text()
-          required = [
+
+          required_js = [
               'sessionPortfolioId',
               'captureSessionPortfolioId',
               'loadPortfolio(selectedId)',
               'await loadPortfolio(null)',
-              "path !== '/portal/vp/session'",
-              'isPortfolioApiRequest'
+              '/portal/vp/portfolios',
+              '/portal/vp/portfolio',
+              '/portal/vp/strategies'
           ]
-          source = js + '\n' + worker
-          missing = [item for item in required if item not in source]
-          if missing:
-              raise SystemExit('missing compatibility markers: ' + ', '.join(missing))
+          for marker in required_js:
+              if marker not in js:
+                  raise SystemExit(f'missing browser compatibility marker: {marker}')
+
           forbidden = ['subscriber_id', 'QUD_VP_PROXY_SECRET', 'proxy_secret']
           for token in forbidden:
               if token in js:
-                  raise SystemExit('forbidden browser token: ' + token)
-          print('compatibility validation passed')
+                  raise SystemExit(f'forbidden browser token: {token}')
+
+          if 'isPortfolioApiRequest' not in worker:
+              raise SystemExit('Worker route detector is missing')
+          if "path !== '/portal/vp/session'" not in worker:
+              raise SystemExit('Worker must exclude the existing session route')
+          if 'handlePortfolioApi(request, env, session)' not in worker:
+              raise SystemExit('protected Worker adapter is missing')
+
+          print('protected Worker compatibility validated')
           PY
-      - name: Commit generated source
-        run: |
-          git checkout -- .github/workflows/validate-vp-mvp.yml
-          rm -f tools/apply_vp_worker_compat.py tools/vp_worker_compat_trigger.txt tools/vp_worker_compat_trigger_2.txt tools/README-vp-worker-compat.txt
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git commit -m 'Connect MVP workspace to protected portfolio routes'
-          git push origin HEAD:${{ github.head_ref || github.ref_name }}
