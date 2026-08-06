@@ -11,6 +11,7 @@
   const state = {
     portfolios: [],
     portfolioId: null,
+    sessionPortfolioId: null,
     payload: null,
     availableStrategies: [],
     selectedRequestId: null,
@@ -247,6 +248,7 @@
   function showAccess(message = '') {
     state.payload = null;
     state.portfolioId = null;
+    state.sessionPortfolioId = null;
     state.availableStrategies = [];
     state.selectedRequestId = null;
     dom.workspace.hidden = true;
@@ -277,6 +279,27 @@
     if (Array.isArray(data?.items)) return data.items;
     if (Array.isArray(data)) return data;
     return [];
+  }
+
+  function captureSessionPortfolioId(data) {
+    const candidates = [
+      data?.portfolio_id,
+      data?.portfolioId,
+      data?.session?.portfolio_id,
+      data?.session?.portfolioId,
+      data?.identity?.portfolio_id,
+      data?.identity?.portfolioId,
+      data?.data?.portfolio_id,
+      data?.data?.portfolioId
+    ];
+    const value = candidates.find((item) => String(item || '').trim());
+    if (value) state.sessionPortfolioId = String(value).trim();
+    return state.sessionPortfolioId;
+  }
+
+  function safeErrorCode(error) {
+    const value = String(error?.code || error?.message || '').trim();
+    return /^[A-Z0-9_\-]{2,80}$/.test(value) ? value : 'DATA_ROUTE_ERROR';
   }
 
   function extractPayload(data) {
@@ -707,17 +730,37 @@
   }
 
   async function loadPortfolio(portfolioId) {
-    const url = `${ENDPOINTS.portfolio}?portfolio_id=${encodeURIComponent(portfolioId)}`;
-    const strategiesUrl = `${ENDPOINTS.strategies}?portfolio_id=${encodeURIComponent(portfolioId)}`;
-    const [portfolioData, strategiesData] = await Promise.all([
-      apiRequest(url),
-      apiRequest(strategiesUrl)
-    ]);
+    const requestedId = String(portfolioId || '').trim();
+    const portfolioUrl = requestedId
+      ? `${ENDPOINTS.portfolio}?portfolio_id=${encodeURIComponent(requestedId)}`
+      : ENDPOINTS.portfolio;
+    const portfolioData = await apiRequest(portfolioUrl);
     const payload = extractPayload(portfolioData);
     if (!payload) throw new Error('PORTFOLIO_PAYLOAD_MISSING');
 
-    state.portfolioId = String(payload.portfolio.portfolio_id || portfolioId);
+    const resolvedId = String(
+      payload.portfolio.portfolio_id || requestedId || state.sessionPortfolioId || ''
+    ).trim();
+    if (!resolvedId) throw new Error('PORTFOLIO_ID_MISSING');
+
+    state.portfolioId = resolvedId;
+    state.sessionPortfolioId = state.sessionPortfolioId || resolvedId;
     state.payload = payload;
+
+    let strategiesData = null;
+    try {
+      const strategiesUrl = `${ENDPOINTS.strategies}?portfolio_id=${encodeURIComponent(resolvedId)}`;
+      strategiesData = await apiRequest(strategiesUrl);
+    } catch (error) {
+      if (error?.code === 'SESSION_EXPIRED') throw error;
+      try {
+        strategiesData = await apiRequest(ENDPOINTS.strategies);
+      } catch (fallbackError) {
+        if (fallbackError?.code === 'SESSION_EXPIRED') throw fallbackError;
+        strategiesData = { items: payload.availableStrategies || [] };
+      }
+    }
+
     const available = extractAvailable(strategiesData, payload.availableStrategies);
     payload.availableStrategies = available;
 
@@ -732,27 +775,47 @@
     renderAvailableStrategies(available);
   }
 
-  async function loadWorkspace() {
+  async function loadWorkspace(sessionData = null) {
     showWorkspace();
+    captureSessionPortfolioId(sessionData);
     dom.updateLabel.textContent = 'Загрузка данных…';
-    try {
-      const portfoliosData = await apiRequest(ENDPOINTS.portfolios);
-      const portfolios = extractPortfolios(portfoliosData);
-      state.portfolios = portfolios;
-      if (!portfolios.length) {
-        dom.portfolioIdentity.textContent = 'Портфель ещё не создан';
-        dom.updateLabel.textContent = 'Нет доступного портфеля';
-        dom.toggleObservation.disabled = true;
-        return;
-      }
 
-      const queryId = new URLSearchParams(window.location.search).get('portfolio_id');
-      const selected = portfolios.find((item) => String(item.portfolio_id) === String(queryId)) || portfolios[0];
-      await loadPortfolio(selected.portfolio_id);
+    try {
+      let portfolios = [];
+      try {
+        const portfoliosData = await apiRequest(ENDPOINTS.portfolios);
+        portfolios = extractPortfolios(portfoliosData);
+      } catch (error) {
+        if (error?.code === 'SESSION_EXPIRED') throw error;
+      }
+      state.portfolios = portfolios;
+
+      const queryId = String(
+        new URLSearchParams(window.location.search).get('portfolio_id') || ''
+      ).trim();
+      const listed = portfolios.find((item) => (
+        String(item.portfolio_id || '') === queryId
+      ));
+      const selectedId = queryId
+        ? (listed?.portfolio_id || queryId)
+        : (portfolios[0]?.portfolio_id || state.sessionPortfolioId || null);
+
+      try {
+        await loadPortfolio(selectedId);
+      } catch (error) {
+        if (error?.code === 'SESSION_EXPIRED') throw error;
+        if (!queryId && selectedId) {
+          await loadPortfolio(null);
+        } else {
+          throw error;
+        }
+      }
     } catch (error) {
       if (handleApiError(error, false)) return;
-      dom.updateLabel.textContent = 'Не удалось загрузить данные';
+      const code = safeErrorCode(error);
+      dom.updateLabel.textContent = `Не удалось загрузить данные · ${code}`;
       dom.portfolioIdentity.textContent = 'Ошибка загрузки портфеля';
+      dom.toggleObservation.disabled = true;
     }
   }
 
@@ -766,7 +829,8 @@
       });
       const data = await readJson(response);
       if (response.ok && data?.ok === true && data?.authenticated === true) {
-        await loadWorkspace();
+        captureSessionPortfolioId(data);
+        await loadWorkspace(data);
         return;
       }
       showAccess();
@@ -848,7 +912,8 @@
         return;
       }
       dom.accessKey.value = '';
-      await loadWorkspace();
+      captureSessionPortfolioId(data);
+      await loadWorkspace(data);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
       dom.accessMessage.textContent = 'Не удалось подключиться к защищённому сервису.';

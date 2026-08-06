@@ -1,0 +1,53 @@
+name: Validate VP Worker compatibility
+
+on:
+  pull_request:
+    paths:
+      - 'portal/portfolio/mvp/**'
+      - 'portal/portfolio/backend/worker/**'
+      - '.github/workflows/apply-vp-worker-compat.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate browser and Worker compatibility
+        run: |
+          node --check portal/portfolio/mvp/app.js
+          python3 - <<'PY'
+          from pathlib import Path
+
+          js = Path('portal/portfolio/mvp/app.js').read_text()
+          worker = Path('portal/portfolio/backend/worker/portfolio-api.js').read_text()
+
+          required_js = [
+              'sessionPortfolioId',
+              'captureSessionPortfolioId',
+              'loadPortfolio(selectedId)',
+              'await loadPortfolio(null)',
+              '/portal/vp/portfolios',
+              '/portal/vp/portfolio',
+              '/portal/vp/strategies'
+          ]
+          for marker in required_js:
+              if marker not in js:
+                  raise SystemExit(f'missing browser compatibility marker: {marker}')
+
+          forbidden = ['subscriber_id', 'QUD_VP_PROXY_SECRET', 'proxy_secret']
+          for token in forbidden:
+              if token in js:
+                  raise SystemExit(f'forbidden browser token: {token}')
+
+          if 'isPortfolioApiRequest' not in worker:
+              raise SystemExit('Worker route detector is missing')
+          if "path !== '/portal/vp/session'" not in worker:
+              raise SystemExit('Worker must exclude the existing session route')
+          if 'handlePortfolioApi(request, env, session)' not in worker:
+              raise SystemExit('protected Worker adapter is missing')
+
+          print('protected Worker compatibility validated')
+          PY
