@@ -822,6 +822,71 @@ function vpw_collectConsistency_(options) {
     );
   });
 
+
+  const latestRequestsForValidation = requestTable.objects.filter((row) => (
+    vpw_boolean_(row.is_latest_strategy_request) &&
+    String(row.status) !== 'CANCELLED'
+  ));
+  const maxHistoryPeakByPortfolio = new Map();
+  historyTable.objects.forEach((row) => {
+    const portfolioId = String(row.portfolio_id);
+    const peak = Number(row.peak_balance_usd) || 0;
+    maxHistoryPeakByPortfolio.set(
+      portfolioId,
+      Math.max(maxHistoryPeakByPortfolio.get(portfolioId) || 0, peak)
+    );
+  });
+
+  portfolioById.forEach((portfolioRow, portfolioId) => {
+    const aggregate = vpw_aggregatePortfolio_(
+      latestRequestsForValidation,
+      portfolioId
+    );
+    const peakBalance = Math.max(
+      aggregate.totalAllocated,
+      aggregate.currentBalance,
+      maxHistoryPeakByPortfolio.get(portfolioId) || 0
+    );
+    const returnUsd = aggregate.currentBalance - aggregate.totalAllocated;
+    const returnPct = aggregate.totalAllocated > 0
+      ? returnUsd / aggregate.totalAllocated * 100
+      : 0;
+    const drawdownPct = peakBalance > 0
+      ? Math.max(
+          0,
+          (peakBalance - aggregate.currentBalance) /
+            peakBalance * 100
+        )
+      : 0;
+    const rebuiltCurrent = {
+      total_allocated_usd: aggregate.totalAllocated,
+      current_balance_usd: aggregate.currentBalance,
+      peak_balance_usd: peakBalance,
+      portfolio_return_usd: returnUsd,
+      portfolio_return_pct: returnPct,
+      current_drawdown_pct: drawdownPct,
+      active_strategies_count: aggregate.activeCount
+    };
+    const currentPairs = [
+      ['total_allocated_usd', 'total_allocated_usd', 'NUMBER'],
+      ['current_balance_usd', 'current_balance_usd', 'NUMBER'],
+      ['peak_balance_usd', 'peak_balance_usd', 'NUMBER'],
+      ['portfolio_return_usd', 'portfolio_return_usd', 'NUMBER'],
+      ['portfolio_return_pct', 'portfolio_return_pct', 'NUMBER'],
+      ['current_drawdown_pct', 'current_drawdown_pct', 'NUMBER'],
+      ['active_strategies_count', 'active_strategies_count', 'NUMBER']
+    ];
+    vpw_compareRows_(
+      rebuiltCurrent,
+      portfolioRow,
+      currentPairs,
+      mismatches,
+      'REBUILT_FROM_LATEST_REQUESTS',
+      'PORTFOLIOS',
+      portfolioId
+    );
+  });
+
   let candidateHistoryRows = historyTable.objects.slice();
 
   if (options.historyRowsSinceMs !== null) {
@@ -861,9 +926,7 @@ function vpw_collectConsistency_(options) {
     ];
 
     const historyPortfolioIds =
-      options.historyRowsSinceMs === null
-        ? Array.from(portfolioById.keys())
-        : Array.from(latestHistoryByPortfolio.keys());
+      Array.from(latestHistoryByPortfolio.keys());
 
     historyPortfolioIds.forEach((portfolioId) => {
       const portfolioRow = portfolioById.get(portfolioId);
@@ -889,27 +952,33 @@ function vpw_collectConsistency_(options) {
         return;
       }
 
-      vpw_compareRows_(
-        portfolioRow,
-        historyRow,
-        historyPairs,
-        mismatches,
-        'PORTFOLIOS',
-        'PORTFOLIO_HISTORY',
-        portfolioId
-      );
-
-      const apiRow = apiById.get(portfolioId);
-      if (apiRow) {
+      // During a weekly run the new snapshot must match the current
+      // portfolio. In a read-only check, a user may have added capital or a
+      // strategy after the last closed week; that is valid and is checked
+      // separately against the latest requests above.
+      if (options.historyRowsSinceMs !== null) {
         vpw_compareRows_(
-          apiRow,
+          portfolioRow,
           historyRow,
           historyPairs,
           mismatches,
-          'API_PORTFOLIOS',
+          'PORTFOLIOS',
           'PORTFOLIO_HISTORY',
           portfolioId
         );
+
+        const apiRow = apiById.get(portfolioId);
+        if (apiRow) {
+          vpw_compareRows_(
+            apiRow,
+            historyRow,
+            historyPairs,
+            mismatches,
+            'API_PORTFOLIOS',
+            'PORTFOLIO_HISTORY',
+            portfolioId
+          );
+        }
       }
 
       try {

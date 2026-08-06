@@ -5,6 +5,7 @@ const QUD_VP_CONFIG = Object.freeze({
     portfolios: 'portfolios',
     requests: 'portfolio_strategy_requests',
     strategyRegistry: 'strategy_registry',
+    strategySnapshot: 'strategy_snapshot',
     apiPortfolios: 'api_portfolios',
     apiRequests: 'api_strategy_requests',
     apiSlots: 'api_strategy_slots',
@@ -13,7 +14,7 @@ const QUD_VP_CONFIG = Object.freeze({
     apiAvailability: 'api_strategy_availability'
   }),
   allowedPeriods: Object.freeze(['2_weeks', '1_month', '3_months']),
-  minAllocatedBalanceUsd: 100,
+  minAllocatedBalanceUsd: 1000,
   maxAllocatedBalanceUsd: 10000000,
   minDrawdownPct: 1,
   maxDrawdownPct: 50,
@@ -26,7 +27,7 @@ function doGet(e) {
     const action = String((e && e.parameter && e.parameter.action) || 'health').trim();
 
     if (action === 'health') {
-      return jsonResponse_({ ok: true, service: 'QUD Virtual Portfolio', version: '2.0.0' });
+      return jsonResponse_({ ok: true, service: 'QUD Virtual Portfolio', version: '2.1.0' });
     }
 
     const subscriberId = requiredString_(e.parameter.subscriber_id, 'subscriber_id');
@@ -92,6 +93,9 @@ function getPortfolioPayload_(subscriberId, portfolioId) {
     .filter((row) => String(row.portfolio_id) === portfolioId);
   const availability = readObjects_(QUD_VP_CONFIG.sheets.apiAvailability)
     .filter((row) => String(row.portfolio_id) === portfolioId);
+  const strategyMetrics = strategyMetricsById_();
+  slots.forEach((row) => enrichStrategyRow_(row, strategyMetrics));
+  availability.forEach((row) => enrichStrategyRow_(row, strategyMetrics));
 
   const primarySlot = slots.find((row) => String(row.status) === 'ACTIVE') || slots[0] || null;
   const compatibilityPortfolio = Object.assign({}, portfolio);
@@ -140,6 +144,8 @@ function getAvailableStrategies_(subscriberId, portfolioId) {
 
   const rows = readObjects_(QUD_VP_CONFIG.sheets.apiAvailability)
     .filter((row) => String(row.portfolio_id) === portfolioId);
+  const strategyMetrics = strategyMetricsById_();
+  rows.forEach((row) => enrichStrategyRow_(row, strategyMetrics));
   const available = rows.filter((row) => toBoolean_(row.is_available));
 
   return {
@@ -239,7 +245,7 @@ function createStrategyRequest_(body) {
     const now = new Date();
     const startDate = utcDateOnly_(now);
     const endDate = calculateEndDate_(now, periodCode);
-    const requestId = generateUniqueRequestId_(requestTable.objects);
+    const requestId = generateUniqueRequestId_(requestTable.objects, strategyId);
     const appendRow = firstEmptyRowInColumn_(requestsSheet, 1, 2);
     const previousLatestRows = collectLatestRows_(requestTable.objects, portfolioId, strategyId);
     const values = [
@@ -372,13 +378,16 @@ function calculateEndDate_(start, periodCode) {
   return utcDateOnly_(date);
 }
 
-function generateUniqueRequestId_(requests) {
+function generateUniqueRequestId_(requests, strategyId) {
   const existing = new Set(requests.map((row) => String(row.request_id)));
   const datePart = Utilities.formatDate(new Date(), 'UTC', 'yyyyMMdd');
+  const prefix = String(strategyId).startsWith('TST-')
+    ? 'TST-QSR-'
+    : 'QSR-';
 
   for (let attempt = 0; attempt < 20; attempt += 1) {
     const suffix = Utilities.getUuid().replace(/-/g, '').slice(0, 4).toUpperCase();
-    const candidate = 'QSR-' + datePart + '-' + suffix;
+    const candidate = prefix + datePart + '-' + suffix;
     if (!existing.has(candidate)) return candidate;
   }
 
@@ -399,7 +408,7 @@ function readSheetTable_(sheet) {
     .map((row) => {
       const object = {};
       headers.forEach((header, index) => {
-        if (header) object[header] = normalizeValue_(row[index]);
+        if (header) object[header] = normalizeFieldValue_(header, row[index]);
       });
       return object;
     });
@@ -478,6 +487,75 @@ function finiteNumber_(value, fieldName) {
 function toBoolean_(value) {
   if (value === true) return true;
   return String(value).trim().toUpperCase() === 'TRUE';
+}
+
+function strategyMetricsById_() {
+  const fields = [
+    'trust_score',
+    'trust_zone',
+    'history_weeks_count',
+    'closed_trades_total',
+    'strategy_return_since_start_pct',
+    'max_drawdown_since_start_pct',
+    'win_ratio_pct',
+    'profit_factor',
+    'average_risk_pct',
+    'sl_safe_pct',
+    'risk_cv_pct',
+    'last_update_utc'
+  ];
+  const result = new Map();
+
+  readObjects_(QUD_VP_CONFIG.sheets.strategySnapshot).forEach((row) => {
+    const strategyId = String(row.strategy_id || '').trim();
+    if (!strategyId) return;
+
+    const metrics = {};
+    fields.forEach((field) => {
+      if (row[field] !== undefined && row[field] !== '') {
+        metrics[field] = row[field];
+      }
+    });
+    result.set(strategyId, metrics);
+  });
+
+  return result;
+}
+
+function enrichStrategyRow_(row, metricsById) {
+  const strategyId = String(row.strategy_id || '').trim();
+  const metrics = metricsById.get(strategyId);
+  if (metrics) Object.assign(row, metrics);
+  return row;
+}
+
+const QUD_VP_DATE_ONLY_FIELDS = new Set([
+  'observation_start_utc',
+  'start_date_utc',
+  'end_date_utc',
+  'period_start_utc',
+  'period_end_utc',
+  'last_applied_period_end_utc',
+  'active_request_end_date'
+]);
+
+function normalizeFieldValue_(fieldName, value) {
+  if (QUD_VP_DATE_ONLY_FIELDS.has(String(fieldName))) {
+    if (value instanceof Date) {
+      return Utilities.formatDate(value, 'UTC', 'yyyy-MM-dd');
+    }
+    if (typeof value === 'number' && Number.isFinite(value)) {
+      const milliseconds = Date.UTC(1899, 11, 30) +
+        Math.round(value * 24 * 60 * 60 * 1000);
+      return Utilities.formatDate(
+        new Date(milliseconds),
+        'UTC',
+        'yyyy-MM-dd'
+      );
+    }
+  }
+
+  return normalizeValue_(value);
 }
 
 function normalizeValue_(value) {
