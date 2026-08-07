@@ -358,17 +358,31 @@
     });
   }
 
-  function latestUpdateValue(payload) {
-    const candidates = [
-      payload?.portfolio?.last_recalc_utc,
-      ...payload?.portfolioHistory?.map((row) => row.updated_at_utc || row.period_end_utc) || [],
-      ...payload?.strategySlots?.map((row) => row.last_update_utc || row.last_applied_period_end_utc) || []
-    ].filter(Boolean);
-    if (!candidates.length) return null;
-    return candidates
+  function latestDateValue(candidates) {
+    const values = candidates.filter(Boolean);
+    if (!values.length) return null;
+    return values
       .map((value) => ({ value, date: parseDate(value) }))
       .filter((item) => item.date)
       .sort((a, b) => b.date - a.date)[0]?.value || null;
+  }
+
+  function latestPortfolioChangeValue(payload) {
+    return latestDateValue([
+      payload?.portfolio?.last_recalc_utc,
+      ...payload?.strategySlots?.flatMap((row) => [
+        row.created_at_utc,
+        row.completed_at_utc,
+        row.last_update_utc,
+        row.last_applied_period_end_utc
+      ]) || []
+    ]);
+  }
+
+  function latestHistoryPeriodValue(payload) {
+    return latestDateValue(
+      payload?.portfolioHistory?.map((row) => row.period_end_utc) || []
+    );
   }
 
   function renderPortfolioSummary(payload) {
@@ -395,10 +409,17 @@
     applySignedClass(dom.metricReturnUsd, returnUsd);
     applySignedClass(dom.metricReturnPct, returnPct);
 
-    const updated = latestUpdateValue(payload);
-    dom.updateLabel.textContent = updated
-      ? `Данные обновлены: ${formatDate(updated)}`
-      : 'Ожидание первого обновления';
+    const portfolioChanged = latestPortfolioChangeValue(payload);
+    const historyCalculated = latestHistoryPeriodValue(payload);
+    if (portfolioChanged && historyCalculated) {
+      dom.updateLabel.textContent = `Портфель изменён: ${formatDate(portfolioChanged)} · История рассчитана по: ${formatDate(historyCalculated)}`;
+    } else if (portfolioChanged) {
+      dom.updateLabel.textContent = `Портфель изменён: ${formatDate(portfolioChanged)} · История ожидает первого расчёта`;
+    } else if (historyCalculated) {
+      dom.updateLabel.textContent = `История рассчитана по: ${formatDate(historyCalculated)}`;
+    } else {
+      dom.updateLabel.textContent = 'Ожидание первого обновления';
+    }
 
     const history = [...payload.portfolioHistory].sort((a, b) => {
       return (parseDate(a.period_end_utc)?.getTime() || 0) -
