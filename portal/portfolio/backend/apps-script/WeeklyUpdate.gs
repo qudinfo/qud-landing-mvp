@@ -78,6 +78,101 @@ function runQudVirtualPortfolioConsistencyCheck() {
   }
 }
 
+/**
+ * Deterministically rebuilds existing portfolio_history snapshots from the
+ * canonical request-level strategy history. It never reapplies a WEEK return,
+ * never creates strategy history rows and never changes request balances.
+ *
+ * This is an administrative recovery tool for cases where snapshot aggregation
+ * logic changes or a consistency guard detects a derived-history mismatch.
+ */
+function runQudVirtualPortfolioHistoryRepair() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+
+  try {
+    const spreadsheet = SpreadsheetApp.openById(
+      QUD_VP_WEEKLY_CONFIG.spreadsheetId
+    );
+    const requestTable = vpw_readTable_(
+      vpw_sheet_(spreadsheet, QUD_VP_WEEKLY_CONFIG.sheets.requests)
+    );
+    const strategyHistoryTable = vpw_readTable_(
+      vpw_sheet_(spreadsheet, QUD_VP_WEEKLY_CONFIG.sheets.strategyHistory)
+    );
+    const portfolioHistorySheet = vpw_sheet_(
+      spreadsheet,
+      QUD_VP_WEEKLY_CONFIG.sheets.portfolioHistory
+    );
+    const portfolioHistoryTable = vpw_readTable_(portfolioHistorySheet);
+    const historyRows = portfolioHistoryTable.objects.slice().sort((a, b) => {
+      const byDate = vpw_date_(a.period_end_utc) - vpw_date_(b.period_end_utc);
+      if (byDate !== 0) return byDate;
+      return String(a.portfolio_id).localeCompare(String(b.portfolio_id));
+    });
+
+    let rebuiltSnapshots = 0;
+
+    historyRows.forEach((historyRow) => {
+      const snapshot = vpw_buildPortfolioSnapshot_({
+        requests: requestTable.objects,
+        strategyHistoryRows: strategyHistoryTable.objects,
+        portfolioHistoryRows: portfolioHistoryTable.objects,
+        portfolioId: historyRow.portfolio_id,
+        periodEndKey: historyRow.period_end_utc
+      });
+      const updatedAt = new Date().toISOString();
+      const historyValues = [
+        snapshot.portfolio_id,
+        snapshot.period_end_utc,
+        snapshot.total_allocated_usd,
+        snapshot.opening_balance_usd,
+        snapshot.profit_loss_usd,
+        snapshot.closing_balance_usd,
+        snapshot.peak_balance_usd,
+        snapshot.portfolio_return_usd,
+        snapshot.portfolio_return_pct,
+        snapshot.drawdown_pct,
+        snapshot.active_strategies_count,
+        String(historyRow.status_after_update || 'ACTIVE'),
+        updatedAt
+      ];
+
+      vpw_replaceAndAssert_(
+        portfolioHistorySheet,
+        historyRow._rowNumber,
+        historyValues
+      );
+      Object.assign(historyRow, snapshot, {
+        status_after_update: String(historyRow.status_after_update || 'ACTIVE'),
+        updated_at_utc: updatedAt
+      });
+      rebuiltSnapshots += 1;
+    });
+
+    SpreadsheetApp.flush();
+
+    const validation = vpw_assertConsistencyWithRetry_({
+      historyRowsSinceMs: null,
+      requireRunHistory: false,
+      compareHistory: true,
+      mode: 'HISTORY_REPAIR'
+    });
+
+    return {
+      ok: true,
+      rebuilt_portfolio_snapshots: rebuiltSnapshots,
+      validated_portfolios: validation.validated_portfolios,
+      validated_history_snapshots: validation.validated_history_snapshots,
+      validated_strategy_history_snapshots:
+        validation.validated_strategy_history_snapshots,
+      repaired_at_utc: new Date().toISOString()
+    };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
 function vpw_run_() {
   const spreadsheet = SpreadsheetApp.openById(QUD_VP_WEEKLY_CONFIG.spreadsheetId);
   const portfolioSheet = vpw_sheet_(spreadsheet, QUD_VP_WEEKLY_CONFIG.sheets.portfolios);
@@ -554,8 +649,9 @@ function vpw_buildPortfolioSnapshot_(options) {
       maximum,
       Number(row.peak_balance_usd) || 0
     ), 0);
-  const peakBalance = Math.max(
+  const peakBalance = vpw_portfolioPeak_(
     previousPeak,
+    totalAllocated,
     openingBalance,
     closingBalance
   );
@@ -580,6 +676,20 @@ function vpw_buildPortfolioSnapshot_(options) {
     drawdown_pct: drawdownPct,
     active_strategies_count: activeCount
   };
+}
+
+function vpw_portfolioPeak_(
+  previousPeak,
+  totalAllocated,
+  openingBalance,
+  closingBalance
+) {
+  return Math.max(
+    Number(previousPeak) || 0,
+    Number(totalAllocated) || 0,
+    Number(openingBalance) || 0,
+    Number(closingBalance) || 0
+  );
 }
 
 function vpw_selectRequestsAtPeriodEnd_(requests, portfolioId, periodEndMs) {
@@ -842,10 +952,11 @@ function vpw_collectConsistency_(options) {
       latestRequestsForValidation,
       portfolioId
     );
-    const peakBalance = Math.max(
+    const peakBalance = vpw_portfolioPeak_(
+      maxHistoryPeakByPortfolio.get(portfolioId) || 0,
       aggregate.totalAllocated,
       aggregate.currentBalance,
-      maxHistoryPeakByPortfolio.get(portfolioId) || 0
+      aggregate.currentBalance
     );
     const returnUsd = aggregate.currentBalance - aggregate.totalAllocated;
     const returnPct = aggregate.totalAllocated > 0
