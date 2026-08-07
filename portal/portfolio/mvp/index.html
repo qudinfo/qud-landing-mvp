@@ -6,9 +6,93 @@
   <meta name="robots" content="noindex, nofollow, noarchive">
   <meta name="color-scheme" content="dark">
   <title>QUD Virtual Portfolio — MVP</title>
-  <link rel="stylesheet" href="./styles.css?v=20260807-1553">
+  <link rel="stylesheet" href="./styles.css?v=20260807-1609">
+  <style>
+    .boot-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 28px;
+      background:
+        radial-gradient(circle at 50% 36%, rgba(219, 163, 81, 0.07), transparent 32%),
+        #0b0d0f;
+      color: #f2f3f4;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 260ms ease, visibility 260ms ease;
+    }
+    .boot-loader.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .boot-loader-card {
+      width: min(100%, 420px);
+      text-align: center;
+    }
+    .boot-loader-brand {
+      margin-bottom: 34px;
+      color: #dba351;
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+    .boot-loader-title {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 5vw, 38px);
+      font-weight: 520;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+    .boot-loader-copy {
+      max-width: 360px;
+      margin: 0 auto;
+      color: #8f989f;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .boot-loader-indicator {
+      position: relative;
+      width: 160px;
+      height: 2px;
+      margin: 30px auto 0;
+      overflow: hidden;
+      background: #202529;
+    }
+    .boot-loader-indicator::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 42%;
+      background: #dba351;
+      animation: qudBootProgress 1.25s ease-in-out infinite;
+    }
+    @keyframes qudBootProgress {
+      0% { transform: translateX(-120%); }
+      55% { transform: translateX(110%); }
+      100% { transform: translateX(300%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .boot-loader,
+      .boot-loader-indicator::after { transition: none; animation: none; }
+      .boot-loader-indicator::after { width: 100%; opacity: 0.55; }
+    }
+  </style>
 </head>
 <body>
+  <div class="boot-loader" id="boot-loader" role="status" aria-live="polite" aria-label="Загрузка данных">
+    <div class="boot-loader-card">
+      <div class="boot-loader-brand">QUD · Virtual Portfolio</div>
+      <h1 class="boot-loader-title">Загрузка данных</h1>
+      <p class="boot-loader-copy">Получаем актуальное состояние виртуального портфеля…</p>
+      <div class="boot-loader-indicator" aria-hidden="true"></div>
+    </div>
+  </div>
+
   <header class="site-header">
     <div class="header-inner">
       <div class="brand">
@@ -219,6 +303,95 @@
     </div>
   </template>
 
-  <script src="./app.js?v=20260807-1553" defer></script>
+  <script>
+    (() => {
+      'use strict';
+
+      const loader = document.getElementById('boot-loader');
+      const originalFetch = window.fetch.bind(window);
+      let initialSessionChecked = false;
+      let authenticated = false;
+      let hidden = false;
+      let fallbackTimer = null;
+
+      function hideLoader() {
+        if (hidden || !loader) return;
+        hidden = true;
+        clearTimeout(fallbackTimer);
+        loader.classList.add('is-hidden');
+        window.setTimeout(() => loader.remove(), 320);
+      }
+
+      function workspaceReady() {
+        if (!initialSessionChecked) return false;
+        if (!authenticated) return true;
+        const workspace = document.getElementById('workspace');
+        const updateLabel = document.getElementById('update-label');
+        if (!workspace || workspace.hidden || !updateLabel) return false;
+        const label = updateLabel.textContent.trim();
+        return Boolean(label) &&
+          label !== 'Данные загружаются…' &&
+          label !== 'Загрузка данных…';
+      }
+
+      function scheduleCheck() {
+        window.requestAnimationFrame(() => {
+          if (workspaceReady()) hideLoader();
+        });
+      }
+
+      window.fetch = async function qudBootFetch(input, init = {}) {
+        const requestUrl = typeof input === 'string'
+          ? input
+          : input && input.url
+            ? input.url
+            : '';
+        const method = String(init.method || (input && input.method) || 'GET').toUpperCase();
+        let pathname = '';
+        try {
+          pathname = new URL(requestUrl, window.location.origin).pathname;
+        } catch {
+          pathname = '';
+        }
+        const isInitialSessionRequest = !initialSessionChecked &&
+          method === 'GET' &&
+          pathname === '/portal/vp/session';
+
+        if (!isInitialSessionRequest) {
+          return originalFetch(input, init);
+        }
+
+        try {
+          const response = await originalFetch(input, init);
+          try {
+            const data = await response.clone().json();
+            authenticated = response.ok && data?.ok === true && data?.authenticated === true;
+          } catch {
+            authenticated = false;
+          }
+          initialSessionChecked = true;
+          scheduleCheck();
+          return response;
+        } catch (error) {
+          initialSessionChecked = true;
+          authenticated = false;
+          scheduleCheck();
+          throw error;
+        }
+      };
+
+      const observer = new MutationObserver(scheduleCheck);
+      observer.observe(document.documentElement, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeFilter: ['hidden'],
+        characterData: true
+      });
+
+      fallbackTimer = window.setTimeout(hideLoader, 15000);
+    })();
+  </script>
+  <script src="./app.js?v=20260807-1609" defer></script>
 </body>
 </html>
