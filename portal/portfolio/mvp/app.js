@@ -406,21 +406,27 @@
     });
     dom.portfolioChartCount.textContent = pluralWeeks(history.length);
 
-    const points = [];
-    if (history.length) {
-      const firstOpening = finiteNumber(history[0].opening_balance_usd);
-      if (firstOpening !== null) {
-        points.push({
-          date: history[0].period_start_utc || history[0].period_end_utc,
-          value: firstOpening
-        });
+    const balancePoints = [];
+    const allocatedPoints = [];
+    history.forEach((row) => {
+      const closing = finiteNumber(row.closing_balance_usd);
+      const allocatedForPeriod = finiteNumber(row.total_allocated_usd);
+      if (closing !== null) {
+        balancePoints.push({ date: row.period_end_utc, value: closing });
       }
-      history.forEach((row) => {
-        const closing = finiteNumber(row.closing_balance_usd);
-        if (closing !== null) points.push({ date: row.period_end_utc, value: closing });
-      });
-    }
-    renderLineChart(dom.portfolioChart, points, 'Тренд общего баланса портфеля');
+      if (allocatedForPeriod !== null) {
+        allocatedPoints.push({ date: row.period_end_utc, value: allocatedForPeriod });
+      }
+    });
+    renderLineChart(
+      dom.portfolioChart,
+      balancePoints,
+      'Тренд общего баланса портфеля',
+      {
+        referencePoints: allocatedPoints,
+        referenceLabel: 'Распределено'
+      }
+    );
   }
 
   function renderStrategyList(payload) {
@@ -569,19 +575,26 @@
     dom.historyContainer.append(scroll);
   }
 
-  function renderLineChart(container, points, ariaLabel) {
+  function renderLineChart(container, points, ariaLabel, options = {}) {
     container.replaceChildren();
     if (points.length < 2) {
       container.append(dom.emptyChartTemplate.content.cloneNode(true));
       return;
     }
 
+    const referencePoints = Array.isArray(options.referencePoints)
+      ? options.referencePoints.filter((point) => finiteNumber(point?.value) !== null)
+      : [];
+    const referenceLabel = String(options.referenceLabel || 'Распределено');
     const width = 920;
     const height = container.classList.contains('small') ? 230 : 275;
     const padding = { top: 24, right: 22, bottom: 36, left: 70 };
     const chartWidth = width - padding.left - padding.right;
     const chartHeight = height - padding.top - padding.bottom;
-    const values = points.map((point) => point.value);
+    const values = [
+      ...points.map((point) => point.value),
+      ...referencePoints.map((point) => point.value)
+    ];
     let min = Math.min(...values);
     let max = Math.max(...values);
     const spread = max - min;
@@ -601,6 +614,24 @@
     const linePath = coordinates.map((point, index) => {
       return `${index === 0 ? 'M' : 'L'} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
     }).join(' ');
+    const pointIndexByDate = new Map(
+      points.map((point, index) => [String(point.date || ''), index])
+    );
+    const referenceCoordinates = referencePoints.map((point, index) => {
+      const matchedIndex = pointIndexByDate.has(String(point.date || ''))
+        ? pointIndexByDate.get(String(point.date || ''))
+        : Math.min(index, points.length - 1);
+      return {
+        ...point,
+        x: x(matchedIndex),
+        y: y(point.value)
+      };
+    });
+    const referenceLinePath = referenceCoordinates.length >= 2
+      ? referenceCoordinates.map((point, index) => {
+          return `${index === 0 ? 'M' : 'L'} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
+        }).join(' ')
+      : '';
     const baseY = padding.top + chartHeight;
     const areaPath = `${linePath} L ${coordinates[coordinates.length - 1].x.toFixed(2)} ${baseY.toFixed(2)} L ${coordinates[0].x.toFixed(2)} ${baseY.toFixed(2)} Z`;
 
@@ -646,6 +677,25 @@
     area.setAttribute('d', areaPath);
     svg.append(area);
 
+    if (referenceLinePath) {
+      const referenceLine = document.createElementNS(svgNs, 'path');
+      referenceLine.setAttribute('class', 'chart-reference-line');
+      referenceLine.setAttribute('d', referenceLinePath);
+      svg.append(referenceLine);
+
+      referenceCoordinates.forEach((point) => {
+        const circle = document.createElementNS(svgNs, 'circle');
+        circle.setAttribute('class', 'chart-reference-point');
+        circle.setAttribute('cx', String(point.x));
+        circle.setAttribute('cy', String(point.y));
+        circle.setAttribute('r', '3');
+        const title = document.createElementNS(svgNs, 'title');
+        title.textContent = `${referenceLabel}: ${formatMoney(point.value)} · ${formatDate(point.date)}`;
+        circle.append(title);
+        svg.append(circle);
+      });
+    }
+
     const line = document.createElementNS(svgNs, 'path');
     line.setAttribute('class', 'chart-line');
     line.setAttribute('d', linePath);
@@ -658,7 +708,7 @@
       circle.setAttribute('cy', String(point.y));
       circle.setAttribute('r', '4');
       const title = document.createElementNS(svgNs, 'title');
-      title.textContent = `${formatDate(point.date)} · ${formatMoney(point.value)}`;
+      title.textContent = `Баланс: ${formatMoney(point.value)} · ${formatDate(point.date)}`;
       circle.append(title);
       svg.append(circle);
     });
