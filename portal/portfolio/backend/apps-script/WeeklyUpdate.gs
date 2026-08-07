@@ -543,10 +543,16 @@ function vpw_buildPortfolioSnapshot_(options) {
   const portfolioId = String(options.portfolioId);
   const periodEndKey = vpw_dateKey_(options.periodEndKey);
   const periodEndMs = vpw_date_(periodEndKey);
+  const requestCutoffMs = vpw_snapshotRequestCutoff_(
+    options.strategyHistoryRows,
+    portfolioId,
+    periodEndMs
+  );
   const selectedRequests = vpw_selectRequestsAtPeriodEnd_(
     options.requests,
     portfolioId,
-    periodEndMs
+    periodEndMs,
+    requestCutoffMs
   );
   if (selectedRequests.length === 0) {
     throw new Error(
@@ -678,6 +684,26 @@ function vpw_buildPortfolioSnapshot_(options) {
   };
 }
 
+function vpw_snapshotRequestCutoff_(strategyHistoryRows, portfolioId, periodEndMs) {
+  const appliedAtValues = strategyHistoryRows
+    .filter((row) => (
+      String(row.portfolio_id) === String(portfolioId) &&
+      vpw_date_(row.period_end_utc) === periodEndMs
+    ))
+    .map((row) => Date.parse(String(row.applied_at_utc || '')))
+    .filter((value) => Number.isFinite(value));
+
+  if (appliedAtValues.length === 0) {
+    throw new Error(
+      'SNAPSHOT_MEMBERSHIP_CUTOFF_MISSING_' +
+      String(portfolioId) + '_' +
+      vpw_dateKey_(periodEndMs)
+    );
+  }
+
+  return Math.max.apply(null, appliedAtValues);
+}
+
 function vpw_portfolioPeak_(
   previousPeak,
   totalAllocated,
@@ -692,12 +718,18 @@ function vpw_portfolioPeak_(
   );
 }
 
-function vpw_selectRequestsAtPeriodEnd_(requests, portfolioId, periodEndMs) {
+function vpw_selectRequestsAtPeriodEnd_(
+  requests,
+  portfolioId,
+  periodEndMs,
+  requestCutoffMs
+) {
   const selectedByStrategy = new Map();
   requests.forEach((request) => {
     if (String(request.portfolio_id) !== String(portfolioId)) return;
     if (String(request.status) === 'CANCELLED') return;
     if (vpw_date_(request.start_date_utc) > periodEndMs) return;
+    if (!vpw_requestExistedByCutoff_(request, requestCutoffMs)) return;
     const strategyId = String(request.strategy_id);
     const existing = selectedByStrategy.get(strategyId);
     if (!existing || vpw_requestIsLater_(request, existing)) {
@@ -705,6 +737,17 @@ function vpw_selectRequestsAtPeriodEnd_(requests, portfolioId, periodEndMs) {
     }
   });
   return Array.from(selectedByStrategy.values());
+}
+
+function vpw_requestExistedByCutoff_(request, requestCutoffMs) {
+  const createdAtMs = Date.parse(String(request.created_at_utc || ''));
+
+  // New requests always have created_at_utc. Legacy/migrated rows without a
+  // parseable timestamp remain eligible because their historical existence
+  // cannot be disproved from the available data.
+  if (!Number.isFinite(createdAtMs)) return true;
+
+  return createdAtMs <= requestCutoffMs;
 }
 
 function vpw_requestIsLater_(candidate, existing) {
