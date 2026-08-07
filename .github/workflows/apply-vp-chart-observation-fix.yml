@@ -6,6 +6,7 @@ on:
       - vp-mvp-chart-observation-v1
     paths:
       - tools/apply_vp_chart_observation_fix.py
+      - tools/vp_chart_trigger.txt
 
 permissions:
   contents: write
@@ -49,6 +50,7 @@ jobs:
       - name: Commit generated source
         run: |
           rm tools/apply_vp_chart_observation_fix.py
+          rm tools/vp_chart_trigger.txt
           rm .github/workflows/apply-vp-chart-observation-fix.yml
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
