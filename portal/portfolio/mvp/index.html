@@ -88,7 +88,7 @@
     <div class="boot-loader-card">
       <div class="boot-loader-brand">QUD · Virtual Portfolio</div>
       <h1 class="boot-loader-title">Загрузка данных</h1>
-      <p class="boot-loader-copy">Получаем актуальное состояние виртуального портфеля…</p>
+      <p class="boot-loader-copy" id="boot-loader-copy">Получаем актуальное состояние виртуального портфеля…</p>
       <div class="boot-loader-indicator" aria-hidden="true"></div>
     </div>
   </div>
@@ -308,36 +308,89 @@
       'use strict';
 
       const loader = document.getElementById('boot-loader');
+      const loaderCopy = document.getElementById('boot-loader-copy');
       const originalFetch = window.fetch.bind(window);
+      const trackedDataPaths = new Set([
+        '/portal/vp/portfolios',
+        '/portal/vp/portfolio',
+        '/portal/vp/strategies'
+      ]);
+
       let initialSessionChecked = false;
       let authenticated = false;
       let hidden = false;
-      let fallbackTimer = null;
+      let initialDataStarted = false;
+      let activeDataRequests = 0;
+      let hideScheduled = false;
 
       function hideLoader() {
         if (hidden || !loader) return;
         hidden = true;
-        clearTimeout(fallbackTimer);
         loader.classList.add('is-hidden');
         window.setTimeout(() => loader.remove(), 320);
       }
 
-      function workspaceReady() {
+      function isLoadingLabel(label) {
+        return label === 'Данные загружаются…' || label === 'Загрузка данных…';
+      }
+
+      function workspaceSettled() {
         if (!initialSessionChecked) return false;
         if (!authenticated) return true;
+        if (!initialDataStarted || activeDataRequests > 0) return false;
+
         const workspace = document.getElementById('workspace');
         const updateLabel = document.getElementById('update-label');
+        const portfolioIdentity = document.getElementById('portfolio-identity');
+        const metricAllocated = document.getElementById('metric-allocated');
+        const metricBalance = document.getElementById('metric-balance');
+        const portfolioChart = document.getElementById('portfolio-chart');
+        const strategyList = document.getElementById('strategy-list');
+        const strategyContent = document.getElementById('strategy-content');
+        const strategyEmptyState = document.getElementById('strategy-empty-state');
+
         if (!workspace || workspace.hidden || !updateLabel) return false;
+
         const label = updateLabel.textContent.trim();
-        return Boolean(label) &&
-          label !== 'Данные загружаются…' &&
-          label !== 'Загрузка данных…';
+        if (!label || isLoadingLabel(label)) return false;
+
+        if (label.startsWith('Не удалось загрузить данные')) return true;
+
+        if (!portfolioIdentity || portfolioIdentity.textContent.includes('Получение портфеля')) return false;
+        if (!metricAllocated || metricAllocated.textContent.trim() === '—') return false;
+        if (!metricBalance || metricBalance.textContent.trim() === '—') return false;
+        if (!portfolioChart || !portfolioChart.firstElementChild) return false;
+        if (!strategyList) return false;
+
+        const detailReady = (strategyContent && !strategyContent.hidden) ||
+          (strategyEmptyState && !strategyEmptyState.hidden);
+        if (!detailReady) return false;
+
+        return true;
+      }
+
+      function hideAfterPaint() {
+        if (hideScheduled || hidden) return;
+        hideScheduled = true;
+
+        const finish = () => {
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+              hideScheduled = false;
+              if (workspaceSettled()) hideLoader();
+            });
+          });
+        };
+
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(finish, { timeout: 700 });
+        } else {
+          window.setTimeout(finish, 0);
+        }
       }
 
       function scheduleCheck() {
-        window.requestAnimationFrame(() => {
-          if (workspaceReady()) hideLoader();
-        });
+        if (workspaceSettled()) hideAfterPaint();
       }
 
       window.fetch = async function qudBootFetch(input, init = {}) {
@@ -353,30 +406,44 @@
         } catch {
           pathname = '';
         }
+
         const isInitialSessionRequest = !initialSessionChecked &&
           method === 'GET' &&
           pathname === '/portal/vp/session';
+        const isTrackedDataRequest = authenticated &&
+          method === 'GET' &&
+          trackedDataPaths.has(pathname);
 
-        if (!isInitialSessionRequest) {
-          return originalFetch(input, init);
+        if (isTrackedDataRequest) {
+          initialDataStarted = true;
+          activeDataRequests += 1;
         }
 
         try {
           const response = await originalFetch(input, init);
-          try {
-            const data = await response.clone().json();
-            authenticated = response.ok && data?.ok === true && data?.authenticated === true;
-          } catch {
-            authenticated = false;
+
+          if (isInitialSessionRequest) {
+            try {
+              const data = await response.clone().json();
+              authenticated = response.ok && data?.ok === true && data?.authenticated === true;
+            } catch {
+              authenticated = false;
+            }
+            initialSessionChecked = true;
           }
-          initialSessionChecked = true;
-          scheduleCheck();
+
           return response;
         } catch (error) {
-          initialSessionChecked = true;
-          authenticated = false;
-          scheduleCheck();
+          if (isInitialSessionRequest) {
+            initialSessionChecked = true;
+            authenticated = false;
+          }
           throw error;
+        } finally {
+          if (isTrackedDataRequest) {
+            activeDataRequests = Math.max(0, activeDataRequests - 1);
+          }
+          scheduleCheck();
         }
       };
 
@@ -389,7 +456,11 @@
         characterData: true
       });
 
-      fallbackTimer = window.setTimeout(hideLoader, 15000);
+      window.setTimeout(() => {
+        if (!hidden && loaderCopy) {
+          loaderCopy.textContent = 'Загрузка занимает немного больше времени. Дожидаемся полной готовности кабинета…';
+        }
+      }, 15000);
     })();
   </script>
   <script src="./app.js?v=20260807-1609" defer></script>
