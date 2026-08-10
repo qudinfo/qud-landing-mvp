@@ -2,34 +2,19 @@
 <body style="margin:0;background:#0b0d0f;color:#c6c6c6;font-family:Arial,sans-serif"><div style="padding:32px">Loading report…</div>
 <script>
 const SOURCE_URL="https://raw.githubusercontent.com/qudinfo/qud-landing-mvp/55327c43b1a36bd8cf1259399d26c1a0b14934bf/reports/trd_5053556280/aud_00013/index.html";
-const SCORE_HISTORY=[
- {period:"2026-05-11 — 2026-05-17",value:0.00,source:"restored"},
- {period:"2026-05-18 — 2026-05-24",value:23.12,source:"restored"},
- {period:"2026-05-25 — 2026-05-31",value:32.38,source:"restored"},
- {period:"2026-06-01 — 2026-06-07",value:41.62,source:"restored"},
- {period:"2026-06-08 — 2026-06-14",value:50.88,source:"restored"},
- {period:"2026-06-15 — 2026-06-21",value:55.50,source:"restored"},
- {period:"2026-06-22 — 2026-06-28",value:60.12,source:"restored"},
- {period:"2026-06-29 — 2026-07-05",value:64.75,source:"restored"},
- {period:"2026-07-06 — 2026-07-12",value:69.38,source:"restored"},
- {period:"2026-07-13 — 2026-07-19",value:72.15,source:"restored"},
- {period:"2026-07-20 — 2026-07-26",value:74.00,source:"restored"},
- {period:"2026-07-27 — 2026-08-02",value:76.77,source:"restored"},
- {period:"2026-08-03 — 2026-08-09",value:78.62,source:"restored"}
-];
-fetch(SOURCE_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('source '+r.status);return r.text()}).then(source=>{
-  const match=source.match(/const REPORT=(\{[\s\S]*?\});\nconst TEMPLATE_URL=/);
-  if(!match)throw new Error('report data not found');
-  const report=JSON.parse(match[1]);
-  report.score.qud_tda_score=78.62;
-  report.score.history_trust_factor=0.85;
-  report.score.trust_zone='QUD Room';
-  report.score.trust_score_delta=1.85;
-  report.score.display_class='warn';
-  report.comparison.score_history=SCORE_HISTORY;
-  const scoreRow=report.comparison.items.find(x=>x&&x.metric==='QUD TDA Score');
-  if(scoreRow){scoreRow.previous=76.77;scoreRow.current=78.62;scoreRow.change=1.85;scoreRow.status='positive';}
-  source=source.replace(match[1],JSON.stringify(report));
-  document.open();document.write(source);document.close();
+fetch(SOURCE_URL,{cache:'no-store'}).then(r=>r.text()).then(source=>{
+ const m=source.match(/const REPORT=(\{[\s\S]*?\});\nconst TEMPLATE_URL=/); if(!m)throw new Error('report data not found');
+ const report=JSON.parse(m[1]);
+ report.score.qud_tda_score=40.00;
+ report.score.history_trust_factor=0.00;
+ report.score.trust_zone='QUD Room';
+ report.score.trust_score_delta='not_available';
+ report.score.display_class='warn';
+ report.score.restored_scoring_note='Historical Trust Score is not calculated for the restored period because confirmed risk-discipline data is unavailable. QUD administrative start: Trust Score 40.00, QUD Room.';
+ report.comparison.score_history=[{period:'2026-08-10',value:40.00,source:'administrative_start'}];
+ const row=report.comparison.items.find(x=>x&&x.metric==='QUD TDA Score');
+ if(row){row.previous='not_available';row.current=40.00;row.change='not_available';row.status='administrative_start';}
+ if(report.findings&&report.findings.items&&report.findings.items.length>=5){report.findings.items[4]={text:'Из-за отсутствия подтверждённых данных по риск-дисциплине за восстановленный период исторический Trust Score не рассчитывается. QUD административно устанавливает стартовый Trust Score = 40.00 в зоне QUD Room.',severity:'technical',display_class:'warn',source_block:'Trust Score',metric:'administrative_start_score'};}
+ source=source.replace(m[1],JSON.stringify(report)); document.open();document.write(source);document.close();
 }).catch(e=>{document.body.innerHTML='<div style="padding:32px">Report loading error: '+String(e.message||e)+'</div>';});
 </script>
