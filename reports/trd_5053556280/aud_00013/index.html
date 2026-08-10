@@ -1,43 +1,35 @@
 <!doctype html><meta charset="utf-8"><title>QUD TDA Basic</title>
 <body style="margin:0;background:#0b0d0f;color:#c6c6c6;font-family:Arial,sans-serif"><div style="padding:32px">Loading report…</div>
 <script>
-const SOURCE_BLOB_URL="https://api.github.com/repos/qudinfo/qud-landing-mvp/git/blobs/e648f42286deaf998bfc9293d71829762b7886f4";
+const SOURCE_URL="https://raw.githubusercontent.com/qudinfo/qud-landing-mvp/55327c43b1a36bd8cf1259399d26c1a0b14934bf/reports/trd_5053556280/aud_00013/index.html";
 const SCORE_HISTORY=[
- {period:"2026-05-11 — 2026-05-15",value:0.00,source:"restored"},
- {period:"2026-05-18 — 2026-05-22",value:14.36,source:"restored"},
- {period:"2026-05-25 — 2026-05-29",value:21.23,source:"restored"},
- {period:"2026-06-01 — 2026-06-05",value:28.19,source:"restored"},
- {period:"2026-06-08 — 2026-06-12",value:36.53,source:"restored"},
- {period:"2026-06-15 — 2026-06-19",value:40.24,source:"restored"},
- {period:"2026-06-22 — 2026-06-26",value:43.94,source:"restored"},
- {period:"2026-06-29 — 2026-07-03",value:47.66,source:"restored"},
- {period:"2026-07-06 — 2026-07-10",value:51.25,source:"restored"},
- {period:"2026-07-13 — 2026-07-17",value:51.87,source:"restored"},
- {period:"2026-07-20 — 2026-07-24",value:53.38,source:"restored"},
- {period:"2026-07-27 — 2026-07-31",value:55.50,source:"restored"},
- {period:"2026-08-03 — 2026-08-07",value:61.84,source:"restored"}
+ {period:"2026-05-11 — 2026-05-17",value:0.00,source:"restored"},
+ {period:"2026-05-18 — 2026-05-24",value:23.12,source:"restored"},
+ {period:"2026-05-25 — 2026-05-31",value:32.38,source:"restored"},
+ {period:"2026-06-01 — 2026-06-07",value:41.62,source:"restored"},
+ {period:"2026-06-08 — 2026-06-14",value:50.88,source:"restored"},
+ {period:"2026-06-15 — 2026-06-21",value:55.50,source:"restored"},
+ {period:"2026-06-22 — 2026-06-28",value:60.12,source:"restored"},
+ {period:"2026-06-29 — 2026-07-05",value:64.75,source:"restored"},
+ {period:"2026-07-06 — 2026-07-12",value:69.38,source:"restored"},
+ {period:"2026-07-13 — 2026-07-19",value:72.15,source:"restored"},
+ {period:"2026-07-20 — 2026-07-26",value:74.00,source:"restored"},
+ {period:"2026-07-27 — 2026-08-02",value:76.77,source:"restored"},
+ {period:"2026-08-03 — 2026-08-09",value:78.62,source:"restored"}
 ];
-function decodeBase64Utf8(value){
-  const bin=atob(String(value||'').replace(/\s/g,''));
-  const bytes=new Uint8Array(bin.length);
-  for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
-  return new TextDecoder('utf-8').decode(bytes);
-}
-fetch(SOURCE_BLOB_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('source '+r.status);return r.json()}).then(blob=>{
-  let source=decodeBase64Utf8(blob.content);
-  const match=source.match(/const PATCH=(\{[\s\S]*?\});\nPromise\.all/);
-  if(!match)throw new Error('report patch not found');
-  const patch=JSON.parse(match[1]);
-  patch.score.qud_tda_score=61.84;
-  patch.score.weekly_quality_score=72.75;
-  patch.score.history_trust_factor=0.85;
-  patch.score.trust_zone='QUD Room';
-  patch.score.trust_score_delta=6.34;
-  patch.score.display_class='warn';
-  patch.comparison.score_history=SCORE_HISTORY;
-  const scoreRow=patch.comparison.items.find(x=>x&&x.metric==='QUD TDA Score');
-  if(scoreRow){scoreRow.previous=55.50;scoreRow.current=61.84;scoreRow.change=6.34;scoreRow.status='improved';}
-  source=source.replace(match[1],JSON.stringify(patch));
+fetch(SOURCE_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('source '+r.status);return r.text()}).then(source=>{
+  const match=source.match(/const REPORT=(\{[\s\S]*?\});\nconst TEMPLATE_URL=/);
+  if(!match)throw new Error('report data not found');
+  const report=JSON.parse(match[1]);
+  report.score.qud_tda_score=78.62;
+  report.score.history_trust_factor=0.85;
+  report.score.trust_zone='QUD Room';
+  report.score.trust_score_delta=1.85;
+  report.score.display_class='warn';
+  report.comparison.score_history=SCORE_HISTORY;
+  const scoreRow=report.comparison.items.find(x=>x&&x.metric==='QUD TDA Score');
+  if(scoreRow){scoreRow.previous=76.77;scoreRow.current=78.62;scoreRow.change=1.85;scoreRow.status='positive';}
+  source=source.replace(match[1],JSON.stringify(report));
   document.open();document.write(source);document.close();
 }).catch(e=>{document.body.innerHTML='<div style="padding:32px">Report loading error: '+String(e.message||e)+'</div>';});
 </script>
