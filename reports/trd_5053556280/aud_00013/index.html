@@ -2,19 +2,190 @@
 <body style="margin:0;background:#0b0d0f;color:#c6c6c6;font-family:Arial,sans-serif"><div style="padding:32px">Loading report…</div>
 <script>
 const SOURCE_URL="https://raw.githubusercontent.com/qudinfo/qud-landing-mvp/55327c43b1a36bd8cf1259399d26c1a0b14934bf/reports/trd_5053556280/aud_00013/index.html";
-fetch(SOURCE_URL,{cache:'no-store'}).then(r=>r.text()).then(source=>{
- const m=source.match(/const REPORT=(\{[\s\S]*?\});\nconst TEMPLATE_URL=/); if(!m)throw new Error('report data not found');
- const report=JSON.parse(m[1]);
- report.score.qud_tda_score=40.00;
- report.score.history_trust_factor=0.00;
- report.score.trust_zone='QUD Room';
- report.score.trust_score_delta='not_available';
- report.score.display_class='warn';
- report.score.restored_scoring_note='Historical Trust Score is not calculated for the restored period because confirmed risk-discipline data is unavailable. QUD administrative start: Trust Score 40.00, QUD Room.';
- report.comparison.score_history=[{period:'2026-08-10',value:40.00,source:'administrative_start'}];
- const row=report.comparison.items.find(x=>x&&x.metric==='QUD TDA Score');
- if(row){row.previous='not_available';row.current=40.00;row.change='not_available';row.status='administrative_start';}
- if(report.findings&&report.findings.items&&report.findings.items.length>=5){report.findings.items[4]={text:'Из-за отсутствия подтверждённых данных по риск-дисциплине за восстановленный период исторический Trust Score не рассчитывается. QUD административно устанавливает стартовый Trust Score = 40.00 в зоне QUD Room.',severity:'technical',display_class:'warn',source_block:'Trust Score',metric:'administrative_start_score'};}
- source=source.replace(m[1],JSON.stringify(report)); document.open();document.write(source);document.close();
+const OBSERVED_EQUITY=[{"timestamp":"2026-08-10 16:58:44","equity":15641.8,"min_equity":15641.8,"max_equity":15641.8,"source_count":1},{"timestamp":"2026-08-10 17:48:44","equity":15727.8,"min_equity":15727.8,"max_equity":15727.8,"source_count":1},{"timestamp":"2026-08-10 22:18:51","equity":15587.8,"min_equity":15587.8,"max_equity":15587.8,"source_count":1},{"timestamp":"2026-08-10 23:59:00","equity":15605.8,"min_equity":15605.8,"max_equity":15605.8,"source_count":1},{"timestamp":"2026-08-11 00:04:04","equity":15595.1,"min_equity":15595.1,"max_equity":15595.1,"source_count":1},{"timestamp":"2026-08-11 04:34:35","equity":15674.1,"min_equity":15674.1,"max_equity":15674.1,"source_count":1},{"timestamp":"2026-08-11 10:59:35","equity":15501.1,"min_equity":15501.1,"max_equity":15501.1,"source_count":1},{"timestamp":"2026-08-11 23:59:46","equity":15605.1,"min_equity":15605.1,"max_equity":15605.1,"source_count":1},{"timestamp":"2026-08-12 00:04:46","equity":15584.4,"min_equity":15584.4,"max_equity":15584.4,"source_count":1},{"timestamp":"2026-08-12 16:10:48","equity":15790.4,"min_equity":15790.4,"max_equity":15790.4,"source_count":1},{"timestamp":"2026-08-12 21:00:48","equity":15388.4,"min_equity":15388.4,"max_equity":15388.4,"source_count":1},{"timestamp":"2026-08-12 23:55:48","equity":15417.4,"min_equity":15417.4,"max_equity":15417.4,"source_count":1},{"timestamp":"2026-08-13 00:00:50","equity":15421.3,"min_equity":15421.3,"max_equity":15421.3,"source_count":1},{"timestamp":"2026-08-13 09:32:04","equity":15320.3,"min_equity":15320.3,"max_equity":15320.3,"source_count":1},{"timestamp":"2026-08-13 18:02:09","equity":15628.3,"min_equity":15628.3,"max_equity":15628.3,"source_count":1},{"timestamp":"2026-08-13 23:57:10","equity":15476.3,"min_equity":15476.3,"max_equity":15476.3,"source_count":1},{"timestamp":"2026-08-14 00:02:10","equity":15436.6,"min_equity":15436.6,"max_equity":15436.6,"source_count":1},{"timestamp":"2026-08-14 14:43:11","equity":15883.6,"min_equity":15883.6,"max_equity":15883.6,"source_count":1},{"timestamp":"2026-08-14 15:03:11","equity":15863.6,"min_equity":15863.6,"max_equity":15863.6,"source_count":1},{"timestamp":"2026-08-14 23:58:42","equity":15863.6,"min_equity":15863.6,"max_equity":15863.6,"source_count":1}];
+const HOLDING_GROUPS=[{"group_index":1,"duration_min":0.02,"duration_max":57.57,"duration_avg":38.49,"sample_size":7,"pnl_min":-189.0,"pnl_q1":-164.5,"pnl_median":-129.0,"pnl_q3":-51.0,"pnl_max":418.0,"pnl_total":-331.0,"pnl_avg":-47.29,"wins_count":1,"losses_count":6,"breakeven_count":0,"win_rate_pct":14.29,"sample_status":"combined_history"},{"group_index":2,"duration_min":147.12,"duration_max":346.15,"duration_avg":274.28,"sample_size":7,"pnl_min":-82.0,"pnl_q1":52.0,"pnl_median":106.0,"pnl_q3":209.0,"pnl_max":452.0,"pnl_total":998.0,"pnl_avg":142.57,"wins_count":6,"losses_count":1,"breakeven_count":0,"win_rate_pct":85.71,"sample_status":"combined_history"},{"group_index":3,"duration_min":431.05,"duration_max":679.67,"duration_avg":585.28,"sample_size":7,"pnl_min":59.3,"pnl_q1":104.95,"pnl_median":147.0,"pnl_q3":165.65,"pnl_max":240.0,"pnl_total":987.5,"pnl_avg":141.07,"wins_count":7,"losses_count":0,"breakeven_count":0,"win_rate_pct":100.0,"sample_status":"combined_history"},{"group_index":4,"duration_min":709.93,"duration_max":984.32,"duration_avg":858.3,"sample_size":6,"pnl_min":-250.7,"pnl_q1":-82.28,"pnl_median":147.0,"pnl_q3":326.25,"pnl_max":411.9,"pnl_total":682.5,"pnl_avg":113.75,"wins_count":4,"losses_count":2,"breakeven_count":0,"win_rate_pct":66.67,"sample_status":"combined_history"},{"group_index":5,"duration_min":3903.62,"duration_max":12311.17,"duration_avg":6504.66,"sample_size":6,"pnl_min":104.0,"pnl_q1":138.25,"pnl_median":492.75,"pnl_q3":953.6,"pnl_max":1314.0,"pnl_total":3530.8,"pnl_avg":588.47,"wins_count":6,"losses_count":0,"breakeven_count":0,"win_rate_pct":100.0,"sample_status":"combined_history"}];
+const CURRENT_FINDINGS=[{"text":"За отчётную неделю закрыта 1 сделка EURUSD BUY с результатом +132.80 USD net.","severity":"positive","display_class":"good","source_block":"Block E","metric":"weekly_net_result"},{"text":"С момента начала наблюдения 10.08.2026 16:58:44 и до закрытия 14.08.2026 15:02:41 позиция находилась без Stop Loss; закрытие также произошло без SL.","severity":"critical","display_class":"danger","source_block":"Block B","metric":"observed_without_sl"},{"text":"SL Safe за наблюдаемую неделю = 0% (0 из 1); зафиксировано 1 128 NO_SL_WARNING.","severity":"critical","display_class":"danger","source_block":"Block B","metric":"sl_safe_pct"},{"text":"Planned Risk, Average Risk, Risk CV и Plan vs Fact не рассчитываются: подтверждённого Stop Loss для наблюдаемой позиции не было.","severity":"medium","display_class":"warn","source_block":"Block A/D","metric":"risk_data_not_available"},{"text":"Trust Score остаётся 40.00 / QUD Room: административный старт сохранён, поскольку первая наблюдаемая неделя не дала оснований для роста доверия; основной подтверждённый фактор — отсутствие Stop Loss.","severity":"medium","display_class":"warn","source_block":"Trust Score","metric":"administrative_hold"}];
+fetch(SOURCE_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('source '+r.status);return r.text()}).then(source=>{
+  const m=source.match(/const REPORT=(\{[\s\S]*?\});\nconst TEMPLATE_URL=/);
+  if(!m)throw new Error('report data not found');
+  const report=JSON.parse(m[1]);
+
+  report.report.request_id='REQ-WEEKLY-aud_00013-5050133593-20260810';
+  report.report.generated_at='2026-08-16 20:42:00';
+  report.report.version='BASIC_AUDIT_v1_RESTORED_PLUS_OBSERVED';
+
+  report.period.start='2026-08-10';
+  report.period.end='2026-08-14';
+  report.period.current_period='2026-08-10 — 2026-08-14';
+
+  report.score.qud_tda_score=40.00;
+  report.score.weekly_quality_score=null;
+  report.score.history_trust_factor=0.25;
+  report.score.trust_zone='QUD Room';
+  report.score.risk_mode='limited';
+  report.score.trust_score_delta=0.00;
+  report.score.display_class='warn';
+  report.score.main_damage_source='Block B';
+  report.score.calculation_status='administrative_hold';
+  report.score.restored_scoring_note='Historical Trust Score before observation is not reconstructed. Administrative start 40.00 is retained after the first observed week because confirmed no-SL behavior provides no basis for Trust Score growth; planned-risk and post-loss components are not fully measurable for this week.';
+
+  report.blocks.A={score:null,status:'limited',reason:'Planned risk is not measurable because the observed position had no confirmed Stop Loss; Max Daily DD 1.347% is confirmed.'};
+  report.blocks.B={score:80,status:'observed',reason:'The position was observed without Stop Loss from 2026-08-10 16:58:44 until closing on 2026-08-14 15:02:41 and closed without SL.'};
+  report.blocks.C={score:null,status:'not_tested',reason:'No qualifying post-loss sequence occurred during the observed week.'};
+  report.blocks.D={score:null,status:'not_available',reason:'Plan vs Fact cannot be calculated without confirmed planned risk / Stop Loss.'};
+  report.blocks.E={score:90,status:'observed',reason:'One closed EURUSD BUY trade: +132.80 USD net; instrument concentration remains 100% EURUSD.'};
+  report.blocks.F={score:100,status:'observed',reason:'CSV observation data are structurally complete for the observed week; trade count is not a validity threshold.'};
+
+  report.trends.win_ratio_pct.push({period:'2026-08-10 — 2026-08-14',value:72.73,source:'observed'});
+  report.trends.profit_factor.push({period:'2026-08-10 — 2026-08-14',value:5.8002,source:'observed'});
+  report.trends.average_risk_pct=[];
+  report.trends.sl_safe_pct=[{period:'2026-08-10 — 2026-08-14',value:0.00,source:'observed'}];
+
+  report.leaks.risk_leak_score=null;
+  report.leaks.sl_leak_score=null;
+  report.leaks.behavior_leak_score=null;
+  report.leaks.execution_leak_score=null;
+  report.leaks.main_leak='SL Leak';
+  report.leaks.items=[{name:'Risk Leak',score:null},{name:'SL Leak',score:null},{name:'Behavior Leak',score:null},{name:'Execution Leak',score:null}];
+
+  report.risk.avg_pct=null;
+  report.risk.median_pct=null;
+  report.risk.max_pct=null;
+  report.risk.min_pct=null;
+  report.risk.std_pct=null;
+  report.risk.cv_value=null;
+  report.risk.cv={value:null,marker_pct:null,label:'RISK CV',status:'not_available',min_label:'0.0',mid_label:'0.5',max_label:'1.0+'};
+  report.risk.personal_risk_baseline_pct=0;
+  report.risk.personal_risk_low_bound_pct=0;
+  report.risk.personal_risk_high_bound_pct=0;
+  report.risk.risk_reduced_count=0;
+  report.risk.risk_normal_count=0;
+  report.risk.risk_expansion_count=0;
+  report.risk.risk_expansion_pct=0;
+  report.risk.risk_drift_count=0;
+  report.risk.drift={count:0,value:0,status:'not_available',label:'Risk Drift'};
+  report.risk.zone_items=[];
+  report.risk.zone_distribution={data_status:'not_available',scope:'observed_week',history_start:'2026-08-10 16:58:44',history_end:'2026-08-14 15:02:41',valid_risk_trades_count:0,personal_risk_baseline_pct:0,personal_risk_low_bound_pct:0,personal_risk_high_bound_pct:0,risk_reduced_count:0,risk_normal_count:0,risk_expansion_count:0,risk_expansion_pct:0,risk_drift_count:0,risk_drift_pct:0,drift:{count:0,pct:0,value:0,direction:'not_available',status:'not_available',label:'Risk Drift'},zone_items:[],methodology_version:'BASIC_AUDIT_v1_OBSERVED_WEEK'};
+  report.risk.trade_series=[];
+  report.risk.trades_above_2pct=0;
+  report.risk.trades_above_3pct=0;
+  report.risk.valid_risk_trades_count=0;
+  report.risk.data_status='not_available';
+  report.risk.max_daily_dd_pct=1.3470;
+  report.risk.max_observed_position_adverse_pct=2.7398;
+  report.risk.max_observed_position_adverse_money=431.00;
+
+  report.sl.trades_without_sl_at_open=0;
+  report.sl.trades_with_sl_at_open=0;
+  report.sl.sl_set_within_30s_count=0;
+  report.sl.sl_set_after_30s_count=0;
+  report.sl.closed_without_sl_count=1;
+  report.sl.avg_sl_install_delay_sec=0;
+  report.sl.max_sl_install_delay_sec=0;
+  report.sl.unsafe_trades_count=1;
+  report.sl.sl_safe_count=0;
+  report.sl.sl_safe_pct=0;
+  report.sl.sl_changed_count=0;
+  report.sl.sl_removed_count=0;
+  report.sl.risk_increase_after_sl_change_count=0;
+  report.sl.personal_risk_baseline_pct=0;
+  report.sl.sl_risk_high_bound_pct=0;
+  report.sl.sl_risk_expansion_after_change_count=0;
+  report.sl.max_risk_after_sl_change_pct=0;
+  report.sl.block_score=80;
+  report.sl.main_issue='Position observed without Stop Loss and closed without SL';
+  report.sl.no_sl_warning_count=1128;
+  report.sl.observation_start='2026-08-10 16:58:44';
+  report.sl.observation_end='2026-08-14 15:02:41';
+  report.sl.actual_entry_state_observed=false;
+  report.sl.protection_segments=[{label:'Protected',value:0,status:'safe'},{label:'Unsafe',value:1,status:'danger'}];
+  report.sl.protection_summary={data_status:'observed',scope:'observed_week',history_start:'2026-08-10 16:58:44',history_end:'2026-08-14 15:02:41',trades_total:1,no_sl_count:1,sl_removed_count:0,sl_changed_count:0,sl_safe_count:0,sl_safe_pct:0,segments:[{label:'No SL',value:1,pct:100,status:'danger'},{label:'SL Removed',value:0,pct:0,status:'removed'},{label:'SL Changed',value:0,pct:0,status:'changed'},{label:'SL Safe',value:0,pct:0,status:'safe'}],methodology_version:'BASIC_AUDIT_v1_SL_PROTECTION_OBSERVED_WEEK'};
+  report.sl.event_timeline=[];
+
+  report.behavior.trade_after_loss_count=0;
+  report.behavior.risk_after_loss_avg_pct=null;
+  report.behavior.risk_after_win_avg_pct=null;
+  report.behavior.risk_after_1_loss_pct=null;
+  report.behavior.risk_after_2_losses_pct=null;
+  report.behavior.risk_after_3_losses_pct=null;
+  report.behavior.max_risk_after_loss_streak_pct=null;
+  report.behavior.risk_increase_after_loss_count=0;
+  report.behavior.position_size_increased_after_loss_count=0;
+  report.behavior.revenge_trading_signal_count=0;
+  report.behavior.avg_minutes_after_loss_to_next_trade=null;
+  report.behavior.min_minutes_after_loss_to_next_trade=null;
+  report.behavior.risk_after_loss_items=[{label:'1 Loss',value:null,status:'not_available'},{label:'2 Losses',value:null,status:'not_available'},{label:'3+ Losses',value:null,status:'not_available'}];
+  report.behavior.post_loss_summary={baseline_pct:0,high_bound_pct:0,avg_risk_pct:null,risk_drift_pct:null,expansion_count:0,expansion_pct:0,revenge_signal_count:0,status:'not_tested'};
+
+  report.plan_fact={trades_total:1,trades_count:0,excluded_trades_count:1,valid_sample_pct:0,planned_risk_avg_pct:null,actual_loss_avg_pct:null,deviation_avg_pct:null,deviation_max_pct:null,deviation_avg_abs_pct:null,deviation_max_abs_pct:null,negative_deviation_trades:0,negative_deviation_trades_pct:0,execution_leak_flag:false,data_status:'not_available',points:[],excluded_reason:'No confirmed planned risk / Stop Loss for the observed position'};
+
+  report.findings.items=CURRENT_FINDINGS;
+  report.technical_warning={active:true,report_data_status:'RESTORED_HISTORY_PLUS_LIVE_OBSERVATION',data_quality_score:100,issue:'Historical risk telemetry before 2026-08-10 is unavailable; the current observed week CSV is valid.',missing_source:'historical risk telemetry before 2026-08-10',period_coverage_pct:100,minimum_sample_valid:true,sample_rule:'Any observed trade count is valid; no minimum trades per week.'};
+
+  report.basic_stats.average_win=295.25;
+  report.basic_stats.average_loss=135.82;
+  report.basic_stats.win_ratio=72.73;
+  report.basic_stats.profit_factor=5.8002;
+  report.basic_stats.number_of_days=28;
+  report.basic_stats.total_trades_taken=33;
+  report.basic_stats.total_lots_used=30.05;
+  report.basic_stats.biggest_win=1314.0;
+  report.basic_stats.biggest_loss=250.7;
+  report.basic_stats.net_profit=5863.6;
+
+  report.account.balance_series.push({timestamp:'2026-08-10 16:58:44',position_ticket:'57895738051',balance:15730.8});
+  report.account.balance_series.push({timestamp:'2026-08-14 15:02:41',position_ticket:'57895738051',balance:15863.6});
+  report.account.equity_series=report.account.equity_series.concat(OBSERVED_EQUITY);
+  report.account.equity_sampling={method:'verified_statement_points_plus_observed_daily_extrema_snapshots',window_minutes:null,raw_points_count:1270,rendered_points_count:report.account.equity_series.length};
+
+  report.account.direction.long_trades_count=15;
+  report.account.direction.long_profit=2410.10;
+  report.account.direction.long_win_rate=66.67;
+  report.account.direction.short_trades_count=18;
+  report.account.direction.short_profit=3453.50;
+  report.account.direction.short_win_rate=77.78;
+  report.account.direction.imbalance_flag=false;
+
+  report.account.profitability.wins_count=24;
+  report.account.profitability.losses_count=9;
+  report.account.profitability.breakeven_count=0;
+  report.account.profitability.wins_pct=72.73;
+  report.account.profitability.losses_pct=27.27;
+  report.account.profitability.be_pct=0;
+
+  report.duration.pnl_by_trade_duration.push({trade_id:'aud_00013_57895738051',symbol:'EURUSD',duration_min:6127.93,profit_money:137.0,result_type:'win'});
+  report.duration.holding_time_efficiency={grouping_method:'equal_frequency_nearest_rank',scope:'cumulative_to_period_end',history_start:'2026-05-12',history_end:'2026-08-14',target_trades_per_group:7,max_groups:5,ties_preserved:true,quartile_method:'inclusive',duration_unit:'minutes',pnl_unit:'account_currency',total_trades:33,baseline_win_rate_pct:72.73,groups_count:5,groups:HOLDING_GROUPS,data_status:'combined_restored_observed'};
+
+  report.instrument.profit_analysis=[{symbol:'EURUSD',trades_count:33,profit_money:5863.6}];
+  report.instrument.volume_analysis=[{symbol:'EURUSD',trades_count:33,volume:30.05}];
+  report.instrument.items=[{symbol:'EURUSD',trades_count:33,profit_money:5863.6,volume:30.05,profit_share_pct:100,volume_share_pct:100,status:'positive'}];
+  report.instrument_contribution={data_status:'combined_restored_observed',scope:'cumulative_to_period_end',period_start:'2026-05-12',period_end:'2026-08-14',groups:[{symbol:'EURUSD',trades:33,wins:24,volume:30.05,win_contribution_pct:100,load_volume_pct:100}]};
+
+  report.analysis.data_status='combined_restored_observed';
+  report.analysis.cover_scope='cumulative_to_period_end';
+  report.analysis.history_start='2026-05-12';
+  report.analysis.history_end='2026-08-14';
+  report.analysis.sample_trades_count=33;
+  report.analysis.short_cover_ratio=7.798228;
+  report.analysis.short_cover_status='combined';
+  report.analysis.short_win_rate_pct=77.78;
+  report.analysis.profit_factor=5.800229;
+  report.analysis.profit_factor_status='combined';
+  report.analysis.total_win_rate_pct=72.727273;
+  report.analysis.long_cover_ratio=4.379479;
+  report.analysis.long_cover_status='combined';
+  report.analysis.long_win_rate_pct=66.67;
+  report.analysis.items=[{name:'Direction Balance',marker_pct:54.55,display_value:'15 / 18',status:'neutral',label_left:'Long',label_right:'Short',segments:[{label:'Long',value:15,pct:45.45},{label:'Short',value:18,pct:54.55}]},{name:'Profitability',marker_pct:72.73,display_value:'72.73%',status:'live',label_left:'Losses',label_right:'Wins',segments:[{label:'Wins',value:24,pct:72.73,status:'positive'},{label:'Losses',value:9,pct:27.27,status:'negative'},{label:'Breakeven',value:0,pct:0,status:'neutral'}]},{name:'Risk Expansion',marker_pct:0,display_value:'N/A',status:'not_available',label_left:'Reduced',label_right:'Expanded',segments:[]}];
+
+  report.comparison.previous_period='2026-08-10 · Administrative Start';
+  report.comparison.current_period='2026-08-10 — 2026-08-14';
+  report.comparison.items=[{metric:'QUD TDA Score',previous:40.00,current:40.00,change:0.00,status:'neutral'},{metric:'Risk CV',previous:'not_available',current:'not_available',change:'not_available',status:'not_available'},{metric:'Avg Risk After Loss',previous:'not_available',current:'not_available',change:'not_available',status:'not_available'},{metric:'No-SL Trades',previous:'not_available',current:1,change:'not_available',status:'danger'},{metric:'Plan vs Fact Deviation',previous:'not_available',current:'not_available',change:'not_available',status:'not_available'},{metric:'Main Leak',previous:'not_available',current:'SL Leak',change:'not_available',status:'warn'}];
+  report.comparison.score_history=[{period:'2026-08-10',value:40.00,source:'administrative_start'},{period:'2026-08-10 — 2026-08-14',value:40.00,source:'observed_week'}];
+
+  source=source.replace(m[1],JSON.stringify(report));
+  source=source.replace("  showNA('slDonut',80);\\n",'');
+  source=source.replace("  showNA('slTimeline',55);\\n",'');
+  source=source.replace("  const slLegend=document.getElementById('slLegend'); if(slLegend)slLegend.textContent='not_available';\\n",'');
+  document.open();document.write(source);document.close();
 }).catch(e=>{document.body.innerHTML='<div style="padding:32px">Report loading error: '+String(e.message||e)+'</div>';});
 </script>
