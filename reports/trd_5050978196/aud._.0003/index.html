@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>QUD TDA Basic</title><body style="margin:0;background:#0b0d0f;color:#c6c6c6;font-family:Arial,sans-serif"><div style="padding:32px">Loading report…</div><script>
+const FIX_SOURCE_URL="https://raw.githubusercontent.com/qudinfo/qud-landing-mvp/a654082bcfbd980dcc62e5f4506d4770241f75ea/reports/trd_5050978196/aud_.0003/index.html";
+fetch(FIX_SOURCE_URL,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.text()}).then(t=>{
+t=t.replace('const SOURCE_URL=','const W10_SOURCE_URL=').replace('fetch(SOURCE_URL,{cache:"no-store"})','fetch(W10_SOURCE_URL,{cache:"no-store"})');
+document.open();document.write(t);document.close();
+}).catch(e=>{document.body.innerHTML='<div style="padding:32px">Report loading error: '+String(e.message||e)+'</div>'});
+</script>
