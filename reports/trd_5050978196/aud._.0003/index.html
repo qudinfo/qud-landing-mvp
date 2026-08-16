@@ -20,13 +20,35 @@ const timer=setInterval(()=>{
     const doc=frame.contentDocument;
     if(!doc) return;
     const titleBlock=doc.querySelector('.top-title-block');
-    if(!titleBlock){if(attempts>300)clearInterval(timer);return;}
+    const trustLabel=Array.from(doc.querySelectorAll('.label')).find(el=>el.textContent.trim().toUpperCase()==='TRUST SCORE');
+    if(!titleBlock||!trustLabel){if(attempts>300)clearInterval(timer);return;}
     if(!doc.getElementById('qud-design-lab-style')){
       const style=doc.createElement('style');
       style.id='qud-design-lab-style';
       style.textContent='@media(min-width:1101px){.top-title-block{transform:translateY(-18px)!important;}}';
       doc.head.appendChild(style);
     }
+    let strategyLabel=doc.getElementById('strategyInterestLabel');
+    if(!strategyLabel){
+      strategyLabel=trustLabel.cloneNode(true);
+      strategyLabel.id='strategyInterestLabel';
+      strategyLabel.textContent='STRATEGY INTEREST';
+      strategyLabel.style.position='absolute';
+      strategyLabel.style.textAlign='left';
+      strategyLabel.style.margin='0';
+      strategyLabel.style.zIndex='20';
+      strategyLabel.style.pointerEvents='none';
+      doc.body.appendChild(strategyLabel);
+    }
+    const positionStrategyInterest=()=>{
+      const titleRect=titleBlock.getBoundingClientRect();
+      const trustRect=trustLabel.getBoundingClientRect();
+      const win=doc.defaultView;
+      strategyLabel.style.left=(titleRect.left+win.scrollX)+'px';
+      strategyLabel.style.top=(trustRect.top+win.scrollY)+'px';
+    };
+    positionStrategyInterest();
+    frame.contentWindow.addEventListener('resize',positionStrategyInterest);
     clearInterval(timer);
   }catch(e){
     if(attempts>300)clearInterval(timer);
