@@ -20,8 +20,10 @@ const timer=setInterval(()=>{
     const doc=frame.contentDocument;
     if(!doc) return;
     const titleBlock=doc.querySelector('.top-title-block');
+    const headerMeta=doc.getElementById('headerMeta');
     const trustLabel=Array.from(doc.querySelectorAll('.label')).find(el=>el.textContent.trim().toUpperCase()==='TRUST SCORE');
-    if(!titleBlock||!trustLabel){if(attempts>300)clearInterval(timer);return;}
+    const referenceBadge=doc.getElementById('riskMode')||doc.querySelector('.badge');
+    if(!titleBlock||!headerMeta||!trustLabel||!referenceBadge){if(attempts>300)clearInterval(timer);return;}
     if(!doc.getElementById('qud-design-lab-style')){
       const style=doc.createElement('style');
       style.id='qud-design-lab-style';
@@ -40,17 +42,40 @@ const timer=setInterval(()=>{
       strategyLabel.style.pointerEvents='none';
       doc.body.appendChild(strategyLabel);
     }
-    const positionStrategyInterest=()=>{
+    let demoBadge=doc.getElementById('strategyDemoBadge');
+    if(!demoBadge){
+      demoBadge=referenceBadge.cloneNode(true);
+      demoBadge.id='strategyDemoBadge';
+      demoBadge.className='badge neutral';
+      demoBadge.textContent='2 DEMO';
+      demoBadge.style.position='absolute';
+      demoBadge.style.margin='0';
+      demoBadge.style.zIndex='20';
+      demoBadge.style.pointerEvents='none';
+      demoBadge.style.visibility='hidden';
+      doc.body.appendChild(demoBadge);
+    }
+    const positionStrategyElements=()=>{
       const titleRect=titleBlock.getBoundingClientRect();
+      const headerRect=headerMeta.getBoundingClientRect();
       const trustRect=trustLabel.getBoundingClientRect();
       const titleStyle=doc.defaultView.getComputedStyle(titleBlock);
       const titlePaddingLeft=parseFloat(titleStyle.paddingLeft)||0;
       const win=doc.defaultView;
-      strategyLabel.style.left=(titleRect.left+titlePaddingLeft+win.scrollX)+'px';
+      const left=titleRect.left+titlePaddingLeft+win.scrollX;
+      strategyLabel.style.left=left+'px';
       strategyLabel.style.top=(trustRect.top+win.scrollY)+'px';
+      const strategyRect=strategyLabel.getBoundingClientRect();
+      const badgeRect=demoBadge.getBoundingClientRect();
+      const gapTop=headerRect.bottom;
+      const gapBottom=strategyRect.top;
+      const badgeTop=gapTop+Math.max(0,(gapBottom-gapTop-badgeRect.height)/2);
+      demoBadge.style.left=left+'px';
+      demoBadge.style.top=(badgeTop+win.scrollY)+'px';
+      demoBadge.style.visibility='visible';
     };
-    positionStrategyInterest();
-    frame.contentWindow.addEventListener('resize',positionStrategyInterest);
+    positionStrategyElements();
+    frame.contentWindow.addEventListener('resize',positionStrategyElements);
     clearInterval(timer);
   }catch(e){
     if(attempts>300)clearInterval(timer);
