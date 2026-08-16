@@ -1,13 +1,16 @@
 <!doctype html><meta charset="utf-8"><title>QUD TDA Basic</title>
 <body style="margin:0;background:#0b0d0f;color:#c6c6c6;font-family:Arial,sans-serif"><div style="padding:32px">Loading report…</div>
 <script>
-const SOURCE_URL="https://raw.githubusercontent.com/qudinfo/qud-landing-mvp/1d37dea0c772ceab276e0b8a1c464c347db6bba9/reports/trd_5053556280/aud_00013/index.html";
-fetch(SOURCE_URL,{cache:'no-store'})
-  .then(r=>{if(!r.ok)throw new Error('source '+r.status);return r.text();})
-  .then(source=>{
-    source=source.replaceAll('report.account.direction','report.direction');
-    source=source.replaceAll('report.account.profitability','report.profitability');
-    document.open();document.write(source);document.close();
+const WEEKLY_PATCH_URL="https://raw.githubusercontent.com/qudinfo/qud-landing-mvp/1d37dea0c772ceab276e0b8a1c464c347db6bba9/reports/trd_5053556280/aud_00013/index.html";
+fetch(WEEKLY_PATCH_URL,{cache:'no-store'})
+  .then(r=>{if(!r.ok)throw new Error('weekly patch '+r.status);return r.text();})
+  .then(wrapper=>{
+    const match=wrapper.match(/<script>([\s\S]*?)<\/script>\s*$/i);
+    if(!match)throw new Error('weekly patch script not found');
+    const code=match[1]
+      .replaceAll('report.account.direction','report.direction')
+      .replaceAll('report.account.profitability','report.profitability');
+    (new Function(code))();
   })
   .catch(e=>{document.body.innerHTML='<div style="padding:32px">Report loading error: '+String(e.message||e)+'</div>';});
 </script>
