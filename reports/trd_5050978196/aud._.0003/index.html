@@ -43,8 +43,10 @@ const timer=setInterval(()=>{
     const positionStrategyInterest=()=>{
       const titleRect=titleBlock.getBoundingClientRect();
       const trustRect=trustLabel.getBoundingClientRect();
+      const titleStyle=doc.defaultView.getComputedStyle(titleBlock);
+      const titlePaddingLeft=parseFloat(titleStyle.paddingLeft)||0;
       const win=doc.defaultView;
-      strategyLabel.style.left=(titleRect.left+win.scrollX)+'px';
+      strategyLabel.style.left=(titleRect.left+titlePaddingLeft+win.scrollX)+'px';
       strategyLabel.style.top=(trustRect.top+win.scrollY)+'px';
     };
     positionStrategyInterest();
