@@ -30,6 +30,15 @@ border-radius:50%;
 cursor:pointer;
 }.range-value{float:right}.value{font-size:32px;color:var(--accent);font-weight:700}
 
+.access-price{
+display:inline-block;
+padding:8px 16px;
+border:1px solid #2f353d;
+border-radius:8px;
+color:#f3f4f6;
+font-weight:600;
+}
+  
 .calculator label,
 .calculator .range-value,
 .calculator p{
@@ -48,9 +57,11 @@ color:#9aa1aa;
 <div class="control"><label>Период наблюдения <span id="periodValue" class="range-value">3 месяца</span></label><input id="period" class="range" type="range" min="1" max="6" value="3"></div>
 </div><div><p>Пример сценария</p><div id="result" class="value">+$900</div></div></div></div></div>
 <div class="section">
+<div class="calculator">
+<div>
 <h2>Исследовательский доступ QUD</h2>
 
-<p><b>$10 / месяц</b></p>
+<p><span class="access-price">$10 / месяц</span></p>
 
 <p class="small">
 Доступ к закрытой среде изучения торговых стратегий перед подключением собственного капитала.
@@ -70,7 +81,27 @@ color:#9aa1aa;
 </p>
 
 </div>
-<div class="section"><h2>Уже есть доступ?</h2></div>
+
+<div>
+<h2>Уже есть доступ?</h2>
+<p class="small">Войдите в личный кабинет для продолжения работы.</p>
+
+<p>
+<button>Войти</button>
+</p>
+
+<h2>Получить доступ</h2>
+<p class="small">Оставьте email, чтобы получить доступ к исследовательской среде QUD.</p>
+
+<p>
+<button>Получить доступ</button>
+</p>
+
+</div>
+
+</div>
+</div>
+<div class="section">
 <div class="small">Исторические результаты не гарантируют будущую доходность. QUD предоставляет инфраструктуру аудита, наблюдения и анализа данных.</div>
 <script>
 function calc(){
