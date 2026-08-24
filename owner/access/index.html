@@ -42,13 +42,14 @@ font-weight:600;
 .access-actions{
 display:flex;
 flex-direction:column;
-gap:16px;
+align-items:center;
+justify-content:center;
+gap:18px;
 margin-top:20px;
 }
 
 .access-button{
-display:block;
-width:100%;
+width:300px;
 padding:14px 20px;
 border:1px solid #2f353d;
 border-radius:10px;
@@ -61,11 +62,15 @@ cursor:pointer;
 transition:0.2s;
 }
 
-.access-button:hover{
-background:#171b20;
-border-color:#454d57;
+.access-button.primary{
+background:#d8dde5;
+border-color:#d8dde5;
+color:#090b0d;
 }
-  
+
+.access-button:hover{
+opacity:0.9;
+}  
 .calculator label,
 .calculator .range-value,
 .calculator p{
@@ -117,10 +122,10 @@ color:#9aa1aa;
 Уже есть доступ?
 </button>
 
-<button class="access-button">
+<button class="access-button primary">
 Получить доступ
 </button>
-
+  
 </div>
 
 </div></div>
