@@ -38,6 +38,33 @@ border-radius:8px;
 color:#f3f4f6;
 font-weight:600;
 }
+
+.access-actions{
+display:flex;
+flex-direction:column;
+gap:16px;
+margin-top:20px;
+}
+
+.access-button{
+display:block;
+width:100%;
+padding:14px 20px;
+border:1px solid #2f353d;
+border-radius:10px;
+background:#101317;
+color:#f3f4f6;
+font-size:16px;
+font-weight:600;
+text-align:center;
+cursor:pointer;
+transition:0.2s;
+}
+
+.access-button:hover{
+background:#171b20;
+border-color:#454d57;
+}
   
 .calculator label,
 .calculator .range-value,
@@ -83,23 +110,20 @@ color:#9aa1aa;
 </div>
 
 <div>
-<h2>Уже есть доступ?</h2>
-<p class="small">Войдите в личный кабинет для продолжения работы.</p>
 
-<p>
-<button>Войти</button>
-</p>
+<div class="access-actions">
 
-<h2>Получить доступ</h2>
-<p class="small">Оставьте email, чтобы получить доступ к исследовательской среде QUD.</p>
+<button class="access-button">
+Уже есть доступ?
+</button>
 
-<p>
-<button>Получить доступ</button>
-</p>
+<button class="access-button">
+Получить доступ
+</button>
 
 </div>
 
-</div>
+</div></div>
 </div>
 <div class="section">
 <div class="small">Исторические результаты не гарантируют будущую доходность. QUD предоставляет инфраструктуру аудита, наблюдения и анализа данных.</div>
