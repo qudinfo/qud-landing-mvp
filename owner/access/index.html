@@ -76,6 +76,70 @@ color:#090b0d;
 .access-button:hover{
 opacity:0.9;
 }  
+.faq-layout{
+display:grid;
+grid-template-columns:.8fr 1.2fr;
+gap:70px;
+align-items:start;
+}
+
+.faq-intro h2{
+margin-top:0;
+}
+
+.faq-list{
+border-top:1px solid var(--border);
+}
+
+.faq-item{
+border-bottom:1px solid var(--border);
+}
+
+.faq-question{
+width:100%;
+display:grid;
+grid-template-columns:42px 1fr 24px;
+align-items:center;
+gap:12px;
+padding:18px 0;
+border:0;
+background:transparent;
+color:var(--text);
+font-size:16px;
+font-weight:600;
+text-align:left;
+cursor:pointer;
+}
+
+.faq-question:hover{
+background:#0d1013;
+}
+
+.faq-index{
+color:var(--muted);
+font-size:12px;
+font-weight:500;
+}
+
+.faq-toggle{
+color:var(--muted);
+font-size:20px;
+font-weight:400;
+text-align:right;
+}
+
+.faq-answer{
+display:none;
+padding:0 36px 18px 54px;
+color:var(--muted);
+font-size:14px;
+line-height:1.6;
+}
+
+.faq-item.open .faq-answer{
+display:block;
+}
+  
 .calculator label,
 .calculator .range-value,
 .calculator p{
@@ -86,15 +150,25 @@ color:#9aa1aa;
 h1{
 font-size:34px;
 }
-
+  
 .why,
 .calculator,
-.access-layout{
+.access-layout,
+.faq-layout{
 grid-template-columns:1fr;
 }
 
 .access-layout{
 gap:32px;
+}
+
+.faq-layout{
+gap:28px;
+}
+
+.faq-answer{
+padding-left:42px;
+padding-right:10px;
 }
 
 .access-actions{
@@ -169,7 +243,120 @@ max-width:320px;
 </div>
   
 <div class="section">
-<div class="small">Исторические результаты не гарантируют будущую доходность. QUD предоставляет инфраструктуру аудита, наблюдения и анализа данных.</div>
+
+<div class="faq-layout">
+
+<div class="faq-intro">
+
+<h2>FAQ</h2>
+
+<p class="small">
+Основные вопросы о доступе, наблюдении и работе с QUD.
+</p>
+
+</div>
+
+
+<div class="faq-list">
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">01</span>
+<span>Вопрос</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Ответ будет добавлен позже.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">02</span>
+<span>Вопрос</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Ответ будет добавлен позже.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">03</span>
+<span>Вопрос</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Ответ будет добавлен позже.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">04</span>
+<span>Вопрос</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Ответ будет добавлен позже.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">05</span>
+<span>Вопрос</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Ответ будет добавлен позже.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">06</span>
+<span>Вопрос</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Ответ будет добавлен позже.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">07</span>
+<span>Вопрос</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Ответ будет добавлен позже.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">08</span>
+<span>Вопрос</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Ответ будет добавлен позже.
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="small">
+Исторические результаты не гарантируют будущую доходность.
+</div>
+
 <script>
 function calc(){
 
@@ -194,5 +381,25 @@ result.textContent =
 sign + '$' + Math.round(scenario).toLocaleString('en-US');
 
 };document.querySelectorAll('input').forEach(i=>i.oninput=calc);calc();
+document.querySelectorAll('.faq-question').forEach(button => {
+
+button.addEventListener('click', () => {
+
+const item = button.closest('.faq-item');
+const isOpen = item.classList.contains('open');
+
+document.querySelectorAll('.faq-item').forEach(other => {
+other.classList.remove('open');
+other.querySelector('.faq-toggle').textContent = '+';
+});
+
+if(!isOpen){
+item.classList.add('open');
+item.querySelector('.faq-toggle').textContent = '−';
+}
+
+});
+
+});  
 </script>
 </div></body></html>
