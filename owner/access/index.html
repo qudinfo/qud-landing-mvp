@@ -91,6 +91,14 @@ margin-top:0;
 border-top:1px solid var(--border);
 }
 
+.faq-section{
+border-bottom:none;
+}
+
+.disclaimer{
+font-size:10px;
+}
+
 .faq-item{
 border-bottom:1px solid var(--border);
 }
@@ -190,9 +198,9 @@ max-width:320px;
 <div class="section"><h2>Сценарная модель капитала</h2><p class="small">Сценарная модель показывает возможную динамику виртуального капитала на основе выбранных параметров. Не является прогнозом будущего результата.</p>
 <div class="card"><div class="calculator"><div>
 <div class="control"><label>Размер капитала <span id="capitalValue" class="range-value">10 000 USD</span></label><input id="capital" class="range" type="range" min="1000" max="25000" step="1000" value="10000"></div>
-<div class="control"><label>Среднее историческое изменение <span id="changeValue" class="range-value">+3% / месяц</span></label><input id="change" class="range" type="range" min="1" max="6" value="3"></div>
-<div class="control"><label>Период наблюдения <span id="periodValue" class="range-value">3 месяца</span></label><input id="period" class="range" type="range" min="1" max="6" value="3"></div>
-</div><div><p>Пример сценария</p><div id="result" class="value">+$900</div></div></div></div></div>
+<div class="control"><label>Среднее историческое изменение <span id="changeValue" class="range-value">+4% / месяц</span></label><input id="change" class="range" type="range" min="1" max="6" value="4"></div>
+<div class="control"><label>Период наблюдения <span id="periodValue" class="range-value">5 месяцев</span></label><input id="period" class="range" type="range" min="1" max="6" value="5"></div>
+</div><div><p>Пример сценария</p><div id="result" class="value">+$2,000</div></div></div></div></div>
 <div class="section">
 
 <div class="access-layout">
@@ -242,7 +250,7 @@ max-width:320px;
 
 </div>
   
-<div class="section">
+<div class="section faq-section">
 
 <div class="faq-layout">
 
@@ -262,88 +270,88 @@ max-width:320px;
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">01</span>
-<span>Вопрос</span>
+<span>Что такое QUD и чем эта модель отличается от торговых сигналов?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Ответ будет добавлен позже.
+QUD — это не сервис торговых сигналов. Пользователь не получает указания, когда покупать или продавать. В QUD каждое торговое решение перед исполнением проходит многоуровневую проверку десятков риск-параметров, и только после этого система решает, можно ли допустить его к исполнению на реальном счёте брокера.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">02</span>
-<span>Вопрос</span>
+<span>Как формируются и проверяются данные QUD?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Ответ будет добавлен позже.
+Автоматизированный сбор данных QUD осуществляется непосредственно из торгового процесса, а AI используется как дополнительный инструмент исследования и выявления закономерностей в данных. Вся информация обрабатывается по единой утверждённой методологии: для каждого показателя определены формулы расчёта, стандарты проверки и правила сравнения с историей наблюдения.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">03</span>
-<span>Вопрос</span>
+<span>Где находятся мои реальные деньги после подключения?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Ответ будет добавлен позже.
+Средства остаются и хранятся на личном счёте владельца капитала у выбранного им брокера. QUD и трейдер не получают права на вывод или перевод средств — распоряжение деньгами остаётся у владельца счёта.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">04</span>
-<span>Вопрос</span>
+<span>Кто фактически совершает сделки после подключения стратегии?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Ответ будет добавлен позже.
+Владелец капитала сам выбирает стратегию и согласовывает с QUD параметры риска. Трейдер продолжает торговать в обычном режиме на своём отдельном счёте, а инфраструктура QUD повторяет его торговые решения на счёте владельца капитала только в рамках заранее согласованных параметров.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">05</span>
-<span>Вопрос</span>
+<span>Гарантирует ли QUD получение прибыли?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Ответ будет добавлен позже.
+Нет. QUD не гарантирует получение прибыли. Исторические данные и виртуальные сценарии отражают поведение стратегии в прошлом и не являются прогнозом будущих результатов. Владелец капитала самостоятельно оценивает возможные риски и до подключения согласовывает с QUD параметры риск-ограничений.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">06</span>
-<span>Вопрос</span>
+<span>Что произойдёт, если стратегия начнёт показывать плохие результаты?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Ответ будет добавлен позже.
+Периоды снижения являются нормальной частью любой торговой стратегии и могут отличаться по глубине и продолжительности. Владелец капитала самостоятельно оценивает такой период, а при необходимости может отключиться от стратегии и выбрать другую.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">07</span>
-<span>Вопрос</span>
+<span>Могу ли я сначала наблюдать за стратегиями без реального капитала?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Ответ будет добавлен позже.
+Да. В личном кабинете владелец капитала изучает аудиты QUD, историю и риски стратегии, может виртуально подключиться к ней и наблюдать без использования реальных средств. После этого он самостоятельно принимает решение о подключении брокерского счёта.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">08</span>
-<span>Вопрос</span>
+<span>Как отключиться от стратегии и прекратить торговлю по ней?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Ответ будет добавлен позже.
+Владелец капитала всегда сохраняет доступ к своему брокерскому счёту и может инициировать отключение от стратегии. Для немедленного прекращения торговли он письменно уведомляет QUD, после чего QUD технически прекращает исполнение стратегии на его счёте.
 </div>
 </div>
 
@@ -353,8 +361,8 @@ max-width:320px;
 
 </div>
 
-<div class="small">
-Исторические результаты не гарантируют будущую доходность.
+<div class="small disclaimer">
+QUD предоставляет инфраструктуру наблюдения, анализа и контроля риска. Исторические данные и виртуальные сценарии носят исследовательский характер и не гарантируют доходность. Торговля на финансовых рынках связана с риском частичной или полной потери капитала. Решение о подключении стратегии владелец капитала принимает самостоятельно.
 </div>
 
 <script>
