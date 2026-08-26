@@ -3427,7 +3427,67 @@ function render(){
   renderFindings($('findings'),d.findings.items);
 }
 
+function initStrategyInterest(){
+  const titleBlock=document.querySelector('.top-title-block');
+  const headerMeta=document.getElementById('headerMeta');
+  const trustLabel=Array.from(document.querySelectorAll('.label')).find(el=>el.textContent.trim().toUpperCase()==='TRUST SCORE');
+  const referenceBadge=document.getElementById('riskMode')||document.querySelector('.badge');
+  if(!titleBlock||!headerMeta||!trustLabel||!referenceBadge)return;
+  if(!document.getElementById('qud-design-lab-style')){
+    const style=document.createElement('style');
+    style.id='qud-design-lab-style';
+    style.textContent='@media(min-width:1101px){.top-title-block{transform:translateY(-18px)!important;}}';
+    document.head.appendChild(style);
+  }
+  let strategyLabel=document.getElementById('strategyInterestLabel');
+  if(!strategyLabel){
+    strategyLabel=trustLabel.cloneNode(true);
+    strategyLabel.id='strategyInterestLabel';
+    strategyLabel.textContent='STRATEGY INTEREST';
+    strategyLabel.style.position='absolute';
+    strategyLabel.style.textAlign='left';
+    strategyLabel.style.margin='0';
+    strategyLabel.style.zIndex='20';
+    strategyLabel.style.pointerEvents='none';
+    document.body.appendChild(strategyLabel);
+  }
+  let demoBadge=document.getElementById('strategyDemoBadge');
+  if(!demoBadge){
+    demoBadge=referenceBadge.cloneNode(true);
+    demoBadge.id='strategyDemoBadge';
+    demoBadge.className='badge neutral';
+    demoBadge.textContent='2 DEMO';
+    demoBadge.style.position='absolute';
+    demoBadge.style.margin='0';
+    demoBadge.style.zIndex='20';
+    demoBadge.style.pointerEvents='none';
+    demoBadge.style.visibility='hidden';
+    document.body.appendChild(demoBadge);
+  }
+  const positionStrategyElements=()=>{
+    const titleRect=titleBlock.getBoundingClientRect();
+    const headerRect=headerMeta.getBoundingClientRect();
+    const trustRect=trustLabel.getBoundingClientRect();
+    const titleStyle=document.defaultView.getComputedStyle(titleBlock);
+    const titlePaddingLeft=parseFloat(titleStyle.paddingLeft)||0;
+    const left=titleRect.left+titlePaddingLeft+window.scrollX;
+    strategyLabel.style.left=left+'px';
+    strategyLabel.style.top=(trustRect.top+window.scrollY)+'px';
+    const strategyRect=strategyLabel.getBoundingClientRect();
+    const badgeRect=demoBadge.getBoundingClientRect();
+    const gapTop=headerRect.bottom;
+    const gapBottom=strategyRect.top;
+    const badgeTop=gapTop+Math.max(0,(gapBottom-gapTop-badgeRect.height)/2);
+    demoBadge.style.left=left+'px';
+    demoBadge.style.top=(badgeTop+window.scrollY)+'px';
+    demoBadge.style.visibility='visible';
+  };
+  positionStrategyElements();
+  window.addEventListener('resize',positionStrategyElements);
+}
+
 render();
+initStrategyInterest();
 initHelp();
 </script>
 </body></html>
