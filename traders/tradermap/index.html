@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUD Capital Owner Access</title>
+<style>
+:root{--bg:#090b0d;--panel:#101317;--border:#22272d;--text:#f3f4f6;--muted:#9aa1aa;--accent:#d8a24b}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}.container{max-width:1100px;margin:auto;padding:40px 24px}.section{padding:45px 0;border-bottom:1px solid var(--border)}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;margin-top:20px}h1{font-size:52px;line-height:1.05;margin:0}h2{font-size:28px}p{line-height:1.6}.small{color:var(--muted);font-size:14px}.header{display:flex;justify-content:space-between;padding:22px 0 45px;border-bottom:1px solid var(--border)}.header a{color:var(--muted);text-decoration:none}.trader-path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;gap:16px;margin:0;padding:0;list-style:none}.path-card{padding:24px;background:var(--panel);border:1px solid var(--border);border-radius:14px}.path-card h2{margin:0;font-size:17px;letter-spacing:.04em}.path-card p{margin:14px 0 0}.path-copy{max-height:4.8em;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 48%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 48%,transparent 100%);transition:max-height .4s ease}.path-card.open .path-copy{max-height:18em;-webkit-mask-image:linear-gradient(#000,#000);mask-image:linear-gradient(#000,#000)}.path-toggle{display:grid;place-items:center;width:36px;height:32px;margin:12px 0 -8px;padding:0;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;transition:background .2s,border-color .2s}.path-toggle:hover{background:#15191e;border-color:var(--border)}.path-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.path-arrow{width:10px;height:10px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .3s ease}.path-card.open .path-arrow{transform:translateY(2px) rotate(225deg)}.history-section{padding-top:76px;padding-bottom:76px}.history-section>h2{margin:0 0 44px}.history-columns{display:grid;grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr);gap:48px;align-items:stretch}.history-column h3{margin:0;font-size:20px;letter-spacing:.03em}.history-description{margin:20px 0 0}.history-divider{width:1px;background:var(--border)}.history-price{display:inline-block;margin-top:18px;padding:12px 18px;border:1px solid #353c44;border-radius:12px;color:var(--text);font-size:18px;font-weight:700;line-height:1.2}.history-note{width:100%;margin:48px 0 0;padding-top:28px;border-top:1px solid var(--border);font-size:16px;line-height:1.65}.calculator{display:grid;grid-template-columns:1fr 1fr;gap:24px}.access-layout{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:70px;
+align-items:center;
+}.control{margin-bottom:18px}.range{
+width:100%;
+height:4px;
+appearance:none;
+background:#3a4048;
+border-radius:4px;
+}
+
+.range::-webkit-slider-thumb{
+appearance:none;
+width:14px;
+height:14px;
+background:#a5adb8;
+border-radius:50%;
+cursor:pointer;
+}
+
+.range::-moz-range-thumb{
+width:14px;
+height:14px;
+background:#a5adb8;
+border-radius:50%;
+cursor:pointer;
+}.range-value{float:right}.value{font-size:32px;color:var(--accent);font-weight:700}
+
+.access-price{
+display:inline-block;
+padding:8px 16px;
+border:1px solid #2f353d;
+border-radius:8px;
+color:#f3f4f6;
+font-weight:600;
+}
+
+.access-actions{
+display:flex;
+flex-direction:row;
+flex-wrap:wrap;
+align-items:center;
+justify-content:center;
+gap:18px;
+margin-top:0;
+}
+
+.trader-actions-section{
+padding-top:56px;
+padding-bottom:56px;
+}
+
+.access-button{
+width:300px;
+padding:14px 20px;
+border:1px solid #2f353d;
+border-radius:10px;
+background:#101317;
+color:#f3f4f6;
+font-size:16px;
+font-weight:600;
+text-align:center;
+cursor:pointer;
+transition:0.2s;
+}
+
+.access-button.primary{
+background:#d8dde5;
+border-color:#d8dde5;
+color:#090b0d;
+}
+
+.access-button:hover{
+opacity:0.9;
+}  
+
+body.is-trial-modal-open{
+overflow:hidden;
+}
+
+.trial-modal{
+position:fixed;
+inset:0;
+z-index:1000;
+display:grid;
+place-items:center;
+padding:24px;
+opacity:0;
+visibility:hidden;
+transition:opacity .25s ease,visibility .25s ease;
+}
+
+.trial-modal.is-open{
+opacity:1;
+visibility:visible;
+}
+
+.trial-modal-backdrop{
+position:absolute;
+inset:0;
+background:rgba(4,6,8,.78);
+backdrop-filter:blur(5px);
+}
+
+.trial-modal-dialog{
+position:relative;
+z-index:1;
+width:min(100%,480px);
+max-height:calc(100vh - 48px);
+overflow:auto;
+padding:32px;
+border:1px solid #30363e;
+border-radius:14px;
+background:var(--panel);
+box-shadow:0 28px 80px rgba(0,0,0,.45);
+transform:translateY(12px) scale(.985);
+transition:transform .25s ease;
+outline:none;
+}
+
+.trial-modal.is-open .trial-modal-dialog{
+transform:translateY(0) scale(1);
+}
+
+.trial-modal-close{
+position:absolute;
+top:14px;
+right:14px;
+display:grid;
+place-items:center;
+width:34px;
+height:34px;
+padding:0;
+border:1px solid var(--border);
+border-radius:9px;
+background:transparent;
+color:var(--muted);
+font-size:22px;
+line-height:1;
+cursor:pointer;
+}
+
+.trial-modal-close:hover{
+color:var(--text);
+border-color:#3a414a;
+}
+
+.trial-modal-close:focus-visible{
+outline:2px solid var(--accent);
+outline-offset:2px;
+}
+
+.trial-modal-kicker{
+display:block;
+color:var(--accent);
+font-size:10px;
+font-weight:700;
+letter-spacing:.1em;
+text-transform:uppercase;
+}
+
+.trial-modal h2{
+margin:12px 44px 0 0;
+font-size:26px;
+}
+
+.trial-modal-copy{
+margin:20px 0 0;
+color:var(--muted);
+font-size:14px;
+line-height:1.65;
+}
+
+.trial-form{
+margin-top:24px;
+}
+
+.trial-form label{
+display:block;
+margin-bottom:8px;
+color:var(--muted);
+font-size:10px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.trial-form input{
+width:100%;
+padding:12px 13px;
+border:1px solid #30363e;
+border-radius:9px;
+background:#0d1013;
+color:var(--text);
+font:inherit;
+outline:none;
+}
+
+.trial-form input:focus{
+border-color:var(--accent);
+}
+
+.trial-form input[aria-invalid="true"]{
+border-color:#d88b75;
+}
+
+.trial-email-error,
+.trial-form-status{
+min-height:16px;
+margin:7px 0 0;
+font-size:11px;
+line-height:1.45;
+}
+
+.trial-email-error{
+color:#d88b75;
+}
+
+.trial-form-status{
+color:var(--muted);
+}
+
+.trial-submit{
+width:100%;
+margin-top:14px;
+padding:12px 16px;
+border:1px solid #d8dde5;
+border-radius:9px;
+background:#d8dde5;
+color:#090b0d;
+font-size:14px;
+font-weight:700;
+cursor:pointer;
+}
+
+.trial-submit:hover{
+opacity:.9;
+}
+
+.trial-submit:focus-visible{
+outline:2px solid var(--accent);
+outline-offset:2px;
+}
+
+.faq-layout{
+display:grid;
+grid-template-columns:.8fr 1.2fr;
+gap:70px;
+align-items:start;
+}
+
+.faq-intro h2{
+margin-top:0;
+}
+
+.faq-list{
+border-top:1px solid var(--border);
+}
+
+.faq-section{
+border-bottom:none;
+}
+
+.disclaimer{
+font-size:10px;
+}
+
+.faq-item{
+border-bottom:1px solid var(--border);
+}
+
+.faq-question{
+width:100%;
+display:grid;
+grid-template-columns:42px 1fr 24px;
+align-items:center;
+gap:12px;
+padding:18px 0;
+border:0;
+background:transparent;
+color:var(--text);
+font-size:16px;
+font-weight:600;
+text-align:left;
+cursor:pointer;
+}
+
+.faq-question:hover{
+background:#0d1013;
+}
+
+.faq-index{
+color:var(--muted);
+font-size:12px;
+font-weight:500;
+}
+
+.faq-toggle{
+color:var(--muted);
+font-size:20px;
+font-weight:400;
+text-align:right;
+}
+
+.faq-answer{
+display:none;
+padding:0 36px 18px 54px;
+color:var(--muted);
+font-size:14px;
+line-height:1.6;
+}
+
+.faq-item.open .faq-answer{
+display:block;
+}
+  
+.calculator label,
+.calculator .range-value,
+.calculator p{
+color:#9aa1aa;
+}
+
+.history-column .history-price{
+margin-top:14px;
+padding:5px 10px;
+border-radius:8px;
+font-size:14px;
+}
+
+.history-column h3{
+color:var(--accent);
+}
+
+.history-note{
+position:relative;
+max-width:920px;
+margin-top:40px;
+padding:0 0 0 16px;
+border-top:0;
+color:var(--muted);
+font-size:13px;
+font-weight:400;
+line-height:1.6;
+}
+
+.history-note::before{
+content:"*";
+position:absolute;
+top:0;
+left:0;
+}
+
+.status-section{
+padding-top:76px;
+padding-bottom:76px;
+}
+
+.status-section>h2{
+margin:0 0 16px;
+}
+
+.status-intro{
+max-width:820px;
+margin:0 0 42px;
+}
+
+.status-list{
+margin:0;
+}
+
+.status-row{
+display:grid;
+grid-template-columns:1fr;
+gap:8px;
+align-items:start;
+padding:0;
+}
+
+.status-row+.status-row{
+margin-top:30px;
+}
+
+.status-row dt{
+color:var(--accent);
+font-size:12px;
+font-weight:700;
+letter-spacing:.04em;
+}
+
+.status-row dd{
+margin:0;
+color:var(--muted);
+font-size:14px;
+line-height:1.7;
+}
+
+.status-note{
+margin:32px 0 0;
+color:var(--muted);
+font-size:13px;
+font-weight:500;
+line-height:1.6;
+}
+
+.earnings-calculator{
+margin-top:24px;
+}
+
+.calculator-note{
+margin:0 0 20px;
+padding:14px 16px;
+border-left:2px solid var(--accent);
+background:rgba(255,255,255,.018);
+color:var(--muted);
+font-size:12px;
+line-height:1.6;
+}
+
+.calculator-summary{
+display:grid;
+grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);
+gap:28px;
+align-items:end;
+}
+
+.calculator-kicker,
+.calc-metric-label{
+display:block;
+color:var(--muted);
+font-size:11px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.calculator-total{
+display:block;
+margin-top:12px;
+color:var(--accent);
+font-size:clamp(32px,5vw,49px);
+font-weight:700;
+line-height:1;
+letter-spacing:-.04em;
+overflow-wrap:anywhere;
+}
+
+.calculator-summary-note{
+display:block;
+margin-top:12px;
+color:var(--muted);
+font-size:12px;
+}
+
+.subscription-potential{
+display:grid;
+grid-template-columns:1fr;
+gap:24px;
+align-items:center;
+}
+
+.potential-control .calc-control-head{
+margin-bottom:14px;
+color:var(--muted);
+font-size:10px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.potential-control{
+display:grid;
+gap:22px;
+}
+
+#strategyLevel{
+background:linear-gradient(to right,rgba(58,64,72,.08) 0%,rgba(58,64,72,.10) 10%,rgba(58,64,72,.14) 20%,rgba(58,64,72,.22) 29.3%,rgba(58,64,72,.42) 34%,rgba(58,64,72,.70) 37%,#3a4048 39.4%,#3a4048 100%);
+}
+
+.potential-result{
+padding:26px 0 0;
+border-top:1px solid var(--border);
+border-left:0;
+}
+
+.potential-disclaimer{
+margin:14px 0 0;
+color:var(--muted);
+font-size:11px;
+line-height:1.6;
+}
+
+.calculator-offer-grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:20px;
+align-items:stretch;
+}
+
+.calculator-offer-grid .card{
+padding:22px;
+}
+
+.calculator-column>.card,
+.private-capital-summary{
+margin-top:0;
+height:100%;
+}
+
+.private-capital-summary{
+display:flex;
+flex-direction:column;
+height:100%;
+}
+
+.subscription-potential h3,
+.private-capital-summary h3{
+margin:0;
+font-size:21px;
+letter-spacing:.03em;
+}
+
+.private-capital-intro{
+margin:10px 0 0;
+color:var(--muted);
+font-size:12px;
+line-height:1.55;
+}
+
+.private-capital-metrics{
+margin-top:20px;
+padding:18px 0;
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
+}
+
+.private-capital-metric+ .private-capital-metric{
+margin-top:16px;
+}
+
+.private-capital-metric strong,
+.private-capital-metric span{
+display:block;
+}
+
+.private-capital-metric strong{
+color:var(--accent);
+font-size:24px;
+line-height:1;
+letter-spacing:-.04em;
+}
+
+.private-capital-metric .private-capital-money{
+font-size:29px;
+}
+
+.private-capital-metric strong sup{
+position:relative;
+top:-.25em;
+font-size:.42em;
+}
+
+.private-capital-metric span{
+margin-top:10px;
+color:var(--muted);
+font-size:10px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.private-capital-metric+ .private-capital-metric span{
+font-size:9px;
+}
+
+.private-capital-note{
+margin:20px 0 0;
+color:var(--muted);
+font-size:12px;
+line-height:1.6;
+}
+
+.private-capital-footnote{
+margin:14px 0 0;
+color:#6f7782;
+font-size:10px;
+line-height:1.5;
+}
+
+.calculator-breakdown{
+display:grid;
+gap:12px;
+}
+
+.calculator-breakdown-row{
+display:flex;
+justify-content:space-between;
+gap:20px;
+padding-top:12px;
+border-top:1px solid var(--border);
+}
+
+.calculator-breakdown-row span{
+color:var(--muted);
+font-size:12px;
+}
+
+.calculator-breakdown-row strong{
+font-size:15px;
+overflow-wrap:anywhere;
+}
+
+.calculator-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+align-items:start;
+margin-top:20px;
+}
+
+.calculator-grid>.card{
+margin-top:0;
+}
+
+.calc-panel-head,
+.calc-switch-row,
+.calc-control-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:16px;
+}
+
+.calc-panel h3{
+margin:0;
+font-size:21px;
+}
+
+.calc-panel-copy{
+margin:7px 0 0;
+color:var(--muted);
+font-size:13px;
+line-height:1.6;
+}
+
+.calc-future{
+flex:none;
+padding:5px 8px;
+border:1px solid var(--border);
+border-radius:7px;
+color:var(--muted);
+font-size:10px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.calc-control{
+margin-top:22px;
+}
+
+.calc-control-head{
+margin-bottom:10px;
+color:var(--text);
+font-size:13px;
+font-weight:600;
+}
+
+.calc-control-value{
+color:var(--accent);
+font-variant-numeric:tabular-nums;
+}
+
+.calc-select,
+.calc-number{
+width:100%;
+min-width:0;
+padding:11px 12px;
+border:1px solid #2f353d;
+border-radius:9px;
+background:#0d1013;
+color:var(--text);
+font:inherit;
+outline:none;
+}
+
+.calc-select:focus,
+.calc-number:focus{
+border-color:var(--accent);
+}
+
+.calc-tier-meta{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:12px;
+}
+
+.calc-pill{
+display:inline-flex;
+align-items:center;
+min-height:30px;
+padding:6px 9px;
+border:1px solid var(--border);
+border-radius:8px;
+color:var(--muted);
+font-size:11px;
+}
+
+.calc-pill strong{
+margin-left:4px;
+color:var(--text);
+}
+
+.calc-pill.is-elite{
+border-color:rgba(216,162,75,.45);
+color:var(--accent);
+}
+
+.calc-dual-input{
+display:grid;
+grid-template-columns:minmax(0,1fr) 86px;
+gap:14px;
+align-items:center;
+}
+
+.calc-scale{
+display:flex;
+justify-content:space-between;
+margin-top:8px;
+color:var(--muted);
+font-size:10px;
+}
+
+.calc-results{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+margin-top:24px;
+}
+
+.calc-metric{
+min-width:0;
+padding-top:14px;
+border-top:1px solid var(--border);
+}
+
+.calc-metric-value{
+display:block;
+margin-top:8px;
+font-size:20px;
+font-weight:700;
+line-height:1.2;
+overflow-wrap:anywhere;
+}
+
+.calc-metric-note{
+display:block;
+margin-top:7px;
+color:var(--muted);
+font-size:11px;
+line-height:1.5;
+}
+
+.calc-positive{
+color:var(--accent);
+}
+
+.calc-switch-row{
+margin-top:22px;
+padding:14px 0;
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
+}
+
+.calc-switch-copy strong,
+.calc-switch-copy span{
+display:block;
+}
+
+.calc-switch-copy strong{
+font-size:13px;
+}
+
+.calc-switch-copy span{
+margin-top:4px;
+color:var(--muted);
+font-size:11px;
+}
+
+.calc-toggle{
+position:relative;
+flex:none;
+cursor:pointer;
+}
+
+.calc-toggle input{
+position:absolute;
+width:1px;
+height:1px;
+opacity:0;
+}
+
+.calc-toggle-track{
+display:block;
+position:relative;
+width:44px;
+height:24px;
+border:1px solid #353c44;
+border-radius:999px;
+background:#0d1013;
+transition:.2s;
+}
+
+.calc-toggle-track::after{
+content:"";
+position:absolute;
+top:3px;
+left:3px;
+width:16px;
+height:16px;
+border-radius:50%;
+background:var(--muted);
+transition:.2s;
+}
+
+.calc-toggle input:checked+.calc-toggle-track{
+border-color:var(--accent);
+}
+
+.calc-toggle input:checked+.calc-toggle-track::after{
+background:var(--accent);
+transform:translateX(20px);
+}
+
+.calc-toggle input:focus-visible+.calc-toggle-track{
+outline:2px solid var(--accent);
+outline-offset:3px;
+}
+
+.calc-private-controls{
+transition:opacity .2s;
+}
+
+.calc-private-controls.is-disabled{
+opacity:.42;
+}
+
+.calc-share-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+}
+
+.calc-share-field label{
+display:block;
+margin-bottom:7px;
+color:var(--muted);
+font-size:11px;
+}
+
+.calc-share-status{
+margin:9px 0 0;
+color:var(--muted);
+font-size:11px;
+}
+
+.calc-share-status.warning{
+color:#d88b75;
+}
+
+@media(max-width:760px){
+
+h1{
+font-size:34px;
+}
+  
+.trader-path,
+.history-columns,
+.calculator,
+.calculator-summary,
+.calculator-offer-grid,
+.subscription-potential,
+.calculator-grid,
+.access-layout,
+.faq-layout{
+grid-template-columns:1fr;
+}
+
+.potential-result{
+padding:26px 0 0;
+border-top:1px solid var(--border);
+border-left:0;
+}
+
+.calc-dual-input,
+.calc-results,
+.calc-share-grid{
+grid-template-columns:1fr;
+}
+
+.calculator-breakdown-row{
+align-items:flex-start;
+flex-direction:column;
+gap:5px;
+}
+
+.history-section{
+padding-top:56px;
+padding-bottom:56px;
+}
+
+.status-section{
+padding-top:56px;
+padding-bottom:56px;
+}
+
+.history-columns{
+gap:32px;
+}
+
+.history-divider{
+width:100%;
+height:1px;
+}
+
+.access-layout{
+gap:32px;
+}
+
+.faq-layout{
+gap:28px;
+}
+
+.faq-answer{
+padding-left:42px;
+padding-right:10px;
+}
+
+.access-actions{
+width:100%;
+}
+
+.access-button{
+width:100%;
+max-width:320px;
+}
+
+.trial-modal{
+padding:36px;
+}
+
+.trial-modal-dialog{
+width:min(100%,360px);
+max-height:calc(100vh - 72px);
+padding:24px;
+}
+
+.trial-modal h2{
+font-size:22px;
+}
+
+.trial-modal-copy{
+font-size:13px;
+}
+
+}
+</style>
+</head>
+<body><div class="container">
+<div class="header"><b><a href="https://fx-qud.com">QUD</a></b><span class="small">TRADER MAP</span></div>
+<div class="section"><h1>Сохраняйте независимость, создавая торговую историю, которая работает на вас.</h1></div>
+<div class="section">
+<ol class="trader-path" aria-label="Путь трейдера в QUD">
+<li><article class="path-card"><h2>СТАРТ</h2><div id="path-start" class="path-copy"><p class="small">Продолжайте торговать в своём стиле. QUD наблюдает за процессом и формирует первый подтверждённый срез.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-start" aria-label="Развернуть карточку «Старт»"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
+<li><article class="path-card"><h2>ИСТОРИЯ</h2><div id="path-history" class="path-copy"><p class="small">С каждой новой неделей стратегия формирует торговую историю, которая начинает работать на вас.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-history" aria-label="Развернуть карточку «История»"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
+<li><article class="path-card"><h2>СТАТУС</h2><div id="path-status" class="path-copy"><p class="small">Накопленная история формирует статус стратегии и открывает возможность быть представленной владельцам капитала.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-status" aria-label="Развернуть карточку «Статус»"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
+<li><article class="path-card"><h2>ДОХОД</h2><div id="path-income" class="path-copy"><p class="small">Когда владельцы капитала подключаются к стратегии, трейдер получает регулярные выплаты из их подписок.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-income" aria-label="Развернуть карточку «Доход»"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
+</ol>
+</div>
+<section class="section history-section" aria-labelledby="history-title">
+<h2 id="history-title">Как формируется история</h2>
+<div class="history-columns">
+<article class="history-column">
+<h3>TDA TRIAL</h3>
+<div class="history-price">Без оплаты</div>
+<p class="small history-description">Первая неделя наблюдения. По итогам трейдер получает персональный аудит по стабильности риск-менеджмента и управление риском в своей торговле.</p>
+</article>
+<div class="history-divider" aria-hidden="true"></div>
+<article class="history-column">
+<h3>TDA BASIC</h3>
+<div class="history-price">$49 / месяц</div>
+<p class="small history-description">Трейдер еженедельно получает отчёт, видит динамику риска и дисциплины, а стратегия формирует подтверждённую историю внутри QUD.</p>
+</article>
+</div>
+<p class="history-note">Чем выше подтверждённый уровень стратегии, тем ниже стоимость TDA Basic. После подключения капитала и начала выплат TDA Basic предоставляется трейдеру без оплаты.</p>
+</section>
+<section class="section status-section" aria-labelledby="status-title">
+<h2 id="status-title">Статус начинает открывать возможности</h2>
+<p class="small status-intro">По мере подтверждения статуса торговая история становится рабочим активом трейдера — расширяет доступ к аналитике, возможностям QUD и капиталу.</p>
+<dl class="status-list">
+<div class="status-row">
+<dt>АНАЛИТИКА</dt>
+<dd>Отчётность показывает, насколько устойчиво стратегия на дистанции: как меняется риск, как проходят просадки, управление SL и последовательность торговых решений.</dd>
+</div>
+<div class="status-row">
+<dt>УСЛОВИЯ</dt>
+<dd>По мере роста статуса стоимость аналитической отчётности снижается. После подключения капитала и начала выплат она становится частью сопровождения стратегии внутри QUD и больше не оплачивается трейдером отдельно.</dd>
+</div>
+<div class="status-row">
+<dt>ВОЗМОЖНОСТИ</dt>
+<dd>Подтверждённый статус открывает доступ к возможностям, которые не предоставляются на стартовом этапе: расширенная и сравнительная аналитика, реферальная программа и другие форматам участия внутри QUD.</dd>
+</div>
+<div class="status-row">
+<dt>РЕЕСТР</dt>
+<dd>Стратегия получает постоянный Strategy ID и включается в реестр подтверждённых стратегий QUD — пространство, через которое владельцы капитала получают доступ к стратегиям с накопленной и проверяемой историей.</dd>
+</div>
+<div class="status-row">
+<dt>ВЫПЛАТЫ</dt>
+<dd>По мере роста статуса стратегии, увеличиваться её ценность, а вместе с этим, стоимость подписки и регулярные выплаты трейдера.</dd>
+</div>
+</dl>
+<p class="status-note">Статус стратегии нельзя купить — он формируется из подтверждённой торговой истории.</p>
+</section>
+<section class="section" id="trader-calculator" aria-labelledby="trader-calculator-title">
+<h2 id="trader-calculator-title">Потенциал торговой стратегии</h2>
+<p class="small">Подтверждённая история создаёт ценность стратегии, а подключения владельцев капитала превращают эту ценность в регулярные выплаты.</p>
+
+<div class="earnings-calculator">
+<div class="calculator-offer-grid">
+<div class="calculator-column">
+<div class="card subscription-potential" aria-labelledby="subscriptions-heading" aria-live="polite">
+<h3 id="subscriptions-heading">STRATEGY SUBSCRIPTIONS</h3>
+<div class="potential-control">
+<div class="potential-slider">
+<div class="calc-control-head"><label for="strategyLevel">Подтверждённый уровень стратегии</label></div>
+<input class="range" id="strategyLevel" type="range" min="1" max="100" step="1" value="78">
+<div class="calc-scale"><span>1</span><span>100</span></div>
+</div>
+<div class="potential-slider">
+<div class="calc-control-head"><label for="subscriptions">Активные подключения</label></div>
+<input class="range" id="subscriptions" type="range" min="1" max="30" step="1" value="22">
+<div class="calc-scale"><span>1</span><span>30+</span></div>
+</div>
+</div>
+<div class="potential-result">
+<span class="calculator-kicker">Расчётная выплата / месяц</span>
+<strong class="calculator-total" id="subscriptionIncome">$1 020</strong>
+</div>
+</div>
+</div>
+
+<article class="card private-capital-summary" aria-labelledby="private-heading">
+<h3 id="private-heading">PRIVATE CAPITAL</h3>
+<p class="private-capital-intro">Высокий статус и история открывает стратегии доступ к новому уровню выплат и взаимодействия с капиталом.</p>
+<div class="private-capital-metrics">
+<div class="private-capital-metric">
+<strong class="private-capital-money">$50 000+</strong>
+<span>Подключённый капитал</span>
+</div>
+<div class="private-capital-metric">
+<strong>от 30%<sup>*</sup></strong>
+<span>Доля трейдера</span>
+</div>
+</div>
+<p class="private-capital-note">Трейдер получает установленную долю положительного результата на подключённом капитале.</p>
+<p class="private-capital-footnote">* Условия участия, расчёта и выплат определяются действующими регламентами QUD и могут изменяться в предусмотренном ими порядке.</p>
+</article>
+</div>
+<p class="potential-disclaimer">Сценарный расчёт не является гарантией дохода. Показанные значения являются предварительными и предназначены для оценки возможной экономики стратегии.</p>
+</div>
+</section>
+<section class="section trader-actions-section" aria-label="Действия трейдера">
+<div class="access-actions">
+<button class="access-button primary" type="button">
+Начать TDA Trial
+</button>
+</div>
+</section>
+
+<div class="trial-modal" id="trialModal" aria-hidden="true">
+<div class="trial-modal-backdrop" data-trial-close></div>
+<div class="trial-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="trialModalTitle" tabindex="-1">
+<button class="trial-modal-close" type="button" aria-label="Закрыть окно" data-trial-close>×</button>
+<span class="trial-modal-kicker">QUD</span>
+<h2 id="trialModalTitle">TDA TRIAL</h2>
+<p class="trial-modal-copy">Первая неделя наблюдения. По итогам трейдер получает персональный аудит по стабильности риск-менеджмента в своей торговле.</p>
+<form class="trial-form" id="trialForm" novalidate>
+<label for="trialEmail">Email</label>
+<input id="trialEmail" name="email" type="email" maxlength="50" autocomplete="email" required aria-describedby="trialEmailError trialFormStatus">
+<p class="trial-email-error" id="trialEmailError" aria-live="polite"></p>
+<button class="trial-submit" type="submit">Продолжить</button>
+<p class="trial-form-status" id="trialFormStatus" aria-live="polite"></p>
+</form>
+</div>
+</div>
+  
+<div class="section faq-section">
+
+<div class="faq-layout">
+
+<div class="faq-intro">
+
+<h2>FAQ</h2>
+
+<p class="small">
+Основные вопросы о доступе, наблюдении и работе с QUD.
+</p>
+
+</div>
+
+
+<div class="faq-list">
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">01</span>
+<span>Чем QUD отличается от проп-компании?</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+QUD не продаёт трейдеру попытки пройти challenge и не строит модель на повторной оплате тестов. Трейдер продолжает торговать в своём стиле, а QUD формирует подтверждённую историю его стратегии, отслеживает риск-культуру и создаёт инфраструктуру, через которую эта история может получить экономическую ценность.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">02</span>
+<span>Что именно анализирует QUD в моей торговле?</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+QUD фиксирует фактические торговые события: риск по сделкам, работу со SL, изменения риска, поведение в просадке и другие параметры торгового процесса. На основе этих данных формируется аналитический отчёт, позволяющий увидеть повторяющиеся особенности поведения на дистанции.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">03</span>
+<span>Как QUD использует AI в аналитике?</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+AI не оценивает сделки вместо системы. Он работает поверх уже собранных и рассчитанных торговых данных, помогая перевести их в понятный разбор: выделить повторяющиеся отклонения, изменения за период и зоны, на которые трейдеру стоит обратить внимание.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">04</span>
+<span>Как формируется статус стратегии?</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Статус не строится только на доходности. QUD использует собственную методологию риск-менеджмента, учитывая его устойчивость и стабильность на дистанции. Хороший короткий результат сам по себе ещё не означает высокий статус.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">05</span>
+<span>Как стратегия начинает приносить трейдеру выплаты?</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+На каждую стратегию <strong>должен существовать реальный спрос со стороны владельцев капитала</strong>. При активных подключениях трейдер может получать выплаты из подписной модели, а стратегии с необходимой подтверждённой историей могут получить доступ к Private Capital.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">06</span>
+<span>Что такое Private Capital и когда он становится доступен?</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Private Capital — отдельный контур для стратегий, прошедших необходимый исторический этап и сформировавших подтверждённый статус QUD. Он предполагает работу с крупным объёмом подключённого капитала и выплату трейдеру установленной доли от положительного результата. Конкретные условия определяются действующими регламентами QUD.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">07</span>
+<span>Вмешивается ли QUD в мою торговлю?</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Нет. Трейдер самостоятельно принимает торговые решения и сохраняет свой стиль. QUD наблюдает за торговым процессом, фиксирует данные и формирует аналитику. При работе с подключённым капиталом дополнительно действует установленный контур контроля риска.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question" type="button">
+<span class="faq-index">08</span>
+<span>Гарантируют ли статус QUD и подключение капитала доход?</span>
+<span class="faq-toggle">+</span>
+</button>
+<div class="faq-answer">
+Нет. Подтверждённая история, статус, подписки и доступ к Private Capital не гарантируют будущий торговый результат или размер выплат. Доход зависит от дальнейших результатов стратегии, спроса со стороны владельцев капитала и действующих условий QUD.
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="small disclaimer">
+QUD предоставляет аналитическую инфраструктуру для независимых трейдеров. Исторические результаты не гарантируют будущих результатов, а статус стратегии, доступ к капиталу и размер выплат не являются гарантированными. Условия участия и выплат определяются действующими регламентами QUD и могут изменяться в установленном порядке. Трейдер самостоятельно принимает торговые решения и несёт связанные с ними рыночные риски.
+</div>
+
+<script>
+(() => {
+'use strict';
+
+const integer = new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+const byId = id => document.getElementById(id);
+const clamp = (value,min,max) => Math.min(max,Math.max(min,Number(value)||0));
+
+const strategyPayoutAnchors = [
+{ level:40, payout:0 },
+{ level:45, payout:21 },
+{ level:55, payout:26.25 },
+{ level:65, payout:32 },
+{ level:75, payout:40.50 },
+{ level:85, payout:60 },
+{ level:100, payout:70 }
+];
+
+function formatPublicUsd(value){
+return `$${integer.format(Math.round(value)).replace(/,/g,' ')}`;
+}
+
+function normalizeStrategyLevel(value){
+return Math.round(clamp(value,1,100));
+}
+
+function normalizeSubscriptions(value){
+return Math.round(clamp(value,1,30));
+}
+
+function payoutForStrategyLevel(level){
+if(level<=40) return 0;
+for(let index=1;index<strategyPayoutAnchors.length;index+=1){
+const previous = strategyPayoutAnchors[index-1];
+const next = strategyPayoutAnchors[index];
+if(level<=next.level){
+const progress = (level-previous.level)/(next.level-previous.level);
+const payout = previous.payout+(next.payout-previous.payout)*progress;
+return Math.round(payout*100)/100;
+}
+}
+return strategyPayoutAnchors.at(-1).payout;
+}
+
+function updateSubscriptions(){
+const level = normalizeStrategyLevel(byId('strategyLevel').value);
+const count = normalizeSubscriptions(byId('subscriptions').value);
+const subscriptionIncome = payoutForStrategyLevel(level) * count;
+
+byId('strategyLevel').value = level;
+byId('subscriptions').value = count;
+byId('subscriptionIncome').textContent = formatPublicUsd(subscriptionIncome);
+}
+
+['strategyLevel','subscriptions'].forEach(id=>byId(id).addEventListener('input',updateSubscriptions));
+
+updateSubscriptions();
+})();
+
+(() => {
+const openButton = document.querySelector('.trader-actions-section .access-button');
+const modal = document.getElementById('trialModal');
+const dialog = modal?.querySelector('.trial-modal-dialog');
+const closeButton = modal?.querySelector('.trial-modal-close');
+const closeTargets = modal?.querySelectorAll('[data-trial-close]') || [];
+const form = modal?.querySelector('#trialForm');
+const emailInput = modal?.querySelector('#trialEmail');
+const emailError = modal?.querySelector('#trialEmailError');
+const formStatus = modal?.querySelector('#trialFormStatus');
+const submitButton = modal?.querySelector('.trial-submit');
+let previousFocus = null;
+
+if(!openButton || !modal || !dialog || !closeButton || !form || !emailInput || !emailError || !formStatus || !submitButton) return;
+
+openButton.setAttribute('aria-haspopup','dialog');
+openButton.setAttribute('aria-controls','trialModal');
+
+function openTrialModal(){
+previousFocus = document.activeElement;
+modal.classList.add('is-open');
+modal.setAttribute('aria-hidden','false');
+document.body.classList.add('is-trial-modal-open');
+requestAnimationFrame(()=>emailInput.focus());
+}
+
+function closeTrialModal(){
+modal.classList.remove('is-open');
+modal.setAttribute('aria-hidden','true');
+document.body.classList.remove('is-trial-modal-open');
+if(previousFocus && typeof previousFocus.focus==='function') previousFocus.focus();
+}
+
+function setEmailError(message){
+emailError.textContent = message;
+emailInput.setAttribute('aria-invalid',String(Boolean(message)));
+}
+
+function validateEmail(){
+const value = emailInput.value.trim();
+emailInput.value = value;
+
+if(!value){
+setEmailError('Введите email.');
+return false;
+}
+
+if(value.length>50){
+setEmailError('Email не должен превышать 50 символов.');
+return false;
+}
+
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)){
+setEmailError('Проверьте правильность email.');
+return false;
+}
+
+setEmailError('');
+return true;
+}
+
+openButton.addEventListener('click',openTrialModal);
+closeTargets.forEach(target=>target.addEventListener('click',closeTrialModal));
+emailInput.addEventListener('input',()=>{
+setEmailError('');
+formStatus.textContent = '';
+});
+emailInput.addEventListener('blur',()=>{
+if(emailInput.value.trim()) validateEmail();
+});
+form.addEventListener('submit',event=>{
+event.preventDefault();
+formStatus.textContent = '';
+if(!validateEmail()){
+emailInput.focus();
+return;
+}
+formStatus.textContent = 'Email заполнен корректно.';
+});
+
+document.addEventListener('keydown',event=>{
+if(!modal.classList.contains('is-open')) return;
+if(event.key==='Escape') closeTrialModal();
+if(event.key==='Tab'){
+const focusable = [closeButton,emailInput,submitButton];
+const first = focusable[0];
+const last = focusable[focusable.length-1];
+if(event.shiftKey && document.activeElement===first){
+event.preventDefault();
+last.focus();
+}else if(!event.shiftKey && document.activeElement===last){
+event.preventDefault();
+first.focus();
+}
+}
+});
+})();
+
+document.querySelectorAll('.path-toggle').forEach(button => {
+
+button.addEventListener('click', () => {
+
+const card = button.closest('.path-card');
+const isOpen = card.classList.toggle('open');
+const title = card.querySelector('h2').textContent.toLowerCase();
+
+button.setAttribute('aria-expanded', String(isOpen));
+button.setAttribute('aria-label', `${isOpen ? 'Свернуть' : 'Развернуть'} карточку «${title}»`);
+
+});
+
+});
+document.querySelectorAll('.faq-question').forEach(button => {
+
+button.addEventListener('click', () => {
+
+const item = button.closest('.faq-item');
+const isOpen = item.classList.contains('open');
+
+document.querySelectorAll('.faq-item').forEach(other => {
+other.classList.remove('open');
+other.querySelector('.faq-toggle').textContent = '+';
+});
+
+if(!isOpen){
+item.classList.add('open');
+item.querySelector('.faq-toggle').textContent = '−';
+}
+
+});
+
+});  
+</script>
+</div></body></html>
