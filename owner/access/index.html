@@ -201,6 +201,27 @@ width:100%;
 margin-top:2px;
 }
 
+.lead-submit:disabled{
+opacity:.65;
+cursor:wait;
+}
+
+.lead-form-status{
+min-height:16px;
+margin:0;
+color:var(--muted);
+font-size:12px;
+line-height:1.35;
+}
+
+.lead-form-status[data-status="error"]{
+color:#c97b7b;
+}
+
+.lead-form-status[data-status="success"]{
+color:#8fb99a;
+}
+
 body.modal-open{
 overflow:hidden;
 }
@@ -710,6 +731,7 @@ Email
 </div>
 <input name="message" type="hidden" value="Хочу получить исследовательский доступ">
 <button class="access-button primary lead-submit" type="submit">Отправить</button>
+<p class="lead-form-status" id="leadFormStatus" aria-live="polite"></p>
 </form>
 </div>
 </div>
@@ -765,8 +787,17 @@ const getAccessButton = document.getElementById('getAccessButton');
 const leadModalClose = document.getElementById('leadModalClose');
 const leadEmail = document.getElementById('leadEmail');
 const leadForm = document.getElementById('leadForm');
+const leadFormStatus = document.getElementById('leadFormStatus');
+const leadSubmitButton = leadForm.querySelector('.lead-submit');
+const QUD_LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxW3MR6BZBOBQFngHgLcLakLc3E-P8RKQoedeNOnB_RsaL6FjjvNNTXtMYY_vzvynkk/exec';
+
+function setLeadFormStatus(message,type='info'){
+leadFormStatus.textContent = message;
+leadFormStatus.dataset.status = type;
+}
 
 function openLeadModal(){
+setLeadFormStatus('');
 leadModal.classList.add('open');
 leadModal.setAttribute('aria-hidden','false');
 document.body.classList.add('modal-open');
@@ -813,12 +844,49 @@ return !error;
 
 leadEmail.addEventListener('blur',validateLeadEmail);
 leadEmail.addEventListener('input',()=>{
+setLeadFormStatus('');
 if(leadEmail.classList.contains('invalid')) validateLeadEmail();
 });
 
-leadForm.addEventListener('submit',event=>{
+leadForm.addEventListener('submit',async event=>{
 event.preventDefault();
-if(!validateLeadEmail()) leadEmail.focus();
+setLeadFormStatus('');
+
+if(!validateLeadEmail()){
+leadEmail.focus();
+return;
+}
+
+const payload = {
+role:'capital_owner',
+email:leadEmail.value.trim(),
+telegram:'',
+message:leadForm.elements.message.value,
+consent:true,
+source:'landing_owner_access',
+referral_code:''
+};
+
+try{
+leadSubmitButton.disabled = true;
+setLeadFormStatus('Отправляем заявку...');
+
+const response = await fetch(QUD_LEADS_ENDPOINT,{
+method:'POST',
+headers:{'Content-Type':'text/plain;charset=utf-8'},
+body:JSON.stringify(payload)
+});
+
+if(!response.ok) throw new Error('Lead submission failed');
+
+leadForm.reset();
+setLeadFormStatus('Заявка отправлена. Мы свяжемся с вами по email.','success');
+}catch(error){
+console.error(error);
+setLeadFormStatus('Не удалось отправить заявку. Попробуйте ещё раз.','error');
+}finally{
+leadSubmitButton.disabled = false;
+}
 });
 
 document.querySelectorAll('.faq-question').forEach(button => {
