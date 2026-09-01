@@ -5,7 +5,7 @@
 <title>QUD Capital Owner Access</title>
 <style>
 :root{--bg:#090b0d;--panel:#101317;--border:#22272d;--text:#f3f4f6;--muted:#9aa1aa;--accent:#d8a24b}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}.container{max-width:1100px;margin:auto;padding:40px 24px}.section{padding:45px 0;border-bottom:1px solid var(--border)}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;margin-top:20px}h1{font-size:52px;line-height:1.05;margin:0}h2{font-size:28px}p{line-height:1.6}.small{color:var(--muted);font-size:14px}.header{display:flex;justify-content:space-between;padding:22px 0 45px;border-bottom:1px solid var(--border)}.header a{color:var(--muted);text-decoration:none}.why{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}.metric{padding:20px 0;border-bottom:1px solid var(--border)}.metric:last-child{border-bottom:none}.calculator{display:grid;grid-template-columns:1fr 1fr;gap:24px}.access-layout{
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}.container{max-width:1100px;margin:auto;padding:40px 24px}.section{padding:45px 0;border-bottom:1px solid var(--border)}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;margin-top:20px}h1{font-size:52px;line-height:1.05;margin:0}h2{font-size:28px}p{line-height:1.6}.small{color:var(--muted);font-size:14px}.header{display:flex;justify-content:space-between;padding:22px 0 45px;border-bottom:1px solid var(--border)}.header a{color:var(--muted);text-decoration:none}.why{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}.metric{padding:20px 0;border-bottom:1px solid var(--border)}.metric:last-child{border-bottom:none}.calculator{display:grid;gap:22px}.access-layout{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:70px;
@@ -54,6 +54,7 @@ margin-top:0;
 }
 
 .access-button{
+display:block;
 width:300px;
 padding:14px 20px;
 border:1px solid #2f353d;
@@ -63,6 +64,7 @@ color:#f3f4f6;
 font-size:16px;
 font-weight:600;
 text-align:center;
+text-decoration:none;
 cursor:pointer;
 transition:0.2s;
 }
@@ -75,7 +77,134 @@ color:#090b0d;
 
 .access-button:hover{
 opacity:0.9;
-}  
+}
+
+.lead-modal{
+position:fixed;
+inset:0;
+z-index:1000;
+display:grid;
+place-items:center;
+padding:20px;
+background:rgba(5,7,9,0.76);
+backdrop-filter:blur(4px);
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+transition:opacity .22s ease,visibility .22s ease;
+}
+
+.lead-modal.open{
+opacity:1;
+visibility:visible;
+pointer-events:auto;
+}
+
+.lead-modal-panel{
+position:relative;
+width:min(100%,380px);
+padding:24px;
+border:1px solid #2f353d;
+border-radius:14px;
+background:#101317;
+box-shadow:0 24px 70px rgba(0,0,0,.45);
+transform:translateY(10px) scale(.98);
+transition:transform .22s ease;
+}
+
+.lead-modal.open .lead-modal-panel{
+transform:translateY(0) scale(1);
+}
+
+.lead-modal-close{
+position:absolute;
+top:12px;
+right:12px;
+width:32px;
+height:32px;
+padding:0;
+border:1px solid #2f353d;
+border-radius:50%;
+background:transparent;
+color:var(--muted);
+font-size:20px;
+line-height:1;
+cursor:pointer;
+}
+
+.lead-modal h2{
+margin:0 40px 20px 0;
+font-size:22px;
+}
+
+.lead-form{
+display:grid;
+gap:16px;
+}
+
+.lead-field{
+display:grid;
+gap:8px;
+color:var(--muted);
+font-size:13px;
+}
+
+.lead-field input{
+width:100%;
+padding:12px 14px;
+border:1px solid #2f353d;
+border-radius:9px;
+outline:none;
+background:#0d1013;
+color:var(--text);
+font:inherit;
+}
+
+.lead-field input:focus{
+border-color:#6d747e;
+}
+
+.lead-field input.invalid{
+border-color:#a96363;
+}
+
+.lead-error{
+min-height:16px;
+margin-top:-2px;
+color:#c97b7b;
+font-size:12px;
+line-height:1.35;
+}
+
+.lead-message{
+padding:12px 14px;
+border:1px solid #2f353d;
+border-radius:9px;
+background:#0d1013;
+}
+
+.lead-message span{
+display:block;
+margin-bottom:6px;
+color:var(--muted);
+font-size:12px;
+}
+
+.lead-message p{
+margin:0;
+font-size:14px;
+line-height:1.45;
+}
+
+.lead-submit{
+width:100%;
+margin-top:2px;
+}
+
+body.modal-open{
+overflow:hidden;
+}
+  
 .faq-layout{
 display:grid;
 grid-template-columns:.8fr 1.2fr;
@@ -153,6 +282,166 @@ display:block;
 .calculator p{
 color:#9aa1aa;
 }
+
+.calculator-controls{
+display:grid;
+gap:22px;
+}
+
+.calculator .control{
+display:grid;
+gap:14px;
+margin:0;
+}
+
+.calculator .control label{
+color:var(--muted);
+font-size:10px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.calculator-scale{
+display:flex;
+justify-content:space-between;
+gap:16px;
+color:var(--muted);
+font-size:10px;
+}
+
+.calculator-result{
+padding-top:26px;
+border-top:1px solid var(--border);
+}
+
+.calculator-kicker{
+display:block;
+color:var(--muted);
+font-size:11px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.calculator-result .value{
+display:block;
+margin-top:12px;
+font-size:clamp(32px,5vw,49px);
+line-height:1;
+letter-spacing:-.04em;
+}
+
+#strategyLevel{
+background:linear-gradient(to right,rgba(58,64,72,.08) 0%,rgba(58,64,72,.10) 10%,rgba(58,64,72,.14) 20%,rgba(58,64,72,.22) 29.3%,rgba(58,64,72,.42) 34%,rgba(58,64,72,.70) 37%,#3a4048 39.4%,#3a4048 100%);
+}
+
+.earnings-calculator{
+margin-top:24px;
+}
+
+.calculator-offer-grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:20px;
+align-items:stretch;
+}
+
+.calculator-offer-grid .card{
+margin-top:0;
+padding:22px;
+}
+
+.calculator-column>.card,
+.private-capital-summary{
+height:100%;
+}
+
+.owner-scenario-card h3,
+.private-capital-summary h3{
+margin:0;
+font-size:21px;
+letter-spacing:.03em;
+}
+
+.owner-scenario-card .calculator{
+margin-top:24px;
+}
+
+.private-capital-summary{
+display:flex;
+flex-direction:column;
+}
+
+.private-capital-intro{
+margin:10px 0 0;
+color:var(--muted);
+font-size:12px;
+line-height:1.55;
+}
+
+.private-capital-metrics{
+margin-top:20px;
+padding:18px 0;
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
+}
+
+.private-capital-metric+.private-capital-metric{
+margin-top:16px;
+}
+
+.private-capital-metric strong,
+.private-capital-metric span{
+display:block;
+}
+
+.private-capital-metric strong{
+color:var(--accent);
+font-size:24px;
+line-height:1;
+letter-spacing:-.04em;
+}
+
+.private-capital-metric .private-capital-money{
+font-size:29px;
+}
+
+.private-capital-metric strong sup{
+position:relative;
+top:-.25em;
+font-size:.42em;
+}
+
+.private-capital-metric span{
+margin-top:10px;
+color:var(--muted);
+font-size:10px;
+font-weight:700;
+letter-spacing:.08em;
+text-transform:uppercase;
+}
+
+.private-capital-note{
+margin:20px 0 0;
+color:var(--muted);
+font-size:12px;
+line-height:1.6;
+}
+
+.private-capital-footnote{
+margin:14px 0 0;
+color:#6f7782;
+font-size:10px;
+line-height:1.5;
+}
+
+.potential-disclaimer{
+margin:14px 0 0;
+color:var(--muted);
+font-size:11px;
+line-height:1.6;
+}
 @media(max-width:760px){
 
 h1{
@@ -161,6 +450,7 @@ font-size:34px;
   
 .why,
 .calculator,
+.calculator-offer-grid,
 .access-layout,
 .faq-layout{
 grid-template-columns:1fr;
@@ -195,12 +485,51 @@ max-width:320px;
 <div class="header"><b><a href="https://fx-qud.com">QUD</a></b><span class="small">CAPITAL OWNER ACCESS</span></div>
 <div class="section"><h1>Получите доступ к торговым стратегиям независимых трейдеров, прежде чем подключить их к своему капиталу</h1></div>
 <div class="section"><div class="why"><div><h2>Глобальное наблюдение</h2><p class="small">QUD помогает владельцу капитала экономить время на поиске и изучении стратегий: находит независимых трейдеров из разных стран и рынков и проводит системное наблюдение за их торговыми процессами.</p></div><div><div class="metric"><b>Метод наблюдения</b><p class="small">QUD использует собственную инфраструктуру наблюдения, которая фиксирует торговые решения, управление риском и изменения стратегии в процессе реальной торговли.</p></div><div class="metric"><b>История наблюдения</b><p class="small">Каждая стратегия проходит период непрерывного наблюдения, что позволяет на основе исторических данных увидеть особенности стратегии и её поведение в различных рыночных условиях.</p></div><div class="metric"><b>Виртуальное наблюдение</b><p class="small">До подключения собственных средств владелец капитала может изучать динамику и поведение стратегии с виртуальным капиталом без использования реальных средств.</p></div></div></div></div>
-<div class="section"><h2>Сценарная модель капитала</h2><p class="small">Сценарная модель показывает возможную динамику виртуального капитала на основе выбранных параметров. Не является прогнозом будущего результата.</p>
-<div class="card"><div class="calculator"><div>
-<div class="control"><label>Размер капитала <span id="capitalValue" class="range-value">10 000 USD</span></label><input id="capital" class="range" type="range" min="1000" max="25000" step="1000" value="10000"></div>
-<div class="control"><label>Среднее историческое изменение <span id="changeValue" class="range-value">+4% / месяц</span></label><input id="change" class="range" type="range" min="1" max="6" value="4"></div>
-<div class="control"><label>Период наблюдения <span id="periodValue" class="range-value">5 месяцев</span></label><input id="period" class="range" type="range" min="1" max="6" value="5"></div>
-</div><div><p>Пример сценария</p><div id="result" class="value">+$2,000</div></div></div></div></div>
+<div class="section"><h2>Сценарная модель капитала</h2><p class="small">Сценарная модель показывает возможный месячный результат владельца после платежей на основе выбранных параметров. Не является прогнозом будущего результата.</p>
+<div class="earnings-calculator">
+<div class="calculator-offer-grid">
+<div class="calculator-column">
+<div class="card owner-scenario-card">
+<div class="calculator">
+<div class="calculator-controls">
+<div class="control">
+<label for="capital">Капитал</label>
+<input id="capital" class="range" type="range" min="4500" max="25000" step="500" value="10000">
+<div class="calculator-scale"><span>$4 500</span><span id="capitalCurrent">$10 000</span></div>
+</div>
+<div class="control">
+<label for="change">Среднее историческое изменение</label>
+<input id="change" class="range" type="range" min="1" max="5" step="0.1" value="3">
+<div class="calculator-scale"><span id="changeProfitStart">+1.0%</span><span id="changeCurrent">3%</span></div>
+</div>
+<div class="control">
+<label for="strategyLevel">Подтверждённый уровень стратегии</label>
+<input id="strategyLevel" class="range" type="range" min="1" max="100" step="1" value="75">
+<div class="calculator-scale"><span>1</span><span id="strategyLevelCurrent">75</span></div>
+</div>
+</div>
+<div class="calculator-result" aria-live="polite">
+<span class="calculator-kicker">Пример сценария / месяц</span>
+<strong id="result" class="value">+$205</strong>
+</div>
+</div>
+</div>
+</div>
+
+<article class="card private-capital-summary" aria-labelledby="private-capital-heading">
+<h3 id="private-capital-heading">PRIVATE CAPITAL</h3>
+<p class="private-capital-intro">Для владельцев капитала выше стандартных лимитов предусмотрен отдельный контур подключения к выбранным стратегиям QUD с индивидуальной многоуровневой системой защиты капитала и контроля рисков.</p>
+<div class="private-capital-metrics">
+<div class="private-capital-metric">
+<strong class="private-capital-money">$50 000+</strong>
+<span>Капитал владельца</span>
+</div>
+</div>
+<p class="private-capital-note">Подключение рассматривается индивидуально, после согласования условий.</p>
+</article>
+</div>
+</div>
+</div>
 <div class="section">
 
 <div class="access-layout">
@@ -235,11 +564,11 @@ max-width:320px;
 
 <div class="access-actions">
 
-<button class="access-button">
-Уже есть доступ?
-</button>
+<a class="access-button" id="cabinetAccessButton" href="https://fx-qud.com/portal/portfolio/mvp/">
+Уже есть доступ
+</a>
 
-<button class="access-button primary">
+<button class="access-button primary" id="getAccessButton" type="button">
 Получить доступ
 </button>
 
@@ -365,30 +694,133 @@ QUD — это не сервис торговых сигналов. Пользо
 QUD предоставляет инфраструктуру наблюдения, анализа и контроля риска. Исторические данные и виртуальные сценарии носят исследовательский характер и не гарантируют доходность. Торговля на финансовых рынках связана с риском частичной или полной потери капитала. Решение о подключении стратегии владелец капитала принимает самостоятельно.
 </div>
 
+<div class="lead-modal" id="leadModal" aria-hidden="true">
+<div class="lead-modal-panel" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
+<button class="lead-modal-close" id="leadModalClose" type="button" aria-label="Закрыть">×</button>
+<h2 id="leadModalTitle">Получить доступ</h2>
+<form class="lead-form" id="leadForm" novalidate>
+<label class="lead-field" for="leadEmail">
+Email
+<input id="leadEmail" name="email" type="email" placeholder="name@example.com" autocomplete="email" maxlength="50" aria-describedby="leadEmailError" required>
+</label>
+<div class="lead-error" id="leadEmailError" aria-live="polite"></div>
+<div class="lead-message">
+<span>Сообщение</span>
+<p>Хочу получить исследовательский доступ</p>
+</div>
+<input name="message" type="hidden" value="Хочу получить исследовательский доступ">
+<button class="access-button primary lead-submit" type="submit">Отправить</button>
+</form>
+</div>
+</div>
+
 <script>
-function calc(){
+function calc(resetToProfitStart=false){
+
+const PROTECTED_ACCESS = 50;
+const tiers = [
+{min:40,max:49,label:'Room 40–49',price:30},
+{min:50,max:59,label:'Room 50–59',price:35},
+{min:60,max:69,label:'Room 60–69',price:40},
+{min:70,max:79,label:'Room 70–79',price:45},
+{min:80,max:89,label:'Elite 80–89',price:60},
+{min:90,max:100,label:'Elite 90–100',price:70}
+];
 
 const c = +capital.value;
+const level = +strategyLevel.value;
+const tier = tiers.find(item=>level>=item.min&&level<=item.max) || tiers[0];
+const fees = PROTECTED_ACCESS + tier.price;
+const breakEvenRate = fees / c * 100;
+const firstProfitRate = Math.min(5,Math.floor((breakEvenRate+1e-9)*10)/10+0.1);
+
+change.min = firstProfitRate.toFixed(1);
+if(resetToProfitStart||Number(change.value)<firstProfitRate){
+change.value = firstProfitRate.toFixed(1);
+}
+
 const ch = +change.value / 100;
-const p = +period.value;
+const gross = c * ch;
+const scenario = gross - fees;
 
-const scenario = c * ch * p;
+const formatUsd = value=>'$'+Math.round(Math.abs(value)).toLocaleString('en-US');
+const signedUsd = value=>(value>=0?'+':'−')+formatUsd(value);
+const formatPercent = value=>Number(value).toFixed(1).replace(/\.0$/,'')+'%';
 
-capitalValue.textContent =
-c.toLocaleString('en-US') + ' USD';
+result.textContent = signedUsd(scenario);
+capitalCurrent.textContent = '$'+Math.round(c).toLocaleString('ru-RU');
+changeProfitStart.textContent = `+${firstProfitRate.toFixed(1)}%`;
+changeCurrent.textContent = Number(change.value)>=5 ? '5%+' : formatPercent(change.value);
+strategyLevelCurrent.textContent = Math.round(level);
 
-changeValue.textContent =
-'+' + change.value + '% / месяц';
+};
 
-periodValue.textContent =
-p + ' ' + (p === 1 ? 'месяц' : 'месяца');
+capital.addEventListener('input',()=>calc(true));
+strategyLevel.addEventListener('input',()=>calc(true));
+change.addEventListener('input',()=>calc(false));
+calc(false);
 
-const sign = scenario >= 0 ? '+' : '';
+const leadModal = document.getElementById('leadModal');
+const getAccessButton = document.getElementById('getAccessButton');
+const leadModalClose = document.getElementById('leadModalClose');
+const leadEmail = document.getElementById('leadEmail');
+const leadForm = document.getElementById('leadForm');
 
-result.textContent =
-sign + '$' + Math.round(scenario).toLocaleString('en-US');
+function openLeadModal(){
+leadModal.classList.add('open');
+leadModal.setAttribute('aria-hidden','false');
+document.body.classList.add('modal-open');
+setTimeout(()=>leadEmail.focus(),220);
+}
 
-};document.querySelectorAll('input').forEach(i=>i.oninput=calc);calc();
+function closeLeadModal(){
+leadModal.classList.remove('open');
+leadModal.setAttribute('aria-hidden','true');
+document.body.classList.remove('modal-open');
+getAccessButton.focus();
+}
+
+getAccessButton.addEventListener('click',openLeadModal);
+leadModalClose.addEventListener('click',closeLeadModal);
+
+leadModal.addEventListener('click',event=>{
+if(event.target===leadModal) closeLeadModal();
+});
+
+document.addEventListener('keydown',event=>{
+if(event.key==='Escape'&&leadModal.classList.contains('open')) closeLeadModal();
+});
+
+function validateLeadEmail(){
+const email = leadEmail.value.trim();
+let error = '';
+
+if(!email){
+error = 'Введите email.';
+}else if(email.length>50){
+error = 'Email должен содержать не более 50 символов.';
+}else if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
+error = 'Проверьте формат email, например name@example.com.';
+}
+
+leadEmail.value = email;
+leadEmail.classList.toggle('invalid',Boolean(error));
+leadEmail.setAttribute('aria-invalid',error ? 'true' : 'false');
+document.getElementById('leadEmailError').textContent = error;
+
+return !error;
+}
+
+leadEmail.addEventListener('blur',validateLeadEmail);
+leadEmail.addEventListener('input',()=>{
+if(leadEmail.classList.contains('invalid')) validateLeadEmail();
+});
+
+leadForm.addEventListener('submit',event=>{
+event.preventDefault();
+if(!validateLeadEmail()) leadEmail.focus();
+});
+
 document.querySelectorAll('.faq-question').forEach(button => {
 
 button.addEventListener('click', () => {
