@@ -237,6 +237,14 @@ color:#d88b75;
 color:var(--muted);
 }
 
+.trial-form-status[data-status="error"]{
+color:#d88b75;
+}
+
+.trial-form-status[data-status="success"]{
+color:#8fb99a;
+}
+
 .trial-submit{
 width:100%;
 margin-top:14px;
@@ -252,6 +260,11 @@ cursor:pointer;
 
 .trial-submit:hover{
 opacity:.9;
+}
+
+.trial-submit:disabled{
+opacity:.65;
+cursor:wait;
 }
 
 .trial-submit:focus-visible{
@@ -1299,6 +1312,7 @@ const referralInput = modal?.querySelector('#trialReferral');
 const emailError = modal?.querySelector('#trialEmailError');
 const formStatus = modal?.querySelector('#trialFormStatus');
 const submitButton = modal?.querySelector('.trial-submit');
+const QUD_LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxW3MR6BZBOBQFngHgLcLakLc3E-P8RKQoedeNOnB_RsaL6FjjvNNTXtMYY_vzvynkk/exec';
 let previousFocus = null;
 
 if(!openButton || !modal || !dialog || !closeButton || !form || !emailInput || !referralInput || !emailError || !formStatus || !submitButton) return;
@@ -1324,6 +1338,15 @@ if(previousFocus && typeof previousFocus.focus==='function') previousFocus.focus
 function setEmailError(message){
 emailError.textContent = message;
 emailInput.setAttribute('aria-invalid',String(Boolean(message)));
+}
+
+function setFormStatus(message,type='info'){
+formStatus.textContent = message;
+formStatus.dataset.status = type;
+}
+
+function normalizeReferralCode(value){
+return String(value || '').trim().toUpperCase().replace(/\s+/g,'');
 }
 
 function validateEmail(){
@@ -1353,23 +1376,54 @@ openButton.addEventListener('click',openTrialModal);
 closeTargets.forEach(target=>target.addEventListener('click',closeTrialModal));
 emailInput.addEventListener('input',()=>{
 setEmailError('');
-formStatus.textContent = '';
+setFormStatus('');
 });
 emailInput.addEventListener('blur',()=>{
 if(emailInput.value.trim()) validateEmail();
 });
 referralInput.addEventListener('input',()=>{
-formStatus.textContent = '';
+setFormStatus('');
 });
-form.addEventListener('submit',event=>{
+form.addEventListener('submit',async event=>{
 event.preventDefault();
-formStatus.textContent = '';
+setFormStatus('');
 if(!validateEmail()){
 emailInput.focus();
 return;
 }
-referralInput.value = referralInput.value.trim();
-formStatus.textContent = 'Данные заполнены корректно.';
+
+referralInput.value = normalizeReferralCode(referralInput.value);
+
+const payload = {
+role:'strategy_owner',
+email:emailInput.value.trim(),
+telegram:'',
+message:'TDA Trial',
+consent:true,
+source:'landing_traders_tradermap',
+referral_code:referralInput.value
+};
+
+try{
+submitButton.disabled = true;
+setFormStatus('Отправляем заявку...');
+
+const response = await fetch(QUD_LEADS_ENDPOINT,{
+method:'POST',
+headers:{'Content-Type':'text/plain;charset=utf-8'},
+body:JSON.stringify(payload)
+});
+
+if(!response.ok) throw new Error('Lead submission failed');
+
+form.reset();
+setFormStatus('Заявка отправлена. Мы свяжемся с вами по email.','success');
+}catch(error){
+console.error(error);
+setFormStatus('Не удалось отправить заявку. Попробуйте ещё раз.','error');
+}finally{
+submitButton.disabled = false;
+}
 });
 
 document.addEventListener('keydown',event=>{
