@@ -213,6 +213,14 @@ border-color:var(--accent);
 border-color:#d88b75;
 }
 
+.trial-referral-label{
+margin-top:16px;
+}
+
+.trial-form input::placeholder{
+color:#6f7782;
+}
+
 .trial-email-error,
 .trial-form-status{
 min-height:16px;
@@ -1097,6 +1105,8 @@ font-size:13px;
 <label for="trialEmail">Email</label>
 <input id="trialEmail" name="email" type="email" maxlength="50" autocomplete="email" required aria-describedby="trialEmailError trialFormStatus">
 <p class="trial-email-error" id="trialEmailError" aria-live="polite"></p>
+<label class="trial-referral-label" for="trialReferral">Referral Code — при наличии</label>
+<input id="trialReferral" name="referral_code" type="text" maxlength="20" autocomplete="off" spellcheck="false" placeholder="QRF-XXXX">
 <button class="trial-submit" type="submit">Продолжить</button>
 <p class="trial-form-status" id="trialFormStatus" aria-live="polite"></p>
 </form>
@@ -1285,12 +1295,13 @@ const closeButton = modal?.querySelector('.trial-modal-close');
 const closeTargets = modal?.querySelectorAll('[data-trial-close]') || [];
 const form = modal?.querySelector('#trialForm');
 const emailInput = modal?.querySelector('#trialEmail');
+const referralInput = modal?.querySelector('#trialReferral');
 const emailError = modal?.querySelector('#trialEmailError');
 const formStatus = modal?.querySelector('#trialFormStatus');
 const submitButton = modal?.querySelector('.trial-submit');
 let previousFocus = null;
 
-if(!openButton || !modal || !dialog || !closeButton || !form || !emailInput || !emailError || !formStatus || !submitButton) return;
+if(!openButton || !modal || !dialog || !closeButton || !form || !emailInput || !referralInput || !emailError || !formStatus || !submitButton) return;
 
 openButton.setAttribute('aria-haspopup','dialog');
 openButton.setAttribute('aria-controls','trialModal');
@@ -1347,6 +1358,9 @@ formStatus.textContent = '';
 emailInput.addEventListener('blur',()=>{
 if(emailInput.value.trim()) validateEmail();
 });
+referralInput.addEventListener('input',()=>{
+formStatus.textContent = '';
+});
 form.addEventListener('submit',event=>{
 event.preventDefault();
 formStatus.textContent = '';
@@ -1354,14 +1368,15 @@ if(!validateEmail()){
 emailInput.focus();
 return;
 }
-formStatus.textContent = 'Email заполнен корректно.';
+referralInput.value = referralInput.value.trim();
+formStatus.textContent = 'Данные заполнены корректно.';
 });
 
 document.addEventListener('keydown',event=>{
 if(!modal.classList.contains('is-open')) return;
 if(event.key==='Escape') closeTrialModal();
 if(event.key==='Tab'){
-const focusable = [closeButton,emailInput,submitButton];
+const focusable = [closeButton,emailInput,referralInput,submitButton];
 const first = focusable[0];
 const last = focusable[focusable.length-1];
 if(event.shiftKey && document.activeElement===first){
