@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><title>QUD TDA Report</title>
+<style>
+:root{--bg:#0b0d0f;--panel:#111315;--text:#c6c6c6;--text-strong:#f0f0ed;--muted:#8a8a8a;--blue:#8fa6c8;--green:#6fa56f;--yellow:#bda351;--orange:#b87945;--red:#b4514b;--border-soft:#1f2428}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 30% -10%,#151b21 0%,#0b0d0f 44%,#08090a 100%);color:var(--text);font-family:Inter,Arial,sans-serif}.page{max-width:1240px;margin:0 auto;padding:20px 22px}.panel{background:linear-gradient(180deg,rgba(17,20,22,.72),rgba(10,12,14,.82));border:1px solid rgba(255,255,255,.06);border-radius:0;padding:14px;box-shadow:0 10px 28px rgba(0,0,0,.14);position:relative;overflow:visible}h1{font-size:24px;margin:0 0 6px;color:var(--text-strong)}h2{font-size:12px;margin:0 0 6px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:800}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#d5c27a;font-weight:700;margin-bottom:8px}.subtitle{margin:0;color:var(--muted);font-size:13px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}.badge{display:inline-flex;border:1px solid rgba(189,163,81,.45);border-radius:999px;padding:5px 10px;color:#d5c27a;background:rgba(189,163,81,.06);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.badge.good{border-color:rgba(111,165,111,.45);color:#8ec58e;background:rgba(111,165,111,.07)}.badge.warn{border-color:rgba(189,163,81,.45);color:#d5c27a;background:rgba(189,163,81,.07)}.badge.danger{border-color:rgba(180,81,75,.5);color:#d97f78;background:rgba(180,81,75,.08)}.badge.neutral{border-color:rgba(143,166,200,.35);color:var(--blue);background:rgba(143,166,200,.07)}.top{margin-bottom:12px}.top-combined{display:grid;grid-template-columns:1.75fr .7fr .7fr;gap:24px;align-items:center}.top-title-block{padding-left:62px}.score-wrap{position:relative;height:154px}.score-gauge{width:100%;height:100%}.score-value{position:absolute;left:50%;top:64%;transform:translate(-50%,-50%);font-size:42px;color:var(--green);font-weight:850;text-align:center}.score-value small{display:block;font-size:12px;color:var(--muted);margin-top:4px}.gauge-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:12;stroke-linecap:round}.gauge-seg{fill:none;stroke-width:12;stroke-linecap:round}.gauge-seg.red{stroke:var(--red)}.gauge-seg.orange{stroke:var(--orange)}.gauge-seg.green{stroke:var(--green)}.gauge-marker{stroke:#efe8d2;stroke-width:4;stroke-linecap:round}.gauge-tick{fill:var(--muted);font-size:10px}.status-badges{height:154px;display:flex;flex-direction:column;justify-content:center;gap:8px}.status-line{display:flex;align-items:center;gap:8px}.status-note{font-size:10px;color:var(--muted);font-weight:600}.top-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:20px 0 24px}.metric-card{padding:10px 24px 10px 0;display:grid;grid-template-columns:auto 104px;grid-template-rows:auto auto;column-gap:18px;align-items:end}.metric-card:first-child{padding-left:24px}.metric-card+.metric-card{padding-left:24px;border-left:1px solid rgba(255,255,255,.12)}.metric-value{font-size:22px;color:var(--text-strong);font-weight:800;margin-top:8px}.metric-spark{grid-column:2;grid-row:1/span 2;width:104px;height:38px;align-self:center}.pre-account-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:24px}.pre-leak-panel{grid-column:span 4;min-height:270px;overflow:hidden}.pre-score-panel{grid-column:span 8}.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:16px;row-gap:26px}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}.section-head{display:flex;justify-content:space-between;margin-bottom:14px}.chart-box{height:220px;margin-top:8px}.account-chart{height:250px}.planned-risk-chart{height:252px}.svg-chart{width:100%;height:100%;display:block}.gridline{stroke:rgba(255,255,255,.055);stroke-width:1}.axis-label{fill:var(--muted);font-size:10px;font-weight:600}.legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:10px;color:var(--muted)}.leg{display:inline-flex;align-items:center;gap:6px}.sw{width:10px;height:10px;border-radius:3px;background:var(--blue)}.sw.green{background:var(--green)}.sw.yellow{background:var(--yellow)}.sw.red{background:var(--red)}.sw.gray{background:#66717b}.mini-leak-stack{display:grid;gap:26px;margin-top:38px;padding:0 10px 8px}.mini-leak-row{display:grid;grid-template-columns:128px minmax(0,1fr);gap:18px;align-items:center}.mini-leak-name{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850;white-space:nowrap}.mini-leak-bar{height:7px;width:100%;max-width:100%;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 30%,var(--yellow) 30% 60%,var(--orange) 60% 80%,var(--red) 80% 100%);position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);overflow:visible}.mini-leak-bar .marker{position:absolute;top:-7px;width:4px;height:21px;background:#e9e0b6;border-radius:4px;box-shadow:0 0 0 2px rgba(0,0,0,.48);transform:translateX(-2px)}.pre-leak-panel h2{font-size:13px;letter-spacing:.1em;margin-bottom:8px}.analysis-panel{padding:28px 14px 30px;background:transparent;border:0;box-shadow:none}.analysis-panel h2{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.analysis-head-value{order:-1;font-size:16px;color:var(--text-strong);font-weight:850}.analysis-winrate{font-size:9px;color:var(--muted)}.analysis-winrate b{font-size:11px}.analysis-gauge-wrap{height:92px;margin-top:18px;display:grid;place-items:center}.analysis-gauge{width:100%;height:78px}.sl-protection-layout{display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:center}.donut-center{font-size:28px;fill:var(--green);font-weight:850}.donut-sub{font-size:10px;fill:var(--muted);letter-spacing:.12em}.timeline-dots{height:172px;width:100%}.legend-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:10px;color:var(--muted)}.legend-row{display:inline-flex;gap:6px;align-items:center}.sq{width:10px;height:10px;border-radius:3px}.risk-zone-summary{position:relative;z-index:1;display:flex;justify-content:flex-start;align-items:center;gap:58px;margin-top:-50px;margin-bottom:16px;padding:0 0 0 10px;text-align:left}.risk-zone-summary>div{min-width:104px}.risk-zone-value{font-size:20px;color:var(--text-strong);font-weight:850}.risk-zone-value.up{color:var(--red)}.risk-zone-value.down{color:var(--green)}.risk-zone-value.neutral{color:var(--muted)}.risk-zone-label{font-size:10px;color:var(--muted);margin-top:5px;font-weight:750}.risk-cv-scale{width:190px;margin-top:8px;margin-left:auto;margin-right:20px}.risk-after-note{margin-top:38px;color:var(--muted);font-size:14px}.risk-after-note b{font-size:22px;color:var(--green);font-weight:850}.risk-after-note b.up{color:var(--red)}.risk-cv-title{font-size:10px;color:var(--text-strong);font-weight:850;letter-spacing:.07em;margin-bottom:5px}.risk-cv-scale-top{position:relative;height:20px}.risk-cv-line{position:absolute;left:0;right:0;top:12px;height:5px;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 50%,var(--yellow) 50% 78%,var(--red) 78% 100%)}.risk-cv-marker{position:absolute;top:0;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #efe8d2}.risk-cv-ticks,.risk-cv-labels{display:flex;justify-content:space-between;font-size:8px;color:var(--muted);font-weight:750;margin-top:2px}.findings-panel{background:transparent;border:0;box-shadow:none;padding:18px 10px}.finding-list{display:grid;gap:18px;margin-top:18px}.finding-list .item{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:center}.item-num{width:24px;height:24px;border-radius:7px;font-size:11px;background:transparent;border:1.5px solid currentColor;display:grid;place-items:center;font-weight:800}.item-num.good{color:var(--green)}.item-num.warn{color:var(--yellow)}.item-num.danger{color:var(--red)}.item-title{font-size:12px;line-height:1.28;font-weight:500;color:var(--text)}.item-sub{display:none}.footer{display:flex;justify-content:space-between;margin-top:14px;color:var(--muted);font-size:12px;border-top:1px solid var(--border-soft);padding-top:12px}.not-available{fill:var(--muted);font-size:13px;font-weight:700}.help{display:inline-grid;place-items:center;width:16px;height:16px;margin-left:6px;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:0;line-height:1;cursor:help;vertical-align:middle;text-transform:none}.help:hover{border-color:rgba(255,255,255,.34);color:var(--text-strong)}.qud-tooltip{position:fixed;z-index:9999;max-width:420px;padding:18px 20px;background:rgba(10,12,14,.96);border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 22px 60px rgba(0,0,0,.5);color:var(--text);font-size:13px;line-height:1.42;pointer-events:none}.qud-tooltip-title{font-size:14px;font-weight:850;color:var(--text-strong);margin-bottom:12px}.qud-tooltip b{display:block;margin-top:9px;margin-bottom:3px;color:#d5c27a;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.qud-tooltip p{margin:0 0 3px}.qud-tooltip .muted{color:var(--muted)}@media(max-width:1100px){.top-combined,.grid,.pre-account-grid,.top-metrics{display:block}.panel{margin-bottom:14px}}
+.risk-zone-value.baseline{color:var(--green)}.footer a{color:inherit;text-decoration:none}.footer a:hover{color:var(--text-strong);text-decoration:underline}
+.section-head>.badge.good{padding:3px 7px;font-size:8px;letter-spacing:.035em}.qud-tooltip{max-width:280px;padding:12px 13px;border-radius:8px;font-size:10px;line-height:1.36}.qud-tooltip-title{font-size:11px;margin-bottom:8px}.qud-tooltip b{margin-top:6px;margin-bottom:2px;font-size:9px}.qud-tooltip p{margin-bottom:2px}@media(max-width:1100px){.qud-tooltip{max-width:calc(100vw - 24px);padding:11px 12px}}
+</style></head><body><main class="page">
+<section class="top"><div class="panel"><div class="top-combined"><div class="top-title-block"><div class="eyebrow">Trade Decision Audit Report</div><h1>—</h1><p class="subtitle" id="headerMeta">—</p></div><div><div class="score-wrap"><svg class="score-gauge" id="scoreGauge" viewBox="0 0 320 180"></svg><div class="score-value" id="scoreValue">—</div></div><div class="label" style="text-align:center">Trust Score</div></div><div><div class="status-badges"><div class="status-line"><span class="badge" id="riskMode">—</span><span class="status-note">risk</span></div><div class="status-line"><span class="badge neutral" id="trustZone">—</span><span class="status-note">trust</span></div><div class="status-line"><span class="badge neutral" id="scoreDelta">—</span><span class="status-note">prev.period</span></div></div><div class="label" style="text-align:center">Trust status</div></div></div></div></section>
+<section class="top-metrics"><div class="metric-card"><div class="label">Win Ratio</div><div class="metric-value" id="topWinRatio">—</div><svg class="metric-spark" id="sparkWinRatio"></svg></div><div class="metric-card"><div class="label">Profit Factor</div><div class="metric-value" id="topProfitFactor">—</div><svg class="metric-spark" id="sparkProfitFactor"></svg></div><div class="metric-card"><div class="label">Average Risk %</div><div class="metric-value" id="topAverageRisk">—</div><svg class="metric-spark" id="sparkAverageRisk"></svg></div><div class="metric-card"><div class="label">SL Safe</div><div class="metric-value" id="topSlSafe">—</div><svg class="metric-spark" id="sparkSlSafe"></svg></div></section>
+<section class="pre-account-grid"><div class="panel pre-leak-panel"><h2>QUD Leak Map</h2><div class="mini-leak-stack" id="miniLeakGrid"></div></div><div class="panel pre-score-panel"><h2>TRUST SCORE OVER TIME</h2><div class="chart-box"><svg class="svg-chart" id="scoreTrend"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Score</span><span class="leg"><span class="sw red"></span>pre QUD</span><span class="leg"><span class="sw" style="background:var(--orange)"></span>QUD Room</span><span class="leg"><span class="sw green"></span>QUD Elite</span></div></div></section>
+<section class="grid">
+<div class="panel span-12"><div class="section-head"><h2>Account Balance & Equity</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box account-chart"><svg class="svg-chart" id="accountEquity"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Balance</span><span class="leg"><span class="sw gray"></span>Equity</span></div></div>
+<div class="panel span-6"><div class="section-head"><h2>Holding Time Efficiency</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box"><svg class="svg-chart" id="durationQuality"></svg></div><div class="legend"><span class="leg"><span class="sw green"></span>Above trader baseline</span><span class="leg"><span class="sw red"></span>Below trader baseline</span><span class="leg"><span class="sw gray"></span>Trader baseline</span></div></div>
+<div class="panel span-6"><div class="section-head"><h2>Instrument Contribution & Load</h2><span class="badge good">LIVE DATA</span></div><div class="chart-box"><svg class="svg-chart" id="instrumentContribution"></svg></div><div class="legend"><span class="leg"><span class="sw green"></span>Win Contribution</span><span class="leg"><span class="sw"></span>Load Volume</span></div></div>
+<div class="span-4 analysis-panel"><h2>Short Cover Ratio <span class="analysis-head-value" id="shortCoverValue">—</span><span class="analysis-winrate">Win Rate % <b id="shortWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="shortAnalysisGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Profit Factor <span class="analysis-head-value" id="profitFactorValue">—</span><span class="analysis-winrate">Win Rate % <b id="totalWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="profitabilityGauge"></svg></div></div>
+<div class="span-4 analysis-panel"><h2>Long Cover Ratio <span class="analysis-head-value" id="longCoverValue">—</span><span class="analysis-winrate">Win Rate % <b id="longWinRateValue">—</b></span></h2><div class="analysis-gauge-wrap"><svg class="analysis-gauge" id="longAnalysisGauge"></svg></div></div>
+<div class="panel span-8"><h2>Protected Trades Rate</h2><div class="sl-protection-layout"><svg id="slDonut" width="190" height="150"></svg><svg class="timeline-dots" id="slTimeline"></svg></div><div class="legend-list" id="slLegend"></div></div>
+<div class="panel span-4"><h2>Risk Zone Distribution <span class="label">VS PERSONAL BASELINE</span></h2><div class="chart-box"><svg class="svg-chart" id="scoreDonut"></svg></div><div class="risk-zone-summary" id="riskZoneSummary"></div></div>
+<div class="panel span-4"><h2>Risk After Loss <span class="label" id="riskAfterLossPeriod">WEEK</span></h2><div class="chart-box"><svg class="svg-chart" id="lossBarsTop"></svg></div><div class="item-sub" id="lossNoteTop" style="margin-top:46px"></div></div>
+<div class="panel span-8"><div class="section-head"><h2>Risk Consistency</h2><div class="risk-cv-scale" id="riskCvScale"></div></div><div class="chart-box"><svg class="svg-chart" id="riskLine"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Risk %</span><span class="leg"><span class="sw green"></span>Normal risk zone</span><span class="leg"><span class="sw yellow"></span>Median risk</span><span class="leg"><span class="sw red"></span>Above normal risk</span></div></div>
+<div class="panel span-8"><h2>PLANNED RISK VS ACTUAL LOSS</h2><div class="chart-box planned-risk-chart"><svg class="svg-chart" id="scatter"></svg></div><div class="legend"><span class="leg"><span class="sw" style="background:#c0c0bd"></span>Planned SL line</span><span class="leg"><span class="sw yellow"></span>Median risk</span><span class="leg"><span class="sw gray"></span>Actual loss within plan</span><span class="leg"><span class="sw red"></span>Excess loss above plan</span></div></div>
+<div class="panel span-4 findings-panel"><h2>5 Key Findings <span class="label" id="findingsPeriod">WEEK</span></h2><div class="finding-list" id="findings"></div></div>
+</section><div class="footer"><a id="footTrader" href="https://fx-qud.com/" target="_blank" rel="noopener noreferrer">fx-qud.com</a><span id="generated">Generated: —</span></div></main>
+<script id="report-data" type="application/json">{"report":{"request_id":"REQ-AUTO-aud_00014-10012455618","audit_id":"aud_00014","plan":"TDA_TRIAL","display_name":"QUD TDA Trial","type":"AUDIT_7D","generated_at":"2026-09-05","version":"TRIAL_AUDIT_v1"},"trader":{"trader_id":"trd_10012455618","account_login":"10012455618","candidate_id":"cnd_622bf3869ba340bf"},"period":{"start":"2026-08-31","end":"2026-09-04","current_period":"2026-08-31 — 2026-09-04"},"score":{"qud_tda_score":1,"weekly_quality_score":44.75,"history_trust_factor":0.25,"trust_zone":"pre QUD","risk_mode":"critical","trust_score_delta":null,"display_class":"danger","zones":[{"from":0,"to":40,"label":"pre QUD","status":"pre_qud"},{"from":40,"to":80,"label":"QUD Room","status":"qud_room"},{"from":80,"to":100,"label":"QUD Elite","status":"qud_elite"}],"main_damage_source":"Block D","history":[{"label":"W1","period":"2026-08-31 — 2026-09-04","value":1.19,"source":"calculated_from_raw"}],"history_calculation_scope":"first_observed_week_only","unavailable_block_rule":"exclude_and_normalize_available_weights"},"trends":{"win_ratio_pct":[{"period":"2026-08-31 — 2026-09-04","value":42.86,"source":"cumulative_to_period_end"}],"profit_factor":[{"period":"2026-08-31 — 2026-09-04","value":0.574562,"source":"cumulative_to_period_end","status":"live"}],"average_risk_pct":[{"period":"2026-08-31 — 2026-09-04","value":1.61,"source":"cumulative_to_period_end"}],"sl_safe_pct":[{"period":"2026-08-31 — 2026-09-04","value":50,"source":"cumulative_to_period_end"}]},"leaks":{"risk_leak_score":80,"sl_leak_score":65,"behavior_leak_score":45,"execution_leak_score":85,"performance_leak_score":65,"data_quality_leak_score":0,"main_leak":"Execution Leak","scope":"cumulative_to_period_end","history_start":"2026-08-31","history_end":"2026-09-04","sample_trades_count":14,"methodology_version":"TRIAL_AUDIT_v1_LEAK_MAP_PROVISIONAL_W1","history_maturity":"first_week_limited","items":[{"name":"Risk Leak","score":80},{"name":"SL Leak","score":65},{"name":"Behavior Leak","score":45},{"name":"Execution Leak","score":85}]},"risk":{"avg_pct":1.61,"median_pct":0.67,"max_pct":7.55,"min_pct":0.36,"std_pct":2.63,"cv_value":1.63,"cv":{"value":1.63,"marker_pct":100,"label":"RISK CV","status":"unstable","min_label":"0.0","mid_label":"0.5","max_label":"1.0+","scope":"cumulative_to_period_end","sample_trades_count":7,"source_average_risk_pct":1.6073,"source_std_risk_pct":2.6278,"methodology_version":"TRIAL_AUDIT_v1_RISK_CV_CUMULATIVE"},"personal_risk_baseline_pct":0.668,"personal_risk_low_bound_pct":0.334,"personal_risk_high_bound_pct":1.002,"risk_reduced_count":0,"risk_normal_count":6,"risk_expansion_count":1,"risk_expansion_pct":14.29,"risk_drift_count":1,"drift":{"count":1,"value":1,"status":"expansion","label":"Risk Drift"},"zone_items":[{"label":"Reduced Risk","count":0,"pct":0,"status":"reduced"},{"label":"Normal Risk","count":6,"pct":85.71,"status":"normal"},{"label":"Risk Expansion","count":1,"pct":14.29,"status":"expansion"}],"zone_distribution":{"data_status":"live","scope":"cumulative_to_period_end","history_start":"2026-08-31","history_end":"2026-09-04","history_maturity":"first_week_limited","valid_risk_trades_count":7,"personal_risk_baseline_pct":0.668,"personal_risk_low_bound_pct":0.334,"personal_risk_high_bound_pct":1.002,"risk_reduced_count":0,"risk_normal_count":6,"risk_expansion_count":1,"risk_expansion_pct":14.29,"risk_drift_count":1,"risk_drift_pct":14.29,"drift":{"count":1,"pct":14.29,"value":14.29,"direction":"toward_expansion","status":"expansion","label":"Risk Drift"},"zone_items":[{"label":"Reduced Risk","count":0,"pct":0,"status":"reduced"},{"label":"Normal Risk","count":6,"pct":85.71,"status":"normal"},{"label":"Risk Expansion","count":1,"pct":14.29,"status":"expansion"}],"methodology_version":"TRIAL_AUDIT_v1_RISK_ZONE_CUMULATIVE"},"trade_series":[{"trade_id":"aud_00014_10012455618_152559995980","risk_pct":0.4371,"timestamp":"2026-08-31 14:48:42","week":"W1","status":"normal"},{"trade_id":"aud_00014_10012455618_152565640540","risk_pct":0.3644,"timestamp":"2026-09-01 12:36:04","week":"W1","status":"normal"},{"trade_id":"aud_00014_10012455618_152565645401","risk_pct":0.5788,"timestamp":"2026-09-01 12:37:28","week":"W1","status":"normal"},{"trade_id":"aud_00014_10012455618_152565646964","risk_pct":0.8675,"timestamp":"2026-09-01 12:37:57","week":"W1","status":"normal"},{"trade_id":"aud_00014_10012455618_152568202423","risk_pct":0.668,"timestamp":"2026-09-01 18:12:08","week":"W1","status":"normal"},{"trade_id":"aud_00014_10012455618_152572742522","risk_pct":0.7824,"timestamp":"2026-09-02 14:02:27","week":"W1","status":"normal"},{"trade_id":"aud_00014_10012455618_152584901684","risk_pct":7.5528,"timestamp":"2026-09-04 13:44:35","week":"W1","status":"expansion"}],"trades_above_2pct":1,"trades_above_3pct":1,"valid_risk_trades_count":7,"data_status":"live","scope":"cumulative_to_period_end","history_start":"2026-08-31","history_end":"2026-09-04","risk_drift_pct":14.29,"methodology_version":"TRIAL_AUDIT_v1_RISK_ZONE_CUMULATIVE"},"sl":{"trades_without_sl_at_open":11,"trades_with_sl_at_open":3,"sl_set_within_30s_count":7,"sl_set_after_30s_count":6,"closed_without_sl_count":1,"avg_sl_install_delay_sec":15427.23,"max_sl_install_delay_sec":100008,"unsafe_trades_count":7,"sl_safe_count":7,"sl_safe_pct":50,"sl_changed_count":0,"sl_removed_count":0,"risk_increase_after_sl_change_count":0,"personal_risk_baseline_pct":0.668,"sl_risk_high_bound_pct":1.002,"sl_risk_expansion_after_change_count":0,"max_risk_after_sl_change_pct":null,"block_score":40,"main_issue":"7 SL violations: 6 late installations and 1 position closed without SL","protection_segments":[{"label":"Protected","value":7,"status":"safe"},{"label":"Unsafe","value":7,"status":"danger"}],"protection_summary":{"data_status":"live","scope":"cumulative_to_period_end","history_start":"2026-08-31","history_end":"2026-09-04","history_maturity":"first_week_limited","trades_total":14,"no_sl_count":1,"late_sl_count":6,"unsafe_count":7,"sl_removed_count":0,"sl_changed_count":0,"sl_safe_count":7,"sl_safe_pct":50,"segments":[{"label":"Late / No SL","value":7,"pct":50,"status":"danger"},{"label":"SL Removed","value":0,"pct":0,"status":"removed"},{"label":"SL Changed","value":0,"pct":0,"status":"changed"},{"label":"SL Safe","value":7,"pct":50,"status":"safe"}],"methodology_version":"TRIAL_AUDIT_v1_SL_CUMULATIVE_30S"},"event_timeline":[]},"behavior":{"trade_after_loss_count":3,"risk_after_loss_avg_pct":null,"risk_after_win_avg_pct":null,"risk_after_1_loss_pct":null,"risk_after_2_losses_pct":null,"risk_after_3_losses_pct":null,"max_risk_after_loss_streak_pct":null,"risk_increase_after_loss_count":0,"position_size_increased_after_loss_count":3,"revenge_trading_signal_count":3,"avg_minutes_after_loss_to_next_trade":0.4,"min_minutes_after_loss_to_next_trade":0.25,"risk_after_loss_items":[{"label":"1 Loss","value":null,"status":"not_available"},{"label":"2 Losses","value":null,"status":"not_available"},{"label":"3+ Losses","value":null,"status":"not_available"}],"post_loss_summary":{"baseline_pct":0.67,"high_bound_pct":1,"avg_risk_pct":null,"risk_drift_pct":null,"expansion_count":0,"expansion_pct":null,"revenge_signal_count":3,"status":"not_available"}},"plan_fact":{"trades_total":14,"trades_count":7,"excluded_trades_count":7,"valid_sample_pct":50,"planned_risk_avg_pct":1.61,"actual_loss_avg_pct":1.64,"deviation_avg_pct":0.97,"deviation_max_pct":2.56,"deviation_avg_abs_pct":1,"deviation_max_abs_pct":2.56,"negative_deviation_trades":3,"negative_deviation_trades_pct":42.86,"execution_leak_flag":true,"data_status":"live","points":[{"trade_id":"aud_00014_10012455618_152559995980","planned":0.4371,"actual":0.4392,"within_plan":0.4371,"excess_loss":0.0021,"status":"excess","week":"W1","timestamp":"2026-08-31 14:48:42"},{"trade_id":"aud_00014_10012455618_152565640540","planned":0.3644,"actual":0,"within_plan":0,"excess_loss":0,"status":"within_plan","week":"W1","timestamp":"2026-09-01 12:36:04"},{"trade_id":"aud_00014_10012455618_152565645401","planned":0.5788,"actual":2.9572,"within_plan":0.5788,"excess_loss":2.3784,"status":"excess","week":"W1","timestamp":"2026-09-01 12:37:28"},{"trade_id":"aud_00014_10012455618_152565646964","planned":0.8675,"actual":3.428,"within_plan":0.8675,"excess_loss":2.5605,"status":"excess","week":"W1","timestamp":"2026-09-01 12:37:57"},{"trade_id":"aud_00014_10012455618_152568202423","planned":0.668,"actual":0.6652,"within_plan":0.6652,"excess_loss":0,"status":"within_plan","week":"W1","timestamp":"2026-09-01 18:12:08"},{"trade_id":"aud_00014_10012455618_152572742522","planned":0.7824,"actual":0.7173,"within_plan":0.7173,"excess_loss":0,"status":"within_plan","week":"W1","timestamp":"2026-09-02 14:02:27"},{"trade_id":"aud_00014_10012455618_152584901684","planned":7.5528,"actual":0,"within_plan":0,"excess_loss":0,"status":"within_plan","week":"W1","timestamp":"2026-09-04 13:44:35"}],"scope":"cumulative_to_period_end","period_start":"2026-08-31","period_end":"2026-09-04","eligible_loss_trades_count":5,"excluded_loss_trades_count":7,"methodology_version":"TRIAL_AUDIT_v1_PLAN_FACT_CUMULATIVE"},"findings":{"items":[{"text":"В сделке AUDJPY запланированный риск достиг 7,55% — это значительно выше критического уровня 3%.","severity":"negative","display_class":"danger","source_block":"Block A","metric":"risk_above_3pct"},{"text":"В сделках XAUUSD и XAGUSD фактический убыток составил 2,96% и 3,43% при плане 0,58% и 0,87%. Эти две сделки стали основной причиной недельного результата −384,69 USD.","severity":"negative","display_class":"danger","source_block":"Block D","metric":"plan_fact_excess_loss"},{"text":"Только 7 из 14 закрытых сделок соответствовали правилу своевременной защиты — SL Safe 50%. В 6 сделках Stop Loss был установлен позднее 30 секунд, ещё одна USDCAD закрыта без Stop Loss.","severity":"negative","display_class":"danger","source_block":"Block B","metric":"sl_safe_cumulative"},{"text":"На момент завершения недельного отчёта оставались открыты 7 позиций: GBPNZD, EURUSD, GBPUSD, AUDUSD, NZDUSD, XAUUSD, XAGUSD. Их итог ещё не включён в результат закрытых сделок.","severity":"neutral","display_class":"warn","source_block":"Block F","metric":"open_positions_at_period_end"},{"text":"Прибыльными завершились 6 из 14 сделок; вместе они принесли 519.53 USD. Лучший результат — +229.53 USD по USDCAD.","severity":"positive","display_class":"good","source_block":"Block E","metric":"weekly_winning_trades"}]},"technical_warning":{"active":false,"report_data_status":"VALID_WITH_LIMITED_HISTORY","data_quality_score":100,"issue":"First observed Trial week; cumulative metrics are provisional until history grows.","missing_source":"daily_equity_raw","period_coverage_pct":100,"minimum_sample_valid":true},"basic_stats":{"average_win":86.59,"average_loss":113.03,"win_ratio":42.86,"profit_factor":0.574562,"number_of_days":4,"total_trades_taken":14,"total_lots_used":2.1,"biggest_win":229.53,"biggest_loss":342.8,"net_profit":-384.69,"win_ratio_pct":42.86},"account":{"balance_equity_curve":[],"balance_series":[{"timestamp":"2026-09-01 17:43:59","position_ticket":"152559993698","balance":10030.47},{"timestamp":"2026-09-01 19:49:34","position_ticket":"152559992069","balance":10050.75},{"timestamp":"2026-09-02 06:35:35","position_ticket":"152565633175","balance":9969.71},{"timestamp":"2026-09-02 07:06:15","position_ticket":"152568202423","balance":9902.99},{"timestamp":"2026-09-02 09:09:52","position_ticket":"152565640540","balance":9952.51},{"timestamp":"2026-09-02 10:05:16","position_ticket":"152559990707","balance":9983.11},{"timestamp":"2026-09-02 16:26:28","position_ticket":"152559995980","balance":9939.19},{"timestamp":"2026-09-03 06:39:57","position_ticket":"152572742522","balance":9867.58},{"timestamp":"2026-09-03 07:03:30","position_ticket":"152565645401","balance":9571.86},{"timestamp":"2026-09-03 07:03:36","position_ticket":"152565646964","balance":9229.06},{"timestamp":"2026-09-03 19:29:57","position_ticket":"152577112585","balance":9458.59},{"timestamp":"2026-09-04 15:30:01","position_ticket":"152577180418","balance":9457.44},{"timestamp":"2026-09-04 15:30:10","position_ticket":"152577180023","balance":9456.18},{"timestamp":"2026-09-04 15:49:58","position_ticket":"152584901684","balance":9615.31}],"equity_series":[{"timestamp":"2026-09-01 17:43:59","equity":10028.26,"min_equity":10028.26,"max_equity":10028.26,"source_count":1},{"timestamp":"2026-09-01 19:49:34","equity":10078.7,"min_equity":10078.7,"max_equity":10078.7,"source_count":1},{"timestamp":"2026-09-02 06:35:35","equity":10653.45,"min_equity":10653.45,"max_equity":10653.45,"source_count":1},{"timestamp":"2026-09-02 07:06:15","equity":10507.02,"min_equity":10507.02,"max_equity":10507.02,"source_count":1},{"timestamp":"2026-09-02 09:09:52","equity":10338.82,"min_equity":10338.82,"max_equity":10338.82,"source_count":1},{"timestamp":"2026-09-02 10:05:16","equity":10357.5,"min_equity":10357.5,"max_equity":10357.5,"source_count":1},{"timestamp":"2026-09-02 16:26:28","equity":9949.76,"min_equity":9949.76,"max_equity":9949.76,"source_count":1},{"timestamp":"2026-09-03 06:39:57","equity":9227.24,"min_equity":9227.24,"max_equity":9227.24,"source_count":1},{"timestamp":"2026-09-03 07:03:30","equity":9198.97,"min_equity":9198.97,"max_equity":9198.97,"source_count":1},{"timestamp":"2026-09-03 07:03:36","equity":9203.77,"min_equity":9203.77,"max_equity":9203.77,"source_count":1},{"timestamp":"2026-09-03 19:29:57","equity":11462.85,"min_equity":11462.85,"max_equity":11462.85,"source_count":1},{"timestamp":"2026-09-04 15:30:01","equity":10210.31,"min_equity":10210.31,"max_equity":10210.31,"source_count":1},{"timestamp":"2026-09-04 15:30:10","equity":9428.26,"min_equity":9428.26,"max_equity":9428.26,"source_count":1},{"timestamp":"2026-09-04 15:49:58","equity":9346.72,"min_equity":9346.72,"max_equity":9346.72,"source_count":1}],"equity_sampling":{"method":"position_close_snapshot","window_minutes":null,"raw_points_count":14,"rendered_points_count":14}},"direction":{"long_trades_count":6,"long_profit":-154.19,"long_win_rate":16.67,"short_trades_count":8,"short_profit":-230.5,"short_win_rate":62.5,"imbalance_flag":true},"profitability":{"wins_count":6,"losses_count":8,"breakeven_count":0,"wins_pct":42.86,"losses_pct":57.14,"be_pct":0},"duration":{"pnl_by_trade_duration":[{"trade_id":"aud_00014_10012455618_152559990707","symbol":"EURUSD","duration_min":2597.77,"profit_money":30.6,"result_type":"win"},{"trade_id":"aud_00014_10012455618_152559992069","symbol":"GBPUSD","duration_min":1741.75,"profit_money":20.28,"result_type":"win"},{"trade_id":"aud_00014_10012455618_152559993698","symbol":"USDCHF","duration_min":1615.82,"profit_money":30.47,"result_type":"win"},{"trade_id":"aud_00014_10012455618_152559995980","symbol":"USDJPY","duration_min":2977.8,"profit_money":-43.92,"result_type":"loss"},{"trade_id":"aud_00014_10012455618_152565633175","symbol":"GBPNZD","duration_min":1081.1,"profit_money":-81.04,"result_type":"loss"},{"trade_id":"aud_00014_10012455618_152565640540","symbol":"EURJPY","duration_min":1233.82,"profit_money":49.52,"result_type":"win"},{"trade_id":"aud_00014_10012455618_152565645401","symbol":"XAUUSD","duration_min":2546.02,"profit_money":-295.72,"result_type":"loss"},{"trade_id":"aud_00014_10012455618_152565646964","symbol":"XAGUSD","duration_min":2545.67,"profit_money":-342.8,"result_type":"loss"},{"trade_id":"aud_00014_10012455618_152568202423","symbol":"NZDUSD","duration_min":774.15,"profit_money":-66.72,"result_type":"loss"},{"trade_id":"aud_00014_10012455618_152572742522","symbol":"USDCAD","duration_min":997.5,"profit_money":-71.61,"result_type":"loss"},{"trade_id":"aud_00014_10012455618_152577112585","symbol":"USDCAD","duration_min":769.52,"profit_money":229.53,"result_type":"win"},{"trade_id":"aud_00014_10012455618_152577180023","symbol":"XAUUSD","duration_min":1946.32,"profit_money":-1.26,"result_type":"loss"},{"trade_id":"aud_00014_10012455618_152577180418","symbol":"XAGUSD","duration_min":1946,"profit_money":-1.15,"result_type":"loss"},{"trade_id":"aud_00014_10012455618_152584901684","symbol":"AUDJPY","duration_min":125.38,"profit_money":159.13,"result_type":"win"}],"items":[{"name":"Winning Trades","duration_min":1347.34,"deviation_pct":-17.62,"status":"positive"},{"name":"Losing Trades","duration_min":1851.82,"deviation_pct":13.22,"status":"negative"}],"holding_time_efficiency":{"grouping_method":"equal_frequency_nearest_rank","scope":"cumulative_to_period_end","history_start":"2026-08-31","history_end":"2026-09-04","target_trades_per_group":5,"max_groups":5,"ties_preserved":true,"quartile_method":"inclusive","duration_unit":"minutes","pnl_unit":"USD","total_trades":14,"baseline_win_rate_pct":42.86,"groups_count":3,"groups":[{"group_index":1,"duration_min":125.38,"duration_max":997.5,"duration_avg":666.64,"sample_size":4,"pnl_min":-71.61,"pnl_q1":-67.94,"pnl_median":46.2,"pnl_q3":176.73,"pnl_max":229.53,"pnl_total":250.33,"pnl_avg":62.58,"wins_count":2,"losses_count":2,"breakeven_count":0,"win_rate_pct":50,"sample_status":"limited_sample"},{"group_index":2,"duration_min":1081.1,"duration_max":1946,"duration_avg":1523.7,"sample_size":5,"pnl_min":-81.04,"pnl_q1":-1.15,"pnl_median":20.28,"pnl_q3":30.47,"pnl_max":49.52,"pnl_total":18.08,"pnl_avg":3.62,"wins_count":3,"losses_count":2,"breakeven_count":0,"win_rate_pct":60,"sample_status":"limited_sample"},{"group_index":3,"duration_min":1946.32,"duration_max":2977.8,"duration_avg":2522.71,"sample_size":5,"pnl_min":-342.8,"pnl_q1":-295.72,"pnl_median":-43.92,"pnl_q3":-1.26,"pnl_max":30.6,"pnl_total":-653.1,"pnl_avg":-130.62,"wins_count":1,"losses_count":4,"breakeven_count":0,"win_rate_pct":20,"sample_status":"limited_sample"}],"data_status":"limited_sample"}},"instrument":{"profit_analysis":[{"symbol":"AUDJPY","trades_count":1,"profit_money":159.13},{"symbol":"EURJPY","trades_count":1,"profit_money":49.52},{"symbol":"EURUSD","trades_count":1,"profit_money":30.6},{"symbol":"GBPNZD","trades_count":1,"profit_money":-81.04},{"symbol":"GBPUSD","trades_count":1,"profit_money":20.28},{"symbol":"NZDUSD","trades_count":1,"profit_money":-66.72},{"symbol":"USDCAD","trades_count":2,"profit_money":157.92},{"symbol":"USDCHF","trades_count":1,"profit_money":30.47},{"symbol":"USDJPY","trades_count":1,"profit_money":-43.92},{"symbol":"XAGUSD","trades_count":2,"profit_money":-343.95},{"symbol":"XAUUSD","trades_count":2,"profit_money":-296.98}],"volume_analysis":[{"symbol":"AUDJPY","trades_count":1,"volume":0.5},{"symbol":"EURJPY","trades_count":1,"volume":0.1},{"symbol":"EURUSD","trades_count":1,"volume":0.1},{"symbol":"GBPNZD","trades_count":1,"volume":0.1},{"symbol":"GBPUSD","trades_count":1,"volume":0.1},{"symbol":"NZDUSD","trades_count":1,"volume":0.1},{"symbol":"USDCAD","trades_count":2,"volume":0.6},{"symbol":"USDCHF","trades_count":1,"volume":0.1},{"symbol":"USDJPY","trades_count":1,"volume":0.1},{"symbol":"XAGUSD","trades_count":2,"volume":0.15},{"symbol":"XAUUSD","trades_count":2,"volume":0.15}],"items":[{"symbol":"AUDJPY","trades_count":1,"profit_money":159.13,"volume":0.5,"profit_share_pct":-41.37,"volume_share_pct":23.81,"status":"positive"},{"symbol":"EURJPY","trades_count":1,"profit_money":49.52,"volume":0.1,"profit_share_pct":-12.87,"volume_share_pct":4.76,"status":"positive"},{"symbol":"EURUSD","trades_count":1,"profit_money":30.6,"volume":0.1,"profit_share_pct":-7.95,"volume_share_pct":4.76,"status":"positive"},{"symbol":"GBPNZD","trades_count":1,"profit_money":-81.04,"volume":0.1,"profit_share_pct":21.07,"volume_share_pct":4.76,"status":"negative"},{"symbol":"GBPUSD","trades_count":1,"profit_money":20.28,"volume":0.1,"profit_share_pct":-5.27,"volume_share_pct":4.76,"status":"positive"},{"symbol":"NZDUSD","trades_count":1,"profit_money":-66.72,"volume":0.1,"profit_share_pct":17.34,"volume_share_pct":4.76,"status":"negative"},{"symbol":"USDCAD","trades_count":2,"profit_money":157.92,"volume":0.6,"profit_share_pct":-41.05,"volume_share_pct":28.57,"status":"positive"},{"symbol":"USDCHF","trades_count":1,"profit_money":30.47,"volume":0.1,"profit_share_pct":-7.92,"volume_share_pct":4.76,"status":"positive"},{"symbol":"USDJPY","trades_count":1,"profit_money":-43.92,"volume":0.1,"profit_share_pct":11.42,"volume_share_pct":4.76,"status":"negative"},{"symbol":"XAGUSD","trades_count":2,"profit_money":-343.95,"volume":0.15,"profit_share_pct":89.41,"volume_share_pct":7.14,"status":"negative"},{"symbol":"XAUUSD","trades_count":2,"profit_money":-296.98,"volume":0.15,"profit_share_pct":77.2,"volume_share_pct":7.14,"status":"negative"}]},"instrument_contribution":{"data_status":"limited_sample","scope":"cumulative_to_period_end","period_start":"2026-08-31","period_end":"2026-09-04","groups":[{"symbol":"AUDJPY","trades":1,"wins":1,"volume":0.5,"win_contribution_pct":16.67,"load_volume_pct":23.81},{"symbol":"EURJPY","trades":1,"wins":1,"volume":0.1,"win_contribution_pct":16.67,"load_volume_pct":4.76},{"symbol":"EURUSD","trades":1,"wins":1,"volume":0.1,"win_contribution_pct":16.67,"load_volume_pct":4.76},{"symbol":"GBPNZD","trades":1,"wins":0,"volume":0.1,"win_contribution_pct":0,"load_volume_pct":4.76},{"symbol":"GBPUSD","trades":1,"wins":1,"volume":0.1,"win_contribution_pct":16.67,"load_volume_pct":4.76},{"symbol":"NZDUSD","trades":1,"wins":0,"volume":0.1,"win_contribution_pct":0,"load_volume_pct":4.76},{"symbol":"USDCAD","trades":2,"wins":1,"volume":0.6,"win_contribution_pct":16.67,"load_volume_pct":28.57},{"symbol":"USDCHF","trades":1,"wins":1,"volume":0.1,"win_contribution_pct":16.67,"load_volume_pct":4.76},{"symbol":"USDJPY","trades":1,"wins":0,"volume":0.1,"win_contribution_pct":0,"load_volume_pct":4.76},{"symbol":"XAGUSD","trades":2,"wins":0,"volume":0.15,"win_contribution_pct":0,"load_volume_pct":7.14},{"symbol":"XAUUSD","trades":2,"wins":0,"volume":0.15,"win_contribution_pct":0,"load_volume_pct":7.14}]},"analysis":{"data_status":"limited_sample","cover_scope":"cumulative_to_period_end","items":[{"name":"Direction Balance","marker_pct":57.14,"display_value":"6 / 8","status":"warning","label_left":"Long","label_right":"Short","segments":[{"label":"Long","value":6,"pct":42.86},{"label":"Short","value":8,"pct":57.14}]},{"name":"Profitability","marker_pct":42.86,"display_value":"42.86%","status":"warning","label_left":"Losses","label_right":"Wins","segments":[{"label":"Wins","value":6,"pct":42.86,"status":"positive"},{"label":"Losses","value":8,"pct":57.14,"status":"negative"},{"label":"Breakeven","value":0,"pct":0,"status":"neutral"}]},{"name":"Risk Expansion","marker_pct":14.29,"display_value":"14.29%","status":"expansion","label_left":"Reduced","label_right":"Expanded","segments":[{"label":"Reduced Risk","count":0,"pct":0,"status":"reduced"},{"label":"Normal Risk","count":6,"pct":85.71,"status":"normal"},{"label":"Risk Expansion","count":1,"pct":14.29,"status":"expansion"}]}],"history_start":"2026-08-31","history_end":"2026-09-04","sample_trades_count":14,"short_cover_ratio":null,"short_cover_status":"not_available","short_win_rate_pct":62.5,"profit_factor":0.574562,"profit_factor_status":"live","total_win_rate_pct":42.86,"long_cover_ratio":null,"long_cover_status":"not_available","long_win_rate_pct":16.67,"methodology_version":"TRIAL_AUDIT_v1_COVER_CUMULATIVE"},"comparison":{"previous_period":"not_available","current_period":"2026-08-31 — 2026-09-04","items":[{"metric":"QUD TDA Score","previous":null,"current":1.19,"change":null,"status":"not_available"},{"metric":"Risk CV","previous":null,"current":1.6349120706,"change":null,"status":"not_available"},{"metric":"Avg Risk After Loss","previous":null,"current":null,"change":null,"status":"not_available"},{"metric":"No-SL Trades","previous":null,"current":1,"change":null,"status":"not_available"},{"metric":"Plan vs Fact Deviation","previous":null,"current":0.97462,"change":null,"status":"not_available"},{"metric":"Main Leak","previous":null,"current":"Execution Leak","change":null,"status":"not_available"}],"score_history":[{"period":"2026-08-31 — 2026-09-04","value":1.19,"source":"calculated_from_raw"}]},"contract":{"name":"QUD_TDA_RENDERER_CONTRACT","version":"1.0.0","weekly_sections":["behavior.post_loss_summary","plan_fact","findings"],"cumulative_sections":["comparison.score_history","trends.win_ratio_pct","trends.profit_factor","duration.holding_time_efficiency","instrument_contribution","analysis","risk","sl.protection_summary","account.balance_series","account.equity_series"],"audit_id":"aud_00014","trader_id":"trd_10012455618","product":"TDA_TRIAL"}}</script>
+<script>
+const $=id=>document.getElementById(id);
+const data=JSON.parse($('report-data').textContent);
+const num=value=>{
+  if(value===null||value===undefined||value===''){
+    throw new TypeError('Expected numeric report value');
+  }
+  const parsed=Number(value);
+  if(!Number.isFinite(parsed)){
+    throw new TypeError('Invalid numeric report value: '+String(value));
+  }
+  return parsed;
+};
+const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+const css=name=>getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const blue=()=>css('--blue');
+const green=()=>css('--green');
+const red=()=>css('--red');
+const yellow=()=>css('--yellow');
+
+function pathValue(root,path){
+  return path.split('.').reduce((value,key)=>
+    value!==null&&value!==undefined&&Object.prototype.hasOwnProperty.call(value,key)
+      ?value[key]
+      :undefined
+  ,root);
+}
+
+function assertReportContract(report){
+  const requiredValues=[
+    'report.audit_id','report.display_name','report.generated_at','report.version',
+    'trader.account_login','trader.trader_id',
+    'period.start','period.end','period.current_period',
+    'score.qud_tda_score','score.risk_mode','score.trust_zone','score.trust_score_delta',
+    'duration.holding_time_efficiency','instrument_contribution','analysis',
+    'sl.protection_summary','risk.zone_distribution','risk.cv',
+    'behavior.post_loss_summary','plan_fact','findings'
+  ];
+  const requiredArrays=[
+    'score.zones','trends.win_ratio_pct','trends.profit_factor',
+    'trends.average_risk_pct','trends.sl_safe_pct',
+    'comparison.score_history','account.balance_series','account.equity_series',
+    'duration.holding_time_efficiency.groups','instrument_contribution.groups',
+    'sl.protection_summary.segments','risk.zone_distribution.zone_items',
+    'risk.trade_series','behavior.risk_after_loss_items',
+    'plan_fact.points','findings.items'
+  ];
+  const missing=requiredValues.filter(path=>pathValue(report,path)===undefined);
+  const invalidArrays=requiredArrays.filter(path=>!Array.isArray(pathValue(report,path)));
+  if(missing.length||invalidArrays.length){
+    throw new Error(
+      'Invalid QUD report JSON contract. Missing: '+
+      [...missing,...invalidArrays].join(', ')
+    );
+  }
+  const displayClasses=['danger','warn','good','neutral'];
+  if(!displayClasses.includes(report.score.display_class)){
+    throw new Error('Invalid score.display_class');
+  }
+  report.findings.items.forEach((item,index)=>{
+    if(!displayClasses.includes(item.display_class)){
+      throw new Error(`Invalid findings.items[${index}].display_class`);
+    }
+  });
+}
+
+function svgEl(name,attributes={}){
+  const element=document.createElementNS('http://www.w3.org/2000/svg',name);
+  Object.entries(attributes).forEach(([key,value])=>element.setAttribute(key,value));
+  return element;
+}
+
+function clear(element){
+  while(element&&element.firstChild)element.removeChild(element.firstChild);
+}
+
+function htmlEl(name,className,text){
+  const element=document.createElement(name);
+  if(className)element.className=className;
+  if(text!==undefined)element.textContent=String(text);
+  return element;
+}
+
+assertReportContract(data);
+
+const helpTexts={leakMap:['QUD Leak Map','Карта потерь качества торгового процесса по блокам: риск, защита сделки, поведение после убытков и исполнение.','Чем дальше маркер вправо, тем сильнее утечка качества. Зелёный — контроль, жёлтый — зона внимания, оранжевый/красный — заметная проблема.','Показывает за всю историю наблюдения, в каком блоке торговый процесс теряет доверие.'],trustScoreTrend:['Trust Score Over Time','Динамика Trust Score по неделям с учётом накопленной истории.','0–39 — pre QUD, 40–79 — QUD Room, 80–100 — QUD Elite. Линия показывает изменение качества от недели к неделе.','Передаёт изменение качества торгового процесса во времени.'],accountEquity:['Account Balance & Equity','Динамика баланса и equity по реальным CSV-данным за период аудита.','Balance — закрытый результат. Equity — состояние счёта с учётом открытых позиций. Если линии совпадают, плавающей просадки в точках отчёта не было.','Показывает финансовую траекторию счёта без замены анализа качества решений.'],holdingTime:['Holding Time Efficiency','Эффективность удержания сделок в разных диапазонах времени в сравнении с общим Win Rate трейдера за весь накопленный период до даты окончания отчёта.','Пунктирная линия — общий Win Rate трейдера.<br><br>Зелёный бар — положительный результат выше общего Win Rate.<br>Красный бар — отрицательный ниже общего Win Rate.<br><br>Значение над баром показывает разницу в процентных пунктах от Win Rate группы.','График помогает определить, какие диапазоны удержания исторически были наиболее и наименее эффективными.'],instrumentContribution:['Instrument Contribution & Load','Сравнение вклада инструментов в выигрышные сделки и торговую нагрузку.','Win Contribution — доля выигрышных сделок инструмента. Load Volume — доля торгового объёма.','Показывает, где формируется результат и где сконцентрирована нагрузка.'],shortCover:['Short Cover Ratio','Насколько прибыльные short-сделки перекрывают убыточные short-сделки.','Выше 1.0 — Edge zone. Ниже 1.0 — Loss zone.','Показывает качество результата отдельно по short-направлению.'],profitFactor:['Profit Factor','Соотношение общей прибыли к общему убытку за период.','Выше 1.0 — прибыль перекрывает убытки. Ниже 1.0 — убытки превышают прибыль.','Показывает результативность, но не заменяет риск- и поведенческую оценку.'],longCover:['Long Cover Ratio','Насколько прибыльные long-сделки перекрывают убыточные long-сделки.','Выше 1.0 — Edge zone. Ниже 1.0 — Loss zone.','Показывает качество результата отдельно по long-направлению.'],protectedTrades:['Protected Trades Rate','Доля сделок, открытых с установленным Stop Loss, и стабильность защиты по неделям.','SAFE — сделки с корректным SL. No SL / SL Removed / SL Changed показывают нарушения защиты сделки.','Передаёт дисциплину защиты позиции.'],riskZone:['Risk Zone Distribution','Распределение сделок относительно типичного уровня риска трейдера. Personal baseline — медианный риск по всем сделкам за анализируемый период.','Normal Risk — сделки внутри персонального диапазона. Risk Expansion — выше верхней границы. Reduced Risk — ниже рабочей зоны.<br><br><strong>Risk Drift</strong> показывает, насколько часто трейдер повышал или снижал риск относительно своего обычного уровня.','Показывает, сохраняет ли трейдер обычный уровень риска или чаще отклоняется в сторону его повышения либо снижения.'],riskAfterLoss:['Risk After Loss','Данные за последнюю завершённую отчётную неделю, накопительная история здесь не учитывается.','<strong>Risk Drift</strong> показывает изменение среднего риска после серии убытков относительно <strong>Normal Risk</strong>.<br><br>Бар ниже Normal Risk — снижение риска после убытка. Бар выше Normal Risk — повышение риска после убытка. N/A — такой серии убытков не было.','Показывает наличие или отсутствие повышения риска после убытков.'],riskConsistency:['Risk Consistency','Последовательность риска по всем реальным сделкам за накопленный период до даты окончания отчёта.','Голубая линия — риск по сделкам. Зелёная зона — Normal Risk. Жёлтый пунктир — медианный риск. Красная точка — выход выше Normal Risk.<br><br><strong>Risk CV</strong> показывает стабильность размера риска: чем ближе значение к 0, тем риск стабильнее; 1.0 и выше означает сильный разброс.','Показывает, насколько последовательно трейдер контролирует размер риска на протяжении всей накопленной истории.'],plannedRisk:['Planned Risk vs Actual Loss','Сравнение запланированного риска по SL с фактическим убытком по всем сделкам накопленной истории.','Серая зона — убыток в рамках плана. Красный сегмент — превышение плана. Белая линия — planned SL. Жёлтый пунктир — median risk.','Показывает, были ли убытки в рамках заранее установленного риска.'],findings:['5 Key Findings','Пять ключевых фактов по текущей отчётной неделе.','Findings описывают текущую неделю, а не весь исторический период. Это факты, не торговые рекомендации.','Передаёт краткий диагностический вывод по последней неделе аудита.']};
+
+function appendHelpText(container,content){
+  String(content)
+    .split(/(<br><br>|<br>|<strong>.*?<\/strong>)/g)
+    .filter(Boolean)
+    .forEach(token=>{
+      if(token==='<br>'){
+        container.appendChild(document.createElement('br'));
+      }else if(token==='<br><br>'){
+        container.append(
+          document.createElement('br'),
+          document.createElement('br')
+        );
+      }else if(token.startsWith('<strong>')&&token.endsWith('</strong>')){
+        container.appendChild(
+          htmlEl('strong','',token.slice(8,-9))
+        );
+      }else{
+        container.appendChild(document.createTextNode(token));
+      }
+    });
+}
+
+function initHelp(){
+  const map=[
+    ['QUD LEAK MAP','leakMap'],
+    ['TRUST SCORE OVER TIME','trustScoreTrend'],
+    ['ACCOUNT BALANCE & EQUITY','accountEquity'],
+    ['HOLDING TIME EFFICIENCY','holdingTime'],
+    ['INSTRUMENT CONTRIBUTION & LOAD','instrumentContribution'],
+    ['SHORT COVER RATIO','shortCover'],
+    ['PROFIT FACTOR','profitFactor'],
+    ['LONG COVER RATIO','longCover'],
+    ['PROTECTED TRADES RATE','protectedTrades'],
+    ['RISK ZONE DISTRIBUTION','riskZone'],
+    ['RISK AFTER LOSS','riskAfterLoss'],
+    ['RISK CONSISTENCY','riskConsistency'],
+    ['PLANNED RISK VS ACTUAL LOSS','plannedRisk'],
+    ['5 KEY FINDINGS','findings']
+  ];
+  document.querySelectorAll('h2').forEach(heading=>{
+    const raw=(heading.childNodes[0]?.textContent||heading.textContent||'')
+      .trim()
+      .toUpperCase();
+    const item=map.find(([label])=>raw.includes(label));
+    if(!item||heading.querySelector('.help'))return;
+    const icon=htmlEl('span','help','?');
+    icon.dataset.help=item[1];
+    const winRate=heading.querySelector('.analysis-winrate');
+    const before=heading.querySelector('.analysis-head-value');
+    if(winRate)heading.appendChild(icon);
+    else if(before)heading.insertBefore(icon,before);
+    else heading.appendChild(icon);
+  });
+
+  let tooltip;
+  document.querySelectorAll('.help[data-help]').forEach(icon=>{
+    icon.addEventListener('mouseenter',()=>{
+      const content=helpTexts[icon.dataset.help];
+      if(!content)return;
+      const readingTitle=
+        icon.dataset.help==='holdingTime'
+          ?'Как читать график'
+          :'Как читать цифры';
+      tooltip=htmlEl('div','qud-tooltip');
+      tooltip.appendChild(htmlEl('div','qud-tooltip-title',content[0]));
+      [
+        ['Что показывает',content[1],''],
+        [readingTitle,content[2],''],
+        ['Что передаёт',content[3],'muted']
+      ].forEach(([title,text,className])=>{
+        tooltip.appendChild(htmlEl('b','',title));
+        const paragraph=htmlEl('p',className);
+        appendHelpText(paragraph,text);
+        tooltip.appendChild(paragraph);
+      });
+      document.body.appendChild(tooltip);
+      const rect=icon.getBoundingClientRect();
+      const margin=12;
+      const left=Math.min(
+        window.innerWidth-tooltip.offsetWidth-margin,
+        Math.max(margin,rect.left-12)
+      );
+      const top=Math.min(
+        window.innerHeight-tooltip.offsetHeight-margin,
+        Math.max(margin,rect.bottom+8)
+      );
+      tooltip.style.left=left+'px';
+      tooltip.style.top=top+'px';
+    });
+    icon.addEventListener('mouseleave',()=>{
+      if(tooltip){
+        tooltip.remove();
+        tooltip=null;
+      }
+    });
+  });
+}
+function scoreGauge(svg,score,zones){clear(svg);const cx=160,cy=125,r=90,start=200,end=-20,total=start-end;const polar=(a,rad=r)=>{const z=Math.PI*a/180;return{x:cx+rad*Math.cos(z),y:cy-rad*Math.sin(z)}};const angle=v=>start-(v/100)*total;const arc=(a1,a2,cls)=>{const p1=polar(a1),p2=polar(a2),large=Math.abs(a1-a2)>180?1:0;svg.appendChild(svgEl('path',{d:`M ${p1.x} ${p1.y} A ${r} ${r} 0 ${large} 1 ${p2.x} ${p2.y}`,class:cls}))};const activeZones=zones;const zoneClass=status=>status==='pre_qud'?'red':status==='qud_elite'?'green':'orange';arc(start,end,'gauge-track');activeZones.forEach(zone=>arc(angle(clamp(Number(zone.from),0,100)),angle(clamp(Number(zone.to),0,100)),`gauge-seg ${zoneClass(zone.status)}`));const ticks=[...new Set(activeZones.flatMap(zone=>[Number(zone.from),Number(zone.to)]).filter(Number.isFinite))].sort((a,b)=>a-b);ticks.forEach(v=>{const p=polar(angle(clamp(v,0,100)),108);svg.appendChild(svgEl('text',{x:p.x,y:p.y+4,'text-anchor':'middle',class:'gauge-tick'})).textContent=v});const a=angle(clamp(score,0,100)),p1=polar(a,r-8),p2=polar(a,r+8);svg.appendChild(svgEl('line',{x1:p1.x,y1:p1.y,x2:p2.x,y2:p2.y,class:'gauge-marker'}))}
+function drawLine(svg,arr,opts={}){
+  if(!document.getElementById('sl-trend-mobile-style')){
+    const style=document.createElement('style');
+    style.id='sl-trend-mobile-style';
+    style.textContent='@media(max-width:1100px){.sl-protection-layout{display:block}.sl-protection-layout #slDonut{display:block;margin:0 auto}.sl-protection-layout #slTimeline{display:block;width:100%;height:180px;margin-top:12px}}';
+    document.head.appendChild(style);
+  }
+  if(!svg.__slTrendResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(svg.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{
+      const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);
+      if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;drawLine(svg,arr,opts)}
+    });
+    observer.observe(svg);
+    svg.__slTrendResizeObserver=observer;
+  }
+  clear(svg);
+  if(!arr||!arr.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}
+  const isMobile=window.matchMedia('(max-width:1100px)').matches;
+  const w=Math.max(260,svg.clientWidth||700),h=svg.clientHeight||220;
+  const p=isMobile?{l:44,r:24,t:28,b:34}:{l:46,r:20,t:18,b:34};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  const vals=arr.map(point=>num(point.y));
+  const mobileFloor=Math.floor(Math.min(...vals)/5)*5;
+  const minY=isMobile?Math.min(95,mobileFloor):(opts.minY??Math.min(0,...vals));
+  const maxY=isMobile?100:(opts.maxY??Math.max(1,...vals)*1.15);
+  const x=index=>p.l+(w-p.l-p.r)*(arr.length<=1?0:index/(arr.length-1));
+  const y=value=>h-p.b-(h-p.t-p.b)*(value-minY)/(maxY-minY||1);
+  const tickCount=isMobile?5:4;
+  for(let index=0;index<=tickCount;index++){
+    const yy=p.t+(h-p.t-p.b)*index/tickCount;
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=(maxY-(maxY-minY)*index/tickCount).toFixed(isMobile?0:(opts.digits??0));
+  }
+  if(isMobile)svg.appendChild(svgEl('text',{x:p.l,y:12,'text-anchor':'start',class:'axis-label'})).textContent='SL TREND · DETAIL '+minY+'–'+maxY+'%';
+  let path='';
+  arr.forEach((point,index)=>path+=(index?'L':'M')+x(index)+' '+y(num(point.y)));
+  svg.appendChild(svgEl('path',{d:path,fill:'none',stroke:opts.color||blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+  const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
+  const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});
+  tooltip.appendChild(tooltipRect);
+  tooltip.appendChild(tooltipText);
+  const showTooltip=(point,index)=>{
+    const cx=x(index),cy=y(num(point.y));
+    const label=String(point.x||('W'+(index+1)))+': '+num(point.y).toFixed(1)+'%';
+    const width=Math.max(78,label.length*6.2+16);
+    const left=Math.max(p.l,Math.min(w-p.r-width,cx-width/2));
+    const top=Math.max(p.t,cy-34);
+    tooltipRect.setAttribute('x',left);tooltipRect.setAttribute('y',top);tooltipRect.setAttribute('width',width);tooltipRect.setAttribute('height',24);
+    tooltipText.setAttribute('x',left+8);tooltipText.setAttribute('y',top+16);tooltipText.textContent=label;
+    tooltip.setAttribute('visibility','visible');
+  };
+  arr.forEach((point,index)=>{
+    const cx=x(index),cy=y(num(point.y));
+    const circle=svgEl('circle',{cx,cy,r:3.2,fill:opts.color||blue(),stroke:'#0b0d0f','stroke-width':1});
+    circle.style.cursor='pointer';
+    circle.addEventListener('pointerenter',()=>showTooltip(point,index));
+    circle.addEventListener('pointerleave',()=>tooltip.setAttribute('visibility','hidden'));
+    circle.addEventListener('click',event=>{event.stopPropagation();showTooltip(point,index)});
+    svg.appendChild(circle);
+    const showWeek=isMobile?(index%2===0||index===arr.length-1):(index%Math.ceil(arr.length/7)===0||index===arr.length-1);
+    if(showWeek)svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=point.x;
+  });
+  if(isMobile){
+    const last=arr[arr.length-1],lastY=y(num(last.y));
+    const labelY=lastY<=p.t+14?lastY+16:lastY-8;
+    svg.appendChild(svgEl('text',{x:w-p.r,y:labelY,'text-anchor':'end',class:'axis-label'})).textContent=num(last.y).toFixed(1)+'%';
+  }
+  svg.appendChild(tooltip);
+}
+function sparkMini(svg,arr,opts={}){clear(svg);if(!arr||!arr.length)return;const w=svg.clientWidth||104,h=svg.clientHeight||38,p={l:3,r:4,t:6,b:6};const vals=arr.map(d=>Number(d.y)).filter(Number.isFinite);if(!vals.length)return;const minY=Math.min(opts.minY??Math.min(...vals),...vals),maxY=Math.max(opts.maxY??Math.max(...vals),...vals);const x=i=>arr.length<=1?p.l+(w-p.l-p.r)/2:p.l+(w-p.l-p.r)*i/(arr.length-1);const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);let d='';arr.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(Number(pt.y)));svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':1.7,'stroke-linecap':'round','stroke-linejoin':'round'}));const last=arr[arr.length-1];svg.appendChild(svgEl('circle',{cx:x(arr.length-1),cy:y(Number(last.y)),r:2.2,fill:blue()}));}
+function renderTopMetric(valueId,sparkId,series,formatter,scale){const points=(Array.isArray(series)?series:[]).filter(point=>point&&Number.isFinite(Number(point.value))).map(point=>({x:String(point.period||''),y:Number(point.value)}));const latest=points.length?points[points.length-1]:null;$(valueId).textContent=latest?formatter(latest.y):'not_available';sparkMini($(sparkId),points,scale);}
+function trustScoreTrend(svg){
+  if(!svg.__trustScoreResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(svg.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{
+      const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);
+      if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;trustScoreTrend(svg)}
+    });
+    observer.observe(svg);
+    svg.__trustScoreResizeObserver=observer;
+  }
+  clear(svg);
+  const rawHistory=data.comparison.score_history;
+  const arr=rawHistory.filter(point=>point&&Number.isFinite(Number(point.value))).map((point,index)=>({x:'W'+(index+1),y:clamp(Number(point.value),0,100),period:String(point.period||'')}));
+  if(!arr.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}
+  const zones=data.score.zones.map(zone=>({from:clamp(Number(zone.from),0,100),to:clamp(Number(zone.to),0,100),status:String(zone.status||'')})).filter(zone=>Number.isFinite(zone.from)&&Number.isFinite(zone.to)&&zone.to>zone.from).sort((a,b)=>a.from-b.from);
+  const measuredSvgWidth=svg.clientWidth||700;
+  const w=Math.max(220,measuredSvgWidth),h=svg.clientHeight||220;
+  const isMobileChart=measuredSvgWidth<=520;
+  const p=isMobileChart?{l:44,r:14,t:18,b:34}:{l:58,r:24,t:18,b:34};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  const minY=0,maxY=100;
+  const x=i=>p.l+(w-p.l-p.r)*(arr.length<=1?0:i/(arr.length-1));
+  const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY);
+  const zoneX=p.l-22,zoneW=8;
+  const zoneColor=status=>status==='pre_qud'?red():status==='qud_elite'?green():css('--orange');
+  const ticks=[...new Set(zones.flatMap(zone=>[zone.from,zone.to]))].sort((a,b)=>a-b);
+  ticks.forEach(v=>{svg.appendChild(svgEl('line',{x1:p.l,y1:y(v),x2:w-p.r,y2:y(v),class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:y(v)+4,class:'axis-label'})).textContent=v});
+  zones.forEach(zone=>svg.appendChild(svgEl('rect',{x:zoneX,y:y(zone.to),width:zoneW,height:y(zone.from)-y(zone.to),rx:3,fill:zoneColor(zone.status),opacity:.95})));
+  let d='';
+  arr.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(pt.y));
+  svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':2.4,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+  const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
+  const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});
+  tooltip.appendChild(tooltipRect);
+  tooltip.appendChild(tooltipText);
+  arr.forEach((pt,i)=>{
+    const cx=x(i),cy=y(pt.y);
+    const circle=svgEl('circle',{cx,cy,r:3.2,fill:blue(),stroke:'#0b0d0f','stroke-width':1.2});
+    circle.style.cursor='pointer';
+    circle.addEventListener('mouseenter',()=>{
+      const label='Trust Score: '+pt.y.toFixed(2);
+      const width=Math.max(112,label.length*6.2+16);
+      const left=Math.max(p.l,Math.min(w-p.r-width,cx-width/2));
+      const top=Math.max(p.t,cy-34);
+      tooltipRect.setAttribute('x',left);
+      tooltipRect.setAttribute('y',top);
+      tooltipRect.setAttribute('width',width);
+      tooltipRect.setAttribute('height',24);
+      tooltipText.setAttribute('x',left+8);
+      tooltipText.setAttribute('y',top+16);
+      tooltipText.textContent=label;
+      tooltip.setAttribute('visibility','visible');
+    });
+    circle.addEventListener('mouseleave',()=>tooltip.setAttribute('visibility','hidden'));
+    svg.appendChild(circle);
+    svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.x;
+  });
+  svg.appendChild(tooltip);
+}
+function parseAccountTime(value){
+  const text=String(value||'').trim();
+  const match=text.match(/^(\d{4})[.\-/](\d{2})[.\-/](\d{2})(?:[ T](\d{1,2}):(\d{2}):(\d{2}))?$/);
+  if(!match)return null;
+  const normalized=`${match[1]}-${match[2]}-${match[3]}T${String(match[4]||'00').padStart(2,'0')}:${match[5]||'00'}:${match[6]||'00'}`;
+  const timestamp=Date.parse(normalized);
+  return Number.isFinite(timestamp)?timestamp:null;
+}
+function niceMoneyStep(range,targetTicks=5){
+  const raw=Math.max(range,1)/Math.max(targetTicks,1);
+  const power=Math.pow(10,Math.floor(Math.log10(raw)));
+  const fraction=raw/power;
+  const nice=fraction<=1?1:fraction<=2?2:fraction<=5?5:10;
+  return nice*power;
+}
+function accountChart(svg,account){
+  const panel=svg.closest('.panel');
+  if(panel)panel.classList.add('account-panel-mobile');
+  if(!document.getElementById('account-range-style')){
+    const style=document.createElement('style');
+    style.id='account-range-style';
+    style.textContent='.account-range-controls{display:none}.account-swipe-hint{display:none}.account-chart-scroll{width:100%;height:100%;overflow:hidden}@media(max-width:1100px){.account-panel-mobile .section-head{flex-wrap:wrap;gap:10px}.account-panel-mobile .account-range-controls{display:flex;align-items:center;order:3;width:100%;gap:6px}.account-range-button{appearance:none;border:1px solid rgba(143,166,200,.35);border-radius:999px;padding:5px 12px;background:rgba(143,166,200,.04);color:var(--muted);font:700 10px Inter,Arial,sans-serif;letter-spacing:.05em}.account-range-button.active{border-color:rgba(143,166,200,.7);background:rgba(143,166,200,.14);color:var(--text-strong)}.account-swipe-hint.visible{display:inline-flex;margin-left:auto;color:var(--blue);font:750 9px Inter,Arial,sans-serif;letter-spacing:.08em;white-space:nowrap}.account-chart-scroll.is-scrollable{overflow-x:auto;overflow-y:hidden;touch-action:pan-x;-webkit-overflow-scrolling:touch;scrollbar-width:thin}}';
+    document.head.appendChild(style);
+  }
+  let scroll=svg.parentElement;
+  if(!scroll||!scroll.classList.contains('account-chart-scroll')){
+    const host=scroll;
+    scroll=document.createElement('div');
+    scroll.className='account-chart-scroll';
+    if(host){host.appendChild(scroll);scroll.appendChild(svg)}
+  }
+  let controls=panel&&panel.querySelector('.account-range-controls');
+  if(panel&&!controls){
+    controls=document.createElement('div');
+    controls.className='account-range-controls';
+    ['ALL','1M'].forEach(range=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='account-range-button';
+      button.dataset.range=range;
+      button.textContent=range;
+      button.addEventListener('click',()=>{
+        svg.dataset.accountRange=range;
+        accountChart(svg,account);
+        if(range==='ALL')requestAnimationFrame(()=>{const holder=svg.parentElement;if(holder)holder.scrollLeft=holder.scrollWidth});
+      });
+      controls.appendChild(button);
+    });
+    const swipeHint=document.createElement('span');
+    swipeHint.className='account-swipe-hint';
+    swipeHint.textContent='← SWIPE →';
+    controls.appendChild(swipeHint);
+    const heading=panel.querySelector('.section-head');
+    if(heading)heading.appendChild(controls);
+  }
+  const isMobile=window.matchMedia('(max-width:1100px)').matches;
+  const selectedRange=svg.dataset.accountRange||'1M';
+  const activeRange=isMobile?selectedRange:'ALL';
+  if(controls)controls.querySelectorAll('.account-range-button').forEach(button=>{
+    const active=button.dataset.range===selectedRange;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',active?'true':'false');
+  });
+  const swipeHint=controls&&controls.querySelector('.account-swipe-hint');
+  if(swipeHint)swipeHint.classList.toggle('visible',isMobile&&activeRange==='ALL');
+  scroll.classList.toggle('is-scrollable',isMobile&&activeRange==='ALL');
+  clear(svg);
+  const normalize=(items,key)=>(Array.isArray(items)?items:[]).map((point,index)=>({
+    timestamp:parseAccountTime(point&&point.timestamp),
+    value:Number(point&&point[key]),
+    position_ticket:String(point&&point.position_ticket||''),
+    order:index
+  })).filter(point=>point.timestamp!==null&&Number.isFinite(point.value)).sort((a,b)=>a.timestamp-b.timestamp||a.order-b.order);
+  const fullBalance=normalize(account.balance_series,'balance');
+  const fullEquity=normalize(account.equity_series,'equity');
+  const complete=[...fullBalance,...fullEquity];
+  if(!complete.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}
+  const latestTime=Math.max(...complete.map(point=>point.timestamp));
+  let rangeStart=-Infinity;
+  if(activeRange==='1M'){
+    const start=new Date(latestTime);
+    start.setMonth(start.getMonth()-1);
+    rangeStart=start.getTime();
+  }
+  const balance=fullBalance.filter(point=>point.timestamp>=rangeStart);
+  const equity=fullEquity.filter(point=>point.timestamp>=rangeStart);
+  const all=[...balance,...equity];
+  if(!all.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}
+  let minTime=Math.min(...all.map(point=>point.timestamp));
+  let maxTime=Math.max(...all.map(point=>point.timestamp));
+  if(minTime===maxTime)maxTime=minTime+86400000;
+  const spanDays=(maxTime-minTime)/86400000;
+  svg.style.width='100%';
+  const viewportWidth=scroll.clientWidth||svg.clientWidth||700;
+  let w=Math.max(220,viewportWidth);
+  if(isMobile&&activeRange==='ALL'){
+    const weeklyWidth=Math.ceil(Math.max(spanDays,1)/7)*56+92;
+    const pointWidth=Math.max(balance.length,equity.length)*18+92;
+    w=Math.max(w,weeklyWidth,pointWidth);
+    svg.style.width=w+'px';
+  }
+  const h=svg.clientHeight||250,p=isMobile?{l:58,r:16,t:18,b:36}:{l:64,r:22,t:18,b:36};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  if(!scroll.__accountResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(scroll.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{
+      const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);
+      if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;accountChart(svg,account)}
+    });
+    observer.observe(scroll);
+    scroll.__accountResizeObserver=observer;
+  }
+  const values=all.map(point=>point.value);
+  const low=Math.min(...values),high=Math.max(...values);
+  const padding=Math.max((high-low)*0.08,Math.abs(high||1)*0.01,1);
+  const step=niceMoneyStep((high+padding)-(low-padding),5);
+  const minY=Math.floor((low-padding)/step)*step;
+  let maxY=Math.ceil((high+padding)/step)*step;
+  if(maxY<=minY)maxY=minY+step;
+  const x=time=>p.l+(w-p.l-p.r)*(time-minTime)/(maxTime-minTime);
+  const y=value=>h-p.b-(h-p.t-p.b)*(value-minY)/(maxY-minY);
+  const moneyTick=new Intl.NumberFormat('en-US',{useGrouping:false,maximumFractionDigits:step<1?2:step<10?1:0});
+  for(let value=minY;value<=maxY+step*0.25;value+=step){
+    const yy=y(value);
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=moneyTick.format(value);
+  }
+  const intervalDays=isMobile?(activeRange==='ALL'?7:3):(spanDays<=14?1:spanDays<=120?7:spanDays<=730?30:90);
+  const ticks=[];
+  const addTick=time=>{
+    const date=new Date(time);
+    const key=date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate();
+    if(ticks.length&&ticks[ticks.length-1].key===key)ticks[ticks.length-1]={time,key};
+    else ticks.push({time,key});
+  };
+  addTick(minTime);
+  const cursor=new Date(minTime);
+  cursor.setHours(0,0,0,0);
+  cursor.setDate(cursor.getDate()+intervalDays);
+  while(cursor.getTime()<maxTime){addTick(cursor.getTime());cursor.setDate(cursor.getDate()+intervalDays)}
+  addTick(maxTime);
+  const dateLabel=new Intl.DateTimeFormat('en-US',{month:'short',day:'2-digit'});
+  ticks.forEach((tick,index)=>{
+    const date=new Date(tick.time);
+    const compact=String(date.getDate()).padStart(2,'0')+'.'+String(date.getMonth()+1).padStart(2,'0');
+    const anchor=isMobile&&activeRange==='1M'?'middle':index===0?'start':index===ticks.length-1?'end':'middle';
+    svg.appendChild(svgEl('text',{x:x(tick.time),y:h-9,'text-anchor':anchor,class:'axis-label'})).textContent=isMobile&&activeRange==='1M'?compact:dateLabel.format(date);
+  });
+  const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+  const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
+  const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});
+  tooltip.appendChild(tooltipRect);
+  tooltip.appendChild(tooltipText);
+  const showTooltip=(point,name)=>{
+    const cx=x(point.timestamp),cy=y(point.value);
+    const amount=new Intl.NumberFormat('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}).format(point.value);
+    const label=name+': '+amount+' · '+dateLabel.format(new Date(point.timestamp));
+    const width=Math.max(128,label.length*6.2+16);
+    const left=Math.max(p.l,Math.min(w-p.r-width,cx-width/2));
+    const top=Math.max(p.t,cy-34);
+    tooltipRect.setAttribute('x',left);tooltipRect.setAttribute('y',top);tooltipRect.setAttribute('width',width);tooltipRect.setAttribute('height',24);
+    tooltipText.setAttribute('x',left+8);tooltipText.setAttribute('y',top+16);tooltipText.textContent=label;
+    tooltip.setAttribute('visibility','visible');
+  };
+  const drawSeries=(points,name,color,dash,width,radius)=>{
+    if(!points.length)return;
+    let path='';
+    points.forEach((point,index)=>path+=(index?'L':'M')+x(point.timestamp)+' '+y(point.value));
+    const attrs={d:path,fill:'none',stroke:color,'stroke-width':width,'stroke-linecap':'round','stroke-linejoin':'round'};
+    if(dash)attrs['stroke-dasharray']=dash;
+    svg.appendChild(svgEl('path',attrs));
+    points.forEach(point=>{
+      const circle=svgEl('circle',{cx:x(point.timestamp),cy:y(point.value),r:radius,fill:color,stroke:'#0b0d0f','stroke-width':1.1});
+      circle.style.cursor='pointer';
+      circle.addEventListener('pointerenter',()=>showTooltip(point,name));
+      circle.addEventListener('pointerleave',()=>tooltip.setAttribute('visibility','hidden'));
+      circle.addEventListener('click',event=>{event.stopPropagation();showTooltip(point,name)});
+      svg.appendChild(circle);
+    });
+  };
+  drawSeries(equity,'Equity','#66717b','4 4',1.8,2.7);
+  drawSeries(balance,'Balance',blue(),'',2.2,3.2);
+  svg.appendChild(tooltip);
+  if(!(isMobile&&activeRange==='ALL'))scroll.scrollLeft=0;
+}
+function formatHoldingDuration(value){
+  const total=Math.max(0,Math.round(num(value)));
+  if(total<60)return total+'m';
+  const days=Math.floor(total/1440);
+  const hours=Math.floor((total%1440)/60);
+  const minutes=total%60;
+  if(days)return days+'d '+hours+'h';
+  return hours+'h '+minutes+'m';
+}
+function holdingTimeEfficiencyBars(svg,model,baselineValue){
+  const groups=model.groups;
+  const baseline=Number(baselineValue);
+  const rows=groups.map(group=>{
+    const winRate=Number(group&&group.win_rate_pct);
+    const minDuration=Number(group&&group.duration_min);
+    const maxDuration=Number(group&&group.duration_max);
+    const valid=Number.isFinite(winRate)&&Number.isFinite(baseline);
+    return{
+      x:Number.isFinite(minDuration)&&Number.isFinite(maxDuration)
+        ?formatHoldingDuration(minDuration)+'–'+formatHoldingDuration(maxDuration)
+        :'N/A',
+      y:valid?winRate-baseline:null
+    };
+  });
+  bars(svg,rows,{
+    baselineLabel:Number.isFinite(baseline)?'Trader Win Rate '+baseline.toFixed(1)+'%':''
+  });
+}
+function bars(svg,rows,opts={}){
+  if(!svg.__holdingBarsResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(svg.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{
+      const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);
+      if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;bars(svg,rows,opts)}
+    });
+    observer.observe(svg);
+    svg.__holdingBarsResizeObserver=observer;
+  }
+  clear(svg);
+  const isMobile=window.matchMedia('(max-width:1100px)').matches;
+  const w=Math.max(260,svg.clientWidth||600),h=svg.clientHeight||220;
+  const p=isMobile?{l:42,r:18,t:18,b:74}:{l:42,r:24,t:18,b:60};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  const vals=rows.map(row=>row.y==null?0:row.y);
+  const minY=opts.minY??Math.min(0,...vals),maxY=opts.maxY??Math.max(1,...vals)*1.18;
+  const barAreaLeft=isMobile?Math.max(p.l+46,w*.16):Math.min(w-p.r-36,Math.max(170,w*.18));
+  const barAreaRight=w-p.r-18;
+  const compactSpan=isMobile?Math.max(0,barAreaRight-barAreaLeft):Math.min(barAreaRight-barAreaLeft,Math.max(0,(rows.length-1)*180));
+  const barLeft=isMobile?barAreaLeft:(barAreaLeft+barAreaRight-compactSpan)/2;
+  const barRight=isMobile?barAreaRight:barLeft+compactSpan;
+  const x=index=>rows.length<=1?(barLeft+barRight)/2:barLeft+(barRight-barLeft)*index/(rows.length-1);
+  const y=value=>h-p.b-(h-p.t-p.b)*(value-minY)/(maxY-minY||1);
+  for(let index=0;index<=4;index++){
+    const yy=p.t+(h-p.t-p.b)*index/4;
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+  }
+  svg.appendChild(svgEl('line',{x1:p.l,y1:y(0),x2:w-p.r,y2:y(0),stroke:'#66717b','stroke-width':1,'stroke-dasharray':'4 4'}));
+  if(opts.baselineLabel){
+    if(isMobile){
+      const match=String(opts.baselineLabel).match(/^(.*?)([0-9]+(?:\.[0-9]+)?%)$/);
+      const baselineText=svgEl('text',{x:0,y:y(0)-20,'text-anchor':'start',class:'axis-label'});
+      const first=svgEl('tspan',{x:0,dy:0});
+      first.textContent=match?'Trader':String(opts.baselineLabel);
+      const second=svgEl('tspan',{x:0,dy:12});
+      second.textContent=match?'Win Rate '+match[2]:'';
+      baselineText.append(first,second);
+      svg.appendChild(baselineText);
+    }else svg.appendChild(svgEl('text',{x:p.l-26,y:y(0)-8,'text-anchor':'start',class:'axis-label'})).textContent=opts.baselineLabel;
+  }
+  const bw=Math.min(34,Math.max(24,(barRight-barLeft)/Math.max(rows.length,1)*.38));
+  rows.forEach((row,index)=>{
+    const cx=x(index);
+    if(row.y==null){
+      svg.appendChild(svgEl('text',{x:cx,y:isMobile?h-42:h-32,'text-anchor':'middle',class:'axis-label'})).textContent='N/A';
+    }else{
+      const top=y(Math.max(0,row.y)),bottom=y(Math.min(0,row.y));
+      svg.appendChild(svgEl('rect',{x:cx-bw/2,y:top,width:bw,height:Math.max(2,bottom-top),rx:3,fill:row.y>=0?green():red(),opacity:.9}));
+      svg.appendChild(svgEl('text',{x:cx,y:row.y>=0?top-7:bottom+15,'text-anchor':'middle',class:'axis-label'})).textContent=(row.y>0?'+':'')+row.y.toFixed(0)+'%';
+    }
+    const text=String(row.x||'');
+    const label=svgEl('text',{x:cx,y:isMobile?h-31:h-12,'text-anchor':'middle',class:'axis-label'});
+    if(isMobile&&text.includes('–')){
+      const parts=text.split('–');
+      const first=svgEl('tspan',{x:cx,dy:0});
+      first.textContent=parts[0]+'–';
+      const second=svgEl('tspan',{x:cx,dy:12});
+      second.textContent=parts.slice(1).join('–');
+      label.append(first,second);
+    }else label.textContent=text;
+    svg.appendChild(label);
+  });
+}
+function groupedBars(svg,groups){
+  const rows=(Array.isArray(groups)?groups:[]).map(g=>({symbol:g.symbol,win:clamp(num(g.win_contribution_pct),0,100),load:clamp(num(g.load_volume_pct),0,100)}));
+  const panel=svg.closest('.panel');
+  const scroll=svg.parentElement;
+  if(panel&&scroll&&svg.id==='instrumentContribution'){
+    panel.classList.add('instrument-panel-mobile');
+    scroll.classList.add('instrument-chart-scroll');
+    if(!document.getElementById('instrument-swipe-style')){
+      const style=document.createElement('style');
+      style.id='instrument-swipe-style';
+      style.textContent='.instrument-swipe-hint{display:none}.instrument-chart-scroll{width:100%;height:100%;overflow:hidden}@media(max-width:1100px){.instrument-panel-mobile .section-head{flex-wrap:wrap;gap:10px}.instrument-swipe-hint{display:inline-flex;order:3;width:100%;justify-content:flex-end;color:var(--blue);font:750 9px Inter,Arial,sans-serif;letter-spacing:.08em;white-space:nowrap}.instrument-chart-scroll{overflow-x:auto;overflow-y:hidden;touch-action:pan-x;-webkit-overflow-scrolling:touch;scrollbar-width:thin}}';
+      document.head.appendChild(style);
+    }
+    const heading=panel.querySelector('.section-head');
+    if(heading&&!heading.querySelector('.instrument-swipe-hint')){
+      const hint=document.createElement('span');
+      hint.className='instrument-swipe-hint';
+      hint.textContent='← SWIPE →';
+      heading.appendChild(hint);
+    }
+  }
+  clear(svg);
+  if(!rows.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}
+  const isMobile=svg.id==='instrumentContribution'&&window.matchMedia('(max-width:1100px)').matches;
+  const viewportWidth=(scroll&&scroll.clientWidth)||svg.clientWidth||700;
+  let w=Math.max(260,viewportWidth);
+  svg.style.width='100%';
+  if(isMobile){w=Math.max(w,rows.length*78+72);svg.style.width=w+'px'}
+  const h=svg.clientHeight||220,p=isMobile?{l:46,r:20,t:18,b:44}:{l:42,r:18,t:18,b:44};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  if(scroll&&!scroll.__instrumentResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(scroll.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{
+      const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);
+      if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;groupedBars(svg,groups)}
+    });
+    observer.observe(scroll);
+    scroll.__instrumentResizeObserver=observer;
+  }
+  const maxY=100;
+  const x=i=>p.l+(w-p.l-p.r)*(i+.5)/rows.length;
+  const y=v=>h-p.b-(h-p.t-p.b)*v/maxY;
+  [0,20,40,60,80,100].forEach(v=>{const yy=y(v);svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=v+'%'});
+  const bw=18;
+  rows.forEach((r,i)=>{const cx=x(i);const winTop=y(r.win),loadTop=y(r.load);svg.appendChild(svgEl('rect',{x:cx-bw-3,y:winTop,width:bw,height:h-p.b-winTop,rx:3,fill:green()}));svg.appendChild(svgEl('text',{x:cx-bw/2-3,y:winTop-7,'text-anchor':'middle',class:'axis-label'})).textContent=Math.round(r.win)+'%';svg.appendChild(svgEl('rect',{x:cx+3,y:loadTop,width:bw,height:h-p.b-loadTop,rx:3,fill:blue(),opacity:.9}));svg.appendChild(svgEl('text',{x:cx+bw/2+3,y:loadTop-7,'text-anchor':'middle',class:'axis-label'})).textContent=Math.round(r.load)+'%';svg.appendChild(svgEl('text',{x:cx,y:h-14,'text-anchor':'middle',class:'axis-label'})).textContent=r.symbol})
+}
+function analysisGauge(svg,value){clear(svg);svg.setAttribute('viewBox','0 0 280 92');const x1=26,x2=254,y=48,split=1,max=2;const x=v=>x1+(x2-x1)*(clamp(v,0,max)/max);svg.appendChild(svgEl('rect',{x:x1,y:y-4,width:x(split)-x1,height:8,fill:red(),rx:3}));svg.appendChild(svgEl('rect',{x:x(split),y:y-4,width:x2-x(split),height:8,fill:green(),rx:3}));svg.appendChild(svgEl('line',{x1:x(split),y1:y-14,x2:x(split),y2:y+14,stroke:'#050607','stroke-width':4}));const cx=x(clamp(value,0,max));svg.appendChild(svgEl('path',{d:`M ${cx-7} ${y-21} L ${cx+7} ${y-21} L ${cx} ${y-10} Z`,fill:'#efe8d2'}));svg.appendChild(svgEl('text',{x:x1,y:y+30,'text-anchor':'start',class:'axis-label'})).textContent='Loss zone';svg.appendChild(svgEl('text',{x:x(split),y:y+30,'text-anchor':'middle',class:'axis-label'})).textContent='1.0';svg.appendChild(svgEl('text',{x:x2,y:y+30,'text-anchor':'end',class:'axis-label'})).textContent='Edge zone'}
+function donut(svg,segments,text,sub){
+  clear(svg);
+  svg.setAttribute('viewBox','0 0 220 150');
+  const cx=110,cy=112,r=76,sw=15,start=200,end=-20,totalAngle=start-end;
+  const polar=(a,rad=r)=>{const z=Math.PI*a/180;return{x:cx+rad*Math.cos(z),y:cy-rad*Math.sin(z)}};
+  const arc=(a1,a2)=>{const p1=polar(a1),p2=polar(a2),large=Math.abs(a1-a2)>180?1:0;return'M '+p1.x+' '+p1.y+' A '+r+' '+r+' 0 '+large+' 1 '+p2.x+' '+p2.y};
+  svg.appendChild(svgEl('path',{d:arc(start,end),fill:'none',stroke:'rgba(255,255,255,.07)','stroke-width':sw,'stroke-linecap':'round'}));
+  const visible=segments.filter(segment=>num(segment.value)>0);
+  const total=visible.reduce((sum,segment)=>sum+num(segment.value),0)||1;
+  let offset=start;
+  const boundaries=[];
+  visible.forEach((segment,index)=>{
+    const angle=num(segment.value)/total*totalAngle;
+    svg.appendChild(svgEl('path',{d:arc(offset,offset-angle),fill:'none',stroke:segment.color,'stroke-width':sw,'stroke-linecap':'butt'}));
+    offset-=angle;
+    if(index<visible.length-1)boundaries.push(offset);
+  });
+  if(visible.length){
+    const firstPoint=polar(start),lastPoint=polar(end);
+    svg.appendChild(svgEl('circle',{cx:firstPoint.x,cy:firstPoint.y,r:sw/2,fill:visible[0].color}));
+    svg.appendChild(svgEl('circle',{cx:lastPoint.x,cy:lastPoint.y,r:sw/2,fill:visible[visible.length-1].color}));
+  }
+  boundaries.forEach(angle=>{
+    const inner=polar(angle,r-sw/2-0.5),outer=polar(angle,r+sw/2+0.5);
+    svg.appendChild(svgEl('line',{x1:inner.x,y1:inner.y,x2:outer.x,y2:outer.y,stroke:'#07090b','stroke-width':1.5,'stroke-linecap':'round'}));
+  });
+  svg.appendChild(svgEl('text',{x:cx,y:cy-4,'text-anchor':'middle',class:'donut-center'})).textContent=text;
+  svg.appendChild(svgEl('text',{x:cx,y:cy+22,'text-anchor':'middle',class:'donut-sub'})).textContent=sub;
+}
+function riskZone(svg,risk){
+  const colorByStatus={reduced:'#6f8fa5',normal:green(),expansion:red()};
+  const rows=risk.zone_items.map(item=>({
+    label:item.label,
+    value:num(item.count),
+    color:colorByStatus[item.status]||colorByStatus.normal
+  }));
+  clear(svg);
+  const w=svg.clientWidth||360,h=svg.clientHeight||220,p={l:112,r:64,t:42,b:34},max=Math.max(1,...rows.map(x=>x.value));
+  rows.forEach((s,i)=>{
+    const y=p.t+i*50,bw=(w-p.l-p.r)*s.value/max;
+    svg.appendChild(svgEl('text',{x:10,y:y+10,class:'axis-label'})).textContent=s.label;
+    svg.appendChild(svgEl('rect',{x:p.l,y,width:w-p.l-p.r,height:14,rx:3,fill:'rgba(255,255,255,.045)'}));
+    svg.appendChild(svgEl('rect',{x:p.l,y,width:bw,height:14,rx:3,fill:s.color}));
+    svg.appendChild(svgEl('text',{x:Math.min(p.l+bw+11,w-20),y:y+11,class:'axis-label'})).textContent=s.value;
+  });
+}
+function riskCvScale(el,cv){
+  el.replaceChildren();
+  const raw=Number(cv.value);
+  const left=clamp(Number(cv.marker_pct),0,100);
+  const title=htmlEl('div','risk-cv-title',`${cv.label} ${raw.toFixed(2)}`);
+  const scale=htmlEl('div','risk-cv-scale-top');
+  const line=htmlEl('div','risk-cv-line');
+  const marker=htmlEl('div','risk-cv-marker');
+  marker.style.left=`calc(${left}% - 6px)`;
+  scale.append(line,marker);
+  const ticks=htmlEl('div','risk-cv-ticks');
+  ticks.append(
+    htmlEl('span','',cv.min_label),
+    htmlEl('span','',cv.mid_label),
+    htmlEl('span','',cv.max_label)
+  );
+  const labels=htmlEl('div','risk-cv-labels');
+  labels.append(
+    htmlEl('span','','Stable zone'),
+    htmlEl('span','','Unstable zone')
+  );
+  el.append(title,scale,ticks,labels);
+}
+function setupMobileHistoryRange(svg,rerender){
+  const panel=svg.closest('.panel');
+  if(panel)panel.classList.add('mobile-history-panel');
+  if(!document.getElementById('mobile-history-range-style')){
+    const style=document.createElement('style');
+    style.id='mobile-history-range-style';
+    style.textContent='.mobile-history-range-controls{display:none}.mobile-history-swipe-hint{display:none}.mobile-history-scroll{width:100%;height:100%;overflow:hidden}@media(max-width:1100px){.mobile-history-panel .section-head{flex-wrap:wrap;gap:10px}.mobile-history-panel .mobile-history-range-controls{display:flex;align-items:center;width:100%;gap:6px;margin:8px 0 4px}.mobile-history-panel .section-head .mobile-history-range-controls{order:3}.mobile-history-range-button{appearance:none;border:1px solid rgba(143,166,200,.35);border-radius:999px;padding:5px 12px;background:rgba(143,166,200,.04);color:var(--muted);font:700 10px Inter,Arial,sans-serif;letter-spacing:.05em}.mobile-history-range-button.active{border-color:rgba(143,166,200,.7);background:rgba(143,166,200,.14);color:var(--text-strong)}.mobile-history-swipe-hint.visible{display:inline-flex;margin-left:auto;color:var(--blue);font:750 9px Inter,Arial,sans-serif;letter-spacing:.08em;white-space:nowrap}.mobile-history-scroll.is-scrollable{overflow-x:auto;overflow-y:hidden;touch-action:pan-x;-webkit-overflow-scrolling:touch;scrollbar-width:thin}}';
+    document.head.appendChild(style);
+  }
+  let scroll=svg.parentElement;
+  if(!scroll||!scroll.classList.contains('mobile-history-scroll')){
+    const host=scroll;
+    scroll=document.createElement('div');
+    scroll.className='mobile-history-scroll';
+    if(host){host.appendChild(scroll);scroll.appendChild(svg)}
+  }
+  let controls=panel&&panel.querySelector('[data-history-for="'+svg.id+'"]');
+  if(panel&&!controls){
+    controls=document.createElement('div');
+    controls.className='mobile-history-range-controls';
+    controls.dataset.historyFor=svg.id;
+    ['ALL','1M'].forEach(range=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='mobile-history-range-button';
+      button.dataset.range=range;
+      button.textContent=range;
+      button.addEventListener('click',()=>{
+        svg.dataset.historyRange=range;
+        rerender();
+        if(range==='ALL')requestAnimationFrame(()=>{const holder=svg.parentElement;if(holder)holder.scrollLeft=holder.scrollWidth});
+      });
+      controls.appendChild(button);
+    });
+    const swipeHint=document.createElement('span');
+    swipeHint.className='mobile-history-swipe-hint';
+    swipeHint.textContent='← SWIPE →';
+    controls.appendChild(swipeHint);
+    const heading=panel.querySelector('.section-head');
+    if(heading)heading.appendChild(controls);
+    else{const title=panel.querySelector('h2');if(title)title.insertAdjacentElement('afterend',controls)}
+  }
+  const isMobile=window.matchMedia('(max-width:1100px)').matches;
+  const selectedRange=svg.dataset.historyRange||'1M';
+  const activeRange=isMobile?selectedRange:'ALL';
+  if(controls)controls.querySelectorAll('.mobile-history-range-button').forEach(button=>{
+    const active=button.dataset.range===selectedRange;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',active?'true':'false');
+  });
+  const swipeHint=controls&&controls.querySelector('.mobile-history-swipe-hint');
+  if(swipeHint)swipeHint.classList.toggle('visible',isMobile&&activeRange==='ALL');
+  scroll.classList.toggle('is-scrollable',isMobile&&activeRange==='ALL');
+  return{panel,scroll,isMobile,activeRange};
+}
+function riskConsistency(svg,series){
+  const setup=setupMobileHistoryRange(svg,()=>riskConsistency(svg,series));
+  const {scroll,isMobile,activeRange}=setup;
+  const fullSeries=(Array.isArray(series)?series:[]).map((point,index)=>({...point,_idx:index,_time:parseAccountTime(point&&point.timestamp)}));
+  let visibleSeries=fullSeries;
+  const validTimes=fullSeries.map(point=>point._time).filter(Number.isFinite);
+  if(isMobile&&activeRange==='1M'&&validTimes.length){
+    const start=new Date(Math.max(...validTimes));
+    start.setMonth(start.getMonth()-1);
+    visibleSeries=fullSeries.filter(point=>point._time!==null&&point._time>=start.getTime());
+  }
+  clear(svg);
+  if(!visibleSeries.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}
+  svg.style.width='100%';
+  const viewportWidth=scroll.clientWidth||svg.clientWidth||780;
+  let w=Math.max(260,viewportWidth);
+  if(isMobile&&activeRange==='ALL'){w=Math.max(w,visibleSeries.length*24+92);svg.style.width=w+'px'}
+  const h=svg.clientHeight||220,p=isMobile?{l:48,r:16,t:18,b:42}:{l:54,r:24,t:18,b:42};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  if(!scroll.__riskHistoryResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(scroll.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;riskConsistency(svg,series)}});
+    observer.observe(scroll);scroll.__riskHistoryResizeObserver=observer;
+  }
+  const low=num(data.risk.personal_risk_low_bound_pct);
+  const high=num(data.risk.personal_risk_high_bound_pct);
+  const median=num(data.risk.personal_risk_baseline_pct);
+  const vals=visibleSeries.map(point=>num(point.risk_pct));
+  const targetMax=Math.max(...vals,high,0.1)*1.12;
+  const roughStep=targetMax/4;
+  const magnitude=Math.pow(10,Math.floor(Math.log10(roughStep||1)));
+  const normalized=roughStep/magnitude;
+  const niceFactor=normalized<=1?1:normalized<=2?2:normalized<=2.5?2.5:normalized<=5?5:10;
+  const tickStep=niceFactor*magnitude;
+  const minY=0,maxY=Math.max(tickStep,Math.ceil(targetMax/tickStep)*tickStep);
+  const x=i=>p.l+(w-p.l-p.r)*(visibleSeries.length<=1?0:i/(visibleSeries.length-1));
+  const y=value=>h-p.b-(h-p.t-p.b)*(value-minY)/(maxY-minY||1);
+  for(let value=0;value<=maxY+tickStep/100;value+=tickStep){
+    const yy=y(value);
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=value.toFixed(tickStep<1?1:0);
+  }
+  svg.appendChild(svgEl('rect',{x:p.l,y:y(high),width:w-p.l-p.r,height:y(low)-y(high),fill:green(),opacity:.10}));
+  svg.appendChild(svgEl('line',{x1:p.l,y1:y(median),x2:w-p.r,y2:y(median),stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'}));
+  let path='';
+  visibleSeries.forEach((point,index)=>{path+=(index?'L':'M')+x(index)+' '+y(num(point.risk_pct))});
+  svg.appendChild(svgEl('path',{d:path,fill:'none',stroke:blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+  const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
+  const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});
+  tooltip.append(tooltipRect,tooltipText);
+  const showTooltip=(point,index)=>{
+    const risk=num(point.risk_pct),cx=x(index),cy=y(risk);
+    const label='Risk '+risk.toFixed(2)+'%';
+    const width=Math.max(76,label.length*6.2+16);
+    const left=clamp(cx-width/2,p.l,w-p.r-width);
+    const top=Math.max(p.t,cy-34);
+    tooltipRect.setAttribute('x',left);tooltipRect.setAttribute('y',top);tooltipRect.setAttribute('width',width);tooltipRect.setAttribute('height',24);
+    tooltipText.setAttribute('x',left+8);tooltipText.setAttribute('y',top+16);tooltipText.textContent=label;tooltip.setAttribute('visibility','visible');
+  };
+  visibleSeries.forEach((point,index)=>{
+    const risk=num(point.risk_pct),status=String(point.status||'').toLowerCase(),isExpansion=status?status==='expansion':risk>high;
+    const circle=svgEl('circle',{cx:x(index),cy:y(risk),r:3,fill:isExpansion?red():blue(),stroke:'#0b0d0f','stroke-width':1.1});
+    circle.style.cursor='pointer';
+    circle.addEventListener('pointerenter',()=>showTooltip(point,index));
+    circle.addEventListener('pointerleave',()=>tooltip.setAttribute('visibility','hidden'));
+    circle.addEventListener('click',event=>{event.stopPropagation();showTooltip(point,index)});
+    svg.appendChild(circle);
+  });
+  const weeks=[];
+  visibleSeries.forEach((point,index)=>{if(!weeks.length||weeks[weeks.length-1].week!==point.week)weeks.push({week:point.week,start:index,end:index});else weeks[weeks.length-1].end=index});
+  weeks.forEach(week=>{
+    const cx=(x(week.start)+x(week.end))/2;
+    svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=week.week;
+    if(week.start>0)svg.appendChild(svgEl('line',{x1:x(week.start),y1:p.t,x2:x(week.start),y2:h-p.b,stroke:'rgba(255,255,255,.04)','stroke-width':1}));
+  });
+  svg.appendChild(svgEl('text',{x:4,y:p.t-6,class:'axis-label'})).textContent='Risk %';
+  svg.appendChild(tooltip);
+}
+function riskAfterLoss(svg,behavior){
+  clear(svg);
+  const summary=behavior.post_loss_summary;
+  const rows=behavior.risk_after_loss_items;
+  const normal=Number(summary.baseline_pct);
+  const w=svg.clientWidth||360,h=svg.clientHeight||220,p={l:116,r:28,t:22,b:58};
+  const vals=rows
+    .map(row=>row.value)
+    .filter(value=>value!==null&&value!==undefined&&Number.isFinite(Number(value)))
+    .map(Number);
+  const maxY=Math.max(normal*1.35,...vals,2);
+  const x=index=>p.l+(w-p.l-p.r)*(index+.5)/rows.length;
+  const y=value=>h-p.b-(h-p.t-p.b)*Number(value)/(maxY||1);
+  for(let i=0;i<=4;i++){
+    const yy=p.t+(h-p.t-p.b)*i/4;
+    svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
+  }
+  svg.appendChild(svgEl('line',{
+    x1:p.l,y1:y(normal),x2:w-p.r,y2:y(normal),
+    stroke:'#66717b','stroke-width':1,'stroke-dasharray':'4 4'
+  }));
+  const baselineLabel=svgEl('text',{
+    x:8,y:y(normal)-8,'text-anchor':'start',class:'axis-label'
+  });
+  baselineLabel.textContent='Normal risk '+normal.toFixed(2);
+  svg.appendChild(baselineLabel);
+  const colorByStatus={expansion:red(),reduced:green(),normal:blue()};
+  const bw=34;
+  rows.forEach((row,index)=>{
+    const cx=x(index);
+    const available=row.value!==null&&
+      row.value!==undefined&&
+      Number.isFinite(Number(row.value));
+    if(!available){
+      const missing=svgEl('text',{
+        x:cx,y:y(normal)+18,'text-anchor':'middle',class:'axis-label'
+      });
+      missing.textContent='N/A';
+      svg.appendChild(missing);
+    }else{
+      const value=Number(row.value);
+      const status=String(row.status);
+      const top=y(Math.max(value,normal)),bottom=y(Math.min(value,normal));
+      const color=colorByStatus[status];
+      svg.appendChild(svgEl('rect',{
+        x:cx-bw/2,y:top,width:bw,height:Math.max(2,bottom-top),
+        rx:4,fill:color,opacity:.9
+      }));
+      const valueLabel=svgEl('text',{
+        x:cx,y:value>normal?top-9:bottom+16,
+        'text-anchor':'middle',class:'axis-label'
+      });
+      valueLabel.textContent=value.toFixed(1);
+      svg.appendChild(valueLabel);
+    }
+    const groupLabel=svgEl('text',{
+      x:cx,y:h-14,'text-anchor':'middle',class:'axis-label'
+    });
+    groupLabel.textContent=row.label;
+    svg.appendChild(groupLabel);
+  });
+}
+function formatReportWeek(period){
+  const start=String(period&&period.start||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const end=String(period&&period.end||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!start||!end)throw new Error('Invalid report period date format');
+  const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const startMonth=months[Number(start[2])-1];
+  const endMonth=months[Number(end[2])-1];
+  if(start[1]===end[1]&&start[2]===end[2]){
+    return `WEEK · ${startMonth} ${start[3]}–${end[3]}, ${end[1]}`;
+  }
+  if(start[1]===end[1]){
+    return `WEEK · ${startMonth} ${start[3]}–${endMonth} ${end[3]}, ${end[1]}`;
+  }
+  return `WEEK · ${startMonth} ${start[3]}, ${start[1]}–${endMonth} ${end[3]}, ${end[1]}`;
+}
+const riskAfterLossPeriod=$('riskAfterLossPeriod');
+if(riskAfterLossPeriod){
+  riskAfterLossPeriod.textContent=formatReportWeek(data.period);
+}
+const findingsPeriod=$('findingsPeriod');
+if(findingsPeriod){
+  findingsPeriod.textContent=formatReportWeek(data.period);
+}
+function planFact(svg,sourcePoints,base){
+  const setup=setupMobileHistoryRange(svg,()=>planFact(svg,sourcePoints,base));
+  const {scroll,isMobile,activeRange}=setup;
+  const fullPoints=Array.isArray(sourcePoints)?sourcePoints.map((point,index)=>({...point,_idx:index,_time:parseAccountTime(point&&point.timestamp)})):[];
+  const fullRiskSeries=Array.isArray(data.risk&&data.risk.trade_series)?data.risk.trade_series.map((point,index)=>({...point,_idx:index,_time:parseAccountTime(point&&point.timestamp)})):[];
+  const validTimes=[...fullPoints,...fullRiskSeries].map(point=>point._time).filter(Number.isFinite);
+  let rangeStart=-Infinity;
+  if(isMobile&&activeRange==='1M'&&validTimes.length){const start=new Date(Math.max(...validTimes));start.setMonth(start.getMonth()-1);rangeStart=start.getTime()}
+  const points=fullPoints.filter(point=>point._time===null||point._time>=rangeStart);
+  const riskSeries=fullRiskSeries.filter(point=>point._time===null||point._time>=rangeStart);
+  const riskWeeks=riskSeries.map(point=>point.week);
+  const pointWeeks=points.map(point=>point.week);
+  const weeks=[...new Set([...riskWeeks,...pointWeeks].filter(Boolean))];
+  clear(svg);
+  if(!points.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='no closed loss trades in period';return}
+  svg.style.width='100%';
+  const viewportWidth=scroll.clientWidth||svg.clientWidth||780;
+  let w=Math.max(260,viewportWidth);
+  if(isMobile&&activeRange==='ALL'){w=Math.max(w,weeks.length*78+100,points.length*24+100);svg.style.width=w+'px'}
+  const h=svg.clientHeight||252,pad=isMobile?{l:58,r:18,t:24,b:48}:{l:74,r:28,t:24,b:48};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  if(!scroll.__planHistoryResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(scroll.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;planFact(svg,sourcePoints,base)}});
+    observer.observe(scroll);scroll.__planHistoryResizeObserver=observer;
+  }
+  const values=points.flatMap(point=>[num(point.planned),num(point.actual),num(base)]);
+  const targetMax=Math.max(...values,0.1)*1.12;
+  const roughStep=targetMax/4;
+  const magnitude=Math.pow(10,Math.floor(Math.log10(roughStep||1)));
+  const normalized=roughStep/magnitude;
+  const niceFactor=normalized<=1?1:normalized<=2?2:normalized<=2.5?2.5:normalized<=5?5:10;
+  const tickStep=niceFactor*magnitude;
+  const minY=0,maxY=Math.max(tickStep,Math.ceil(targetMax/tickStep)*tickStep);
+  const y=value=>h-pad.b-(h-pad.t-pad.b)*(value-minY)/(maxY-minY||1);
+  for(let value=0;value<=maxY+tickStep/100;value+=tickStep){
+    const yy=y(value);
+    svg.appendChild(svgEl('line',{x1:pad.l,y1:yy,x2:w-pad.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:6,y:yy+4,class:'axis-label'})).textContent=value.toFixed(tickStep<1?1:0);
+  }
+  svg.appendChild(svgEl('text',{x:6,y:pad.t-8,class:'axis-label'})).textContent='Loss %';
+  svg.appendChild(svgEl('line',{x1:pad.l,y1:y(num(base)),x2:w-pad.r,y2:y(num(base)),stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'}));
+  const plotWidth=w-pad.l-pad.r;
+  const weekWidth=plotWidth/Math.max(weeks.length,1);
+  const groups=weeks.map((week,index)=>({week,index,points:points.filter(point=>point.week===week)}));
+  const maxWeekLosses=Math.max(1,...groups.map(group=>group.points.length));
+  const denseSlot=weekWidth/maxWeekLosses;
+  const barWidth=clamp(denseSlot*.56,7,42);
+  const placed=[];
+  groups.forEach(group=>{
+    const start=pad.l+group.index*weekWidth,center=start+weekWidth/2;
+    if(group.index>0)svg.appendChild(svgEl('line',{x1:start,y1:pad.t,x2:start,y2:h-pad.b,stroke:'rgba(255,255,255,.04)','stroke-width':1}));
+    svg.appendChild(svgEl('text',{x:center,y:h-12,'text-anchor':'middle',class:'axis-label'})).textContent=group.week;
+    if(!group.points.length){svg.appendChild(svgEl('text',{x:center,y:y(num(base))+18,'text-anchor':'middle',class:'axis-label'})).textContent='N/A';return}
+    const slot=weekWidth/group.points.length;
+    group.points.forEach((point,index)=>placed.push({...point,cx:start+slot*(index+.5)}));
+  });
+  placed.sort((a,b)=>a._idx-b._idx);
+  placed.forEach(point=>{
+    const actual=num(point.actual),within=num(point.within_plan),excess=num(point.excess_loss);
+    const baseY=y(0),withinTop=y(within),actualTop=y(actual);
+    const group=svgEl('g');group.style.cursor='pointer';
+    group.appendChild(svgEl('rect',{x:point.cx-barWidth/2,y:withinTop,width:barWidth,height:Math.max(2,baseY-withinTop),rx:3,fill:'#66717b',opacity:.92}));
+    if(excess>0)group.appendChild(svgEl('rect',{x:point.cx-barWidth/2,y:actualTop,width:barWidth,height:Math.max(2,withinTop-actualTop),rx:3,fill:red(),opacity:.92}));
+    const valueLabel=svgEl('text',{x:point.cx,y:Math.max(pad.t+10,actualTop-8),'text-anchor':'middle',class:'axis-label',visibility:'hidden'});
+    valueLabel.textContent=actual.toFixed(2)+'%';group.appendChild(valueLabel);
+    group.addEventListener('pointerenter',()=>valueLabel.setAttribute('visibility','visible'));
+    group.addEventListener('pointerleave',()=>valueLabel.setAttribute('visibility','hidden'));
+    group.addEventListener('click',event=>{event.stopPropagation();valueLabel.setAttribute('visibility','visible')});
+    svg.appendChild(group);
+  });
+  if(placed.length){
+    let path='';placed.forEach((point,index)=>{path+=(index?'L':'M')+point.cx+' '+y(num(point.planned))});
+    svg.appendChild(svgEl('path',{d:path,fill:'none',stroke:'#c0c0bd','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'}));
+    const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
+    const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
+    const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});tooltip.append(tooltipRect,tooltipText);
+    const showTooltip=point=>{
+      const cy=y(num(point.planned)),label='Planned risk '+num(point.planned).toFixed(2)+'%';
+      const width=Math.max(112,label.length*6.2+16),left=clamp(point.cx-width/2,pad.l,w-pad.r-width),top=Math.max(pad.t,cy-34);
+      tooltipRect.setAttribute('x',left);tooltipRect.setAttribute('y',top);tooltipRect.setAttribute('width',width);tooltipRect.setAttribute('height',24);
+      tooltipText.setAttribute('x',left+8);tooltipText.setAttribute('y',top+16);tooltipText.textContent=label;tooltip.setAttribute('visibility','visible');
+    };
+    placed.forEach(point=>{
+      const circle=svgEl('circle',{cx:point.cx,cy:y(num(point.planned)),r:3,fill:'#c0c0bd',stroke:'#0b0d0f','stroke-width':1});
+      circle.style.cursor='pointer';circle.addEventListener('pointerenter',()=>showTooltip(point));circle.addEventListener('pointerleave',()=>tooltip.setAttribute('visibility','hidden'));circle.addEventListener('click',event=>{event.stopPropagation();showTooltip(point)});svg.appendChild(circle);
+    });
+    svg.appendChild(tooltip);
+  }
+}
+function renderReportHeader(reportData){
+  const displayName=String(reportData.report.display_name);
+  document.querySelector('.top-title-block h1').textContent=displayName;
+  $('headerMeta').textContent=
+    `${reportData.trader.account_login} · ${reportData.report.audit_id} · `+
+    `${reportData.trader.trader_id} · ${reportData.period.current_period}`;
+  document.title=`${displayName} — Trade Decision Audit Report`;
+}
+
+function renderLeakMap(container,leaks){
+  container.replaceChildren();
+  [
+    ['Risk Leak',leaks.risk_leak_score],
+    ['SL Leak',leaks.sl_leak_score],
+    ['Behavior Leak',leaks.behavior_leak_score],
+    ['Execution Leak',leaks.execution_leak_score]
+  ].forEach(([name,value])=>{
+    const row=htmlEl('div','mini-leak-row');
+    const label=htmlEl('div','mini-leak-name',name);
+    const bar=htmlEl('div','mini-leak-bar');
+    const marker=htmlEl('span','marker');
+    marker.style.left=clamp(Number(value),0,100)+'%';
+    bar.appendChild(marker);
+    row.append(label,bar);
+    container.appendChild(row);
+  });
+}
+
+function renderSlLegend(container,segments){
+  container.replaceChildren();
+  segments.forEach(segment=>{
+    const row=htmlEl('span','legend-row');
+    const swatch=htmlEl('span','sq');
+    swatch.style.background=segment.color;
+    row.append(
+      swatch,
+      document.createTextNode(`${segment.label} - ${Number(segment.pct).toFixed(1)}%`)
+    );
+    container.appendChild(row);
+  });
+}
+
+function renderRiskZoneSummary(container,distribution){
+  container.replaceChildren();
+  const baseline=Number(distribution.personal_risk_baseline_pct);
+  const drift=Number(distribution.drift.pct);
+  const driftClass=drift>0?'up':drift<0?'down':'neutral';
+  const driftArrow=drift>0?'↑':drift<0?'↓':'→';
+  const baselineBlock=htmlEl('div');
+  baselineBlock.append(
+    htmlEl('div','risk-zone-value baseline',baseline.toFixed(2)+'%'),
+    htmlEl('div','risk-zone-label','Personal baseline')
+  );
+  const driftBlock=htmlEl('div');
+  driftBlock.append(
+    htmlEl(
+      'div',
+      'risk-zone-value '+driftClass,
+      `${driftArrow} ${Math.abs(drift).toFixed(1)}%`
+    ),
+    htmlEl('div','risk-zone-label','Risk drift')
+  );
+  container.append(baselineBlock,driftBlock);
+}
+
+function renderRiskAfterLossNote(container,summary){
+  const source=summary.risk_drift_pct;
+  const available=source!==null&&source!==undefined&&Number.isFinite(Number(source));
+  container.replaceChildren();
+  container.className='risk-after-note';
+  container.appendChild(document.createTextNode('Risk drift: '));
+  if(!available){container.appendChild(htmlEl('b','neutral','N/A'));return}
+  const drift=Number(source);
+  const value=htmlEl('b',drift>0?'up':'',`${drift>0?'↑ +':drift<0?'↓ ':'→ '}${Math.abs(drift).toFixed(2)}%`);
+  container.appendChild(value);
+}
+
+function renderFindings(container,items){
+  container.replaceChildren();
+  items.forEach((item,index)=>{
+    const row=htmlEl('div','item');
+    const number=htmlEl(
+      'div',
+      'item-num '+item.display_class,
+      Number.isFinite(Number(item.rank))?Number(item.rank):index+1
+    );
+    const body=htmlEl('div');
+    body.appendChild(htmlEl('div','item-title',item.text));
+    row.append(number,body);
+    container.appendChild(row);
+  });
+}
+
+function render(){
+  const d=data;
+  renderReportHeader(d);
+  $('generated').textContent=`Generated: ${d.report.generated_at} · ${d.report.version}`;
+
+  const score=d.score;
+  const q=clamp(Number(score.qud_tda_score),0,100);
+  const trustClass=score.display_class;
+  const scoreValue=$('scoreValue');
+  scoreValue.textContent=String(Math.round(q));
+  scoreValue.style.fontSize='42px';
+  scoreValue.style.color=
+    trustClass==='danger'?'var(--red)':
+    trustClass==='warn'?'var(--yellow)':
+    trustClass==='good'?'var(--green)':'var(--blue)';
+  scoreGauge($('scoreGauge'),q,score.zones);
+
+  const riskModeValue=String(score.risk_mode);
+  const riskClass=
+    riskModeValue==='critical'||riskModeValue==='dangerous'?'danger':
+    riskModeValue==='low'||riskModeValue==='protected'?'good':'warn';
+  $('riskMode').textContent=riskModeValue.toUpperCase();
+  $('riskMode').className='badge '+riskClass;
+  $('trustZone').textContent=String(score.trust_zone).toUpperCase();
+  $('trustZone').className='badge '+trustClass;
+
+  const deltaAvailable=Number.isFinite(Number(score.trust_score_delta));
+  if(deltaAvailable){
+    const delta=Number(score.trust_score_delta);
+    const label=Math.abs(delta)>=1
+      ?String(Math.round(Math.abs(delta)))
+      :Math.abs(delta).toFixed(1);
+    $('scoreDelta').textContent=
+      delta>0?`↑ ${label} SCORE`:delta<0?`↓ ${label} SCORE`:'0 SCORE';
+    $('scoreDelta').className='badge '+(delta===0?'neutral':delta>0?'good':'danger');
+  }else{
+    $('scoreDelta').textContent='not_available';
+    $('scoreDelta').className='badge neutral';
+  }
+
+  const trends=d.trends;
+  renderTopMetric('topWinRatio','sparkWinRatio',trends.win_ratio_pct,value=>value.toFixed(1)+'%',{minY:0,maxY:100});
+  renderTopMetric('topProfitFactor','sparkProfitFactor',trends.profit_factor,value=>value.toFixed(2),{minY:0,maxY:5});
+  renderTopMetric('topAverageRisk','sparkAverageRisk',trends.average_risk_pct,value=>value.toFixed(2)+'%',{minY:0,maxY:3});
+  renderTopMetric('topSlSafe','sparkSlSafe',trends.sl_safe_pct,value=>value.toFixed(1)+'%',{minY:0,maxY:100});
+
+  renderLeakMap($('miniLeakGrid'),d.leaks);
+  trustScoreTrend($('scoreTrend'));
+  accountChart($('accountEquity'),d.account);
+  holdingTimeEfficiencyBars(
+    $('durationQuality'),
+    d.duration.holding_time_efficiency,
+    d.duration.holding_time_efficiency.baseline_win_rate_pct
+  );
+  groupedBars($('instrumentContribution'),d.instrument_contribution.groups);
+
+  $('shortCoverValue').textContent=Number(d.analysis.short_cover_ratio).toFixed(2)+'x';
+  $('profitFactorValue').textContent=Number(d.analysis.profit_factor).toFixed(2);
+  $('longCoverValue').textContent=Number(d.analysis.long_cover_ratio).toFixed(2)+'x';
+  $('shortWinRateValue').textContent=Number(d.analysis.short_win_rate_pct).toFixed(1)+'%';
+  $('totalWinRateValue').textContent=Number(d.analysis.total_win_rate_pct).toFixed(1)+'%';
+  $('longWinRateValue').textContent=Number(d.analysis.long_win_rate_pct).toFixed(1)+'%';
+  analysisGauge($('shortAnalysisGauge'),Number(d.analysis.short_cover_ratio));
+  analysisGauge($('profitabilityGauge'),Number(d.analysis.profit_factor));
+  analysisGauge($('longAnalysisGauge'),Number(d.analysis.long_cover_ratio));
+
+  const colorByStatus={
+    danger:red(),
+    removed:'#b87945',
+    changed:yellow(),
+    safe:green()
+  };
+  const protection=d.sl.protection_summary;
+  const slSegments=protection.segments.map(segment=>({
+    ...segment,
+    color:colorByStatus[segment.status]
+  }));
+  donut(
+    $('slDonut'),
+    slSegments,
+    Number(protection.sl_safe_pct).toFixed(1)+'%',
+    'SAFE'
+  );
+  renderSlLegend($('slLegend'),slSegments);
+  const protectionTrend=trends.sl_safe_pct
+    .filter(point=>point&&Number.isFinite(Number(point.value)))
+    .map((point,index)=>({
+      x:'W'+(index+1),
+      y:Number(point.value),
+      period:String(point.period||'')
+    }));
+  drawLine($('slTimeline'),protectionTrend,{minY:0,maxY:100,color:green()});
+
+  const riskDistribution=d.risk.zone_distribution;
+  riskZone($('scoreDonut'),riskDistribution);
+  renderRiskZoneSummary($('riskZoneSummary'),riskDistribution);
+  riskAfterLoss($('lossBarsTop'),d.behavior);
+  renderRiskAfterLossNote($('lossNoteTop'),d.behavior.post_loss_summary);
+  riskCvScale($('riskCvScale'),d.risk.cv);
+  riskConsistency($('riskLine'),d.risk.trade_series);
+  planFact($('scatter'),d.plan_fact.points,d.risk.personal_risk_baseline_pct);
+  renderFindings($('findings'),d.findings.items);
+}
+
+function initStrategyInterest(){
+  const titleBlock=document.querySelector('.top-title-block');
+  const headerMeta=document.getElementById('headerMeta');
+  const trustLabel=Array.from(document.querySelectorAll('.label')).find(el=>el.textContent.trim().toUpperCase()==='TRUST SCORE');
+  const referenceBadge=document.getElementById('riskMode')||document.querySelector('.badge');
+  if(!titleBlock||!headerMeta||!trustLabel||!referenceBadge)return;
+  if(!document.getElementById('qud-design-lab-style')){
+    const style=document.createElement('style');
+    style.id='qud-design-lab-style';
+    style.textContent='@media(min-width:1101px){.top-title-block{transform:translateY(-18px)!important;}#strategyInterestMobileRow{display:none!important;}}@media(max-width:1100px){#strategyInterestMobileRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 8px;}#strategyInterestMobileRow #strategyInterestLabel,#strategyInterestMobileRow #strategyDemoBadge{position:static!important;left:auto!important;top:auto!important;margin:0!important;}}';
+    document.head.appendChild(style);
+  }
+  let strategyLabel=document.getElementById('strategyInterestLabel');
+  if(!strategyLabel){
+    strategyLabel=trustLabel.cloneNode(true);
+    strategyLabel.id='strategyInterestLabel';
+    strategyLabel.textContent='STRATEGY INTEREST';
+    strategyLabel.style.position='absolute';
+    strategyLabel.style.textAlign='left';
+    strategyLabel.style.margin='0';
+    strategyLabel.style.zIndex='20';
+    strategyLabel.style.pointerEvents='none';
+    document.body.appendChild(strategyLabel);
+  }
+  let demoBadge=document.getElementById('strategyDemoBadge');
+  if(!demoBadge){
+    demoBadge=referenceBadge.cloneNode(true);
+    demoBadge.id='strategyDemoBadge';
+    demoBadge.className='badge neutral';
+    demoBadge.textContent='2 DEMO';
+    demoBadge.style.position='absolute';
+    demoBadge.style.margin='0';
+    demoBadge.style.zIndex='20';
+    demoBadge.style.pointerEvents='none';
+    demoBadge.style.visibility='hidden';
+    document.body.appendChild(demoBadge);
+  }
+  let mobileRow=document.getElementById('strategyInterestMobileRow');
+  if(!mobileRow){
+    mobileRow=document.createElement('div');
+    mobileRow.id='strategyInterestMobileRow';
+    headerMeta.insertAdjacentElement('afterend',mobileRow);
+  }
+  const positionStrategyElements=()=>{
+    const isMobile=window.matchMedia('(max-width:1100px)').matches;
+    if(isMobile){
+      if(strategyLabel.parentNode!==mobileRow)mobileRow.appendChild(strategyLabel);
+      if(demoBadge.parentNode!==mobileRow)mobileRow.appendChild(demoBadge);
+      strategyLabel.style.position='static';
+      strategyLabel.style.left='';
+      strategyLabel.style.top='';
+      strategyLabel.style.textAlign='left';
+      demoBadge.style.position='static';
+      demoBadge.style.left='';
+      demoBadge.style.top='';
+      demoBadge.style.visibility='visible';
+      mobileRow.style.display='flex';
+      return;
+    }
+    mobileRow.style.display='none';
+    if(strategyLabel.parentNode!==document.body)document.body.appendChild(strategyLabel);
+    if(demoBadge.parentNode!==document.body)document.body.appendChild(demoBadge);
+    strategyLabel.style.position='absolute';
+    demoBadge.style.position='absolute';
+    const titleRect=titleBlock.getBoundingClientRect();
+    const headerRect=headerMeta.getBoundingClientRect();
+    const trustRect=trustLabel.getBoundingClientRect();
+    const titleStyle=document.defaultView.getComputedStyle(titleBlock);
+    const titlePaddingLeft=parseFloat(titleStyle.paddingLeft)||0;
+    const left=titleRect.left+titlePaddingLeft+window.scrollX;
+    strategyLabel.style.left=left+'px';
+    strategyLabel.style.top=(trustRect.top+window.scrollY)+'px';
+    const strategyRect=strategyLabel.getBoundingClientRect();
+    const badgeRect=demoBadge.getBoundingClientRect();
+    const gapTop=headerRect.bottom;
+    const gapBottom=strategyRect.top;
+    const badgeTop=gapTop+Math.max(0,(gapBottom-gapTop-badgeRect.height)/2);
+    demoBadge.style.left=left+'px';
+    demoBadge.style.top=(badgeTop+window.scrollY)+'px';
+    demoBadge.style.visibility='visible';
+  };
+  positionStrategyElements();
+  window.addEventListener('resize',positionStrategyElements);
+}
+
+render();
+/* TDA_TRIAL: Strategy Interest and 2 DEMO are intentionally hidden. */
+initHelp();
+</script>
+</body></html>
