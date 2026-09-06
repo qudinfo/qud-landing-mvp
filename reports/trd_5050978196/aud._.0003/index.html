@@ -3,7 +3,7 @@
 <style>
 :root{--bg:#0b0d0f;--panel:#111315;--text:#c6c6c6;--text-strong:#f0f0ed;--muted:#8a8a8a;--blue:#8fa6c8;--green:#6fa56f;--yellow:#bda351;--orange:#b87945;--red:#b4514b;--border-soft:#1f2428}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 30% -10%,#151b21 0%,#0b0d0f 44%,#08090a 100%);color:var(--text);font-family:Inter,Arial,sans-serif}.page{max-width:1240px;margin:0 auto;padding:20px 22px}.panel{background:linear-gradient(180deg,rgba(17,20,22,.72),rgba(10,12,14,.82));border:1px solid rgba(255,255,255,.06);border-radius:0;padding:14px;box-shadow:0 10px 28px rgba(0,0,0,.14);position:relative;overflow:visible}h1{font-size:24px;margin:0 0 6px;color:var(--text-strong)}h2{font-size:12px;margin:0 0 6px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:800}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#d5c27a;font-weight:700;margin-bottom:8px}.subtitle{margin:0;color:var(--muted);font-size:13px}.label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}.badge{display:inline-flex;border:1px solid rgba(189,163,81,.45);border-radius:999px;padding:5px 10px;color:#d5c27a;background:rgba(189,163,81,.06);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.badge.good{border-color:rgba(111,165,111,.45);color:#8ec58e;background:rgba(111,165,111,.07)}.badge.warn{border-color:rgba(189,163,81,.45);color:#d5c27a;background:rgba(189,163,81,.07)}.badge.danger{border-color:rgba(180,81,75,.5);color:#d97f78;background:rgba(180,81,75,.08)}.badge.neutral{border-color:rgba(143,166,200,.35);color:var(--blue);background:rgba(143,166,200,.07)}.top{margin-bottom:12px}.top-combined{display:grid;grid-template-columns:1.75fr .7fr .7fr;gap:24px;align-items:center}.top-title-block{padding-left:62px}.score-wrap{position:relative;height:154px}.score-gauge{width:100%;height:100%}.score-value{position:absolute;left:50%;top:64%;transform:translate(-50%,-50%);font-size:42px;color:var(--green);font-weight:850;text-align:center}.score-value small{display:block;font-size:12px;color:var(--muted);margin-top:4px}.gauge-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:12;stroke-linecap:round}.gauge-seg{fill:none;stroke-width:12;stroke-linecap:round}.gauge-seg.red{stroke:var(--red)}.gauge-seg.orange{stroke:var(--orange)}.gauge-seg.green{stroke:var(--green)}.gauge-marker{stroke:#efe8d2;stroke-width:4;stroke-linecap:round}.gauge-tick{fill:var(--muted);font-size:10px}.status-badges{height:154px;display:flex;flex-direction:column;justify-content:center;gap:8px}.status-line{display:flex;align-items:center;gap:8px}.status-note{font-size:10px;color:var(--muted);font-weight:600}.top-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:20px 0 24px}.metric-card{padding:10px 24px 10px 0;display:grid;grid-template-columns:auto 104px;grid-template-rows:auto auto;column-gap:18px;align-items:end}.metric-card:first-child{padding-left:24px}.metric-card+.metric-card{padding-left:24px;border-left:1px solid rgba(255,255,255,.12)}.metric-value{font-size:22px;color:var(--text-strong);font-weight:800;margin-top:8px}.metric-spark{grid-column:2;grid-row:1/span 2;width:104px;height:38px;align-self:center}.pre-account-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:24px}.pre-leak-panel{grid-column:span 4;min-height:270px;overflow:hidden}.pre-score-panel{grid-column:span 8}.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:16px;row-gap:26px}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}.span-4{grid-column:span 4}.section-head{display:flex;justify-content:space-between;margin-bottom:14px}.chart-box{height:220px;margin-top:8px}.account-chart{height:250px}.planned-risk-chart{height:252px}.svg-chart{width:100%;height:100%;display:block}.gridline{stroke:rgba(255,255,255,.055);stroke-width:1}.axis-label{fill:var(--muted);font-size:10px;font-weight:600}.legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:10px;color:var(--muted)}.leg{display:inline-flex;align-items:center;gap:6px}.sw{width:10px;height:10px;border-radius:3px;background:var(--blue)}.sw.green{background:var(--green)}.sw.yellow{background:var(--yellow)}.sw.red{background:var(--red)}.sw.gray{background:#66717b}.mini-leak-stack{display:grid;gap:26px;margin-top:38px;padding:0 10px 8px}.mini-leak-row{display:grid;grid-template-columns:128px minmax(0,1fr);gap:18px;align-items:center}.mini-leak-name{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:850;white-space:nowrap}.mini-leak-bar{height:7px;width:100%;max-width:100%;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 30%,var(--yellow) 30% 60%,var(--orange) 60% 80%,var(--red) 80% 100%);position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);overflow:visible}.mini-leak-bar .marker{position:absolute;top:-7px;width:4px;height:21px;background:#e9e0b6;border-radius:4px;box-shadow:0 0 0 2px rgba(0,0,0,.48);transform:translateX(-2px)}.pre-leak-panel h2{font-size:13px;letter-spacing:.1em;margin-bottom:8px}.analysis-panel{padding:28px 14px 30px;background:transparent;border:0;box-shadow:none}.analysis-panel h2{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.analysis-head-value{order:-1;font-size:16px;color:var(--text-strong);font-weight:850}.analysis-winrate{font-size:9px;color:var(--muted)}.analysis-winrate b{font-size:11px}.analysis-gauge-wrap{height:92px;margin-top:18px;display:grid;place-items:center}.analysis-gauge{width:100%;height:78px}.sl-protection-layout{display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:center}.donut-center{font-size:28px;fill:var(--green);font-weight:850}.donut-sub{font-size:10px;fill:var(--muted);letter-spacing:.12em}.timeline-dots{height:172px;width:100%}.legend-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:10px;color:var(--muted)}.legend-row{display:inline-flex;gap:6px;align-items:center}.sq{width:10px;height:10px;border-radius:3px}.risk-zone-summary{position:relative;z-index:1;display:flex;justify-content:flex-start;align-items:center;gap:58px;margin-top:-50px;margin-bottom:16px;padding:0 0 0 10px;text-align:left}.risk-zone-summary>div{min-width:104px}.risk-zone-value{font-size:20px;color:var(--text-strong);font-weight:850}.risk-zone-value.up{color:var(--red)}.risk-zone-value.down{color:var(--green)}.risk-zone-value.neutral{color:var(--muted)}.risk-zone-label{font-size:10px;color:var(--muted);margin-top:5px;font-weight:750}.risk-cv-scale{width:190px;margin-top:8px;margin-left:auto;margin-right:20px}.risk-after-note{margin-top:38px;color:var(--muted);font-size:14px}.risk-after-note b{font-size:22px;color:var(--green);font-weight:850}.risk-after-note b.up{color:var(--red)}.risk-cv-title{font-size:10px;color:var(--text-strong);font-weight:850;letter-spacing:.07em;margin-bottom:5px}.risk-cv-scale-top{position:relative;height:20px}.risk-cv-line{position:absolute;left:0;right:0;top:12px;height:5px;border-radius:999px;background:linear-gradient(90deg,var(--green) 0 50%,var(--yellow) 50% 78%,var(--red) 78% 100%)}.risk-cv-marker{position:absolute;top:0;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:10px solid #efe8d2}.risk-cv-ticks,.risk-cv-labels{display:flex;justify-content:space-between;font-size:8px;color:var(--muted);font-weight:750;margin-top:2px}.findings-panel{background:transparent;border:0;box-shadow:none;padding:18px 10px}.finding-list{display:grid;gap:18px;margin-top:18px}.finding-list .item{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:center}.item-num{width:24px;height:24px;border-radius:7px;font-size:11px;background:transparent;border:1.5px solid currentColor;display:grid;place-items:center;font-weight:800}.item-num.good{color:var(--green)}.item-num.warn{color:var(--yellow)}.item-num.danger{color:var(--red)}.item-title{font-size:12px;line-height:1.28;font-weight:500;color:var(--text)}.item-sub{display:none}.footer{display:flex;justify-content:space-between;margin-top:14px;color:var(--muted);font-size:12px;border-top:1px solid var(--border-soft);padding-top:12px}.not-available{fill:var(--muted);font-size:13px;font-weight:700}.help{display:inline-grid;place-items:center;width:16px;height:16px;margin-left:6px;border:1px solid rgba(255,255,255,.18);border-radius:50%;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:0;line-height:1;cursor:help;vertical-align:middle;text-transform:none}.help:hover{border-color:rgba(255,255,255,.34);color:var(--text-strong)}.qud-tooltip{position:fixed;z-index:9999;max-width:420px;padding:18px 20px;background:rgba(10,12,14,.96);border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 22px 60px rgba(0,0,0,.5);color:var(--text);font-size:13px;line-height:1.42;pointer-events:none}.qud-tooltip-title{font-size:14px;font-weight:850;color:var(--text-strong);margin-bottom:12px}.qud-tooltip b{display:block;margin-top:9px;margin-bottom:3px;color:#d5c27a;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.qud-tooltip p{margin:0 0 3px}.qud-tooltip .muted{color:var(--muted)}@media(max-width:1100px){.top-combined,.grid,.pre-account-grid,.top-metrics{display:block}.panel{margin-bottom:14px}}
 .risk-zone-value.baseline{color:var(--green)}.footer a{color:inherit;text-decoration:none}.footer a:hover{color:var(--text-strong);text-decoration:underline}
-</style></head><body><main class="page">
+.section-head>.badge.good{align-self:flex-start;font-size:5px;padding:2px 4px;line-height:1.1;letter-spacing:.06em;opacity:.82}.qud-tooltip{max-width:220px;padding:9px 10px;border-radius:8px;box-shadow:0 12px 30px rgba(0,0,0,.46);font-size:9.5px;line-height:1.32}.qud-tooltip-title{font-size:11px;margin-bottom:6px}.qud-tooltip b{margin-top:6px;margin-bottom:2px;font-size:8px;letter-spacing:.07em}.qud-tooltip p{margin:0 0 2px}@media(max-width:1100px){.qud-tooltip{width:min(220px,calc(100vw - 24px));max-width:calc(100vw - 24px);max-height:calc(100vh - 24px);overflow-y:auto;padding:9px 10px;font-size:9px;line-height:1.3}}</style></head><body><main class="page">
 <section class="top"><div class="panel"><div class="top-combined"><div class="top-title-block"><div class="eyebrow">Trade Decision Audit Report</div><h1>—</h1><p class="subtitle" id="headerMeta">—</p></div><div><div class="score-wrap"><svg class="score-gauge" id="scoreGauge" viewBox="0 0 320 180"></svg><div class="score-value" id="scoreValue">—</div></div><div class="label" style="text-align:center">Trust Score</div></div><div><div class="status-badges"><div class="status-line"><span class="badge" id="riskMode">—</span><span class="status-note">risk</span></div><div class="status-line"><span class="badge neutral" id="trustZone">—</span><span class="status-note">trust</span></div><div class="status-line"><span class="badge neutral" id="scoreDelta">—</span><span class="status-note">prev.period</span></div></div><div class="label" style="text-align:center">Trust status</div></div></div></div></section>
 <section class="top-metrics"><div class="metric-card"><div class="label">Win Ratio</div><div class="metric-value" id="topWinRatio">—</div><svg class="metric-spark" id="sparkWinRatio"></svg></div><div class="metric-card"><div class="label">Profit Factor</div><div class="metric-value" id="topProfitFactor">—</div><svg class="metric-spark" id="sparkProfitFactor"></svg></div><div class="metric-card"><div class="label">Average Risk %</div><div class="metric-value" id="topAverageRisk">—</div><svg class="metric-spark" id="sparkAverageRisk"></svg></div><div class="metric-card"><div class="label">SL Safe</div><div class="metric-value" id="topSlSafe">—</div><svg class="metric-spark" id="sparkSlSafe"></svg></div></section>
 <section class="pre-account-grid"><div class="panel pre-leak-panel"><h2>QUD Leak Map</h2><div class="mini-leak-stack" id="miniLeakGrid"></div></div><div class="panel pre-score-panel"><h2>TRUST SCORE OVER TIME</h2><div class="chart-box"><svg class="svg-chart" id="scoreTrend"></svg></div><div class="legend"><span class="leg"><span class="sw"></span>Score</span><span class="leg"><span class="sw red"></span>pre QUD</span><span class="leg"><span class="sw" style="background:var(--orange)"></span>QUD Room</span><span class="leg"><span class="sw green"></span>QUD Elite</span></div></div></section>
@@ -29,7 +29,7 @@
     "plan": "TDA_BASIC",
     "display_name": "QUD TDA Basic",
     "type": "TRADER_REGULAR",
-    "generated_at": "2026-08-30",
+    "generated_at": "2026-09-06",
     "version": "BASIC_AUDIT_v1"
   },
   "trader": {
@@ -37,17 +37,17 @@
     "account_login": 756010900
   },
   "period": {
-    "start": "2026-08-24",
-    "end": "2026-08-28",
-    "current_period": "2026-08-24 — 2026-08-28"
+    "start": "2026-08-31",
+    "end": "2026-09-04",
+    "current_period": "2026-08-31 — 2026-09-04"
   },
   "score": {
-    "qud_tda_score": 72,
-    "weekly_quality_score": 84.71,
-    "history_trust_factor": 0.85,
+    "qud_tda_score": 70,
+    "weekly_quality_score": 79,
+    "history_trust_factor": 0.89,
     "trust_zone": "QUD Room",
-    "risk_mode": "moderate",
-    "trust_score_delta": 14.73,
+    "risk_mode": "low",
+    "trust_score_delta": -1.69,
     "display_class": "warn",
     "zones": [
       {
@@ -69,7 +69,7 @@
         "status": "qud_elite"
       }
     ],
-    "main_damage_source": "Block A",
+    "main_damage_source": "Block E",
     "history": [
       {
         "label": "W1",
@@ -141,10 +141,16 @@
         "label": "W12",
         "period": "2026-08-24 — 2026-08-28",
         "value": 72,
+        "source": "recalculated_from_raw"
+      },
+      {
+        "label": "W13",
+        "period": "2026-08-31 — 2026-09-04",
+        "value": 70.31,
         "source": "current_report_recalculated"
       }
     ],
-    "history_calculation_scope": "weekly_raw_recalculated_W1_W12",
+    "history_calculation_scope": "weekly_raw_recalculated_W1_W13",
     "unavailable_block_rule": "exclude_and_normalize_available_weights"
   },
   "trends": {
@@ -207,6 +213,11 @@
       {
         "period": "2026-08-24 — 2026-08-28",
         "value": 63.64,
+        "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-08-31 — 2026-09-04",
+        "value": 58,
         "source": "cumulative_to_period_end"
       }
     ],
@@ -282,6 +293,12 @@
         "value": 1.594433,
         "source": "cumulative_to_period_end",
         "status": "live"
+      },
+      {
+        "period": "2026-08-31 — 2026-09-04",
+        "value": 1.311828,
+        "source": "cumulative_to_period_end",
+        "status": "live"
       }
     ],
     "average_risk_pct": [
@@ -343,6 +360,11 @@
       {
         "period": "2026-08-24 — 2026-08-28",
         "value": 1.32,
+        "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-08-31 — 2026-09-04",
+        "value": 1.27,
         "source": "cumulative_to_period_end"
       }
     ],
@@ -406,6 +428,11 @@
         "period": "2026-08-24 — 2026-08-28",
         "value": 97.73,
         "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-08-31 — 2026-09-04",
+        "value": 98,
+        "source": "cumulative_to_period_end"
       }
     ]
   },
@@ -419,8 +446,8 @@
     "main_leak": "SL Leak",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
-    "history_end": "2026-08-28",
-    "sample_trades_count": 44,
+    "history_end": "2026-09-04",
+    "sample_trades_count": 50,
     "methodology_version": "BASIC_AUDIT_v1_LEAK_MAP_CUMULATIVE_v1",
     "items": [
       {
@@ -442,57 +469,57 @@
     ]
   },
   "risk": {
-    "avg_pct": 0.88,
-    "median_pct": 1.09,
-    "max_pct": 1.21,
-    "min_pct": 0.11,
-    "std_pct": 0.51,
-    "cv_value": 0.35,
+    "avg_pct": 0.91,
+    "median_pct": 0.82,
+    "max_pct": 1.24,
+    "min_pct": 0.64,
+    "std_pct": 0.22,
+    "cv_value": 0.36,
     "cv": {
-      "value": 0.35,
-      "marker_pct": 35.03,
+      "value": 0.36,
+      "marker_pct": 36.16,
       "label": "RISK CV",
       "status": "stable",
       "min_label": "0.0",
       "mid_label": "0.5",
       "max_label": "1.0+",
       "scope": "cumulative_to_period_end",
-      "sample_trades_count": 44,
-      "source_average_risk_pct": 1.3211,
-      "source_std_risk_pct": 0.4628,
+      "sample_trades_count": 50,
+      "source_average_risk_pct": 1.2715,
+      "source_std_risk_pct": 0.4597,
       "methodology_version": "BASIC_AUDIT_v1_RISK_CV_CUMULATIVE_v1"
     },
-    "personal_risk_baseline_pct": 1.2781,
-    "personal_risk_low_bound_pct": 0.639,
-    "personal_risk_high_bound_pct": 1.9171,
-    "risk_reduced_count": 1,
-    "risk_normal_count": 3,
-    "risk_expansion_count": 0,
-    "risk_expansion_pct": 0,
-    "risk_drift_count": -1,
+    "personal_risk_baseline_pct": 1.2371,
+    "personal_risk_low_bound_pct": 0.6185,
+    "personal_risk_high_bound_pct": 1.8556,
+    "risk_reduced_count": 0,
+    "risk_normal_count": 5,
+    "risk_expansion_count": 1,
+    "risk_expansion_pct": 16.67,
+    "risk_drift_count": 1,
     "drift": {
-      "count": -1,
-      "value": -1,
-      "status": "reduced",
+      "count": 1,
+      "value": 1,
+      "status": "expansion",
       "label": "Risk Drift"
     },
     "zone_items": [
       {
         "label": "Reduced Risk",
-        "count": 1,
-        "pct": 25,
+        "count": 0,
+        "pct": 0,
         "status": "reduced"
       },
       {
         "label": "Normal Risk",
-        "count": 3,
-        "pct": 75,
+        "count": 5,
+        "pct": 83.33,
         "status": "normal"
       },
       {
         "label": "Risk Expansion",
-        "count": 0,
-        "pct": 0,
+        "count": 1,
+        "pct": 16.67,
         "status": "expansion"
       }
     ],
@@ -500,21 +527,21 @@
       "data_status": "live",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
-      "history_end": "2026-08-28",
-      "valid_risk_trades_count": 44,
-      "personal_risk_baseline_pct": 1.2781,
-      "personal_risk_low_bound_pct": 0.639,
-      "personal_risk_high_bound_pct": 1.9171,
+      "history_end": "2026-09-04",
+      "valid_risk_trades_count": 50,
+      "personal_risk_baseline_pct": 1.2371,
+      "personal_risk_low_bound_pct": 0.6185,
+      "personal_risk_high_bound_pct": 1.8556,
       "risk_reduced_count": 1,
-      "risk_normal_count": 39,
+      "risk_normal_count": 45,
       "risk_expansion_count": 4,
-      "risk_expansion_pct": 9.09,
+      "risk_expansion_pct": 8,
       "risk_drift_count": 3,
-      "risk_drift_pct": 6.82,
+      "risk_drift_pct": 6,
       "drift": {
         "count": 3,
-        "pct": 6.82,
-        "value": 6.82,
+        "pct": 6,
+        "value": 6,
         "direction": "toward_expansion",
         "status": "expansion",
         "label": "Risk Drift"
@@ -523,19 +550,19 @@
         {
           "label": "Reduced Risk",
           "count": 1,
-          "pct": 2.27,
+          "pct": 2,
           "status": "reduced"
         },
         {
           "label": "Normal Risk",
-          "count": 39,
-          "pct": 88.64,
+          "count": 45,
+          "pct": 90,
           "status": "normal"
         },
         {
           "label": "Risk Expansion",
           "count": 4,
-          "pct": 9.09,
+          "pct": 8,
           "status": "expansion"
         }
       ],
@@ -849,47 +876,89 @@
         "timestamp": "2026-08-27 09:54:15",
         "week": "W12",
         "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58224870649",
+        "risk_pct": 0.8211,
+        "timestamp": "2026-08-31 09:47:30",
+        "week": "W13",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58244792904",
+        "risk_pct": 0.8279,
+        "timestamp": "2026-09-01 09:59:20",
+        "week": "W13",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58267147827",
+        "risk_pct": 1.1014,
+        "timestamp": "2026-09-02 09:52:50",
+        "week": "W13",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58286515463",
+        "risk_pct": 1.2445,
+        "timestamp": "2026-09-03 09:03:21",
+        "week": "W13",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58286529104",
+        "risk_pct": 0.6435,
+        "timestamp": "2026-09-03 09:04:35",
+        "week": "W13",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58312621177",
+        "risk_pct": 0.8075,
+        "timestamp": "2026-09-04 15:41:39",
+        "week": "W13",
+        "status": "normal"
       }
     ],
     "trades_above_2pct": 0,
     "trades_above_3pct": 0,
-    "valid_risk_trades_count": 4,
+    "valid_risk_trades_count": 6,
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
-    "history_end": "2026-08-28",
-    "risk_drift_pct": 6.82,
+    "history_end": "2026-09-04",
+    "risk_drift_pct": 6,
     "methodology_version": "BASIC_AUDIT_v1_RISK_ZONE_CUMULATIVE_v2"
   },
   "sl": {
     "trades_without_sl_at_open": 0,
-    "trades_with_sl_at_open": 4,
-    "sl_set_within_30s_count": 4,
+    "trades_with_sl_at_open": 6,
+    "sl_set_within_30s_count": 6,
     "sl_set_after_30s_count": 0,
     "closed_without_sl_count": 0,
     "avg_sl_install_delay_sec": 0,
     "max_sl_install_delay_sec": 0,
-    "unsafe_trades_count": 1,
-    "sl_safe_count": 3,
-    "sl_safe_pct": 75,
-    "sl_changed_count": 1,
+    "unsafe_trades_count": 0,
+    "sl_safe_count": 6,
+    "sl_safe_pct": 100,
+    "sl_changed_count": 0,
     "sl_removed_count": 0,
-    "risk_increase_after_sl_change_count": 1,
-    "personal_risk_baseline_pct": 1.0922,
-    "sl_risk_high_bound_pct": 1.6382,
+    "risk_increase_after_sl_change_count": 0,
+    "personal_risk_baseline_pct": 0.8245,
+    "sl_risk_high_bound_pct": 1.2368,
     "sl_risk_expansion_after_change_count": 0,
-    "max_risk_after_sl_change_pct": 1.02,
-    "block_score": 85,
+    "max_risk_after_sl_change_pct": null,
+    "block_score": 100,
     "main_issue": "SL discipline acceptable",
     "protection_segments": [
       {
         "label": "Protected",
-        "value": 3,
+        "value": 6,
         "status": "safe"
       },
       {
         "label": "Unsafe",
-        "value": 1,
+        "value": 0,
         "status": "danger"
       }
     ],
@@ -897,13 +966,13 @@
       "data_status": "live",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
-      "history_end": "2026-08-28",
-      "trades_total": 44,
+      "history_end": "2026-09-04",
+      "trades_total": 50,
       "no_sl_count": 0,
       "sl_removed_count": 0,
       "sl_changed_count": 1,
-      "sl_safe_count": 43,
-      "sl_safe_pct": 97.73,
+      "sl_safe_count": 49,
+      "sl_safe_pct": 98,
       "segments": [
         {
           "label": "No SL",
@@ -920,13 +989,13 @@
         {
           "label": "SL Changed",
           "value": 1,
-          "pct": 2.27,
+          "pct": 2,
           "status": "changed"
         },
         {
           "label": "SL Safe",
-          "value": 43,
-          "pct": 97.73,
+          "value": 49,
+          "pct": 98,
           "status": "safe"
         }
       ],
@@ -935,23 +1004,23 @@
     "event_timeline": []
   },
   "behavior": {
-    "trade_after_loss_count": 1,
-    "risk_after_loss_avg_pct": 0.11,
-    "risk_after_win_avg_pct": 1.13,
-    "risk_after_1_loss_pct": 0.11,
+    "trade_after_loss_count": 4,
+    "risk_after_loss_avg_pct": 0.88,
+    "risk_after_win_avg_pct": 0.96,
+    "risk_after_1_loss_pct": 0.91,
     "risk_after_2_losses_pct": null,
-    "risk_after_3_losses_pct": null,
-    "max_risk_after_loss_streak_pct": 0.11,
-    "risk_increase_after_loss_count": 1,
+    "risk_after_3_losses_pct": 0.81,
+    "max_risk_after_loss_streak_pct": 1.24,
+    "risk_increase_after_loss_count": 2,
     "position_size_increased_after_loss_count": 0,
     "revenge_trading_signal_count": 0,
-    "avg_minutes_after_loss_to_next_trade": 4288.88,
-    "min_minutes_after_loss_to_next_trade": 4288.88,
+    "avg_minutes_after_loss_to_next_trade": 1464.12,
+    "min_minutes_after_loss_to_next_trade": 1349.98,
     "risk_after_loss_items": [
       {
         "label": "1 Loss",
-        "value": 0.11,
-        "status": "reduced"
+        "value": 0.91,
+        "status": "normal"
       },
       {
         "label": "2 Losses",
@@ -960,34 +1029,34 @@
       },
       {
         "label": "3+ Losses",
-        "value": null,
-        "status": "not_available"
+        "value": 0.81,
+        "status": "reduced"
       }
     ],
     "post_loss_summary": {
-      "baseline_pct": 1.09,
-      "high_bound_pct": 1.64,
-      "avg_risk_pct": 0.11,
-      "risk_drift_pct": -1.02,
-      "expansion_count": 0,
-      "expansion_pct": 0,
+      "baseline_pct": 0.82,
+      "high_bound_pct": 1.24,
+      "avg_risk_pct": 0.88,
+      "risk_drift_pct": -0.08,
+      "expansion_count": 1,
+      "expansion_pct": 25,
       "revenge_signal_count": 0,
-      "status": "reduced"
+      "status": "expansion"
     }
   },
   "plan_fact": {
-    "trades_total": 44,
-    "trades_count": 44,
+    "trades_total": 50,
+    "trades_count": 50,
     "excluded_trades_count": 0,
     "valid_sample_pct": 100,
-    "planned_risk_avg_pct": 1.32,
-    "actual_loss_avg_pct": 1.19,
-    "deviation_avg_pct": -0.03,
+    "planned_risk_avg_pct": 1.27,
+    "actual_loss_avg_pct": 1.12,
+    "deviation_avg_pct": -0.02,
     "deviation_max_pct": 0.19,
-    "deviation_avg_abs_pct": 0.05,
+    "deviation_avg_abs_pct": 0.04,
     "deviation_max_abs_pct": 0.61,
-    "negative_deviation_trades": 8,
-    "negative_deviation_trades_pct": 18.18,
+    "negative_deviation_trades": 10,
+    "negative_deviation_trades_pct": 20,
     "execution_leak_flag": true,
     "data_status": "live",
     "points": [
@@ -1430,51 +1499,111 @@
         "status": "within_plan",
         "week": "W12",
         "timestamp": "2026-08-27 09:54:15"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58224870649",
+        "planned": 0.8211,
+        "actual": 0.8211,
+        "within_plan": 0.8211,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W13",
+        "timestamp": "2026-08-31 09:47:30"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58244792904",
+        "planned": 0.8279,
+        "actual": 0,
+        "within_plan": 0,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W13",
+        "timestamp": "2026-09-01 09:59:20"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58267147827",
+        "planned": 1.1014,
+        "actual": 1.1014,
+        "within_plan": 1.1014,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W13",
+        "timestamp": "2026-09-02 09:52:50"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58286515463",
+        "planned": 1.2445,
+        "actual": 1.2445,
+        "within_plan": 1.2445,
+        "excess_loss": 0,
+        "status": "excess",
+        "week": "W13",
+        "timestamp": "2026-09-03 09:03:21"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58286529104",
+        "planned": 0.6435,
+        "actual": 0.6435,
+        "within_plan": 0.6435,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W13",
+        "timestamp": "2026-09-03 09:04:35"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58312621177",
+        "planned": 0.8075,
+        "actual": 0.8082,
+        "within_plan": 0.8075,
+        "excess_loss": 0.0007,
+        "status": "excess",
+        "week": "W13",
+        "timestamp": "2026-09-04 15:41:39"
       }
     ],
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-04",
-    "period_end": "2026-08-28",
-    "eligible_loss_trades_count": 16,
+    "period_end": "2026-09-04",
+    "eligible_loss_trades_count": 21,
     "excluded_loss_trades_count": 0,
     "methodology_version": "BASIC_AUDIT_v1_PLAN_FACT_CUMULATIVE_v1"
   },
   "findings": {
     "items": [
       {
-        "text": "Неделя завершена положительно: 4 прибыльные сделки из 4, Win Rate 100%, итог +515,90 USD. Profit Factor не рассчитывается, поскольку убыточных сделок не было.",
-        "severity": "positive",
-        "display_class": "good",
-        "source_block": "Block E",
-        "metric": "weekly_result_all_wins"
-      },
-      {
-        "text": "В первой сделке после убытка Stop Loss был изменён через 12 секунд: фактический риск вырос с 0,11% до 1,02% (9,3×). Событие классифицировано как SL Changed.",
+        "text": "Неделя завершена отрицательно: 1 прибыльная сделка из 6, Win Rate 16,7%, итог -437,31 USD, Profit Factor 0,16.",
         "severity": "negative",
         "display_class": "danger",
-        "source_block": "Block B",
-        "metric": "material_sl_risk_increase"
+        "source_block": "Block E",
+        "metric": "weekly_result_negative"
       },
       {
-        "text": "Risk CV недели составил 0,59: разброс создан одной сделкой со сниженным риском 0,11%. Расширения риска и сделок выше 2% не зафиксировано.",
+        "text": "После убыточных сделок выполнено 4 новых входа: в 2 случаях риск был увеличен, а одна сделка вышла выше индивидуального диапазона недели.",
+        "severity": "negative",
+        "display_class": "danger",
+        "source_block": "Block C",
+        "metric": "post_loss_risk_increase"
+      },
+      {
+        "text": "Все 6 сделок были открыты сразу с Stop Loss; удалений и изменений SL не зафиксировано. Исторический SL Safe вырос до 98,0%.",
+        "severity": "positive",
+        "display_class": "good",
+        "source_block": "Block B",
+        "metric": "weekly_sl_discipline"
+      },
+      {
+        "text": "Средний риск недели составил 0,91%; сделок выше 2% не было, одна сделка лишь незначительно превысила верхнюю границу индивидуального диапазона.",
         "severity": "neutral",
         "display_class": "warn",
         "source_block": "Block A",
-        "metric": "risk_cv_reduced_risk_outlier"
+        "metric": "weekly_risk_profile"
       },
       {
-        "text": "Вся торговая нагрузка недели пришлась на GBPUSD: 4 сделки общим объёмом 4,1 лота.",
-        "severity": "neutral",
-        "display_class": "warn",
-        "source_block": "Block E",
-        "metric": "weekly_instrument_concentration"
-      },
-      {
-        "text": "Недельная выборка не содержит убыточных сделок, поэтому фактическое соблюдение Planned Risk vs Actual Loss за W12 оценить нельзя.",
-        "severity": "neutral",
-        "display_class": "warn",
+        "text": "Все 6 сделок пригодны для Planned Risk vs Actual Loss. В 2 убыточных сделках зафиксировано формальное превышение плана; максимум — 0,0007 процентного пункта.",
+        "severity": "negative",
+        "display_class": "danger",
         "source_block": "Block D",
-        "metric": "weekly_plan_fact_no_loss_sample"
+        "metric": "weekly_plan_fact_deviation"
       }
     ]
   },
@@ -1488,17 +1617,17 @@
     "minimum_sample_valid": true
   },
   "basic_stats": {
-    "average_win": 128.98,
-    "average_loss": null,
-    "win_ratio": 100,
-    "profit_factor": null,
-    "number_of_days": 4,
-    "total_trades_taken": 4,
-    "total_lots_used": 4.1,
-    "biggest_win": 153,
-    "biggest_loss": null,
-    "net_profit": 515.9,
-    "win_ratio_pct": 100
+    "average_win": 86,
+    "average_loss": 104.66,
+    "win_ratio": 16.67,
+    "profit_factor": 0.164339,
+    "number_of_days": 5,
+    "total_trades_taken": 6,
+    "total_lots_used": 5.9,
+    "biggest_win": 86,
+    "biggest_loss": 140.8,
+    "net_profit": -437.31,
+    "win_ratio_pct": 16.67
   },
   "account": {
     "balance_equity_curve": [],
@@ -1722,6 +1851,36 @@
         "timestamp": "2026-08-27 12:04:53",
         "position_ticket": "58181150610",
         "balance": 11447.84
+      },
+      {
+        "timestamp": "2026-08-31 11:03:17",
+        "position_ticket": "58224870649",
+        "balance": 11353.84
+      },
+      {
+        "timestamp": "2026-09-01 11:08:38",
+        "position_ticket": "58244792904",
+        "balance": 11439.84
+      },
+      {
+        "timestamp": "2026-09-02 10:33:22",
+        "position_ticket": "58267147827",
+        "balance": 11313.84
+      },
+      {
+        "timestamp": "2026-09-03 10:02:19",
+        "position_ticket": "58286529104",
+        "balance": 11241.04
+      },
+      {
+        "timestamp": "2026-09-03 10:02:25",
+        "position_ticket": "58286515463",
+        "balance": 11173.04
+      },
+      {
+        "timestamp": "2026-09-04 15:50:26",
+        "position_ticket": "58312621177",
+        "balance": 11010.53
       }
     ],
     "equity_series": [
@@ -2025,179 +2184,220 @@
         "min_equity": 11447.84,
         "max_equity": 11447.84,
         "source_count": 96
+      },
+      {
+        "timestamp": "2026-09-01 23:48:40",
+        "equity": 11400.03,
+        "min_equity": 11353.84,
+        "max_equity": 11521.84,
+        "source_count": 192
+      },
+      {
+        "timestamp": "2026-09-03 23:50:12",
+        "equity": 11277.78,
+        "min_equity": 11100.24,
+        "max_equity": 11467.84,
+        "source_count": 192
+      },
+      {
+        "timestamp": "2026-09-04 23:53:35",
+        "equity": 11069.81,
+        "min_equity": 11010.53,
+        "max_equity": 11100.24,
+        "source_count": 96
       }
     ],
     "equity_sampling": {
       "method": "time_weighted_average",
       "window_minutes": 2880,
-      "raw_points_count": 5610,
-      "rendered_points_count": 43
+      "raw_points_count": 6090,
+      "rendered_points_count": 46
     }
   },
   "direction": {
-    "long_trades_count": 2,
-    "long_profit": 272.9,
-    "long_win_rate": 100,
-    "short_trades_count": 2,
-    "short_profit": 243,
-    "short_win_rate": 100,
+    "long_trades_count": 1,
+    "long_profit": -89.71,
+    "long_win_rate": 0,
+    "short_trades_count": 5,
+    "short_profit": -347.6,
+    "short_win_rate": 20,
     "imbalance_flag": false
   },
   "profitability": {
-    "wins_count": 4,
-    "losses_count": 0,
+    "wins_count": 1,
+    "losses_count": 5,
     "breakeven_count": 0,
-    "wins_pct": 100,
-    "losses_pct": 0,
+    "wins_pct": 16.67,
+    "losses_pct": 83.33,
     "be_pct": 0
   },
   "duration": {
     "pnl_by_trade_duration": [
       {
-        "trade_id": "aud_00003_756010900_58118688246",
+        "trade_id": "aud_00003_756010900_58224870649",
         "symbol": "GBPUSD",
-        "duration_min": 40.08,
-        "profit_money": 105,
+        "duration_min": 75.8,
+        "profit_money": -94,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58244792904",
+        "symbol": "GBPUSD",
+        "duration_min": 69.3,
+        "profit_money": 86,
         "result_type": "win"
       },
       {
-        "trade_id": "aud_00003_756010900_58140609921",
+        "trade_id": "aud_00003_756010900_58267147827",
         "symbol": "GBPUSD",
-        "duration_min": 22.75,
-        "profit_money": 153,
-        "result_type": "win"
+        "duration_min": 40.53,
+        "profit_money": -126,
+        "result_type": "loss"
       },
       {
-        "trade_id": "aud_00003_756010900_58161003425",
+        "trade_id": "aud_00003_756010900_58286515463",
         "symbol": "GBPUSD",
-        "duration_min": 18.13,
-        "profit_money": 119.9,
-        "result_type": "win"
+        "duration_min": 59.07,
+        "profit_money": -140.8,
+        "result_type": "loss"
       },
       {
-        "trade_id": "aud_00003_756010900_58181150610",
-        "symbol": "GBPUSD",
-        "duration_min": 130.68,
-        "profit_money": 138,
-        "result_type": "win"
+        "trade_id": "aud_00003_756010900_58286529104",
+        "symbol": "EURUSD",
+        "duration_min": 57.73,
+        "profit_money": -72.8,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58312621177",
+        "symbol": "USDCAD",
+        "duration_min": 8.78,
+        "profit_money": -89.71,
+        "result_type": "loss"
       }
     ],
     "items": [
       {
         "name": "Winning Trades",
-        "duration_min": 52.91,
-        "deviation_pct": 0,
+        "duration_min": 69.3,
+        "deviation_pct": 33.6,
         "status": "positive"
+      },
+      {
+        "name": "Losing Trades",
+        "duration_min": 48.38,
+        "deviation_pct": -6.72,
+        "status": "negative"
       }
     ],
     "holding_time_efficiency": {
       "grouping_method": "equal_frequency_nearest_rank",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-05",
-      "history_end": "2026-08-28",
+      "history_end": "2026-09-04",
       "target_trades_per_group": 5,
       "max_groups": 5,
       "ties_preserved": true,
       "quartile_method": "inclusive",
       "duration_unit": "minutes",
       "pnl_unit": "account_currency",
-      "total_trades": 44,
-      "baseline_win_rate_pct": 63.64,
+      "total_trades": 50,
+      "baseline_win_rate_pct": 58,
       "groups_count": 5,
       "groups": [
         {
           "group_index": 1,
-          "duration_min": 16.23,
+          "duration_min": 8.78,
           "duration_max": 38.53,
-          "duration_avg": 25.88,
-          "sample_size": 9,
+          "duration_avg": 24.17,
+          "sample_size": 10,
           "pnl_min": -176.4,
-          "pnl_q1": 111.6,
-          "pnl_median": 120.96,
-          "pnl_q3": 153,
+          "pnl_q1": 101.03,
+          "pnl_median": 120.43,
+          "pnl_q3": 150.5,
           "pnl_max": 176.4,
-          "pnl_total": 903.16,
-          "pnl_avg": 100.35,
+          "pnl_total": 813.45,
+          "pnl_avg": 81.35,
           "wins_count": 8,
-          "losses_count": 1,
+          "losses_count": 2,
           "breakeven_count": 0,
-          "win_rate_pct": 88.89,
+          "win_rate_pct": 80,
           "sample_status": "valid"
         },
         {
           "group_index": 2,
           "duration_min": 40.08,
           "duration_max": 55.22,
-          "duration_avg": 47.62,
-          "sample_size": 9,
+          "duration_avg": 46.92,
+          "sample_size": 10,
           "pnl_min": -145.2,
-          "pnl_q1": -93.5,
-          "pnl_median": 72,
-          "pnl_q3": 111.1,
+          "pnl_q1": -105.05,
+          "pnl_median": -1.16,
+          "pnl_q3": 109.57,
           "pnl_max": 113.3,
-          "pnl_total": 90.59,
-          "pnl_avg": 10.07,
+          "pnl_total": -35.41,
+          "pnl_avg": -3.54,
           "wins_count": 5,
-          "losses_count": 4,
+          "losses_count": 5,
           "breakeven_count": 0,
-          "win_rate_pct": 55.56,
+          "win_rate_pct": 50,
           "sample_status": "valid"
         },
         {
           "group_index": 3,
-          "duration_min": 60.8,
-          "duration_max": 138.93,
-          "duration_avg": 96.96,
-          "sample_size": 9,
-          "pnl_min": -133.2,
-          "pnl_q1": -126.5,
-          "pnl_median": 111.1,
-          "pnl_q3": 138,
+          "duration_min": 57.73,
+          "duration_max": 93.15,
+          "duration_avg": 73.19,
+          "sample_size": 10,
+          "pnl_min": -140.8,
+          "pnl_q1": -131.45,
+          "pnl_median": -83.4,
+          "pnl_q3": 124.63,
           "pnl_max": 170.4,
-          "pnl_total": 197.36,
-          "pnl_avg": 21.93,
-          "wins_count": 5,
-          "losses_count": 4,
+          "pnl_total": -166.8,
+          "pnl_avg": -16.68,
+          "wins_count": 4,
+          "losses_count": 6,
           "breakeven_count": 0,
-          "win_rate_pct": 55.56,
+          "win_rate_pct": 40,
           "sample_status": "valid"
         },
         {
           "group_index": 4,
-          "duration_min": 151.78,
-          "duration_max": 264.12,
-          "duration_avg": 198.32,
-          "sample_size": 9,
+          "duration_min": 130.68,
+          "duration_max": 243.95,
+          "duration_avg": 167.92,
+          "sample_size": 10,
           "pnl_min": -205.2,
-          "pnl_q1": -117.7,
-          "pnl_median": -80.7,
-          "pnl_q3": 103.4,
+          "pnl_q1": -114.91,
+          "pnl_median": -4.19,
+          "pnl_q3": 113.58,
           "pnl_max": 152.9,
-          "pnl_total": -214.07,
-          "pnl_avg": -23.79,
-          "wins_count": 4,
+          "pnl_total": -94.21,
+          "pnl_avg": -9.42,
+          "wins_count": 5,
           "losses_count": 5,
           "breakeven_count": 0,
-          "win_rate_pct": 44.44,
+          "win_rate_pct": 50,
           "sample_status": "valid"
         },
         {
           "group_index": 5,
-          "duration_min": 277.47,
+          "duration_min": 244.2,
           "duration_max": 497.97,
-          "duration_avg": 365.75,
-          "sample_size": 8,
+          "duration_avg": 343.43,
+          "sample_size": 10,
           "pnl_min": -195,
-          "pnl_q1": -31.7,
-          "pnl_median": 105.83,
-          "pnl_q3": 121.22,
+          "pnl_q1": -57.53,
+          "pnl_median": 104.5,
+          "pnl_q3": 114.72,
           "pnl_max": 170.5,
-          "pnl_total": 286.04,
-          "pnl_avg": 35.75,
-          "wins_count": 6,
-          "losses_count": 2,
+          "pnl_total": 308.74,
+          "pnl_avg": 30.87,
+          "wins_count": 7,
+          "losses_count": 3,
           "breakeven_count": 0,
-          "win_rate_pct": 75,
+          "win_rate_pct": 70,
           "sample_status": "valid"
         }
       ],
@@ -2207,27 +2407,65 @@
   "instrument": {
     "profit_analysis": [
       {
+        "symbol": "EURUSD",
+        "trades_count": 1,
+        "profit_money": -72.8
+      },
+      {
         "symbol": "GBPUSD",
         "trades_count": 4,
-        "profit_money": 515.9
+        "profit_money": -274.8
+      },
+      {
+        "symbol": "USDCAD",
+        "trades_count": 1,
+        "profit_money": -89.71
       }
     ],
     "volume_analysis": [
       {
+        "symbol": "EURUSD",
+        "trades_count": 1,
+        "volume": 0.7
+      },
+      {
         "symbol": "GBPUSD",
         "trades_count": 4,
         "volume": 4.1
+      },
+      {
+        "symbol": "USDCAD",
+        "trades_count": 1,
+        "volume": 1.1
       }
     ],
     "items": [
       {
+        "symbol": "EURUSD",
+        "trades_count": 1,
+        "profit_money": -72.8,
+        "volume": 0.7,
+        "profit_share_pct": 16.65,
+        "volume_share_pct": 11.86,
+        "status": "negative"
+      },
+      {
         "symbol": "GBPUSD",
         "trades_count": 4,
-        "profit_money": 515.9,
+        "profit_money": -274.8,
         "volume": 4.1,
-        "profit_share_pct": 100,
-        "volume_share_pct": 100,
-        "status": "positive"
+        "profit_share_pct": 62.84,
+        "volume_share_pct": 69.49,
+        "status": "negative"
+      },
+      {
+        "symbol": "USDCAD",
+        "trades_count": 1,
+        "profit_money": -89.71,
+        "volume": 1.1,
+        "profit_share_pct": 20.51,
+        "volume_share_pct": 18.64,
+        "status": "negative"
       }
     ]
   },
@@ -2235,39 +2473,39 @@
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-05",
-    "period_end": "2026-08-28",
+    "period_end": "2026-09-04",
     "groups": [
       {
         "symbol": "EURUSD",
-        "trades": 17,
+        "trades": 18,
         "wins": 8,
-        "volume": 10.7,
-        "win_contribution_pct": 28.57,
-        "load_volume_pct": 27.51
+        "volume": 11.4,
+        "win_contribution_pct": 27.59,
+        "load_volume_pct": 25.45
       },
       {
         "symbol": "GBPUSD",
-        "trades": 19,
-        "wins": 15,
-        "volume": 20.4,
-        "win_contribution_pct": 53.57,
-        "load_volume_pct": 52.44
+        "trades": 23,
+        "wins": 16,
+        "volume": 24.5,
+        "win_contribution_pct": 55.17,
+        "load_volume_pct": 54.69
       },
       {
         "symbol": "USDCAD",
-        "trades": 6,
+        "trades": 7,
         "wins": 4,
-        "volume": 5.8,
-        "win_contribution_pct": 14.29,
-        "load_volume_pct": 14.91
+        "volume": 6.9,
+        "win_contribution_pct": 13.79,
+        "load_volume_pct": 15.4
       },
       {
         "symbol": "USDJPY",
         "trades": 2,
         "wins": 1,
         "volume": 2,
-        "win_contribution_pct": 3.57,
-        "load_volume_pct": 5.14
+        "win_contribution_pct": 3.45,
+        "load_volume_pct": 4.46
       }
     ]
   },
@@ -2277,42 +2515,42 @@
     "items": [
       {
         "name": "Direction Balance",
-        "marker_pct": 56.82,
-        "display_value": "19 / 25",
+        "marker_pct": 60,
+        "display_value": "20 / 30",
         "status": "neutral",
         "label_left": "Long",
         "label_right": "Short",
         "segments": [
           {
             "label": "Long",
-            "value": 19,
-            "pct": 43.18
+            "value": 20,
+            "pct": 40
           },
           {
             "label": "Short",
-            "value": 25,
-            "pct": 56.82
+            "value": 30,
+            "pct": 60
           }
         ]
       },
       {
         "name": "Profitability",
-        "marker_pct": 63.64,
-        "display_value": "63.64%",
+        "marker_pct": 58,
+        "display_value": "58%",
         "status": "live",
         "label_left": "Losses",
         "label_right": "Wins",
         "segments": [
           {
             "label": "Wins",
-            "value": 28,
-            "pct": 63.64,
+            "value": 29,
+            "pct": 58,
             "status": "positive"
           },
           {
             "label": "Losses",
-            "value": 16,
-            "pct": 36.36,
+            "value": 21,
+            "pct": 42,
             "status": "negative"
           },
           {
@@ -2325,8 +2563,8 @@
       },
       {
         "name": "Risk Expansion",
-        "marker_pct": 9.09,
-        "display_value": "9.09%",
+        "marker_pct": 8,
+        "display_value": "8%",
         "status": "expansion",
         "label_left": "Reduced",
         "label_right": "Expanded",
@@ -2334,62 +2572,62 @@
           {
             "label": "Reduced Risk",
             "count": 1,
-            "pct": 2.27,
+            "pct": 2,
             "status": "reduced"
           },
           {
             "label": "Normal Risk",
-            "count": 39,
-            "pct": 88.64,
+            "count": 45,
+            "pct": 90,
             "status": "normal"
           },
           {
             "label": "Risk Expansion",
             "count": 4,
-            "pct": 9.09,
+            "pct": 8,
             "status": "expansion"
           }
         ]
       }
     ],
     "history_start": "2026-06-05",
-    "history_end": "2026-08-28",
-    "sample_trades_count": 44,
-    "short_cover_ratio": 1.265704,
+    "history_end": "2026-09-04",
+    "sample_trades_count": 50,
+    "short_cover_ratio": 1.006448,
     "short_cover_status": "live",
-    "short_win_rate_pct": 60,
-    "profit_factor": 1.594433,
+    "short_win_rate_pct": 53.33,
+    "profit_factor": 1.311828,
     "profit_factor_status": "live",
-    "total_win_rate_pct": 63.64,
-    "long_cover_ratio": 2.168962,
+    "total_win_rate_pct": 58,
+    "long_cover_ratio": 1.943501,
     "long_cover_status": "live",
-    "long_win_rate_pct": 68.42,
+    "long_win_rate_pct": 65,
     "methodology_version": "BASIC_AUDIT_v1_COVER_CUMULATIVE_v1"
   },
   "comparison": {
-    "previous_period": "2026-08-15 — 2026-08-21",
-    "current_period": "2026-08-24 — 2026-08-28",
+    "previous_period": "2026-08-24 — 2026-08-28",
+    "current_period": "2026-08-31 — 2026-09-04",
     "items": [
       {
         "metric": "QUD TDA Score",
-        "previous": 57.27,
-        "current": 72,
-        "change": 14.73,
-        "status": "improved"
-      },
-      {
-        "metric": "Risk CV",
-        "previous": 0.5168208785,
-        "current": 0.586843688,
-        "change": 0.0700228095,
+        "previous": 72,
+        "current": 70.31,
+        "change": -1.69,
         "status": "worse"
       },
       {
-        "metric": "Avg Risk After Loss",
-        "previous": 1.088525752,
-        "current": 0.1098,
-        "change": -0.978725752,
+        "metric": "Risk CV",
+        "previous": 0.586843688,
+        "current": 0.2437144186,
+        "change": -0.3431292694,
         "status": "improved"
+      },
+      {
+        "metric": "Avg Risk After Loss",
+        "previous": 0.1098,
+        "current": 0.8808483675,
+        "change": 0.7710483675,
+        "status": "worse"
       },
       {
         "metric": "No-SL Trades",
@@ -2400,15 +2638,15 @@
       },
       {
         "metric": "Plan vs Fact Deviation",
-        "previous": 0.0002075813,
-        "current": null,
-        "change": -0.0002075813,
+        "previous": null,
+        "current": 0.0001385049,
+        "change": 0.0001385049,
         "status": "not_available"
       },
       {
         "metric": "Main Leak",
-        "previous": "Performance Leak",
-        "current": "SL Leak",
+        "previous": "SL Leak",
+        "current": "Performance Leak",
         "change": "changed",
         "status": "changed"
       }
@@ -2472,6 +2710,11 @@
       {
         "period": "2026-08-24 — 2026-08-28",
         "value": 72,
+        "source": "recalculated_from_raw"
+      },
+      {
+        "period": "2026-08-31 — 2026-09-04",
+        "value": 70.31,
         "source": "current_report_recalculated"
       }
     ]
@@ -2663,13 +2906,16 @@ function initHelp(){
       });
       document.body.appendChild(tooltip);
       const rect=icon.getBoundingClientRect();
+      const edge=12;
+      const tooltipWidth=tooltip.offsetWidth;
+      const tooltipHeight=tooltip.offsetHeight;
       const left=Math.min(
-        window.innerWidth-440,
-        Math.max(16,rect.left-20)
+        window.innerWidth-tooltipWidth-edge,
+        Math.max(edge,rect.left-8)
       );
       const top=Math.min(
-        window.innerHeight-tooltip.offsetHeight-16,
-        Math.max(16,rect.bottom+12)
+        window.innerHeight-tooltipHeight-edge,
+        Math.max(edge,rect.bottom+8)
       );
       tooltip.style.left=left+'px';
       tooltip.style.top=top+'px';
@@ -2748,11 +2994,6 @@ function drawLine(svg,arr,opts={}){
     const showWeek=isMobile?(index%2===0||index===arr.length-1):(index%Math.ceil(arr.length/7)===0||index===arr.length-1);
     if(showWeek)svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=point.x;
   });
-  if(isMobile){
-    const last=arr[arr.length-1],lastY=y(num(last.y));
-    const labelY=lastY<=p.t+14?lastY+16:lastY-8;
-    svg.appendChild(svgEl('text',{x:w-p.r,y:labelY,'text-anchor':'end',class:'axis-label'})).textContent=num(last.y).toFixed(1)+'%';
-  }
   svg.appendChild(tooltip);
 }
 function sparkMini(svg,arr,opts={}){clear(svg);if(!arr||!arr.length)return;const w=svg.clientWidth||104,h=svg.clientHeight||38,p={l:3,r:4,t:6,b:6};const vals=arr.map(d=>Number(d.y)).filter(Number.isFinite);if(!vals.length)return;const minY=Math.min(opts.minY??Math.min(...vals),...vals),maxY=Math.max(opts.maxY??Math.max(...vals),...vals);const x=i=>arr.length<=1?p.l+(w-p.l-p.r)/2:p.l+(w-p.l-p.r)*i/(arr.length-1);const y=v=>h-p.b-(h-p.t-p.b)*(v-minY)/(maxY-minY||1);let d='';arr.forEach((pt,i)=>d+=(i?'L':'M')+x(i)+' '+y(Number(pt.y)));svg.appendChild(svgEl('path',{d,fill:'none',stroke:blue(),'stroke-width':1.7,'stroke-linecap':'round','stroke-linejoin':'round'}));const last=arr[arr.length-1];svg.appendChild(svgEl('circle',{cx:x(arr.length-1),cy:y(Number(last.y)),r:2.2,fill:blue()}));}
@@ -2816,8 +3057,6 @@ function trustScoreTrend(svg){
     svg.appendChild(circle);
     svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=pt.x;
   });
-  const last=arr[arr.length-1];
-  svg.appendChild(svgEl('text',{x:isMobileChart?w-p.r:x(arr.length-1)-2,y:y(last.y)-10,'text-anchor':isMobileChart?'end':'middle',class:'axis-label'})).textContent=last.y.toFixed(2);
   svg.appendChild(tooltip);
 }
 function parseAccountTime(value){
@@ -3170,17 +3409,90 @@ function riskCvScale(el,cv){
   );
   el.append(title,scale,ticks,labels);
 }
-function riskConsistency(svg,series){
-  clear(svg);
-  if(!series||!series.length){
-    svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';
-    return;
+function setupMobileHistoryRange(svg,rerender){
+  const panel=svg.closest('.panel');
+  if(panel)panel.classList.add('mobile-history-panel');
+  if(!document.getElementById('mobile-history-range-style')){
+    const style=document.createElement('style');
+    style.id='mobile-history-range-style';
+    style.textContent='.mobile-history-range-controls{display:none}.mobile-history-swipe-hint{display:none}.mobile-history-scroll{width:100%;height:100%;overflow:hidden}@media(max-width:1100px){.mobile-history-panel .section-head{flex-wrap:wrap;gap:10px}.mobile-history-panel .mobile-history-range-controls{display:flex;align-items:center;width:100%;gap:6px;margin:8px 0 4px}.mobile-history-panel .section-head .mobile-history-range-controls{order:3}.mobile-history-range-button{appearance:none;border:1px solid rgba(143,166,200,.35);border-radius:999px;padding:5px 12px;background:rgba(143,166,200,.04);color:var(--muted);font:700 10px Inter,Arial,sans-serif;letter-spacing:.05em}.mobile-history-range-button.active{border-color:rgba(143,166,200,.7);background:rgba(143,166,200,.14);color:var(--text-strong)}.mobile-history-swipe-hint.visible{display:inline-flex;margin-left:auto;color:var(--blue);font:750 9px Inter,Arial,sans-serif;letter-spacing:.08em;white-space:nowrap}.mobile-history-scroll.is-scrollable{overflow-x:auto;overflow-y:hidden;touch-action:pan-x;-webkit-overflow-scrolling:touch;scrollbar-width:thin}}';
+    document.head.appendChild(style);
   }
-  const w=svg.clientWidth||780,h=svg.clientHeight||220,p={l:54,r:24,t:18,b:42};
+  let scroll=svg.parentElement;
+  if(!scroll||!scroll.classList.contains('mobile-history-scroll')){
+    const host=scroll;
+    scroll=document.createElement('div');
+    scroll.className='mobile-history-scroll';
+    if(host){host.appendChild(scroll);scroll.appendChild(svg)}
+  }
+  let controls=panel&&panel.querySelector('[data-history-for="'+svg.id+'"]');
+  if(panel&&!controls){
+    controls=document.createElement('div');
+    controls.className='mobile-history-range-controls';
+    controls.dataset.historyFor=svg.id;
+    ['ALL','1M'].forEach(range=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='mobile-history-range-button';
+      button.dataset.range=range;
+      button.textContent=range;
+      button.addEventListener('click',()=>{
+        svg.dataset.historyRange=range;
+        rerender();
+        if(range==='ALL')requestAnimationFrame(()=>{const holder=svg.parentElement;if(holder)holder.scrollLeft=holder.scrollWidth});
+      });
+      controls.appendChild(button);
+    });
+    const swipeHint=document.createElement('span');
+    swipeHint.className='mobile-history-swipe-hint';
+    swipeHint.textContent='← SWIPE →';
+    controls.appendChild(swipeHint);
+    const heading=panel.querySelector('.section-head');
+    if(heading)heading.appendChild(controls);
+    else{const title=panel.querySelector('h2');if(title)title.insertAdjacentElement('afterend',controls)}
+  }
+  const isMobile=window.matchMedia('(max-width:1100px)').matches;
+  const selectedRange=svg.dataset.historyRange||'1M';
+  const activeRange=isMobile?selectedRange:'ALL';
+  if(controls)controls.querySelectorAll('.mobile-history-range-button').forEach(button=>{
+    const active=button.dataset.range===selectedRange;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',active?'true':'false');
+  });
+  const swipeHint=controls&&controls.querySelector('.mobile-history-swipe-hint');
+  if(swipeHint)swipeHint.classList.toggle('visible',isMobile&&activeRange==='ALL');
+  scroll.classList.toggle('is-scrollable',isMobile&&activeRange==='ALL');
+  return{panel,scroll,isMobile,activeRange};
+}
+function riskConsistency(svg,series){
+  const setup=setupMobileHistoryRange(svg,()=>riskConsistency(svg,series));
+  const {scroll,isMobile,activeRange}=setup;
+  const fullSeries=(Array.isArray(series)?series:[]).map((point,index)=>({...point,_idx:index,_time:parseAccountTime(point&&point.timestamp)}));
+  let visibleSeries=fullSeries;
+  const validTimes=fullSeries.map(point=>point._time).filter(Number.isFinite);
+  if(isMobile&&activeRange==='1M'&&validTimes.length){
+    const start=new Date(Math.max(...validTimes));
+    start.setMonth(start.getMonth()-1);
+    visibleSeries=fullSeries.filter(point=>point._time!==null&&point._time>=start.getTime());
+  }
+  clear(svg);
+  if(!visibleSeries.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='not_available';return}
+  svg.style.width='100%';
+  const viewportWidth=scroll.clientWidth||svg.clientWidth||780;
+  let w=Math.max(260,viewportWidth);
+  if(isMobile&&activeRange==='ALL'){w=Math.max(w,visibleSeries.length*24+92);svg.style.width=w+'px'}
+  const h=svg.clientHeight||220,p=isMobile?{l:48,r:16,t:18,b:42}:{l:54,r:24,t:18,b:42};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  if(!scroll.__riskHistoryResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(scroll.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;riskConsistency(svg,series)}});
+    observer.observe(scroll);scroll.__riskHistoryResizeObserver=observer;
+  }
   const low=num(data.risk.personal_risk_low_bound_pct);
   const high=num(data.risk.personal_risk_high_bound_pct);
   const median=num(data.risk.personal_risk_baseline_pct);
-  const vals=series.map(point=>num(point.risk_pct));
+  const vals=visibleSeries.map(point=>num(point.risk_pct));
   const targetMax=Math.max(...vals,high,0.1)*1.12;
   const roughStep=targetMax/4;
   const magnitude=Math.pow(10,Math.floor(Math.log10(roughStep||1)));
@@ -3188,79 +3500,46 @@ function riskConsistency(svg,series){
   const niceFactor=normalized<=1?1:normalized<=2?2:normalized<=2.5?2.5:normalized<=5?5:10;
   const tickStep=niceFactor*magnitude;
   const minY=0,maxY=Math.max(tickStep,Math.ceil(targetMax/tickStep)*tickStep);
-  const x=i=>p.l+(w-p.l-p.r)*(series.length<=1?0:i/(series.length-1));
+  const x=i=>p.l+(w-p.l-p.r)*(visibleSeries.length<=1?0:i/(visibleSeries.length-1));
   const y=value=>h-p.b-(h-p.t-p.b)*(value-minY)/(maxY-minY||1);
   for(let value=0;value<=maxY+tickStep/100;value+=tickStep){
     const yy=y(value);
     svg.appendChild(svgEl('line',{x1:p.l,y1:yy,x2:w-p.r,y2:yy,class:'gridline'}));
     svg.appendChild(svgEl('text',{x:4,y:yy+4,class:'axis-label'})).textContent=value.toFixed(tickStep<1?1:0);
   }
-  svg.appendChild(svgEl('rect',{
-    x:p.l,y:y(high),width:w-p.l-p.r,height:y(low)-y(high),fill:green(),opacity:.10
-  }));
-  svg.appendChild(svgEl('line',{
-    x1:p.l,y1:y(median),x2:w-p.r,y2:y(median),
-    stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'
-  }));
+  svg.appendChild(svgEl('rect',{x:p.l,y:y(high),width:w-p.l-p.r,height:y(low)-y(high),fill:green(),opacity:.10}));
+  svg.appendChild(svgEl('line',{x1:p.l,y1:y(median),x2:w-p.r,y2:y(median),stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'}));
   let path='';
-  series.forEach((point,index)=>{
-    path+=(index?'L':'M')+x(index)+' '+y(num(point.risk_pct));
-  });
-  svg.appendChild(svgEl('path',{
-    d:path,fill:'none',stroke:blue(),'stroke-width':2,
-    'stroke-linecap':'round','stroke-linejoin':'round'
-  }));
+  visibleSeries.forEach((point,index)=>{path+=(index?'L':'M')+x(index)+' '+y(num(point.risk_pct))});
+  svg.appendChild(svgEl('path',{d:path,fill:'none',stroke:blue(),'stroke-width':2,'stroke-linecap':'round','stroke-linejoin':'round'}));
   const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
-  const tooltipRect=svgEl('rect',{
-    rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1
-  });
+  const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
   const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});
   tooltip.append(tooltipRect,tooltipText);
-  series.forEach((point,index)=>{
-    const risk=num(point.risk_pct);
-    const status=String(point.status||'').toLowerCase();
-    const isExpansion=status?status==='expansion':risk>high;
-    const cx=x(index),cy=y(risk);
-    const circle=svgEl('circle',{
-      cx,cy,r:3,fill:isExpansion?red():blue(),stroke:'#0b0d0f','stroke-width':1.1
-    });
+  const showTooltip=(point,index)=>{
+    const risk=num(point.risk_pct),cx=x(index),cy=y(risk);
+    const label='Risk '+risk.toFixed(2)+'%';
+    const width=Math.max(76,label.length*6.2+16);
+    const left=clamp(cx-width/2,p.l,w-p.r-width);
+    const top=Math.max(p.t,cy-34);
+    tooltipRect.setAttribute('x',left);tooltipRect.setAttribute('y',top);tooltipRect.setAttribute('width',width);tooltipRect.setAttribute('height',24);
+    tooltipText.setAttribute('x',left+8);tooltipText.setAttribute('y',top+16);tooltipText.textContent=label;tooltip.setAttribute('visibility','visible');
+  };
+  visibleSeries.forEach((point,index)=>{
+    const risk=num(point.risk_pct),status=String(point.status||'').toLowerCase(),isExpansion=status?status==='expansion':risk>high;
+    const circle=svgEl('circle',{cx:x(index),cy:y(risk),r:3,fill:isExpansion?red():blue(),stroke:'#0b0d0f','stroke-width':1.1});
     circle.style.cursor='pointer';
-    circle.addEventListener('mouseenter',()=>{
-      const label=`Risk ${risk.toFixed(2)}%`;
-      const width=Math.max(76,label.length*6.2+16);
-      const left=clamp(cx-width/2,p.l,w-p.r-width);
-      const top=Math.max(p.t,cy-34);
-      tooltipRect.setAttribute('x',left);
-      tooltipRect.setAttribute('y',top);
-      tooltipRect.setAttribute('width',width);
-      tooltipRect.setAttribute('height',24);
-      tooltipText.setAttribute('x',left+8);
-      tooltipText.setAttribute('y',top+16);
-      tooltipText.textContent=label;
-      tooltip.setAttribute('visibility','visible');
-    });
-    circle.addEventListener('mouseleave',()=>tooltip.setAttribute('visibility','hidden'));
+    circle.addEventListener('pointerenter',()=>showTooltip(point,index));
+    circle.addEventListener('pointerleave',()=>tooltip.setAttribute('visibility','hidden'));
+    circle.addEventListener('click',event=>{event.stopPropagation();showTooltip(point,index)});
     svg.appendChild(circle);
   });
   const weeks=[];
-  series.forEach((point,index)=>{
-    if(!weeks.length||weeks[weeks.length-1].week!==point.week){
-      weeks.push({week:point.week,start:index,end:index});
-    }else{
-      weeks[weeks.length-1].end=index;
-    }
-  });
+  visibleSeries.forEach((point,index)=>{if(!weeks.length||weeks[weeks.length-1].week!==point.week)weeks.push({week:point.week,start:index,end:index});else weeks[weeks.length-1].end=index});
   weeks.forEach(week=>{
     const cx=(x(week.start)+x(week.end))/2;
-    svg.appendChild(svgEl('text',{
-      x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'
-    })).textContent=week.week;
-    if(week.start>0){
-      svg.appendChild(svgEl('line',{
-        x1:x(week.start),y1:p.t,x2:x(week.start),y2:h-p.b,
-        stroke:'rgba(255,255,255,.04)','stroke-width':1
-      }));
-    }
+    svg.appendChild(svgEl('text',{x:cx,y:h-8,'text-anchor':'middle',class:'axis-label'})).textContent=week.week;
+    if(week.start>0)svg.appendChild(svgEl('line',{x1:x(week.start),y1:p.t,x2:x(week.start),y2:h-p.b,stroke:'rgba(255,255,255,.04)','stroke-width':1}));
   });
   svg.appendChild(svgEl('text',{x:4,y:p.t-6,class:'axis-label'})).textContent='Risk %';
   svg.appendChild(tooltip);
@@ -3351,28 +3630,33 @@ if(findingsPeriod){
   findingsPeriod.textContent=formatReportWeek(data.period);
 }
 function planFact(svg,sourcePoints,base){
-  clear(svg);
-  const points=Array.isArray(sourcePoints)
-    ?sourcePoints.map((point,index)=>({...point,_idx:index}))
-    :[];
-  const riskWeeks=Array.isArray(data.risk&&data.risk.trade_series)
-    ?data.risk.trade_series.map(point=>point.week)
-    :[];
+  const setup=setupMobileHistoryRange(svg,()=>planFact(svg,sourcePoints,base));
+  const {scroll,isMobile,activeRange}=setup;
+  const fullPoints=Array.isArray(sourcePoints)?sourcePoints.map((point,index)=>({...point,_idx:index,_time:parseAccountTime(point&&point.timestamp)})):[];
+  const fullRiskSeries=Array.isArray(data.risk&&data.risk.trade_series)?data.risk.trade_series.map((point,index)=>({...point,_idx:index,_time:parseAccountTime(point&&point.timestamp)})):[];
+  const validTimes=[...fullPoints,...fullRiskSeries].map(point=>point._time).filter(Number.isFinite);
+  let rangeStart=-Infinity;
+  if(isMobile&&activeRange==='1M'&&validTimes.length){const start=new Date(Math.max(...validTimes));start.setMonth(start.getMonth()-1);rangeStart=start.getTime()}
+  const points=fullPoints.filter(point=>point._time===null||point._time>=rangeStart);
+  const riskSeries=fullRiskSeries.filter(point=>point._time===null||point._time>=rangeStart);
+  const riskWeeks=riskSeries.map(point=>point.week);
   const pointWeeks=points.map(point=>point.week);
   const weeks=[...new Set([...riskWeeks,...pointWeeks].filter(Boolean))];
-  const w=svg.clientWidth||780,h=svg.clientHeight||252;
-  const pad={l:74,r:28,t:24,b:48};
-  if(!points.length){
-    svg.appendChild(svgEl('text',{
-      x:20,y:40,class:'not-available'
-    })).textContent='no closed loss trades in period';
-    return;
+  clear(svg);
+  if(!points.length){svg.appendChild(svgEl('text',{x:20,y:40,class:'not-available'})).textContent='no closed loss trades in period';return}
+  svg.style.width='100%';
+  const viewportWidth=scroll.clientWidth||svg.clientWidth||780;
+  let w=Math.max(260,viewportWidth);
+  if(isMobile&&activeRange==='ALL'){w=Math.max(w,weeks.length*78+100,points.length*24+100);svg.style.width=w+'px'}
+  const h=svg.clientHeight||252,pad=isMobile?{l:58,r:18,t:24,b:48}:{l:74,r:28,t:24,b:48};
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  svg.setAttribute('preserveAspectRatio','none');
+  if(!scroll.__planHistoryResizeObserver&&typeof ResizeObserver==='function'){
+    let measuredWidth=Math.round(scroll.clientWidth||0);
+    const observer=new ResizeObserver(entries=>{const nextWidth=Math.round((entries[0]&&entries[0].contentRect.width)||0);if(nextWidth&&nextWidth!==measuredWidth){measuredWidth=nextWidth;planFact(svg,sourcePoints,base)}});
+    observer.observe(scroll);scroll.__planHistoryResizeObserver=observer;
   }
-  const values=points.flatMap(point=>[
-    num(point.planned),
-    num(point.actual),
-    num(base)
-  ]);
+  const values=points.flatMap(point=>[num(point.planned),num(point.actual),num(base)]);
   const targetMax=Math.max(...values,0.1)*1.12;
   const roughStep=targetMax/4;
   const magnitude=Math.pow(10,Math.floor(Math.log10(roughStep||1)));
@@ -3383,127 +3667,55 @@ function planFact(svg,sourcePoints,base){
   const y=value=>h-pad.b-(h-pad.t-pad.b)*(value-minY)/(maxY-minY||1);
   for(let value=0;value<=maxY+tickStep/100;value+=tickStep){
     const yy=y(value);
-    svg.appendChild(svgEl('line',{
-      x1:pad.l,y1:yy,x2:w-pad.r,y2:yy,class:'gridline'
-    }));
-    svg.appendChild(svgEl('text',{
-      x:6,y:yy+4,class:'axis-label'
-    })).textContent=value.toFixed(tickStep<1?1:0);
+    svg.appendChild(svgEl('line',{x1:pad.l,y1:yy,x2:w-pad.r,y2:yy,class:'gridline'}));
+    svg.appendChild(svgEl('text',{x:6,y:yy+4,class:'axis-label'})).textContent=value.toFixed(tickStep<1?1:0);
   }
-  svg.appendChild(svgEl('text',{
-    x:6,y:pad.t-8,class:'axis-label'
-  })).textContent='Loss %';
-  svg.appendChild(svgEl('line',{
-    x1:pad.l,y1:y(num(base)),x2:w-pad.r,y2:y(num(base)),
-    stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'
-  }));
+  svg.appendChild(svgEl('text',{x:6,y:pad.t-8,class:'axis-label'})).textContent='Loss %';
+  svg.appendChild(svgEl('line',{x1:pad.l,y1:y(num(base)),x2:w-pad.r,y2:y(num(base)),stroke:yellow(),'stroke-width':1,'stroke-dasharray':'4 4'}));
   const plotWidth=w-pad.l-pad.r;
-  const weekWidth=plotWidth/weeks.length;
-  const groups=weeks.map((week,index)=>({
-    week,
-    index,
-    points:points.filter(point=>point.week===week)
-  }));
+  const weekWidth=plotWidth/Math.max(weeks.length,1);
+  const groups=weeks.map((week,index)=>({week,index,points:points.filter(point=>point.week===week)}));
   const maxWeekLosses=Math.max(1,...groups.map(group=>group.points.length));
   const denseSlot=weekWidth/maxWeekLosses;
   const barWidth=clamp(denseSlot*.56,7,42);
   const placed=[];
   groups.forEach(group=>{
-    const start=pad.l+group.index*weekWidth;
-    const center=start+weekWidth/2;
-    if(group.index>0){
-      svg.appendChild(svgEl('line',{
-        x1:start,y1:pad.t,x2:start,y2:h-pad.b,
-        stroke:'rgba(255,255,255,.04)','stroke-width':1
-      }));
-    }
-    svg.appendChild(svgEl('text',{
-      x:center,y:h-12,'text-anchor':'middle',class:'axis-label'
-    })).textContent=group.week;
-    if(!group.points.length){
-      svg.appendChild(svgEl('text',{
-        x:center,y:y(num(base))+18,'text-anchor':'middle',class:'axis-label'
-      })).textContent='N/A';
-      return;
-    }
+    const start=pad.l+group.index*weekWidth,center=start+weekWidth/2;
+    if(group.index>0)svg.appendChild(svgEl('line',{x1:start,y1:pad.t,x2:start,y2:h-pad.b,stroke:'rgba(255,255,255,.04)','stroke-width':1}));
+    svg.appendChild(svgEl('text',{x:center,y:h-12,'text-anchor':'middle',class:'axis-label'})).textContent=group.week;
+    if(!group.points.length){svg.appendChild(svgEl('text',{x:center,y:y(num(base))+18,'text-anchor':'middle',class:'axis-label'})).textContent='N/A';return}
     const slot=weekWidth/group.points.length;
-    group.points.forEach((point,index)=>{
-      const cx=start+slot*(index+.5);
-      placed.push({...point,cx});
-    });
+    group.points.forEach((point,index)=>placed.push({...point,cx:start+slot*(index+.5)}));
   });
   placed.sort((a,b)=>a._idx-b._idx);
   placed.forEach(point=>{
-    const planned=num(point.planned);
-    const actual=num(point.actual);
-    const within=num(point.within_plan);
-    const excess=num(point.excess_loss);
-    const baseY=y(0);
-    const withinTop=y(within);
-    const actualTop=y(actual);
-    const group=svgEl('g');
-    group.style.cursor='pointer';
-    group.appendChild(svgEl('rect',{
-      x:point.cx-barWidth/2,y:withinTop,width:barWidth,
-      height:Math.max(2,baseY-withinTop),rx:3,fill:'#66717b',opacity:.92
-    }));
-    if(excess>0){
-      group.appendChild(svgEl('rect',{
-        x:point.cx-barWidth/2,y:actualTop,width:barWidth,
-        height:Math.max(2,withinTop-actualTop),rx:3,fill:red(),opacity:.92
-      }));
-    }
-    const valueLabel=svgEl('text',{
-      x:point.cx,y:Math.max(pad.t+10,actualTop-8),
-      'text-anchor':'middle',class:'axis-label',visibility:'hidden'
-    });
-    valueLabel.textContent=actual.toFixed(2)+'%';
-    group.appendChild(valueLabel);
-    group.addEventListener('mouseenter',()=>valueLabel.setAttribute('visibility','visible'));
-    group.addEventListener('mouseleave',()=>valueLabel.setAttribute('visibility','hidden'));
+    const actual=num(point.actual),within=num(point.within_plan),excess=num(point.excess_loss);
+    const baseY=y(0),withinTop=y(within),actualTop=y(actual);
+    const group=svgEl('g');group.style.cursor='pointer';
+    group.appendChild(svgEl('rect',{x:point.cx-barWidth/2,y:withinTop,width:barWidth,height:Math.max(2,baseY-withinTop),rx:3,fill:'#66717b',opacity:.92}));
+    if(excess>0)group.appendChild(svgEl('rect',{x:point.cx-barWidth/2,y:actualTop,width:barWidth,height:Math.max(2,withinTop-actualTop),rx:3,fill:red(),opacity:.92}));
+    const valueLabel=svgEl('text',{x:point.cx,y:Math.max(pad.t+10,actualTop-8),'text-anchor':'middle',class:'axis-label',visibility:'hidden'});
+    valueLabel.textContent=actual.toFixed(2)+'%';group.appendChild(valueLabel);
+    group.addEventListener('pointerenter',()=>valueLabel.setAttribute('visibility','visible'));
+    group.addEventListener('pointerleave',()=>valueLabel.setAttribute('visibility','hidden'));
+    group.addEventListener('click',event=>{event.stopPropagation();valueLabel.setAttribute('visibility','visible')});
     svg.appendChild(group);
   });
   if(placed.length){
-    let path='';
-    placed.forEach((point,index)=>{
-      path+=(index?'L':'M')+point.cx+' '+y(num(point.planned));
-    });
-    svg.appendChild(svgEl('path',{
-      d:path,fill:'none',stroke:'#c0c0bd','stroke-width':1.8,
-      'stroke-linecap':'round','stroke-linejoin':'round'
-    }));
+    let path='';placed.forEach((point,index)=>{path+=(index?'L':'M')+point.cx+' '+y(num(point.planned))});
+    svg.appendChild(svgEl('path',{d:path,fill:'none',stroke:'#c0c0bd','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'}));
     const tooltip=svgEl('g',{visibility:'hidden','pointer-events':'none'});
-    const tooltipRect=svgEl('rect',{
-      rx:5,fill:'rgba(10,12,14,.96)',
-      stroke:'rgba(255,255,255,.18)','stroke-width':1
-    });
-    const tooltipText=svgEl('text',{
-      fill:'#f0f0ed','font-size':10,'font-weight':700
-    });
-    tooltip.append(tooltipRect,tooltipText);
+    const tooltipRect=svgEl('rect',{rx:5,fill:'rgba(10,12,14,.96)',stroke:'rgba(255,255,255,.18)','stroke-width':1});
+    const tooltipText=svgEl('text',{fill:'#f0f0ed','font-size':10,'font-weight':700});tooltip.append(tooltipRect,tooltipText);
+    const showTooltip=point=>{
+      const cy=y(num(point.planned)),label='Planned risk '+num(point.planned).toFixed(2)+'%';
+      const width=Math.max(112,label.length*6.2+16),left=clamp(point.cx-width/2,pad.l,w-pad.r-width),top=Math.max(pad.t,cy-34);
+      tooltipRect.setAttribute('x',left);tooltipRect.setAttribute('y',top);tooltipRect.setAttribute('width',width);tooltipRect.setAttribute('height',24);
+      tooltipText.setAttribute('x',left+8);tooltipText.setAttribute('y',top+16);tooltipText.textContent=label;tooltip.setAttribute('visibility','visible');
+    };
     placed.forEach(point=>{
-      const cy=y(num(point.planned));
-      const circle=svgEl('circle',{
-        cx:point.cx,cy,r:3,fill:'#c0c0bd',
-        stroke:'#0b0d0f','stroke-width':1
-      });
-      circle.style.cursor='pointer';
-      circle.addEventListener('mouseenter',()=>{
-        const label=`Planned risk ${num(point.planned).toFixed(2)}%`;
-        const width=Math.max(112,label.length*6.2+16);
-        const left=clamp(point.cx-width/2,pad.l,w-pad.r-width);
-        const top=Math.max(pad.t,cy-34);
-        tooltipRect.setAttribute('x',left);
-        tooltipRect.setAttribute('y',top);
-        tooltipRect.setAttribute('width',width);
-        tooltipRect.setAttribute('height',24);
-        tooltipText.setAttribute('x',left+8);
-        tooltipText.setAttribute('y',top+16);
-        tooltipText.textContent=label;
-        tooltip.setAttribute('visibility','visible');
-      });
-      circle.addEventListener('mouseleave',()=>tooltip.setAttribute('visibility','hidden'));
-      svg.appendChild(circle);
+      const circle=svgEl('circle',{cx:point.cx,cy:y(num(point.planned)),r:3,fill:'#c0c0bd',stroke:'#0b0d0f','stroke-width':1});
+      circle.style.cursor='pointer';circle.addEventListener('pointerenter',()=>showTooltip(point));circle.addEventListener('pointerleave',()=>tooltip.setAttribute('visibility','hidden'));circle.addEventListener('click',event=>{event.stopPropagation();showTooltip(point)});svg.appendChild(circle);
     });
     svg.appendChild(tooltip);
   }
