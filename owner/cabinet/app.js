@@ -20,6 +20,7 @@
   const ownerShell = document.getElementById('owner-shell');
   const ownerLogin = document.getElementById('owner-login');
   const toast = document.getElementById('demo-toast');
+  const strategyView = document.getElementById('view-strategies');
   const strategyCatalog = document.getElementById('strategy-catalog');
   const strategyCount = document.getElementById('strategy-count');
   const navItems = Array.from(document.querySelectorAll('.nav-item[data-view]'));
@@ -37,6 +38,10 @@
   let strategyCache = null;
   let strategyRequest = 0;
   let strategyController;
+  const strategyDetailCache = new Map();
+  let selectedStrategyId = '';
+  let strategyDetailRequest = 0;
+  let strategyDetailController;
 
   function closeSidebar({ restoreFocus = false } = {}) {
     sidebar.classList.remove('is-open');
@@ -97,6 +102,55 @@
       typeof value.data_status === 'string' && value.data_status.trim() !== '';
   }
 
+  function isOptionalNumber(value) {
+    return value === null || Number.isFinite(value);
+  }
+
+  function isValidStrategyDetail(data, strategyId) {
+    const strategy = data && data.strategy;
+    return data && data.ok === true &&
+      strategy && strategy.strategy_id === strategyId &&
+      Number.isFinite(strategy.trust_score) &&
+      typeof strategy.trust_zone === 'string' && strategy.trust_zone.trim() !== '' &&
+      Number.isInteger(strategy.history_weeks_count) && strategy.history_weeks_count >= 0 &&
+      Number.isFinite(strategy.closed_trades_total) &&
+      Number.isFinite(strategy.strategy_return_since_start_pct) &&
+      isOptionalNumber(strategy.max_drawdown_since_start_pct) &&
+      Number.isFinite(strategy.win_ratio_pct) &&
+      isOptionalNumber(strategy.profit_factor) &&
+      isOptionalNumber(strategy.average_risk_pct) &&
+      isOptionalNumber(strategy.sl_safe_pct) &&
+      isOptionalNumber(strategy.risk_cv_pct) &&
+      typeof strategy.data_period_end === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(strategy.data_period_end) &&
+      typeof strategy.data_status === 'string' && strategy.data_status.trim() !== '' &&
+      Array.isArray(data.history) && data.history.every((row) =>
+        row &&
+        typeof row.period_start === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(row.period_start) &&
+        typeof row.period_end === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(row.period_end) &&
+        row.period_start <= row.period_end &&
+        Number.isFinite(row.period_return_pct) &&
+        Number.isFinite(row.strategy_return_since_start_pct) &&
+        Number.isFinite(row.closed_trades_period) &&
+        Number.isFinite(row.trust_score_snapshot) &&
+        typeof row.trust_zone_snapshot === 'string' && row.trust_zone_snapshot.trim() !== ''
+      );
+  }
+
+  function formatPercent(value, signed = false) {
+    const normalized = Math.abs(value) < 0.005 ? 0 : value;
+    const prefix = signed && normalized > 0 ? '+' : '';
+    return `${prefix}${normalized.toFixed(2).replace(/\.00$/, '')}%`;
+  }
+
+  function formatNumber(value) {
+    return value.toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
+  }
+
+  function formatDate(value) {
+    const [year, month, day] = value.split('-');
+    return `${day}.${month}.${year}`;
+  }
+
   function createMetric(label, value) {
     const metric = document.createElement('span');
     metric.className = 'strategy-metric';
@@ -122,8 +176,11 @@
     }
 
     strategies.forEach((strategy, index) => {
-      const row = document.createElement('article');
+      const row = document.createElement('button');
       row.className = 'strategy-catalog-row panel';
+      row.type = 'button';
+      row.setAttribute('aria-label', `Открыть стратегию ${strategy.strategy_id}`);
+      row.addEventListener('click', () => openStrategy(strategy.strategy_id));
 
       const identity = document.createElement('span');
       identity.className = 'strategy-identity';
@@ -145,8 +202,278 @@
         createMetric('Win Ratio', `${strategy.win_ratio_pct.toFixed(1).replace(/\.0$/, '')}%`),
         createMetric('История', formatWeeks(strategy.history_weeks_count))
       );
+      const open = document.createElement('span');
+      open.className = 'strategy-row-open';
+      open.setAttribute('aria-hidden', 'true');
+      open.innerHTML = '<svg><use href="#icon-chevron"></use></svg>';
+      row.append(open);
       strategyCatalog.append(row);
     });
+  }
+
+  function createDetailMetric(label, value, className = '') {
+    const metric = document.createElement('div');
+    metric.className = `strategy-detail-metric${className ? ` ${className}` : ''}`;
+    const caption = document.createElement('dt');
+    const result = document.createElement('dd');
+    caption.textContent = label;
+    result.textContent = value;
+    metric.append(caption, result);
+    return metric;
+  }
+
+  function createStrategyChart(history, strategyId) {
+    const section = document.createElement('section');
+    section.className = 'strategy-chart panel';
+    const heading = document.createElement('div');
+    heading.className = 'strategy-section-heading';
+    heading.innerHTML = '<div><p class="eyebrow">Performance History</p><h3>Динамика стратегии</h3></div><span>Накопительный результат, %</span>';
+    section.append(heading);
+
+    if (history.length === 0) {
+      const empty = document.createElement('p');
+      empty.className = 'strategy-chart-empty';
+      empty.textContent = 'Недостаточно подтверждённых данных для построения графика.';
+      section.append(empty);
+      return section;
+    }
+
+    const namespace = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(namespace, 'svg');
+    svg.setAttribute('class', 'strategy-history-chart');
+    svg.setAttribute('viewBox', '0 0 900 320');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', `Динамика накопительного результата стратегии ${strategyId}`);
+
+    const values = history.map((row) => row.strategy_return_since_start_pct);
+    const rawMin = Math.min(0, ...values);
+    const rawMax = Math.max(0, ...values);
+    const rawSpan = rawMax - rawMin;
+    const padding = rawSpan === 0 ? Math.max(Math.abs(rawMax) * 0.15, 1) : rawSpan * 0.12;
+    const min = rawMin - padding;
+    const max = rawMax + padding;
+    const left = 66;
+    const right = 22;
+    const top = 24;
+    const bottom = 54;
+    const width = 900 - left - right;
+    const height = 320 - top - bottom;
+    const xAt = (index) => history.length === 1
+      ? left + width / 2
+      : left + (index / (history.length - 1)) * width;
+    const yAt = (value) => top + ((max - value) / (max - min)) * height;
+    const addSvg = (name, attributes, text = '') => {
+      const element = document.createElementNS(namespace, name);
+      Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
+      if (text) element.textContent = text;
+      svg.append(element);
+      return element;
+    };
+
+    for (let index = 0; index <= 4; index += 1) {
+      const value = max - ((max - min) * index / 4);
+      const y = yAt(value);
+      addSvg('line', { class: 'chart-grid-line', x1: left, x2: 900 - right, y1: y, y2: y });
+      addSvg('text', { class: 'chart-axis-label', x: left - 12, y: y + 4, 'text-anchor': 'end' }, formatPercent(value));
+    }
+
+    const zeroY = yAt(0);
+    addSvg('line', { class: 'chart-zero-line', x1: left, x2: 900 - right, y1: zeroY, y2: zeroY });
+    const points = history.map((row, index) => `${xAt(index)},${yAt(row.strategy_return_since_start_pct)}`).join(' ');
+    addSvg('polyline', { class: 'chart-result-line', points });
+    history.forEach((row, index) => {
+      addSvg('circle', {
+        class: 'chart-result-point',
+        cx: xAt(index),
+        cy: yAt(row.strategy_return_since_start_pct),
+        r: history.length === 1 ? 6 : 4
+      });
+    });
+
+    const labelIndexes = history.length <= 5
+      ? history.map((_, index) => index)
+      : [0, Math.floor((history.length - 1) / 2), history.length - 1];
+    [...new Set(labelIndexes)].forEach((index) => {
+      addSvg('text', {
+        class: 'chart-axis-label chart-date-label',
+        x: xAt(index),
+        y: 300,
+        'text-anchor': index === 0 && history.length > 1 ? 'start' : index === history.length - 1 && history.length > 1 ? 'end' : 'middle'
+      }, formatDate(history[index].period_end));
+    });
+    section.append(svg);
+    return section;
+  }
+
+  function createHistoryTable(history) {
+    const section = document.createElement('section');
+    section.className = 'strategy-history panel';
+    const heading = document.createElement('div');
+    heading.className = 'strategy-section-heading';
+    heading.innerHTML = '<div><p class="eyebrow">История</p><h3>Подтверждённые периоды</h3></div>';
+    section.append(heading);
+
+    if (history.length === 0) {
+      const empty = document.createElement('p');
+      empty.className = 'strategy-history-empty';
+      empty.textContent = 'Подтверждённая история пока отсутствует.';
+      section.append(empty);
+      return section;
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'strategy-history-scroll';
+    const table = document.createElement('table');
+    table.innerHTML = '<thead><tr><th>Период</th><th>Результат периода</th><th>Результат с начала</th></tr></thead>';
+    const body = document.createElement('tbody');
+    history.forEach((row) => {
+      const tr = document.createElement('tr');
+      const period = document.createElement('td');
+      const periodResult = document.createElement('td');
+      const totalResult = document.createElement('td');
+      period.textContent = `${formatDate(row.period_start)} — ${formatDate(row.period_end)}`;
+      periodResult.textContent = formatPercent(row.period_return_pct, true);
+      totalResult.textContent = formatPercent(row.strategy_return_since_start_pct, true);
+      periodResult.className = row.period_return_pct > 0 ? 'positive' : row.period_return_pct < 0 ? 'negative' : '';
+      totalResult.className = row.strategy_return_since_start_pct > 0 ? 'positive' : row.strategy_return_since_start_pct < 0 ? 'negative' : '';
+      tr.append(period, periodResult, totalResult);
+      body.append(tr);
+    });
+    table.append(body);
+    wrapper.append(table);
+    section.append(wrapper);
+    return section;
+  }
+
+  function renderStrategyDetail(data) {
+    const { strategy, history } = data;
+    strategyCatalog.replaceChildren();
+    strategyCatalog.setAttribute('aria-busy', 'false');
+
+    const back = document.createElement('button');
+    back.className = 'strategy-back';
+    back.type = 'button';
+    back.textContent = '← Все стратегии';
+    back.addEventListener('click', showStrategyList);
+
+    const header = document.createElement('section');
+    header.className = 'strategy-detail-header panel';
+    const identity = document.createElement('div');
+    identity.innerHTML = `<p class="eyebrow">Strategy ID</p><h2>${strategy.strategy_id}</h2><p>Подтверждённые показатели стратегии QUD</p>`;
+    const trust = document.createElement('dl');
+    trust.className = 'strategy-trust-summary';
+    trust.append(
+      createDetailMetric('Trust Score', String(strategy.trust_score)),
+      createDetailMetric('Trust Zone', strategy.trust_zone)
+    );
+    header.append(identity, trust);
+
+    const metrics = document.createElement('dl');
+    metrics.className = 'strategy-detail-metrics';
+    metrics.append(
+      createDetailMetric('Закрытых сделок', formatNumber(strategy.closed_trades_total)),
+      createDetailMetric('Доходность с начала', formatPercent(strategy.strategy_return_since_start_pct, true)),
+      createDetailMetric('Max Drawdown', strategy.max_drawdown_since_start_pct === null ? 'Недостаточно подтверждённых данных' : formatPercent(strategy.max_drawdown_since_start_pct), strategy.max_drawdown_since_start_pct === null ? 'metric-insufficient' : ''),
+      createDetailMetric('Profit Factor', strategy.profit_factor === null ? '—' : formatNumber(strategy.profit_factor)),
+      createDetailMetric('Average Risk', strategy.average_risk_pct === null ? '—' : formatPercent(strategy.average_risk_pct)),
+      createDetailMetric('SL Safe', strategy.sl_safe_pct === null ? 'Недостаточно подтверждённых данных' : formatPercent(strategy.sl_safe_pct), strategy.sl_safe_pct === null ? 'metric-insufficient' : ''),
+      createDetailMetric('Risk CV', strategy.risk_cv_pct === null ? '—' : formatPercent(strategy.risk_cv_pct)),
+      createDetailMetric('Обновлено', formatDate(strategy.data_period_end))
+    );
+
+    strategyCatalog.append(back, header, createStrategyChart(history, strategy.strategy_id), metrics, createHistoryTable(history));
+    strategyCatalog.querySelector('.strategy-back').focus({ preventScroll: true });
+  }
+
+  function renderStrategyDetailState(kind, strategyId) {
+    strategyCatalog.replaceChildren();
+    strategyCatalog.setAttribute('aria-busy', kind === 'loading' ? 'true' : 'false');
+    const state = document.createElement('div');
+    state.className = `strategy-state${kind === 'error' ? ' strategy-state-error' : ''}`;
+    state.setAttribute('role', kind === 'loading' ? 'status' : 'alert');
+    const message = document.createElement('p');
+    message.textContent = kind === 'loading'
+      ? 'Загрузка стратегии…'
+      : kind === 'not-found'
+        ? 'Стратегия недоступна.'
+        : 'Не удалось загрузить данные стратегии.';
+    state.append(message);
+    if (kind === 'error') {
+      const retry = document.createElement('button');
+      retry.className = 'button button-primary';
+      retry.type = 'button';
+      retry.textContent = 'Повторить';
+      retry.addEventListener('click', () => loadStrategyDetail(strategyId));
+      state.append(retry);
+    }
+    const back = document.createElement('button');
+    back.className = 'strategy-back strategy-back-state';
+    back.type = 'button';
+    back.textContent = '← Все стратегии';
+    back.addEventListener('click', showStrategyList);
+    strategyCatalog.append(back, state);
+  }
+
+  function showStrategyList() {
+    strategyDetailRequest += 1;
+    if (strategyDetailController) strategyDetailController.abort();
+    strategyDetailController = undefined;
+    selectedStrategyId = '';
+    strategyView.classList.remove('is-detail');
+    if (strategyCache) renderStrategies(strategyCache);
+    content.scrollTop = 0;
+  }
+
+  function openStrategy(strategyId) {
+    selectedStrategyId = strategyId;
+    strategyView.classList.add('is-detail');
+    strategyCount.textContent = '';
+    content.scrollTop = 0;
+    if (strategyDetailCache.has(strategyId)) {
+      renderStrategyDetail(strategyDetailCache.get(strategyId));
+      return;
+    }
+    loadStrategyDetail(strategyId);
+  }
+
+  async function loadStrategyDetail(strategyId) {
+    if (strategyDetailController) strategyDetailController.abort();
+    renderStrategyDetailState('loading', strategyId);
+    const requestId = ++strategyDetailRequest;
+    const controller = new AbortController();
+    strategyDetailController = controller;
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const response = await fetch(`/owner/api/strategies/${encodeURIComponent(strategyId)}`, {
+        method: 'GET',
+        credentials: 'same-origin',
+        cache: 'no-store',
+        signal: controller.signal,
+        headers: { Accept: 'application/json' }
+      });
+      if (response.status === 401) {
+        window.location.reload();
+        return;
+      }
+      if (requestId !== strategyDetailRequest || selectedStrategyId !== strategyId) return;
+      if (response.status === 404) {
+        renderStrategyDetailState('not-found', strategyId);
+        return;
+      }
+      const data = await response.json();
+      if (!response.ok || !isValidStrategyDetail(data, strategyId)) {
+        throw new Error('INVALID_STRATEGY_DETAIL_RESPONSE');
+      }
+      strategyDetailCache.set(strategyId, data);
+      renderStrategyDetail(data);
+    } catch {
+      if (requestId !== strategyDetailRequest || selectedStrategyId !== strategyId) return;
+      renderStrategyDetailState('error', strategyId);
+    } finally {
+      window.clearTimeout(timeout);
+      if (strategyDetailController === controller) strategyDetailController = undefined;
+    }
   }
 
   function renderStrategyError() {
@@ -223,6 +550,12 @@
     if (strategyController) strategyController.abort();
     strategyController = undefined;
     strategyCache = null;
+    strategyDetailCache.clear();
+    selectedStrategyId = '';
+    strategyDetailRequest += 1;
+    if (strategyDetailController) strategyDetailController.abort();
+    strategyDetailController = undefined;
+    strategyView.classList.remove('is-detail');
     strategyState = 'initial';
     strategyCount.textContent = '';
     strategyCatalog.setAttribute('aria-busy', 'false');
