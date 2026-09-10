@@ -7,20 +7,27 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20260910-7">
+  <link rel="stylesheet" href="./styles.css?v=20260910-8">
 </head>
 <body>
   <section class="auth-screen" id="owner-loading" role="status" aria-live="polite"><p>Загрузка данных</p></section>
   <section class="auth-screen" id="owner-login" hidden aria-labelledby="login-title">
-    <div class="auth-card panel">
-      <p class="eyebrow">QUD Capital Owner</p><h1 id="login-title">Вход в кабинет</h1>
-      <form id="owner-login-form">
-        <label for="owner-key">Owner access key</label>
-        <input id="owner-key" name="access_key" type="password" required maxlength="512" autocomplete="current-password" spellcheck="false" aria-describedby="owner-login-message">
-        <p id="owner-login-message" role="alert"></p>
-        <button class="button button-primary" id="owner-login-submit" type="submit">Войти</button>
-      </form>
-      <a href="/owner/access/">О доступе QUD Owner</a>
+    <div class="auth-login-layout">
+      <div class="auth-login-pane">
+        <div class="auth-card panel">
+          <p class="eyebrow">QUD Capital Owner</p><h1 id="login-title">Вход в кабинет</h1>
+          <form id="owner-login-form">
+            <label for="owner-key">Owner access key</label>
+            <input id="owner-key" name="access_key" type="password" required maxlength="512" autocomplete="current-password" spellcheck="false" aria-describedby="owner-login-message">
+            <p id="owner-login-message" role="alert"></p>
+            <button class="button button-primary" id="owner-login-submit" type="submit">Войти</button>
+          </form>
+          <a href="/owner/access/">О доступе QUD Owner</a>
+        </div>
+      </div>
+      <div class="hero-visual auth-login-visual" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="core-cube"><span>QUD</span></div><i class="node node-one"></i><i class="node node-two"></i><i class="node node-three"></i><i class="node node-four"></i>
+      </div>
     </div>
   </section>
   <section class="auth-screen" id="owner-unavailable" hidden aria-labelledby="unavailable-title">

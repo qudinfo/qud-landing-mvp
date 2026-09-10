@@ -568,3 +568,38 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 .auth-card a { display: inline-block; margin-top: 24px; color: var(--text-soft); }
 #owner-login-message { color: #efaaa4; min-height: 1.5em; line-height: 1.5; }
 .auth-card button:disabled { opacity: .6; cursor: wait; }
+
+#owner-login { place-items: stretch; padding: 0; }
+.auth-login-layout { width: 100%; min-height: 100vh; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.auth-login-pane { min-width: 0; display: grid; place-items: center; padding: 32px; }
+#owner-login .auth-card { width: min(100%, 300px); padding: 22px; }
+#owner-login .auth-card h1 { margin: 0; font-size: 23px; }
+#owner-login .auth-card label { margin-top: 19px; font-size: 13px; }
+#owner-login .auth-card input { padding: 11px 12px; }
+#owner-login .auth-card .button { width: auto; min-height: 40px; padding-inline: 16px; }
+#owner-login .auth-card a { margin-top: 19px; font-size: 13px; }
+#owner-login-message { margin-block: 8px; font-size: 12px; }
+.auth-login-visual { min-height: 100vh; border-left: 1px solid var(--border); background: radial-gradient(circle at 50% 50%, rgba(197, 203, 208, .1), transparent 24%); }
+.auth-login-visual::before, .auth-login-visual::after { width: min(62vw, 980px); }
+.auth-login-visual .orbit-one { width: min(35vw, 680px); height: min(16vw, 310px); }
+.auth-login-visual .orbit-two { width: min(46vw, 900px); height: min(23vw, 450px); }
+.auth-login-visual .core-cube { width: clamp(118px, 9vw, 176px); height: clamp(118px, 9vw, 176px); }
+.auth-login-visual .core-cube::before { inset: 14px; }
+.auth-login-visual .core-cube span { font-size: clamp(23px, 2vw, 34px); }
+.auth-login-visual .node { width: 10px; height: 10px; }
+.auth-login-visual .node-one { left: 22%; top: 28%; }
+.auth-login-visual .node-two { right: 20%; top: 32%; }
+.auth-login-visual .node-three { left: 24%; bottom: 27%; }
+.auth-login-visual .node-four { right: 22%; bottom: 23%; }
+
+@media (max-width: 760px) {
+  .auth-login-layout { grid-template-columns: 1fr; grid-template-rows: minmax(430px, 1fr) minmax(230px, 38vh); }
+  .auth-login-pane { padding: 24px; }
+  .auth-login-visual { position: relative; inset: auto; width: 100%; height: auto; min-height: 230px; border-top: 1px solid var(--border); border-left: 0; opacity: 1; }
+  .auth-login-visual::before, .auth-login-visual::after { width: 620px; }
+  .auth-login-visual .orbit-one { width: 330px; height: 145px; }
+  .auth-login-visual .orbit-two { width: 440px; height: 210px; }
+  .auth-login-visual .core-cube { width: 100px; height: 100px; }
+  .auth-login-visual .core-cube::before { inset: 10px; }
+  .auth-login-visual .core-cube span { font-size: 20px; }
+}
