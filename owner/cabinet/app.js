@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  // Existing demo shell; Owner session is managed separately in session.js.
+  // Owner session is managed separately in session.js.
   const allowedViews = new Set([
     'overview',
     'strategies',
@@ -17,11 +17,14 @@
   const backdrop = document.getElementById('sidebar-backdrop');
   const viewTitle = document.getElementById('view-title');
   const content = document.getElementById('cabinet-content');
+  const ownerShell = document.getElementById('owner-shell');
+  const ownerLogin = document.getElementById('owner-login');
   const toast = document.getElementById('demo-toast');
+  const strategyCatalog = document.getElementById('strategy-catalog');
+  const strategyCount = document.getElementById('strategy-count');
   const navItems = Array.from(document.querySelectorAll('.nav-item[data-view]'));
   const viewTriggers = Array.from(document.querySelectorAll('[data-view], [data-open-view]'));
   const demoTriggers = Array.from(document.querySelectorAll('[data-demo-action]'));
-  const strategyToggles = Array.from(document.querySelectorAll('.strategy-catalog-card[aria-controls]'));
   const views = new Map(
     Array.from(document.querySelectorAll('.view')).map((view) => [
       view.id.replace('view-', ''),
@@ -30,6 +33,10 @@
   );
 
   let toastTimer;
+  let strategyState = 'initial';
+  let strategyCache = null;
+  let strategyRequest = 0;
+  let strategyController;
 
   function closeSidebar({ restoreFocus = false } = {}) {
     sidebar.classList.remove('is-open');
@@ -61,21 +68,165 @@
     toastTimer = window.setTimeout(hideToast, 3600);
   }
 
-  function setStrategyCardState(toggle, isExpanded) {
-    const details = document.getElementById(toggle.getAttribute('aria-controls'));
-    const card = toggle.closest('[data-strategy-card]');
-    if (!details || !card) return;
-
-    toggle.setAttribute('aria-expanded', String(isExpanded));
-    details.hidden = !isExpanded;
-    card.classList.toggle('is-expanded', isExpanded);
+  function formatWeeks(value) {
+    const lastTwo = value % 100;
+    const last = value % 10;
+    if (lastTwo >= 11 && lastTwo <= 14) return `${value} недель`;
+    if (last === 1) return `${value} неделя`;
+    if (last >= 2 && last <= 4) return `${value} недели`;
+    return `${value} недель`;
   }
 
-  function toggleStrategyCard(selectedToggle) {
-    const shouldOpen = selectedToggle.getAttribute('aria-expanded') !== 'true';
-    strategyToggles.forEach((toggle) => {
-      setStrategyCardState(toggle, toggle === selectedToggle && shouldOpen);
+  function formatStrategyCount(value) {
+    const lastTwo = value % 100;
+    const last = value % 10;
+    if (lastTwo >= 11 && lastTwo <= 14) return `${value} стратегий`;
+    if (last === 1) return `${value} стратегия`;
+    if (last >= 2 && last <= 4) return `${value} стратегии`;
+    return `${value} стратегий`;
+  }
+
+  function isValidStrategy(value) {
+    return value &&
+      /^QST-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(value.strategy_id) &&
+      Number.isFinite(value.trust_score) &&
+      typeof value.trust_zone === 'string' && value.trust_zone.trim() !== '' &&
+      Number.isFinite(value.win_ratio_pct) &&
+      Number.isInteger(value.history_weeks_count) && value.history_weeks_count >= 0 &&
+      typeof value.data_period_end === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value.data_period_end) &&
+      typeof value.data_status === 'string' && value.data_status.trim() !== '';
+  }
+
+  function createMetric(label, value) {
+    const metric = document.createElement('span');
+    metric.className = 'strategy-metric';
+    const caption = document.createElement('small');
+    const result = document.createElement('strong');
+    caption.textContent = label;
+    result.textContent = value;
+    metric.append(caption, result);
+    return metric;
+  }
+
+  function renderStrategies(strategies) {
+    strategyCatalog.replaceChildren();
+    strategyCatalog.setAttribute('aria-busy', 'false');
+    strategyCount.textContent = formatStrategyCount(strategies.length);
+
+    if (strategies.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'strategy-state';
+      empty.textContent = 'Пока нет доступных стратегий.';
+      strategyCatalog.append(empty);
+      return;
+    }
+
+    strategies.forEach((strategy, index) => {
+      const row = document.createElement('article');
+      row.className = 'strategy-catalog-row panel';
+
+      const identity = document.createElement('span');
+      identity.className = 'strategy-identity';
+      const number = document.createElement('span');
+      number.className = 'strategy-number';
+      number.textContent = String(index + 1).padStart(2, '0');
+      const identityCopy = document.createElement('span');
+      const identityLabel = document.createElement('small');
+      const identityValue = document.createElement('strong');
+      identityLabel.textContent = 'Strategy ID';
+      identityValue.textContent = strategy.strategy_id;
+      identityCopy.append(identityLabel, identityValue);
+      identity.append(number, identityCopy);
+
+      row.append(
+        identity,
+        createMetric('Trust Score', String(strategy.trust_score)),
+        createMetric('Trust Zone', strategy.trust_zone),
+        createMetric('Win Ratio', `${strategy.win_ratio_pct.toFixed(1).replace(/\.0$/, '')}%`),
+        createMetric('История', formatWeeks(strategy.history_weeks_count))
+      );
+      strategyCatalog.append(row);
     });
+  }
+
+  function renderStrategyError() {
+    strategyCatalog.replaceChildren();
+    strategyCatalog.setAttribute('aria-busy', 'false');
+    strategyCount.textContent = '';
+    const error = document.createElement('div');
+    error.className = 'strategy-state strategy-state-error';
+    const message = document.createElement('p');
+    message.textContent = 'Не удалось загрузить стратегии.';
+    const retry = document.createElement('button');
+    retry.className = 'button button-primary';
+    retry.type = 'button';
+    retry.textContent = 'Повторить';
+    retry.addEventListener('click', loadStrategies);
+    error.append(message, retry);
+    strategyCatalog.append(error);
+  }
+
+  async function loadStrategies() {
+    if (strategyState === 'loading' || strategyState === 'loaded') return;
+    strategyState = 'loading';
+    strategyCatalog.setAttribute('aria-busy', 'true');
+    strategyCatalog.innerHTML = '<div class="strategy-state" role="status">Загрузка стратегий…</div>';
+    strategyCount.textContent = '';
+
+    const requestId = ++strategyRequest;
+    const controller = new AbortController();
+    strategyController = controller;
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const response = await fetch('/owner/api/strategies', {
+        method: 'GET',
+        credentials: 'same-origin',
+        cache: 'no-store',
+        signal: controller.signal,
+        headers: { Accept: 'application/json' }
+      });
+
+      if (response.status === 401) {
+        window.location.reload();
+        return;
+      }
+
+      const data = await response.json();
+      if (!response.ok || data.ok !== true || !Array.isArray(data.strategies) || !data.strategies.every(isValidStrategy)) {
+        throw new Error('INVALID_STRATEGY_RESPONSE');
+      }
+
+      if (requestId !== strategyRequest) return;
+      strategyCache = data.strategies;
+      strategyState = 'loaded';
+      renderStrategies(strategyCache);
+    } catch {
+      if (requestId !== strategyRequest) return;
+      strategyState = 'error';
+      renderStrategyError();
+    } finally {
+      window.clearTimeout(timeout);
+      if (strategyController === controller) strategyController = undefined;
+    }
+  }
+
+  function maybeLoadStrategies() {
+    const strategiesView = views.get('strategies');
+    if (strategiesView && !strategiesView.hidden && !ownerShell.hidden && strategyState === 'initial') {
+      loadStrategies();
+    }
+  }
+
+  function resetStrategyLibrary() {
+    strategyRequest += 1;
+    if (strategyController) strategyController.abort();
+    strategyController = undefined;
+    strategyCache = null;
+    strategyState = 'initial';
+    strategyCount.textContent = '';
+    strategyCatalog.setAttribute('aria-busy', 'false');
+    strategyCatalog.innerHTML = '<div class="strategy-state" role="status">Загрузка стратегий…</div>';
   }
 
   function activateView(requestedView, { updateHash = true, moveFocus = false } = {}) {
@@ -106,6 +257,7 @@
     content.scrollTop = 0;
     closeSidebar();
     hideToast();
+    maybeLoadStrategies();
     if (moveFocus) content.focus({ preventScroll: true });
   }
 
@@ -114,10 +266,6 @@
       if (trigger.tagName === 'A') event.preventDefault();
       activateView(trigger.dataset.view || trigger.dataset.openView, { moveFocus: true });
     });
-  });
-
-  strategyToggles.forEach((toggle) => {
-    toggle.addEventListener('click', () => toggleStrategyCard(toggle));
   });
 
   demoTriggers.forEach((trigger) => {
@@ -147,18 +295,18 @@
   window.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     if (sidebar.classList.contains('is-open')) closeSidebar({ restoreFocus: true });
-    else {
-      const expandedStrategy = strategyToggles.find((toggle) => toggle.getAttribute('aria-expanded') === 'true');
-      if (expandedStrategy) {
-        setStrategyCardState(expandedStrategy, false);
-        expandedStrategy.focus();
-      } else if (!toast.hidden) hideToast();
-    }
+    else if (!toast.hidden) hideToast();
   });
 
   window.addEventListener('resize', () => {
     if (window.innerWidth > 820) closeSidebar();
   });
+
+  new MutationObserver(maybeLoadStrategies)
+    .observe(ownerShell, { attributes: true, attributeFilter: ['hidden'] });
+  new MutationObserver(() => {
+    if (!ownerLogin.hidden) resetStrategyLibrary();
+  }).observe(ownerLogin, { attributes: true, attributeFilter: ['hidden'] });
 
   activateView(window.location.hash.slice(1), { updateHash: false });
 })();

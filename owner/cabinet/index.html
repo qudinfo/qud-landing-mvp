@@ -145,130 +145,18 @@
             <div>
               <p class="eyebrow">Strategy Library</p>
               <h2 id="strategies-title">Доступные стратегии</h2>
-              <p>Компактный каталог стратегий QUD. Основные показатели видны сразу, подробная история открывается внутри выбранной карточки.</p>
+              <p>Компактный каталог стратегий QUD с актуальными подтверждёнными показателями.</p>
             </div>
-            <span class="status-chip">Demo-каталог</span>
+            <span class="status-chip">Данные QUD</span>
           </div>
 
-          <div class="catalog-toolbar" data-demo="true">
-            <div>
-              <span class="demo-badge">Demo values</span>
-              <p>Карточки пока не подключены к Google Sheets и используются для согласования структуры.</p>
-            </div>
-            <span class="catalog-count">3 стратегии</span>
+          <div class="catalog-toolbar">
+            <p>Стратегии представлены в стабильном порядке источника данных.</p>
+            <span class="catalog-count" id="strategy-count" aria-live="polite"></span>
           </div>
 
-          <div class="strategy-catalog" aria-label="Демонстрационный каталог стратегий" data-demo="true">
-            <article class="strategy-card panel" data-strategy-card>
-              <button class="strategy-catalog-card" id="strategy-toggle-a17" type="button" aria-expanded="false" aria-controls="strategy-details-a17">
-                <span class="strategy-identity">
-                  <span class="strategy-number">01</span>
-                  <span><small>Strategy ID</small><strong>QST-DEMO-A17</strong></span>
-                </span>
-                <span class="strategy-metric"><small>Trust Score</small><strong>82</strong></span>
-                <span class="strategy-metric"><small>Trust Zone</small><strong>QUD Zone A</strong></span>
-                <span class="strategy-metric"><small>Win Ratio</small><strong>61.4%</strong></span>
-                <span class="strategy-metric"><small>История</small><strong>38 недель</strong></span>
-                <span class="strategy-open-hint" aria-hidden="true"><svg><use href="#icon-chevron"></use></svg></span>
-              </button>
-              <div class="strategy-card-details" id="strategy-details-a17" role="region" aria-labelledby="strategy-toggle-a17" hidden>
-                <section class="strategy-balance" aria-labelledby="strategy-balance-a17">
-                  <div class="strategy-balance-heading"><div><span>Balance</span><h4 id="strategy-balance-a17">Динамика стратегии</h4></div><small>Подтверждённые периоды · demo</small></div>
-                  <div class="strategy-chart-wrap">
-                    <svg class="strategy-chart" viewBox="0 0 900 230" role="img" aria-label="Демонстрационный график Balance стратегии QST-DEMO-A17">
-                      <g class="strategy-chart-grid"><path d="M44 24H880M44 82H880M44 140H880M44 198H880"/><path d="M44 24V198M211 24V198M378 24V198M545 24V198M712 24V198M880 24V198"/></g>
-                      <path class="strategy-chart-area" d="M44 178 96 166 148 171 200 146 252 151 304 130 356 137 408 112 460 118 512 91 564 99 616 76 668 82 720 57 772 64 824 45 880 32V198H44Z"/>
-                      <path class="strategy-chart-line" d="M44 178 96 166 148 171 200 146 252 151 304 130 356 137 408 112 460 118 512 91 564 99 616 76 668 82 720 57 772 64 824 45 880 32"/>
-                    </svg>
-                    <div class="strategy-chart-axis"><span>Начало</span><span>10 нед.</span><span>20 нед.</span><span>30 нед.</span><span>38 нед.</span></div>
-                  </div>
-                </section>
-                <dl class="strategy-detail-grid" aria-label="Дополнительные показатели стратегии">
-                  <div><dt>Закрытых сделок</dt><dd>146</dd></div>
-                  <div><dt>Доходность с начала</dt><dd class="positive">+24.8%</dd></div>
-                  <div><dt>Max Drawdown</dt><dd class="negative">−8.6%</dd></div>
-                  <div><dt>Profit Factor</dt><dd>1.68</dd></div>
-                  <div><dt>Average Risk</dt><dd>0.74%</dd></div>
-                  <div><dt>SL Safe</dt><dd>98.6%</dd></div>
-                  <div><dt>Risk CV</dt><dd>0.19</dd></div>
-                  <div><dt>Обновлено</dt><dd>03.09.2026</dd></div>
-                </dl>
-              </div>
-            </article>
-
-            <article class="strategy-card panel" data-strategy-card>
-              <button class="strategy-catalog-card" id="strategy-toggle-b24" type="button" aria-expanded="false" aria-controls="strategy-details-b24">
-                <span class="strategy-identity">
-                  <span class="strategy-number">02</span>
-                  <span><small>Strategy ID</small><strong>QST-DEMO-B24</strong></span>
-                </span>
-                <span class="strategy-metric"><small>Trust Score</small><strong>76</strong></span>
-                <span class="strategy-metric"><small>Trust Zone</small><strong>QUD Zone B</strong></span>
-                <span class="strategy-metric"><small>Win Ratio</small><strong>58.9%</strong></span>
-                <span class="strategy-metric"><small>История</small><strong>27 недель</strong></span>
-                <span class="strategy-open-hint" aria-hidden="true"><svg><use href="#icon-chevron"></use></svg></span>
-              </button>
-              <div class="strategy-card-details" id="strategy-details-b24" role="region" aria-labelledby="strategy-toggle-b24" hidden>
-                <section class="strategy-balance" aria-labelledby="strategy-balance-b24">
-                  <div class="strategy-balance-heading"><div><span>Balance</span><h4 id="strategy-balance-b24">Динамика стратегии</h4></div><small>Подтверждённые периоды · demo</small></div>
-                  <div class="strategy-chart-wrap">
-                    <svg class="strategy-chart" viewBox="0 0 900 230" role="img" aria-label="Демонстрационный график Balance стратегии QST-DEMO-B24">
-                      <g class="strategy-chart-grid"><path d="M44 24H880M44 82H880M44 140H880M44 198H880"/><path d="M44 24V198M211 24V198M378 24V198M545 24V198M712 24V198M880 24V198"/></g>
-                      <path class="strategy-chart-area" d="M44 180 102 170 160 151 218 158 276 141 334 149 392 126 450 133 508 108 566 117 624 95 682 103 740 77 798 84 880 61V198H44Z"/>
-                      <path class="strategy-chart-line" d="M44 180 102 170 160 151 218 158 276 141 334 149 392 126 450 133 508 108 566 117 624 95 682 103 740 77 798 84 880 61"/>
-                    </svg>
-                    <div class="strategy-chart-axis"><span>Начало</span><span>7 нед.</span><span>14 нед.</span><span>21 нед.</span><span>27 нед.</span></div>
-                  </div>
-                </section>
-                <dl class="strategy-detail-grid" aria-label="Дополнительные показатели стратегии">
-                  <div><dt>Закрытых сделок</dt><dd>102</dd></div>
-                  <div><dt>Доходность с начала</dt><dd class="positive">+15.3%</dd></div>
-                  <div><dt>Max Drawdown</dt><dd class="negative">−11.2%</dd></div>
-                  <div><dt>Profit Factor</dt><dd>1.46</dd></div>
-                  <div><dt>Average Risk</dt><dd>0.91%</dd></div>
-                  <div><dt>SL Safe</dt><dd>96.1%</dd></div>
-                  <div><dt>Risk CV</dt><dd>0.27</dd></div>
-                  <div><dt>Обновлено</dt><dd>03.09.2026</dd></div>
-                </dl>
-              </div>
-            </article>
-
-            <article class="strategy-card panel" data-strategy-card>
-              <button class="strategy-catalog-card" id="strategy-toggle-c09" type="button" aria-expanded="false" aria-controls="strategy-details-c09">
-                <span class="strategy-identity">
-                  <span class="strategy-number">03</span>
-                  <span><small>Strategy ID</small><strong>QST-DEMO-C09</strong></span>
-                </span>
-                <span class="strategy-metric"><small>Trust Score</small><strong>69</strong></span>
-                <span class="strategy-metric"><small>Trust Zone</small><strong>Observation</strong></span>
-                <span class="strategy-metric"><small>Win Ratio</small><strong>55.2%</strong></span>
-                <span class="strategy-metric"><small>История</small><strong>19 недель</strong></span>
-                <span class="strategy-open-hint" aria-hidden="true"><svg><use href="#icon-chevron"></use></svg></span>
-              </button>
-              <div class="strategy-card-details" id="strategy-details-c09" role="region" aria-labelledby="strategy-toggle-c09" hidden>
-                <section class="strategy-balance" aria-labelledby="strategy-balance-c09">
-                  <div class="strategy-balance-heading"><div><span>Balance</span><h4 id="strategy-balance-c09">Динамика стратегии</h4></div><small>Подтверждённые периоды · demo</small></div>
-                  <div class="strategy-chart-wrap">
-                    <svg class="strategy-chart" viewBox="0 0 900 230" role="img" aria-label="Демонстрационный график Balance стратегии QST-DEMO-C09">
-                      <g class="strategy-chart-grid"><path d="M44 24H880M44 82H880M44 140H880M44 198H880"/><path d="M44 24V198M211 24V198M378 24V198M545 24V198M712 24V198M880 24V198"/></g>
-                      <path class="strategy-chart-area" d="M44 181 104 163 164 174 224 145 284 157 344 139 404 151 464 124 524 136 584 111 644 125 704 98 764 109 824 88 880 94V198H44Z"/>
-                      <path class="strategy-chart-line" d="M44 181 104 163 164 174 224 145 284 157 344 139 404 151 464 124 524 136 584 111 644 125 704 98 764 109 824 88 880 94"/>
-                    </svg>
-                    <div class="strategy-chart-axis"><span>Начало</span><span>5 нед.</span><span>10 нед.</span><span>15 нед.</span><span>19 нед.</span></div>
-                  </div>
-                </section>
-                <dl class="strategy-detail-grid" aria-label="Дополнительные показатели стратегии">
-                  <div><dt>Закрытых сделок</dt><dd>71</dd></div>
-                  <div><dt>Доходность с начала</dt><dd class="positive">+8.7%</dd></div>
-                  <div><dt>Max Drawdown</dt><dd class="negative">−13.9%</dd></div>
-                  <div><dt>Profit Factor</dt><dd>1.28</dd></div>
-                  <div><dt>Average Risk</dt><dd>1.06%</dd></div>
-                  <div><dt>SL Safe</dt><dd>93.0%</dd></div>
-                  <div><dt>Risk CV</dt><dd>0.34</dd></div>
-                  <div><dt>Обновлено</dt><dd>03.09.2026</dd></div>
-                </dl>
-              </div>
-            </article>
+          <div class="strategy-catalog" id="strategy-catalog" aria-live="polite" aria-busy="false">
+            <div class="strategy-state" role="status">Загрузка стратегий…</div>
           </div>
         </section>
 
@@ -284,7 +172,7 @@
   </div>
 
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
-  <script src="./app.js?v=20260910-7" defer></script>
+  <script src="./app.js?v=20260910-8" defer></script>
   <script src="./session.js?v=20260910-7" defer></script>
 </body>
 </html>
