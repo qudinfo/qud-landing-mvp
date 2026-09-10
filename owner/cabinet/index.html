@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#070b0e">
+  <title>Обзор — QUD Capital Owner</title>
+  <link rel="stylesheet" href="./styles.css?v=20260910-7">
+</head>
+<body>
+  <section class="auth-screen" id="owner-loading" role="status" aria-live="polite"><p>Загрузка данных</p></section>
+  <section class="auth-screen" id="owner-login" hidden aria-labelledby="login-title">
+    <div class="auth-card panel">
+      <p class="eyebrow">QUD Capital Owner</p><h1 id="login-title">Вход в кабинет</h1>
+      <form id="owner-login-form">
+        <label for="owner-key">Owner access key</label>
+        <input id="owner-key" name="access_key" type="password" required maxlength="512" autocomplete="current-password" spellcheck="false" aria-describedby="owner-login-message">
+        <p id="owner-login-message" role="alert"></p>
+        <button class="button button-primary" id="owner-login-submit" type="submit">Войти</button>
+      </form>
+      <a href="/owner/access/">О доступе QUD Owner</a>
+    </div>
+  </section>
+  <section class="auth-screen" id="owner-unavailable" hidden aria-labelledby="unavailable-title">
+    <div class="auth-card panel"><h1 id="unavailable-title">Не удалось проверить сессию</h1><p role="alert">Сервис временно недоступен. Попробуйте ещё раз.</p><button class="button button-primary" id="owner-retry" type="button">Повторить</button></div>
+  </section>
+  <noscript><style>#owner-loading{display:none}</style><p>Для входа в кабинет включите JavaScript.</p></noscript>
+  <a class="skip-link" href="#cabinet-content">Перейти к содержанию</a>
+
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-overview" viewBox="0 0 24 24"><path d="M3 11.3 12 4l9 7.3v8.2a.5.5 0 0 1-.5.5h-6v-6h-5v6h-6a.5.5 0 0 1-.5-.5Z"/><path d="m5.5 9.3 6.5-5.2 6.5 5.2"/></symbol>
+    <symbol id="icon-strategies" viewBox="0 0 24 24"><path d="m3 17 5.2-5.2 3.2 3.2L20 6.4"/><path d="M15 6h5v5"/></symbol>
+    <symbol id="icon-portfolio" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9h-9Z"/><path d="M14.5 3.4A8.6 8.6 0 0 1 20.6 9h-6.1Z"/></symbol>
+    <symbol id="icon-account" viewBox="0 0 24 24"><path d="M3 20h18M5 17h14M6 10v7m4-7v7m4-7v7m4-7v7M3.5 8h17L12 3Z"/></symbol>
+    <symbol id="icon-documents" viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H11v18H6.5A2.5 2.5 0 0 0 4 22ZM20 4.5A2.5 2.5 0 0 0 17.5 2H13v18h4.5A2.5 2.5 0 0 1 20 22Z"/></symbol>
+    <symbol id="icon-exit" viewBox="0 0 24 24"><path d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5M14 8l4 4-4 4M8 12h10"/></symbol>
+    <symbol id="icon-wallet" viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H19v16H6.5A2.5 2.5 0 0 1 4 17.5Z"/><path d="M4 7h13M15 11h6v5h-6a2.5 2.5 0 0 1 0-5Z"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 20h18M5 17l4-5 4 2 6-8"/></symbol>
+    <symbol id="icon-percent" viewBox="0 0 24 24"><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><path d="m18 4-12 16"/></symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M14 15a4.5 4.5 0 0 1 6.5 4"/></symbol>
+    <symbol id="icon-file" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6Z"/><path d="M14 2v5h5M9 12h6M9 16h6"/></symbol>
+    <symbol id="icon-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v11H3Z"/></symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 2 20 5v6c0 5.2-3.2 9-8 11-4.8-2-8-5.8-8-11V5Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></symbol>
+    <symbol id="icon-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 3.1 2.4c-.7.3-.7.9-.7 1.6M12 17h.01"/></symbol>
+    <symbol id="icon-support" viewBox="0 0 24 24"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13H2v5h4v-5ZM20 13h2v5h-4v-5ZM18 19c-1 2-3 2-5 2"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  </svg>
+
+  <div class="cabinet-shell" id="owner-shell" hidden>
+    <aside class="sidebar" id="sidebar" aria-label="Навигация кабинета">
+      <div class="sidebar-header">
+        <a class="brand" href="#overview" data-open-view="overview" aria-label="QUD Capital Owner — обзор">
+          <span class="brand-mark">QUD</span><span class="brand-divider" aria-hidden="true"></span><span class="brand-product">Capital<br>Owner</span>
+        </a>
+        <button class="icon-button sidebar-close" id="sidebar-close" type="button" aria-label="Закрыть меню"><svg><use href="#icon-close"></use></svg></button>
+      </div>
+
+      <nav class="primary-nav" aria-label="Основные разделы">
+        <p class="nav-label">Навигация</p>
+        <button class="nav-item is-active" type="button" data-view="overview" aria-current="page"><svg class="nav-icon"><use href="#icon-overview"></use></svg><span class="nav-index">01</span><span class="nav-text">Обзор</span></button>
+        <button class="nav-item" type="button" data-view="strategies"><svg class="nav-icon"><use href="#icon-strategies"></use></svg><span class="nav-index">02</span><span class="nav-text">Стратегии</span></button>
+        <button class="nav-item" type="button" data-view="portfolio"><svg class="nav-icon"><use href="#icon-portfolio"></use></svg><span class="nav-index">03</span><span class="nav-text">Virtual Portfolio</span></button>
+        <button class="nav-item" type="button" data-view="real-account"><svg class="nav-icon"><use href="#icon-account"></use></svg><span class="nav-index">04</span><span class="nav-text">Реальный счёт</span></button>
+        <button class="nav-item" type="button" data-view="documents"><svg class="nav-icon"><use href="#icon-documents"></use></svg><span class="nav-index">05</span><span class="nav-text">Документы<br>и регламенты</span></button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-account">
+        <p class="nav-label">Профиль и доступ</p>
+        <button class="profile-entry" type="button" data-view="profile"><span class="avatar" aria-hidden="true">QC</span><span class="profile-copy"><strong>Профиль владельца</strong><small>Данные, доступ и настройки</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
+        <button class="logout-entry" id="logout-button" type="button"><svg><use href="#icon-exit"></use></svg><span>Выйти из кабинета</span></button>
+      </div>
+    </aside>
+
+    <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Закрыть меню" hidden></button>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div class="topbar-context">
+          <button class="icon-button menu-button" id="menu-button" type="button" aria-label="Открыть меню" aria-controls="sidebar" aria-expanded="false"><svg><use href="#icon-menu"></use></svg></button>
+          <div><p class="topbar-kicker">Owner Cabinet</p><h1 id="view-title">Обзор</h1></div>
+        </div>
+        <div class="topbar-actions">
+          <div class="access-pill" data-demo="true" aria-label="Owner-сессия активна"><span class="status-dot"></span><span><strong>Статус доступа</strong><small>Вход выполнен</small></span></div>
+          <button class="top-profile" type="button" data-view="profile" aria-label="Открыть профиль владельца"><span class="avatar">QC</span><span class="top-profile-copy"><strong>QUD Capital Owner</strong><small>Профиль MVP</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
+        </div>
+      </header>
+
+      <main class="content" id="cabinet-content" tabindex="-1">
+        <section class="view is-active" id="view-overview" data-title="Обзор" aria-labelledby="overview-title">
+          <div class="demo-notice" role="note"><span>Frontend MVP</span><p>Все показатели на экране — демонстрационный контент для проверки композиции.</p></div>
+          <div class="overview-grid">
+            <div class="overview-main">
+              <section class="hero-card panel" aria-labelledby="overview-title">
+                <div class="hero-copy"><p class="eyebrow">QUD Capital Owner</p><h2 id="overview-title">Добро пожаловать в пространство осознанного управления капиталом</h2><p>Изучайте стратегии, наблюдайте за ними в Virtual Portfolio и принимайте взвешенные решения на основе подтверждённых данных QUD.</p><div class="hero-actions"><button class="button button-primary" type="button" data-open-view="strategies">Изучить стратегии <svg><use href="#icon-arrow"></use></svg></button><button class="button button-secondary" type="button" data-open-view="portfolio">Открыть Virtual Portfolio <svg><use href="#icon-arrow"></use></svg></button></div></div>
+                <div class="hero-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="core-cube"><span>QUD</span></div><i class="node node-one"></i><i class="node node-two"></i><i class="node node-three"></i><i class="node node-four"></i></div>
+              </section>
+
+              <section class="portfolio-summary" aria-labelledby="portfolio-summary-title" data-demo="true">
+                <div class="section-heading compact-heading"><div><p class="eyebrow">Мой Virtual Portfolio</p><h3 id="portfolio-summary-title">Состояние наблюдения</h3></div><span class="demo-badge">Demo values</span></div>
+                <div class="metric-grid">
+                  <article class="metric-card panel"><span>Распределено</span><strong>$5,000</strong><small>Виртуальный капитал</small><svg><use href="#icon-wallet"></use></svg></article>
+                  <article class="metric-card panel"><span>Текущий баланс</span><strong>$5,214</strong><small>Демонстрационная сумма</small><svg><use href="#icon-portfolio"></use></svg></article>
+                  <article class="metric-card panel is-positive"><span>Результат</span><strong>+$214</strong><small>Финансовый результат</small><svg><use href="#icon-chart"></use></svg></article>
+                  <article class="metric-card panel is-positive"><span>Доходность</span><strong>+4.28%</strong><small>Относительно капитала</small><svg><use href="#icon-percent"></use></svg></article>
+                  <article class="metric-card panel is-negative"><span>Просадка</span><strong>−3.12%</strong><small>От peak balance</small><svg><use href="#icon-chart"></use></svg></article>
+                  <article class="metric-card panel"><span>Активные стратегии</span><strong>2</strong><small>В наблюдении</small><svg><use href="#icon-users"></use></svg></article>
+                </div>
+              </section>
+
+              <section class="portfolio-panel panel" aria-labelledby="chart-title" data-demo="true">
+                <div class="chart-header"><div><p class="eyebrow">Динамика портфеля</p><h3 id="chart-title">Виртуальный баланс</h3></div><div class="chart-meta"><span><small>Портфель изменён</small>19.08.2026</span><span><small>История рассчитана по</small>30.08.2026</span><button type="button" disabled>Недели⌄</button></div></div>
+                <div class="chart-and-strategies">
+                  <div class="chart-wrap" aria-label="Демонстрационный график динамики портфеля"><div class="chart-legend"><span class="legend-balance">Виртуальный баланс</span><span class="legend-capital">Распределённый капитал</span></div><svg class="demo-chart" viewBox="0 0 760 260" role="img" aria-label="Демонстрационный график"><defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#aeb5bb" stop-opacity=".16"/><stop offset="1" stop-color="#aeb5bb" stop-opacity="0"/></linearGradient></defs><g class="chart-grid-lines"><path d="M48 25H742M48 80H742M48 135H742M48 190H742M48 245H742"/><path d="M48 25V245M188 25V245M328 25V245M468 25V245M608 25V245M742 25V245"/></g><path class="capital-line" d="M48 165H742"/><path class="chart-area" d="M48 216 86 195 124 137 162 150 200 139 238 133 276 128 314 110 352 85 390 98 428 90 466 106 504 113 542 103 580 99 618 63 656 69 694 58 742 36V245H48Z"/><path class="balance-line" d="M48 216 86 195 124 137 162 150 200 139 238 133 276 128 314 110 352 85 390 98 428 90 466 106 504 113 542 103 580 99 618 63 656 69 694 58 742 36"/><g class="chart-points"><circle cx="124" cy="137" r="4"/><circle cx="352" cy="85" r="4"/><circle cx="618" cy="63" r="4"/><circle cx="742" cy="36" r="4"/></g></svg><div class="chart-axis"><span>07.07</span><span>21.07</span><span>04.08</span><span>18.08</span><span>01.09</span></div></div>
+                  <aside class="strategy-preview" aria-labelledby="my-strategies-title"><div class="preview-heading"><h4 id="my-strategies-title">Мои стратегии</h4><button type="button" data-open-view="portfolio">Все <span>→</span></button></div><div class="strategy-row"><span><strong>QUD-ALPHA</strong><small>Наблюдение #1024</small></span><em>ACTIVE</em><span class="result positive">+$135<small>+4.50%</small></span></div><div class="strategy-row"><span><strong>QUD-BETA</strong><small>Наблюдение #1026</small></span><em>ACTIVE</em><span class="result positive">+$79<small>+3.08%</small></span></div><button class="button button-outline full-width" type="button" data-open-view="portfolio">Открыть Virtual Portfolio <svg><use href="#icon-arrow"></use></svg></button></aside>
+                </div>
+              </section>
+
+              <section class="documents-panel panel" aria-labelledby="documents-overview-title"><div class="section-heading"><div><p class="eyebrow">Документы и регламенты</p><h3 id="documents-overview-title">Основы работы с QUD</h3></div><button class="text-action" type="button" data-open-view="documents">Все документы →</button></div><div class="document-grid"><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-shield"></use></svg><strong>Регламент QUD</strong><small>Правила работы платформы</small></button><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-file"></use></svg><strong>Условия доступа</strong><small>Owner Access и подписка</small></button><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-portfolio"></use></svg><strong>Virtual Portfolio</strong><small>Как работает модель</small></button><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-strategies"></use></svg><strong>Стратегии QUD</strong><small>Качество и Trust Score</small></button><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-help"></use></svg><strong>Риски</strong><small>Важная информация</small></button><button class="document-card" type="button" data-open-view="documents"><svg><use href="#icon-folder"></use></svg><strong>Все документы</strong><small>Перейти к разделу</small></button></div></section>
+            </div>
+
+            <aside class="overview-aside">
+              <section class="next-step-card panel"><div class="aside-label"><span>Следующий шаг</span><svg><use href="#icon-account"></use></svg></div><h3>Подключите реальный счёт</h3><p>Здесь позднее появится безопасный путь от виртуального наблюдения к реальному подключению.</p><button class="button button-outline full-width" type="button" data-open-view="real-account">Перейти к разделу <svg><use href="#icon-arrow"></use></svg></button></section>
+              <section class="access-card panel" data-demo="true"><p class="eyebrow">Ваш доступ</p><dl><div><dt>Статус</dt><dd class="muted-value">Не подключён</dd></div><div><dt>Тип доступа</dt><dd>Owner Access</dd></div><div><dt>Оплачено до</dt><dd>—</dd></div><div><dt>Стоимость</dt><dd>—</dd></div></dl><button class="button button-outline full-width" type="button" data-open-view="profile">Управление доступом</button></section>
+              <section class="help-card panel"><p class="eyebrow">Нужна помощь?</p><button type="button" data-demo-action="help"><svg><use href="#icon-help"></use></svg><span><strong>Как работает QUD</strong><small>Краткое руководство</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="help"><svg><use href="#icon-help"></use></svg><span><strong>Вопросы и ответы</strong><small>Частые вопросы</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="help"><svg><use href="#icon-support"></use></svg><span><strong>Поддержка</strong><small>Будущий канал связи</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button></section>
+            </aside>
+          </div>
+          <footer class="cabinet-footer">QUD Capital Owner Cabinet MVP <span>·</span> Frontend-каркас без подключения данных</footer>
+        </section>
+
+        <section class="view" id="view-strategies" data-title="Стратегии" aria-labelledby="strategies-title" hidden>
+          <div class="page-heading catalog-heading">
+            <div>
+              <p class="eyebrow">Strategy Library</p>
+              <h2 id="strategies-title">Доступные стратегии</h2>
+              <p>Компактный каталог стратегий QUD. Основные показатели видны сразу, подробная история открывается внутри выбранной карточки.</p>
+            </div>
+            <span class="status-chip">Demo-каталог</span>
+          </div>
+
+          <div class="catalog-toolbar" data-demo="true">
+            <div>
+              <span class="demo-badge">Demo values</span>
+              <p>Карточки пока не подключены к Google Sheets и используются для согласования структуры.</p>
+            </div>
+            <span class="catalog-count">3 стратегии</span>
+          </div>
+
+          <div class="strategy-catalog" aria-label="Демонстрационный каталог стратегий" data-demo="true">
+            <article class="strategy-card panel" data-strategy-card>
+              <button class="strategy-catalog-card" id="strategy-toggle-a17" type="button" aria-expanded="false" aria-controls="strategy-details-a17">
+                <span class="strategy-identity">
+                  <span class="strategy-number">01</span>
+                  <span><small>Strategy ID</small><strong>QST-DEMO-A17</strong></span>
+                </span>
+                <span class="strategy-metric"><small>Trust Score</small><strong>82</strong></span>
+                <span class="strategy-metric"><small>Trust Zone</small><strong>QUD Zone A</strong></span>
+                <span class="strategy-metric"><small>Win Ratio</small><strong>61.4%</strong></span>
+                <span class="strategy-metric"><small>История</small><strong>38 недель</strong></span>
+                <span class="strategy-open-hint" aria-hidden="true"><svg><use href="#icon-chevron"></use></svg></span>
+              </button>
+              <div class="strategy-card-details" id="strategy-details-a17" role="region" aria-labelledby="strategy-toggle-a17" hidden>
+                <section class="strategy-balance" aria-labelledby="strategy-balance-a17">
+                  <div class="strategy-balance-heading"><div><span>Balance</span><h4 id="strategy-balance-a17">Динамика стратегии</h4></div><small>Подтверждённые периоды · demo</small></div>
+                  <div class="strategy-chart-wrap">
+                    <svg class="strategy-chart" viewBox="0 0 900 230" role="img" aria-label="Демонстрационный график Balance стратегии QST-DEMO-A17">
+                      <g class="strategy-chart-grid"><path d="M44 24H880M44 82H880M44 140H880M44 198H880"/><path d="M44 24V198M211 24V198M378 24V198M545 24V198M712 24V198M880 24V198"/></g>
+                      <path class="strategy-chart-area" d="M44 178 96 166 148 171 200 146 252 151 304 130 356 137 408 112 460 118 512 91 564 99 616 76 668 82 720 57 772 64 824 45 880 32V198H44Z"/>
+                      <path class="strategy-chart-line" d="M44 178 96 166 148 171 200 146 252 151 304 130 356 137 408 112 460 118 512 91 564 99 616 76 668 82 720 57 772 64 824 45 880 32"/>
+                    </svg>
+                    <div class="strategy-chart-axis"><span>Начало</span><span>10 нед.</span><span>20 нед.</span><span>30 нед.</span><span>38 нед.</span></div>
+                  </div>
+                </section>
+                <dl class="strategy-detail-grid" aria-label="Дополнительные показатели стратегии">
+                  <div><dt>Закрытых сделок</dt><dd>146</dd></div>
+                  <div><dt>Доходность с начала</dt><dd class="positive">+24.8%</dd></div>
+                  <div><dt>Max Drawdown</dt><dd class="negative">−8.6%</dd></div>
+                  <div><dt>Profit Factor</dt><dd>1.68</dd></div>
+                  <div><dt>Average Risk</dt><dd>0.74%</dd></div>
+                  <div><dt>SL Safe</dt><dd>98.6%</dd></div>
+                  <div><dt>Risk CV</dt><dd>0.19</dd></div>
+                  <div><dt>Обновлено</dt><dd>03.09.2026</dd></div>
+                </dl>
+              </div>
+            </article>
+
+            <article class="strategy-card panel" data-strategy-card>
+              <button class="strategy-catalog-card" id="strategy-toggle-b24" type="button" aria-expanded="false" aria-controls="strategy-details-b24">
+                <span class="strategy-identity">
+                  <span class="strategy-number">02</span>
+                  <span><small>Strategy ID</small><strong>QST-DEMO-B24</strong></span>
+                </span>
+                <span class="strategy-metric"><small>Trust Score</small><strong>76</strong></span>
+                <span class="strategy-metric"><small>Trust Zone</small><strong>QUD Zone B</strong></span>
+                <span class="strategy-metric"><small>Win Ratio</small><strong>58.9%</strong></span>
+                <span class="strategy-metric"><small>История</small><strong>27 недель</strong></span>
+                <span class="strategy-open-hint" aria-hidden="true"><svg><use href="#icon-chevron"></use></svg></span>
+              </button>
+              <div class="strategy-card-details" id="strategy-details-b24" role="region" aria-labelledby="strategy-toggle-b24" hidden>
+                <section class="strategy-balance" aria-labelledby="strategy-balance-b24">
+                  <div class="strategy-balance-heading"><div><span>Balance</span><h4 id="strategy-balance-b24">Динамика стратегии</h4></div><small>Подтверждённые периоды · demo</small></div>
+                  <div class="strategy-chart-wrap">
+                    <svg class="strategy-chart" viewBox="0 0 900 230" role="img" aria-label="Демонстрационный график Balance стратегии QST-DEMO-B24">
+                      <g class="strategy-chart-grid"><path d="M44 24H880M44 82H880M44 140H880M44 198H880"/><path d="M44 24V198M211 24V198M378 24V198M545 24V198M712 24V198M880 24V198"/></g>
+                      <path class="strategy-chart-area" d="M44 180 102 170 160 151 218 158 276 141 334 149 392 126 450 133 508 108 566 117 624 95 682 103 740 77 798 84 880 61V198H44Z"/>
+                      <path class="strategy-chart-line" d="M44 180 102 170 160 151 218 158 276 141 334 149 392 126 450 133 508 108 566 117 624 95 682 103 740 77 798 84 880 61"/>
+                    </svg>
+                    <div class="strategy-chart-axis"><span>Начало</span><span>7 нед.</span><span>14 нед.</span><span>21 нед.</span><span>27 нед.</span></div>
+                  </div>
+                </section>
+                <dl class="strategy-detail-grid" aria-label="Дополнительные показатели стратегии">
+                  <div><dt>Закрытых сделок</dt><dd>102</dd></div>
+                  <div><dt>Доходность с начала</dt><dd class="positive">+15.3%</dd></div>
+                  <div><dt>Max Drawdown</dt><dd class="negative">−11.2%</dd></div>
+                  <div><dt>Profit Factor</dt><dd>1.46</dd></div>
+                  <div><dt>Average Risk</dt><dd>0.91%</dd></div>
+                  <div><dt>SL Safe</dt><dd>96.1%</dd></div>
+                  <div><dt>Risk CV</dt><dd>0.27</dd></div>
+                  <div><dt>Обновлено</dt><dd>03.09.2026</dd></div>
+                </dl>
+              </div>
+            </article>
+
+            <article class="strategy-card panel" data-strategy-card>
+              <button class="strategy-catalog-card" id="strategy-toggle-c09" type="button" aria-expanded="false" aria-controls="strategy-details-c09">
+                <span class="strategy-identity">
+                  <span class="strategy-number">03</span>
+                  <span><small>Strategy ID</small><strong>QST-DEMO-C09</strong></span>
+                </span>
+                <span class="strategy-metric"><small>Trust Score</small><strong>69</strong></span>
+                <span class="strategy-metric"><small>Trust Zone</small><strong>Observation</strong></span>
+                <span class="strategy-metric"><small>Win Ratio</small><strong>55.2%</strong></span>
+                <span class="strategy-metric"><small>История</small><strong>19 недель</strong></span>
+                <span class="strategy-open-hint" aria-hidden="true"><svg><use href="#icon-chevron"></use></svg></span>
+              </button>
+              <div class="strategy-card-details" id="strategy-details-c09" role="region" aria-labelledby="strategy-toggle-c09" hidden>
+                <section class="strategy-balance" aria-labelledby="strategy-balance-c09">
+                  <div class="strategy-balance-heading"><div><span>Balance</span><h4 id="strategy-balance-c09">Динамика стратегии</h4></div><small>Подтверждённые периоды · demo</small></div>
+                  <div class="strategy-chart-wrap">
+                    <svg class="strategy-chart" viewBox="0 0 900 230" role="img" aria-label="Демонстрационный график Balance стратегии QST-DEMO-C09">
+                      <g class="strategy-chart-grid"><path d="M44 24H880M44 82H880M44 140H880M44 198H880"/><path d="M44 24V198M211 24V198M378 24V198M545 24V198M712 24V198M880 24V198"/></g>
+                      <path class="strategy-chart-area" d="M44 181 104 163 164 174 224 145 284 157 344 139 404 151 464 124 524 136 584 111 644 125 704 98 764 109 824 88 880 94V198H44Z"/>
+                      <path class="strategy-chart-line" d="M44 181 104 163 164 174 224 145 284 157 344 139 404 151 464 124 524 136 584 111 644 125 704 98 764 109 824 88 880 94"/>
+                    </svg>
+                    <div class="strategy-chart-axis"><span>Начало</span><span>5 нед.</span><span>10 нед.</span><span>15 нед.</span><span>19 нед.</span></div>
+                  </div>
+                </section>
+                <dl class="strategy-detail-grid" aria-label="Дополнительные показатели стратегии">
+                  <div><dt>Закрытых сделок</dt><dd>71</dd></div>
+                  <div><dt>Доходность с начала</dt><dd class="positive">+8.7%</dd></div>
+                  <div><dt>Max Drawdown</dt><dd class="negative">−13.9%</dd></div>
+                  <div><dt>Profit Factor</dt><dd>1.28</dd></div>
+                  <div><dt>Average Risk</dt><dd>1.06%</dd></div>
+                  <div><dt>SL Safe</dt><dd>93.0%</dd></div>
+                  <div><dt>Risk CV</dt><dd>0.34</dd></div>
+                  <div><dt>Обновлено</dt><dd>03.09.2026</dd></div>
+                </dl>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-portfolio" data-title="Virtual Portfolio" aria-labelledby="portfolio-title" hidden><div class="page-heading"><div><p class="eyebrow">Наблюдение без реального капитала</p><h2 id="portfolio-title">Мой Virtual Portfolio</h2><p>Рабочий MVP остаётся отдельным защищённым модулем. На этом этапе мы не переносим и не изменяем его расчётную логику.</p></div><span class="status-chip is-ready">Рабочее ядро сохранено</span></div><section class="module-card panel"><div class="module-icon"><svg><use href="#icon-portfolio"></use></svg></div><div><p class="eyebrow">Текущая интеграция</p><h3>Virtual Portfolio не изменён</h3><p>Будущая интеграция будет выполнена через защищённый API после утверждения структуры кабинета и Owner Identity.</p></div><a class="button button-primary" href="/portal/portfolio/mvp/">Открыть существующий MVP <svg><use href="#icon-arrow"></use></svg></a></section><div class="feature-placeholder-grid"><article class="panel"><span>01</span><h3>Показатели портфеля</h3><p>Распределённый капитал, баланс, результат, доходность и просадка.</p></article><article class="panel"><span>02</span><h3>История</h3><p>График виртуального баланса и распределённого капитала.</p></article><article class="panel"><span>03</span><h3>Наблюдения</h3><p>ACTIVE, COMPLETED и STOPPED_DD без изменения базовой логики.</p></article></div></section>
+
+        <section class="view" id="view-real-account" data-title="Реальный счёт" aria-labelledby="account-title" hidden><div class="page-heading"><div><p class="eyebrow">Следующий уровень</p><h2 id="account-title">Подключение реального счёта</h2><p>Информационный placeholder будущего сценария. Брокерская интеграция и реальные деньги не входят в текущий этап.</p></div><span class="status-chip">Не подключено</span></div><section class="placeholder-hero panel accent-panel"><div><span class="large-index">04</span><p class="eyebrow">Только структура</p><h3>Сначала наблюдение, затем решение</h3><p>Раздел будет сформирован отдельно после проверки полного пользовательского пути в Virtual Portfolio и отдельного согласования инфраструктуры.</p></div><svg><use href="#icon-account"></use></svg></section><ol class="journey-list"><li class="panel"><span>01</span><div><strong>Изучить стратегию</strong><small>Подтверждённые данные и риск-профиль</small></div></li><li class="panel"><span>02</span><div><strong>Проверить в Virtual Portfolio</strong><small>Виртуальный капитал и собственный DD Limit</small></div></li><li class="panel is-future"><span>03</span><div><strong>Рассмотреть подключение</strong><small>Будущий этап после отдельного согласования</small></div></li></ol></section>
+
+        <section class="view" id="view-documents" data-title="Документы и регламенты" aria-labelledby="documents-title" hidden><div class="page-heading"><div><p class="eyebrow">Knowledge Base</p><h2 id="documents-title">Документы и регламенты</h2><p>Будущая библиотека правил работы QUD, условий доступа, описаний Virtual Portfolio и риск-дисклеймеров.</p></div><span class="status-chip">Структура раздела</span></div><div class="library-grid"><article class="library-card panel"><svg><use href="#icon-shield"></use></svg><div><span>Регламент</span><h3>Правила работы QUD</h3><p>Принципы инфраструктуры и взаимодействия с платформой.</p></div><button type="button" data-demo-action="document">Открыть →</button></article><article class="library-card panel"><svg><use href="#icon-file"></use></svg><div><span>Доступ</span><h3>Условия Owner Access</h3><p>Статус доступа, правила и будущие условия подписки.</p></div><button type="button" data-demo-action="document">Открыть →</button></article><article class="library-card panel"><svg><use href="#icon-portfolio"></use></svg><div><span>Модель</span><h3>Virtual Portfolio</h3><p>Логика виртуального наблюдения без реального капитала.</p></div><button type="button" data-demo-action="document">Открыть →</button></article><article class="library-card panel"><svg><use href="#icon-help"></use></svg><div><span>Риски</span><h3>Важная информация</h3><p>Исторические данные не гарантируют будущий результат.</p></div><button type="button" data-demo-action="document">Открыть →</button></article></div></section>
+
+        <section class="view" id="view-profile" data-title="Профиль владельца" aria-labelledby="profile-title" hidden><div class="page-heading"><div><p class="eyebrow">Owner Identity</p><h2 id="profile-title">Профиль и доступ</h2><p>Визуальная структура будущего профиля. Вход выполнен. Персональные данные и подписка пока не подключены.</p></div><span class="status-chip">Demo profile</span></div><div class="profile-layout"><section class="profile-card panel"><span class="avatar avatar-large">QC</span><div><p class="eyebrow">Профиль владельца</p><h3>QUD Capital Owner</h3><p>Персональные данные появятся после подключения Owner Identity.</p></div></section><section class="settings-card panel"><h3>Состояние доступа</h3><dl><div><dt>Авторизация</dt><dd>Вход выполнен</dd></div><div><dt>Owner ID</dt><dd>Не назначен</dd></div><div><dt>Portfolio ID</dt><dd>Определяется сервером</dd></div></dl></section></div></section>
+      </main>
+    </section>
+  </div>
+
+  <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
+  <script src="./app.js?v=20260910-7" defer></script>
+  <script src="./session.js?v=20260910-7" defer></script>
+</body>
+</html>
