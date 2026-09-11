@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20260911-10">
+  <link rel="stylesheet" href="./styles.css?v=20260911-11">
 </head>
 <body>
   <section class="auth-screen" id="owner-loading" role="status" aria-live="polite"><p>Загрузка данных</p></section>
@@ -69,18 +69,18 @@
 
       <nav class="primary-nav" aria-label="Основные разделы">
         <p class="nav-label">Навигация</p>
-        <button class="nav-item is-active" type="button" data-view="overview" aria-current="page"><svg class="nav-icon"><use href="#icon-overview"></use></svg><span class="nav-index">01</span><span class="nav-text">Обзор</span></button>
-        <button class="nav-item" type="button" data-view="strategies"><svg class="nav-icon"><use href="#icon-strategies"></use></svg><span class="nav-index">02</span><span class="nav-text">Стратегии</span></button>
-        <button class="nav-item" type="button" data-view="portfolio"><svg class="nav-icon"><use href="#icon-portfolio"></use></svg><span class="nav-index">03</span><span class="nav-text">Virtual Portfolio</span></button>
-        <button class="nav-item" type="button" data-view="real-account"><svg class="nav-icon"><use href="#icon-account"></use></svg><span class="nav-index">04</span><span class="nav-text">Реальный счёт</span></button>
-        <button class="nav-item" type="button" data-view="documents"><svg class="nav-icon"><use href="#icon-documents"></use></svg><span class="nav-index">05</span><span class="nav-text">Документы<br>и регламенты</span></button>
+        <button class="nav-item is-active" type="button" data-view="overview" aria-label="Обзор" aria-current="page"><svg class="nav-icon"><use href="#icon-overview"></use></svg><span class="nav-index">01</span><span class="nav-text">Обзор</span></button>
+        <button class="nav-item" type="button" data-view="strategies" aria-label="Стратегии"><svg class="nav-icon"><use href="#icon-strategies"></use></svg><span class="nav-index">02</span><span class="nav-text">Стратегии</span></button>
+        <button class="nav-item" type="button" data-view="portfolio" aria-label="Virtual Portfolio"><svg class="nav-icon"><use href="#icon-portfolio"></use></svg><span class="nav-index">03</span><span class="nav-text">Virtual Portfolio</span></button>
+        <button class="nav-item" type="button" data-view="real-account" aria-label="Реальный счёт"><svg class="nav-icon"><use href="#icon-account"></use></svg><span class="nav-index">04</span><span class="nav-text">Реальный счёт</span></button>
+        <button class="nav-item" type="button" data-view="documents" aria-label="Документы и регламенты"><svg class="nav-icon"><use href="#icon-documents"></use></svg><span class="nav-index">05</span><span class="nav-text">Документы<br>и регламенты</span></button>
       </nav>
 
       <div class="sidebar-spacer"></div>
       <div class="sidebar-account">
         <p class="nav-label">Профиль и доступ</p>
-        <button class="profile-entry" type="button" data-view="profile"><span class="avatar" aria-hidden="true">QC</span><span class="profile-copy"><strong>Профиль владельца</strong><small>Данные, доступ и настройки</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
-        <button class="logout-entry" id="logout-button" type="button"><svg><use href="#icon-exit"></use></svg><span>Выйти из кабинета</span></button>
+        <button class="profile-entry" type="button" data-view="profile" aria-label="Профиль владельца"><span class="avatar" aria-hidden="true">QC</span><span class="profile-copy"><strong>Профиль владельца</strong><small>Данные, доступ и настройки</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
+        <button class="logout-entry" id="logout-button" type="button" aria-label="Выйти из кабинета"><svg><use href="#icon-exit"></use></svg><span>Выйти из кабинета</span></button>
       </div>
     </aside>
 
@@ -172,7 +172,7 @@
   </div>
 
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
-  <script src="./app.js?v=20260911-9" defer></script>
+  <script src="./app.js?v=20260911-10" defer></script>
   <script src="./session.js?v=20260910-7" defer></script>
 </body>
 </html>

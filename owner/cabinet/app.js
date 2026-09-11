@@ -290,12 +290,17 @@
       });
     });
 
+    const mobileLabelIndexes = new Set([
+      0,
+      Math.floor((history.length - 1) / 2),
+      history.length - 1
+    ]);
     const labelIndexes = history.length <= 5
       ? history.map((_, index) => index)
-      : [0, Math.floor((history.length - 1) / 2), history.length - 1];
+      : [...mobileLabelIndexes];
     [...new Set(labelIndexes)].forEach((index) => {
       addSvg('text', {
-        class: 'chart-axis-label chart-date-label',
+        class: `chart-axis-label chart-date-label${mobileLabelIndexes.has(index) ? '' : ' chart-date-intermediate'}`,
         x: xAt(index),
         y: 300,
         'text-anchor': index === 0 && history.length > 1 ? 'start' : index === history.length - 1 && history.length > 1 ? 'end' : 'middle'
@@ -306,12 +311,23 @@
   }
 
   function createHistoryTable(history) {
-    const section = document.createElement('section');
+    const section = document.createElement('details');
     section.className = 'strategy-history panel';
-    const heading = document.createElement('div');
-    heading.className = 'strategy-section-heading';
-    heading.innerHTML = '<div><p class="eyebrow">История</p><h3>Подтверждённые периоды</h3></div>';
-    section.append(heading);
+    const summary = document.createElement('summary');
+    summary.className = 'strategy-history-summary';
+    const summaryCopy = document.createElement('span');
+    summaryCopy.innerHTML = '<small>История</small><strong>Подтверждённые периоды</strong>';
+    const summaryMeta = document.createElement('span');
+    summaryMeta.className = 'strategy-history-meta';
+    summaryMeta.textContent = history.length === 0
+      ? 'Нет периодов'
+      : `${history.length} · ${formatDate(history[0].period_start)}–${formatDate(history[history.length - 1].period_end)}`;
+    const summaryIcon = document.createElement('span');
+    summaryIcon.className = 'strategy-history-toggle';
+    summaryIcon.setAttribute('aria-hidden', 'true');
+    summaryIcon.innerHTML = '<svg><use href="#icon-chevron"></use></svg>';
+    summary.append(summaryCopy, summaryMeta, summaryIcon);
+    section.append(summary);
 
     if (history.length === 0) {
       const empty = document.createElement('p');
@@ -381,7 +397,14 @@
       createDetailMetric('Обновлено', formatDate(strategy.data_period_end))
     );
 
-    strategyCatalog.append(back, header, createStrategyChart(history, strategy.strategy_id), metrics, createHistoryTable(history));
+    const summary = document.createElement('div');
+    summary.className = 'strategy-detail-summary';
+    summary.append(header, metrics);
+    const dashboard = document.createElement('div');
+    dashboard.className = 'strategy-detail-dashboard';
+    dashboard.append(summary, createStrategyChart(history, strategy.strategy_id));
+
+    strategyCatalog.append(back, dashboard, createHistoryTable(history));
     strategyCatalog.querySelector('.strategy-back').focus({ preventScroll: true });
   }
 
