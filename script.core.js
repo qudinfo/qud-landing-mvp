@@ -980,7 +980,7 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
       message: messageInput.value.trim(),
       consent: consentInput.checked,
       source: 'landing',
-      entry_point: 'landing_main',
+      entry_point: 'main_landing',
       lead_intent: role === 'strategy_owner' ? 'tda_trial' : ''
     };
 
