@@ -167,11 +167,47 @@
   const QUD_LEADS_ENDPOINT =
     'https://script.google.com/macros/s/AKfycbxW3MR6BZBOBQFngHgLcLakLc3E-P8RKQoedeNOnB_RsaL6FjjvNNTXtMYY_vzvynkk/exec';
 
+  const PILOT_REFERRAL_STORAGE_KEY =
+    'qudPilotReferralCode';
+
   const normalizeReferralCode = (value) =>
     String(value || '')
       .trim()
       .toUpperCase()
       .replace(/\s+/g, '');
+
+  const isPilotReferralCode = (value) =>
+    /^QUDPTP-\d{5}$/.test(value);
+
+  const getStoredPilotReferralCode = () => {
+    try {
+      const storedCode = normalizeReferralCode(
+        window.localStorage.getItem(
+          PILOT_REFERRAL_STORAGE_KEY
+        )
+      );
+
+      return isPilotReferralCode(storedCode)
+        ? storedCode
+        : '';
+    } catch (error) {
+      return '';
+    }
+  };
+
+  const prefillPilotReferralCode = () => {
+    const referralInput = document.querySelector(
+      REFERRAL_INPUT_SELECTOR
+    );
+
+    if (!referralInput || referralInput.value) return;
+
+    const storedCode = getStoredPilotReferralCode();
+
+    if (storedCode) referralInput.value = storedCode;
+  };
+
+  prefillPilotReferralCode();
 
   document.addEventListener('input', (event) => {
     const input = event.target.closest?.(

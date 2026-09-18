@@ -972,13 +972,16 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
 
     if (!validateContactsForm()) return;
 
+    const role = getSelectedRole();
     const payload = {
-      role: getSelectedRole(),
+      role,
       email: emailInput.value.trim(),
       telegram: telegramInput?.value.trim() || '',
       message: messageInput.value.trim(),
       consent: consentInput.checked,
-      source: 'landing'
+      source: 'landing',
+      entry_point: 'landing_main',
+      lead_intent: role === 'strategy_owner' ? 'tda_trial' : ''
     };
 
     if (!QUD_LEADS_ENDPOINT) {

@@ -1313,6 +1313,7 @@ const emailError = modal?.querySelector('#trialEmailError');
 const formStatus = modal?.querySelector('#trialFormStatus');
 const submitButton = modal?.querySelector('.trial-submit');
 const QUD_LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxW3MR6BZBOBQFngHgLcLakLc3E-P8RKQoedeNOnB_RsaL6FjjvNNTXtMYY_vzvynkk/exec';
+const PILOT_REFERRAL_STORAGE_KEY = 'qudPilotReferralCode';
 let previousFocus = null;
 
 if(!openButton || !modal || !dialog || !closeButton || !form || !emailInput || !referralInput || !emailError || !formStatus || !submitButton) return;
@@ -1347,6 +1348,20 @@ formStatus.dataset.status = type;
 
 function normalizeReferralCode(value){
 return String(value || '').trim().toUpperCase().replace(/\s+/g,'');
+}
+
+function getStoredPilotReferralCode(){
+try{
+const storedCode = normalizeReferralCode(localStorage.getItem(PILOT_REFERRAL_STORAGE_KEY));
+return /^QUDPTP-\d{5}$/.test(storedCode) ? storedCode : '';
+}catch(error){
+return '';
+}
+}
+
+const storedPilotReferralCode = getStoredPilotReferralCode();
+if(storedPilotReferralCode && !referralInput.value){
+referralInput.value = storedPilotReferralCode;
 }
 
 function validateEmail(){
@@ -1401,6 +1416,8 @@ telegram:'',
 message:'TDA Trial',
 consent:true,
 source:'landing_traders_tradermap',
+entry_point:'traders_tradermap',
+lead_intent:'tda_trial',
 referral_code:referralInput.value
 };
 
