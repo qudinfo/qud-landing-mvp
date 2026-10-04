@@ -29,7 +29,7 @@
     "plan": "TDA_BASIC",
     "display_name": "QUD TDA Basic",
     "type": "TRADER_REGULAR",
-    "generated_at": "2026-09-27",
+    "generated_at": "2026-10-04",
     "version": "BASIC_AUDIT_v1"
   },
   "trader": {
@@ -37,17 +37,17 @@
     "account_login": 756010900
   },
   "period": {
-    "start": "2026-09-21",
-    "end": "2026-09-25",
-    "current_period": "2026-09-21 — 2026-09-25"
+    "start": "2026-09-28",
+    "end": "2026-10-02",
+    "current_period": "2026-09-28 — 2026-10-02"
   },
   "score": {
-    "qud_tda_score": 91,
-    "weekly_quality_score": 91,
+    "qud_tda_score": 93,
+    "weekly_quality_score": 93,
     "history_trust_factor": 1,
     "trust_zone": "QUD Elite",
     "risk_mode": "low",
-    "trust_score_delta": 0.76,
+    "trust_score_delta": 2,
     "display_class": "good",
     "zones": [
       {
@@ -69,7 +69,7 @@
         "status": "qud_elite"
       }
     ],
-    "main_damage_source": "Block C",
+    "main_damage_source": "Block D",
     "history": [
       {
         "label": "W1",
@@ -165,10 +165,16 @@
         "label": "W16",
         "period": "2026-09-21 — 2026-09-25",
         "value": 91,
+        "source": "recalculated_from_raw"
+      },
+      {
+        "label": "W17",
+        "period": "2026-09-28 — 2026-10-02",
+        "value": 93,
         "source": "current_report_recalculated"
       }
     ],
-    "history_calculation_scope": "weekly_raw_recalculated_W1_W16",
+    "history_calculation_scope": "weekly_raw_recalculated_W1_W17",
     "unavailable_block_rule": "exclude_and_normalize_available_weights"
   },
   "trends": {
@@ -251,6 +257,11 @@
       {
         "period": "2026-09-21 — 2026-09-25",
         "value": 58.33,
+        "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-09-28 — 2026-10-02",
+        "value": 58.46,
         "source": "cumulative_to_period_end"
       }
     ],
@@ -350,6 +361,12 @@
         "value": 1.373823,
         "source": "cumulative_to_period_end",
         "status": "live"
+      },
+      {
+        "period": "2026-09-28 — 2026-10-02",
+        "value": 1.38924,
+        "source": "cumulative_to_period_end",
+        "status": "live"
       }
     ],
     "average_risk_pct": [
@@ -431,6 +448,11 @@
       {
         "period": "2026-09-21 — 2026-09-25",
         "value": 1.24,
+        "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-09-28 — 2026-10-02",
+        "value": 1.23,
         "source": "cumulative_to_period_end"
       }
     ],
@@ -514,6 +536,11 @@
         "period": "2026-09-21 — 2026-09-25",
         "value": 98.33,
         "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-09-28 — 2026-10-02",
+        "value": 98.46,
+        "source": "cumulative_to_period_end"
       }
     ]
   },
@@ -521,14 +548,14 @@
     "risk_leak_score": 35,
     "sl_leak_score": 50,
     "behavior_leak_score": 40,
-    "execution_leak_score": 40,
+    "execution_leak_score": 60,
     "performance_leak_score": 10,
     "data_quality_leak_score": 0,
-    "main_leak": "SL Leak",
+    "main_leak": "Execution Leak",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
-    "history_end": "2026-09-25",
-    "sample_trades_count": 60,
+    "history_end": "2026-10-02",
+    "sample_trades_count": 65,
     "methodology_version": "BASIC_AUDIT_v1_LEAK_MAP_CUMULATIVE_v1",
     "items": [
       {
@@ -545,36 +572,36 @@
       },
       {
         "name": "Execution Leak",
-        "score": 40
+        "score": 60
       }
     ]
   },
   "risk": {
-    "avg_pct": 1.06,
-    "median_pct": 1.01,
-    "max_pct": 1.32,
-    "min_pct": 0.85,
-    "std_pct": 0.24,
-    "cv_value": 0.35,
+    "avg_pct": 1.11,
+    "median_pct": 1.09,
+    "max_pct": 1.36,
+    "min_pct": 0.83,
+    "std_pct": 0.2,
+    "cv_value": 0.34,
     "cv": {
-      "value": 0.35,
-      "marker_pct": 35,
+      "value": 0.34,
+      "marker_pct": 34.24,
       "label": "RISK CV",
       "status": "stable",
       "min_label": "0.0",
       "mid_label": "0.5",
       "max_label": "1.0+",
       "scope": "cumulative_to_period_end",
-      "sample_trades_count": 60,
-      "source_average_risk_pct": 1.2413,
-      "source_std_risk_pct": 0.4345,
+      "sample_trades_count": 65,
+      "source_average_risk_pct": 1.2313,
+      "source_std_risk_pct": 0.4215,
       "methodology_version": "BASIC_AUDIT_v1_RISK_CV_CUMULATIVE_v1"
     },
-    "personal_risk_baseline_pct": 1.2037,
-    "personal_risk_low_bound_pct": 0.6019,
-    "personal_risk_high_bound_pct": 1.8056,
+    "personal_risk_baseline_pct": 1.1983,
+    "personal_risk_low_bound_pct": 0.5991,
+    "personal_risk_high_bound_pct": 1.7974,
     "risk_reduced_count": 0,
-    "risk_normal_count": 3,
+    "risk_normal_count": 5,
     "risk_expansion_count": 0,
     "risk_expansion_pct": 0,
     "risk_drift_count": 0,
@@ -593,7 +620,7 @@
       },
       {
         "label": "Normal Risk",
-        "count": 3,
+        "count": 5,
         "pct": 100,
         "status": "normal"
       },
@@ -608,21 +635,21 @@
       "data_status": "live",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
-      "history_end": "2026-09-25",
-      "valid_risk_trades_count": 60,
-      "personal_risk_baseline_pct": 1.2037,
-      "personal_risk_low_bound_pct": 0.6019,
-      "personal_risk_high_bound_pct": 1.8056,
+      "history_end": "2026-10-02",
+      "valid_risk_trades_count": 65,
+      "personal_risk_baseline_pct": 1.1983,
+      "personal_risk_low_bound_pct": 0.5991,
+      "personal_risk_high_bound_pct": 1.7974,
       "risk_reduced_count": 1,
-      "risk_normal_count": 55,
+      "risk_normal_count": 60,
       "risk_expansion_count": 4,
-      "risk_expansion_pct": 6.67,
+      "risk_expansion_pct": 6.15,
       "risk_drift_count": 3,
-      "risk_drift_pct": 5,
+      "risk_drift_pct": 4.62,
       "drift": {
         "count": 3,
-        "pct": 5,
-        "value": 5,
+        "pct": 4.62,
+        "value": 4.62,
         "direction": "toward_expansion",
         "status": "expansion",
         "label": "Risk Drift"
@@ -631,19 +658,19 @@
         {
           "label": "Reduced Risk",
           "count": 1,
-          "pct": 1.67,
+          "pct": 1.54,
           "status": "reduced"
         },
         {
           "label": "Normal Risk",
-          "count": 55,
-          "pct": 91.67,
+          "count": 60,
+          "pct": 92.31,
           "status": "normal"
         },
         {
           "label": "Risk Expansion",
           "count": 4,
-          "pct": 6.67,
+          "pct": 6.15,
           "status": "expansion"
         }
       ],
@@ -1069,34 +1096,69 @@
         "timestamp": "2026-09-25 10:01:46",
         "week": "W16",
         "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58669210640",
+        "risk_pct": 0.8335,
+        "timestamp": "2026-09-29 09:03:22",
+        "week": "W17",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58669869073",
+        "risk_pct": 1.3572,
+        "timestamp": "2026-09-29 09:50:39",
+        "week": "W17",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58689984570",
+        "risk_pct": 1.0427,
+        "timestamp": "2026-09-30 09:56:35",
+        "week": "W17",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58712940993",
+        "risk_pct": 1.238,
+        "timestamp": "2026-10-01 09:49:58",
+        "week": "W17",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58734240643",
+        "risk_pct": 1.0883,
+        "timestamp": "2026-10-02 09:16:39",
+        "week": "W17",
+        "status": "normal"
       }
     ],
     "trades_above_2pct": 0,
     "trades_above_3pct": 0,
-    "valid_risk_trades_count": 3,
+    "valid_risk_trades_count": 5,
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
-    "history_end": "2026-09-25",
-    "risk_drift_pct": 5,
+    "history_end": "2026-10-02",
+    "risk_drift_pct": 4.62,
     "methodology_version": "BASIC_AUDIT_v1_RISK_ZONE_CUMULATIVE_v2"
   },
   "sl": {
     "trades_without_sl_at_open": 0,
-    "trades_with_sl_at_open": 3,
-    "sl_set_within_30s_count": 3,
+    "trades_with_sl_at_open": 5,
+    "sl_set_within_30s_count": 5,
     "sl_set_after_30s_count": 0,
     "closed_without_sl_count": 0,
     "avg_sl_install_delay_sec": 0,
     "max_sl_install_delay_sec": 0,
     "unsafe_trades_count": 0,
-    "sl_safe_count": 3,
+    "sl_safe_count": 5,
     "sl_safe_pct": 100,
     "sl_changed_count": 0,
     "sl_removed_count": 0,
     "risk_increase_after_sl_change_count": 0,
-    "personal_risk_baseline_pct": 1.0097,
-    "sl_risk_high_bound_pct": 1.5146,
+    "personal_risk_baseline_pct": 1.0883,
+    "sl_risk_high_bound_pct": 1.6325,
     "sl_risk_expansion_after_change_count": 0,
     "max_risk_after_sl_change_pct": null,
     "block_score": 100,
@@ -1104,7 +1166,7 @@
     "protection_segments": [
       {
         "label": "Protected",
-        "value": 3,
+        "value": 5,
         "status": "safe"
       },
       {
@@ -1117,13 +1179,13 @@
       "data_status": "live",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
-      "history_end": "2026-09-25",
-      "trades_total": 60,
+      "history_end": "2026-10-02",
+      "trades_total": 65,
       "no_sl_count": 0,
       "sl_removed_count": 0,
       "sl_changed_count": 1,
-      "sl_safe_count": 59,
-      "sl_safe_pct": 98.33,
+      "sl_safe_count": 64,
+      "sl_safe_pct": 98.46,
       "segments": [
         {
           "label": "No SL",
@@ -1140,13 +1202,13 @@
         {
           "label": "SL Changed",
           "value": 1,
-          "pct": 1.67,
+          "pct": 1.54,
           "status": "changed"
         },
         {
           "label": "SL Safe",
-          "value": 59,
-          "pct": 98.33,
+          "value": 64,
+          "pct": 98.46,
           "status": "safe"
         }
       ],
@@ -1155,23 +1217,23 @@
     "event_timeline": []
   },
   "behavior": {
-    "trade_after_loss_count": 1,
-    "risk_after_loss_avg_pct": 1.32,
-    "risk_after_win_avg_pct": 0.93,
-    "risk_after_1_loss_pct": null,
+    "trade_after_loss_count": 2,
+    "risk_after_loss_avg_pct": 0.94,
+    "risk_after_win_avg_pct": 1.23,
+    "risk_after_1_loss_pct": 0.94,
     "risk_after_2_losses_pct": null,
-    "risk_after_3_losses_pct": 1.32,
-    "max_risk_after_loss_streak_pct": 1.32,
-    "risk_increase_after_loss_count": 1,
-    "position_size_increased_after_loss_count": 1,
+    "risk_after_3_losses_pct": null,
+    "max_risk_after_loss_streak_pct": 1.04,
+    "risk_increase_after_loss_count": 0,
+    "position_size_increased_after_loss_count": 0,
     "revenge_trading_signal_count": 0,
-    "avg_minutes_after_loss_to_next_trade": 5643.35,
-    "min_minutes_after_loss_to_next_trade": 5643.35,
+    "avg_minutes_after_loss_to_next_trade": 3471.07,
+    "min_minutes_after_loss_to_next_trade": 1289.58,
     "risk_after_loss_items": [
       {
         "label": "1 Loss",
-        "value": null,
-        "status": "not_available"
+        "value": 0.94,
+        "status": "reduced"
       },
       {
         "label": "2 Losses",
@@ -1180,34 +1242,34 @@
       },
       {
         "label": "3+ Losses",
-        "value": 1.32,
-        "status": "normal"
+        "value": null,
+        "status": "not_available"
       }
     ],
     "post_loss_summary": {
-      "baseline_pct": 1.01,
-      "high_bound_pct": 1.51,
-      "avg_risk_pct": 1.32,
-      "risk_drift_pct": 0.39,
+      "baseline_pct": 1.09,
+      "high_bound_pct": 1.63,
+      "avg_risk_pct": 0.94,
+      "risk_drift_pct": -0.29,
       "expansion_count": 0,
       "expansion_pct": 0,
       "revenge_signal_count": 0,
-      "status": "normal"
+      "status": "reduced"
     }
   },
   "plan_fact": {
-    "trades_total": 60,
-    "trades_count": 60,
+    "trades_total": 65,
+    "trades_count": 65,
     "excluded_trades_count": 0,
     "valid_sample_pct": 100,
-    "planned_risk_avg_pct": 1.24,
-    "actual_loss_avg_pct": 1.06,
-    "deviation_avg_pct": -0.06,
+    "planned_risk_avg_pct": 1.23,
+    "actual_loss_avg_pct": 1.04,
+    "deviation_avg_pct": -0.09,
     "deviation_max_pct": 0.19,
-    "deviation_avg_abs_pct": 0.07,
-    "deviation_max_abs_pct": 0.63,
+    "deviation_avg_abs_pct": 0.1,
+    "deviation_max_abs_pct": 1,
     "negative_deviation_trades": 10,
-    "negative_deviation_trades_pct": 16.67,
+    "negative_deviation_trades_pct": 15.38,
     "execution_leak_flag": true,
     "data_status": "live",
     "points": [
@@ -1810,51 +1872,101 @@
         "status": "within_plan",
         "week": "W16",
         "timestamp": "2026-09-25 10:01:46"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58669210640",
+        "planned": 0.8335,
+        "actual": 0,
+        "within_plan": 0,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W17",
+        "timestamp": "2026-09-29 09:03:22"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58669869073",
+        "planned": 1.3572,
+        "actual": 1.3572,
+        "within_plan": 1.3572,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W17",
+        "timestamp": "2026-09-29 09:50:39"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58689984570",
+        "planned": 1.0427,
+        "actual": 0,
+        "within_plan": 0,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W17",
+        "timestamp": "2026-09-30 09:56:35"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58712940993",
+        "planned": 1.238,
+        "actual": 0,
+        "within_plan": 0,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W17",
+        "timestamp": "2026-10-01 09:49:58"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58734240643",
+        "planned": 1.0883,
+        "actual": 0.0867,
+        "within_plan": 0.0867,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W17",
+        "timestamp": "2026-10-02 09:16:39"
       }
     ],
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-04",
-    "period_end": "2026-09-25",
-    "eligible_loss_trades_count": 25,
+    "period_end": "2026-10-02",
+    "eligible_loss_trades_count": 27,
     "excluded_loss_trades_count": 0,
     "methodology_version": "BASIC_AUDIT_v1_PLAN_FACT_CUMULATIVE_v1"
   },
   "findings": {
     "items": [
       {
-        "text": "Неделя завершилась результатом +228,20 USD: 2 прибыльные сделки из 3, Win Rate 66,7%, Profit Factor 10,13.",
+        "text": "Неделя завершилась результатом +109,70 USD: 3 прибыльные сделки из 5, Win Rate 60,0%, Profit Factor 1,67.",
         "severity": "positive",
         "display_class": "good",
         "source_block": "Block E",
         "metric": "weekly_result_positive"
       },
       {
-        "text": "После серии из 3 убытков риск первой сделки недели вырос с 0,66% до 1,32%, а объём — с 1,0 до 1,2. Интервал между сделками составил около 94 часов, поэтому признак revenge trading отсутствует.",
-        "severity": "high",
-        "display_class": "danger",
+        "text": "После двух убыточных сделок риск в следующих входах был снижен: с 0,85% до 0,83% и с 1,36% до 1,04%. Увеличения риска, объёма и признаков revenge trading не зафиксировано.",
+        "severity": "positive",
+        "display_class": "good",
         "source_block": "Block C",
-        "metric": "post_loss_risk_and_volume_increase"
+        "metric": "post_loss_risk_reduction"
       },
       {
-        "text": "Все 3 сделки открыты с Stop Loss; удалений и изменений SL не зафиксировано. Исторический SL Safe составил 98,33%.",
+        "text": "Все 5 сделок открыты с Stop Loss; удалений и изменений SL не зафиксировано. Исторический SL Safe составил 98,46%.",
         "severity": "positive",
         "display_class": "good",
         "source_block": "Block B",
         "metric": "weekly_sl_discipline"
       },
       {
-        "text": "Единственная убыточная сделка потеряла 25,00 USD при запланированном риске 96,00 USD — около 26% от лимита. Превышений первоначального риска не выявлено.",
-        "severity": "positive",
-        "display_class": "good",
+        "text": "2 октября фактический убыток составил 0,09% при плане 1,09%: отклонение около 1,00 п.п. снизило оценку согласованности Plan vs Fact, хотя превышения лимита риска не было.",
+        "severity": "medium",
+        "display_class": "warn",
         "source_block": "Block D",
-        "metric": "weekly_plan_fact_within_risk"
+        "metric": "weekly_plan_fact_large_underuse"
       },
       {
-        "text": "Две прибыльные сделки 22–23 сентября дали 253,20 USD; пятничный убыток сократил результат лишь на 25,00 USD. Максимальная дневная просадка недели — 0,33%.",
+        "text": "Все 5 сделок остались внутри индивидуального диапазона риска 0,54–1,63%; средний риск недели — 1,11%, максимальная дневная просадка — 1,22%.",
         "severity": "positive",
         "display_class": "good",
         "source_block": "Block A",
-        "metric": "weekly_profit_concentration_and_drawdown"
+        "metric": "weekly_risk_stability"
       }
     ]
   },
@@ -1868,17 +1980,17 @@
     "minimum_sample_valid": true
   },
   "basic_stats": {
-    "average_win": 126.6,
-    "average_loss": 25,
-    "win_ratio": 66.67,
-    "profit_factor": 10.128,
-    "number_of_days": 3,
-    "total_trades_taken": 3,
-    "total_lots_used": 3.3,
-    "biggest_win": 147.6,
-    "biggest_loss": 25,
-    "net_profit": 228.2,
-    "win_ratio_pct": 66.67
+    "average_win": 91.07,
+    "average_loss": 81.75,
+    "win_ratio": 60,
+    "profit_factor": 1.670948,
+    "number_of_days": 4,
+    "total_trades_taken": 5,
+    "total_lots_used": 5.2,
+    "biggest_win": 136.4,
+    "biggest_loss": 153.6,
+    "net_profit": 109.7,
+    "win_ratio_pct": 60
   },
   "account": {
     "balance_equity_curve": [],
@@ -2182,6 +2294,31 @@
         "timestamp": "2026-09-25 10:50:49",
         "position_ticket": "58625869166",
         "balance": 11301.51
+      },
+      {
+        "timestamp": "2026-09-29 09:49:55",
+        "position_ticket": "58669210640",
+        "balance": 11317.11
+      },
+      {
+        "timestamp": "2026-09-29 12:27:00",
+        "position_ticket": "58669869073",
+        "balance": 11163.51
+      },
+      {
+        "timestamp": "2026-09-30 10:17:07",
+        "position_ticket": "58689984570",
+        "balance": 11284.71
+      },
+      {
+        "timestamp": "2026-10-01 09:58:18",
+        "position_ticket": "58712940993",
+        "balance": 11421.11
+      },
+      {
+        "timestamp": "2026-10-02 10:28:16",
+        "position_ticket": "58734240643",
+        "balance": 11411.21
       }
     ],
     "equity_series": [
@@ -2569,67 +2706,109 @@
         "min_equity": 11299.51,
         "max_equity": 11372.51,
         "source_count": 96
+      },
+      {
+        "timestamp": "2026-09-29 23:45:40",
+        "equity": 11232.87,
+        "min_equity": 11163.51,
+        "max_equity": 11351.91,
+        "source_count": 96
+      },
+      {
+        "timestamp": "2026-09-30 23:45:59",
+        "equity": 11231.92,
+        "min_equity": 11102.31,
+        "max_equity": 11284.71,
+        "source_count": 96
+      },
+      {
+        "timestamp": "2026-10-01 23:46:23",
+        "equity": 11364.28,
+        "min_equity": 11284.71,
+        "max_equity": 11421.11,
+        "source_count": 96
+      },
+      {
+        "timestamp": "2026-10-02 23:46:45",
+        "equity": 11416.21,
+        "min_equity": 11411.21,
+        "max_equity": 11466.21,
+        "source_count": 96
       }
     ],
     "equity_sampling": {
       "method": "time_weighted_average",
       "window_minutes": 2880,
-      "raw_points_count": 7338,
-      "rendered_points_count": 55
+      "raw_points_count": 7722,
+      "rendered_points_count": 59
     }
   },
   "direction": {
-    "long_trades_count": 0,
-    "long_profit": 0,
-    "long_win_rate": null,
-    "short_trades_count": 3,
-    "short_profit": 228.2,
-    "short_win_rate": 66.67,
+    "long_trades_count": 5,
+    "long_profit": 109.7,
+    "long_win_rate": 60,
+    "short_trades_count": 0,
+    "short_profit": 0,
+    "short_win_rate": null,
     "imbalance_flag": false
   },
   "profitability": {
-    "wins_count": 2,
-    "losses_count": 1,
+    "wins_count": 3,
+    "losses_count": 2,
     "breakeven_count": 0,
-    "wins_pct": 66.67,
-    "losses_pct": 33.33,
+    "wins_pct": 60,
+    "losses_pct": 40,
     "be_pct": 0
   },
   "duration": {
     "pnl_by_trade_duration": [
       {
-        "trade_id": "aud_00003_756010900_58563695221",
+        "trade_id": "aud_00003_756010900_58669210640",
         "symbol": "GBPUSD",
-        "duration_min": 36.68,
-        "profit_money": 147.6,
+        "duration_min": 46.55,
+        "profit_money": 15.6,
         "result_type": "win"
       },
       {
-        "trade_id": "aud_00003_756010900_58585025555",
+        "trade_id": "aud_00003_756010900_58669869073",
         "symbol": "GBPUSD",
-        "duration_min": 44.18,
-        "profit_money": 105.6,
+        "duration_min": 156.35,
+        "profit_money": -153.6,
+        "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58689984570",
+        "symbol": "GBPUSD",
+        "duration_min": 20.53,
+        "profit_money": 121.2,
         "result_type": "win"
       },
       {
-        "trade_id": "aud_00003_756010900_58625869166",
+        "trade_id": "aud_00003_756010900_58712940993",
         "symbol": "GBPUSD",
-        "duration_min": 49.05,
-        "profit_money": -25,
+        "duration_min": 8.33,
+        "profit_money": 136.4,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58734240643",
+        "symbol": "GBPUSD",
+        "duration_min": 71.62,
+        "profit_money": -9.9,
         "result_type": "loss"
       }
     ],
     "items": [
       {
         "name": "Winning Trades",
-        "duration_min": 40.43,
-        "deviation_pct": -6.63,
+        "duration_min": 25.14,
+        "deviation_pct": -58.57,
         "status": "positive"
       },
       {
         "name": "Losing Trades",
-        "duration_min": 49.05,
-        "deviation_pct": 13.26,
+        "duration_min": 113.98,
+        "deviation_pct": 87.85,
         "status": "negative"
       }
     ],
@@ -2637,110 +2816,110 @@
       "grouping_method": "equal_frequency_nearest_rank",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-05",
-      "history_end": "2026-09-25",
+      "history_end": "2026-10-02",
       "target_trades_per_group": 5,
       "max_groups": 5,
       "ties_preserved": true,
       "quartile_method": "inclusive",
       "duration_unit": "minutes",
       "pnl_unit": "account_currency",
-      "total_trades": 60,
-      "baseline_win_rate_pct": 58.33,
+      "total_trades": 65,
+      "baseline_win_rate_pct": 58.46,
       "groups_count": 5,
       "groups": [
         {
           "group_index": 1,
-          "duration_min": 8.78,
-          "duration_max": 40.08,
-          "duration_avg": 26.54,
-          "sample_size": 12,
+          "duration_min": 8.33,
+          "duration_max": 38.53,
+          "duration_avg": 23.63,
+          "sample_size": 13,
           "pnl_min": -176.4,
-          "pnl_q1": 103.13,
-          "pnl_median": 120.43,
-          "pnl_q3": 148.95,
+          "pnl_q1": 111.6,
+          "pnl_median": 121.2,
+          "pnl_q3": 147.6,
           "pnl_max": 176.4,
-          "pnl_total": 1066.05,
-          "pnl_avg": 88.84,
-          "wins_count": 10,
+          "pnl_total": 1218.65,
+          "pnl_avg": 93.74,
+          "wins_count": 11,
           "losses_count": 2,
           "breakeven_count": 0,
-          "win_rate_pct": 83.33,
+          "win_rate_pct": 84.62,
           "sample_status": "valid"
         },
         {
           "group_index": 2,
-          "duration_min": 40.53,
-          "duration_max": 55.22,
-          "duration_avg": 46.96,
-          "sample_size": 12,
+          "duration_min": 40.08,
+          "duration_max": 51.93,
+          "duration_avg": 45.77,
+          "sample_size": 13,
           "pnl_min": -145.2,
-          "pnl_q1": -109.43,
-          "pnl_median": -49.65,
-          "pnl_q3": 106.98,
+          "pnl_q1": -108.9,
+          "pnl_median": 15.6,
+          "pnl_q3": 105.6,
           "pnl_max": 113.3,
-          "pnl_total": -170.81,
-          "pnl_avg": -14.23,
-          "wins_count": 5,
-          "losses_count": 7,
+          "pnl_total": 43.29,
+          "pnl_avg": 3.33,
+          "wins_count": 7,
+          "losses_count": 6,
           "breakeven_count": 0,
-          "win_rate_pct": 41.67,
+          "win_rate_pct": 53.85,
           "sample_status": "valid"
         },
         {
           "group_index": 3,
-          "duration_min": 57.73,
-          "duration_max": 82.55,
-          "duration_avg": 68.36,
-          "sample_size": 12,
+          "duration_min": 55.22,
+          "duration_max": 78.4,
+          "duration_avg": 66.51,
+          "sample_size": 13,
           "pnl_min": -166.8,
-          "pnl_q1": -133.12,
-          "pnl_median": -10,
-          "pnl_q3": 105.85,
+          "pnl_q1": -133.1,
+          "pnl_median": -72.8,
+          "pnl_q3": 86,
           "pnl_max": 170.4,
-          "pnl_total": -76.6,
-          "pnl_avg": -6.38,
-          "wins_count": 6,
-          "losses_count": 6,
+          "pnl_total": -317.5,
+          "pnl_avg": -24.42,
+          "wins_count": 5,
+          "losses_count": 8,
           "breakeven_count": 0,
-          "win_rate_pct": 50,
+          "win_rate_pct": 38.46,
           "sample_status": "valid"
         },
         {
           "group_index": 4,
-          "duration_min": 85.9,
-          "duration_max": 184.42,
-          "duration_avg": 135.67,
-          "sample_size": 12,
-          "pnl_min": -205.2,
-          "pnl_q1": -109.33,
-          "pnl_median": 95.72,
-          "pnl_q3": 120.3,
+          "duration_min": 82.55,
+          "duration_max": 172.4,
+          "duration_avg": 129.42,
+          "sample_size": 13,
+          "pnl_min": -153.6,
+          "pnl_q1": -106.54,
+          "pnl_median": 106.8,
+          "pnl_q3": 137.5,
           "pnl_max": 152.9,
-          "pnl_total": 255.17,
-          "pnl_avg": 21.26,
-          "wins_count": 7,
+          "pnl_total": 444.27,
+          "pnl_avg": 34.17,
+          "wins_count": 8,
           "losses_count": 5,
           "breakeven_count": 0,
-          "win_rate_pct": 58.33,
+          "win_rate_pct": 61.54,
           "sample_status": "valid"
         },
         {
           "group_index": 5,
-          "duration_min": 189.17,
+          "duration_min": 184.42,
           "duration_max": 497.97,
-          "duration_avg": 322.28,
-          "sample_size": 12,
-          "pnl_min": -195,
-          "pnl_q1": -110.45,
-          "pnl_median": 57.7,
-          "pnl_q3": 108.95,
+          "duration_avg": 311.68,
+          "sample_size": 13,
+          "pnl_min": -205.2,
+          "pnl_q1": -162.8,
+          "pnl_median": 12,
+          "pnl_q3": 106.06,
           "pnl_max": 170.5,
-          "pnl_total": 42.94,
-          "pnl_avg": 3.58,
+          "pnl_total": -162.26,
+          "pnl_avg": -12.48,
           "wins_count": 7,
-          "losses_count": 5,
+          "losses_count": 6,
           "breakeven_count": 0,
-          "win_rate_pct": 58.33,
+          "win_rate_pct": 53.85,
           "sample_status": "valid"
         }
       ],
@@ -2751,23 +2930,23 @@
     "profit_analysis": [
       {
         "symbol": "GBPUSD",
-        "trades_count": 3,
-        "profit_money": 228.2
+        "trades_count": 5,
+        "profit_money": 109.7
       }
     ],
     "volume_analysis": [
       {
         "symbol": "GBPUSD",
-        "trades_count": 3,
-        "volume": 3.3
+        "trades_count": 5,
+        "volume": 5.2
       }
     ],
     "items": [
       {
         "symbol": "GBPUSD",
-        "trades_count": 3,
-        "profit_money": 228.2,
-        "volume": 3.3,
+        "trades_count": 5,
+        "profit_money": 109.7,
+        "volume": 5.2,
         "profit_share_pct": 100,
         "volume_share_pct": 100,
         "status": "positive"
@@ -2778,39 +2957,39 @@
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-05",
-    "period_end": "2026-09-25",
+    "period_end": "2026-10-02",
     "groups": [
       {
         "symbol": "EURUSD",
         "trades": 18,
         "wins": 8,
         "volume": 11.4,
-        "win_contribution_pct": 22.86,
-        "load_volume_pct": 20.47
+        "win_contribution_pct": 21.05,
+        "load_volume_pct": 18.72
       },
       {
         "symbol": "GBPUSD",
-        "trades": 32,
-        "wins": 22,
-        "volume": 34.4,
-        "win_contribution_pct": 62.86,
-        "load_volume_pct": 61.76
+        "trades": 37,
+        "wins": 25,
+        "volume": 39.6,
+        "win_contribution_pct": 65.79,
+        "load_volume_pct": 65.02
       },
       {
         "symbol": "USDCAD",
         "trades": 8,
         "wins": 4,
         "volume": 7.9,
-        "win_contribution_pct": 11.43,
-        "load_volume_pct": 14.18
+        "win_contribution_pct": 10.53,
+        "load_volume_pct": 12.97
       },
       {
         "symbol": "USDJPY",
         "trades": 2,
         "wins": 1,
         "volume": 2,
-        "win_contribution_pct": 2.86,
-        "load_volume_pct": 3.59
+        "win_contribution_pct": 2.63,
+        "load_volume_pct": 3.28
       }
     ]
   },
@@ -2820,42 +2999,42 @@
     "items": [
       {
         "name": "Direction Balance",
-        "marker_pct": 63.33,
-        "display_value": "22 / 38",
+        "marker_pct": 58.46,
+        "display_value": "27 / 38",
         "status": "neutral",
         "label_left": "Long",
         "label_right": "Short",
         "segments": [
           {
             "label": "Long",
-            "value": 22,
-            "pct": 36.67
+            "value": 27,
+            "pct": 41.54
           },
           {
             "label": "Short",
             "value": 38,
-            "pct": 63.33
+            "pct": 58.46
           }
         ]
       },
       {
         "name": "Profitability",
-        "marker_pct": 58.33,
-        "display_value": "58.33%",
+        "marker_pct": 58.46,
+        "display_value": "58.46%",
         "status": "live",
         "label_left": "Losses",
         "label_right": "Wins",
         "segments": [
           {
             "label": "Wins",
-            "value": 35,
-            "pct": 58.33,
+            "value": 38,
+            "pct": 58.46,
             "status": "positive"
           },
           {
             "label": "Losses",
-            "value": 25,
-            "pct": 41.67,
+            "value": 27,
+            "pct": 41.54,
             "status": "negative"
           },
           {
@@ -2868,8 +3047,8 @@
       },
       {
         "name": "Risk Expansion",
-        "marker_pct": 6.67,
-        "display_value": "6.67%",
+        "marker_pct": 6.15,
+        "display_value": "6.15%",
         "status": "expansion",
         "label_left": "Reduced",
         "label_right": "Expanded",
@@ -2877,62 +3056,62 @@
           {
             "label": "Reduced Risk",
             "count": 1,
-            "pct": 1.67,
+            "pct": 1.54,
             "status": "reduced"
           },
           {
             "label": "Normal Risk",
-            "count": 55,
-            "pct": 91.67,
+            "count": 60,
+            "pct": 92.31,
             "status": "normal"
           },
           {
             "label": "Risk Expansion",
             "count": 4,
-            "pct": 6.67,
+            "pct": 6.15,
             "status": "expansion"
           }
         ]
       }
     ],
     "history_start": "2026-06-05",
-    "history_end": "2026-09-25",
-    "sample_trades_count": 60,
+    "history_end": "2026-10-02",
+    "sample_trades_count": 65,
     "short_cover_ratio": 1.179148,
     "short_cover_status": "live",
     "short_win_rate_pct": 55.26,
-    "profit_factor": 1.373823,
+    "profit_factor": 1.38924,
     "profit_factor_status": "live",
-    "total_win_rate_pct": 58.33,
-    "long_cover_ratio": 1.776226,
+    "total_win_rate_pct": 58.46,
+    "long_cover_ratio": 1.761094,
     "long_cover_status": "live",
-    "long_win_rate_pct": 63.64,
+    "long_win_rate_pct": 62.96,
     "methodology_version": "BASIC_AUDIT_v1_COVER_CUMULATIVE_v1"
   },
   "comparison": {
-    "previous_period": "2026-09-14 — 2026-09-18",
-    "current_period": "2026-09-21 — 2026-09-25",
+    "previous_period": "2026-09-21 — 2026-09-25",
+    "current_period": "2026-09-28 — 2026-10-02",
     "items": [
       {
         "metric": "QUD TDA Score",
-        "previous": 90.24,
-        "current": 91,
-        "change": 0.76,
+        "previous": 91,
+        "current": 93,
+        "change": 2,
         "status": "improved"
       },
       {
         "metric": "Risk CV",
-        "previous": 0.3921492261,
-        "current": 0.227571037,
-        "change": -0.1645781892,
+        "previous": 0.227571037,
+        "current": 0.1792650699,
+        "change": -0.0483059671,
         "status": "improved"
       },
       {
         "metric": "Avg Risk After Loss",
-        "previous": 0.82255,
-        "current": 1.3220979093,
-        "change": 0.4995479093,
-        "status": "worse"
+        "previous": 1.3220979093,
+        "current": 0.9380914061,
+        "change": -0.3840065032,
+        "status": "improved"
       },
       {
         "metric": "No-SL Trades",
@@ -2943,15 +3122,15 @@
       },
       {
         "metric": "Plan vs Fact Deviation",
-        "previous": -0.1093666667,
-        "current": -0.6269,
-        "change": -0.5175333333,
-        "status": "improved"
+        "previous": -0.6269,
+        "current": -0.5008362548,
+        "change": 0.1260637452,
+        "status": "worse"
       },
       {
         "metric": "Main Leak",
-        "previous": "Performance Leak",
-        "current": "Behavior Leak",
+        "previous": "Behavior Leak",
+        "current": "Execution Leak",
         "change": "changed",
         "status": "changed"
       }
@@ -3035,6 +3214,11 @@
       {
         "period": "2026-09-21 — 2026-09-25",
         "value": 91,
+        "source": "recalculated_from_raw"
+      },
+      {
+        "period": "2026-09-28 — 2026-10-02",
+        "value": 93,
         "source": "current_report_recalculated"
       }
     ]
