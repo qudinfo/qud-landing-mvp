@@ -1,1 +1,153 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>QUD — Методология TDA</title>
+  <style>
+    :root{--bg:#090b0d;--panel:#101317;--soft:#0d1013;--border:#22272d;--text:#f3f4f6;--muted:#9aa1aa;--quiet:#6d747e;--accent:#d8a24b;--accent-soft:rgba(216,162,75,.08);--accent-border:rgba(216,162,75,.34);--container:1100px;--content:760px}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:88px}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;line-height:1.62}a{color:inherit;text-decoration:none}.container{width:min(calc(100% - 40px),var(--container));margin:auto}.skip{position:fixed;top:8px;left:8px;z-index:10;padding:9px 12px;background:var(--accent);color:var(--bg);transform:translateY(-150%)}.skip:focus{transform:translateY(0)}.header{position:sticky;top:0;z-index:5;border-bottom:1px solid var(--border);background:rgba(9,11,13,.93);backdrop-filter:blur(14px)}.header-inner{min-height:72px;display:flex;justify-content:space-between;align-items:center;gap:24px}.logo{font-size:24px;font-weight:800;letter-spacing:.09em}.logo span{margin-left:12px;color:var(--muted);font-size:10px;letter-spacing:.12em;vertical-align:middle}.status{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.hero{padding:72px 0 56px;border-bottom:1px solid var(--border)}.eyebrow,.number{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.eyebrow{display:inline-block;padding:5px 9px;border:1px solid var(--accent-border);background:var(--accent-soft);border-radius:6px}h1,h2,h3{margin:0;letter-spacing:-.025em}h1{max-width:850px;margin-top:20px;font-size:clamp(36px,5vw,54px);line-height:1.06}h2{margin-top:10px;font-size:27px;line-height:1.2}h3{font-size:15px}.hero p{max-width:710px;margin:20px 0 0;color:var(--muted);font-size:16px}.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:27px}.badge{padding:6px 10px;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.badge.accent{border-color:var(--accent-border);color:var(--accent);background:var(--accent-soft)}.document{padding:60px 0 90px}.layout{display:grid;grid-template-columns:230px minmax(0,var(--content));justify-content:space-between;gap:64px;align-items:start}.nav{position:sticky;top:98px;padding:17px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}.nav strong{display:block;margin:0 8px 9px;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.nav a{display:block;padding:7px 8px;border-radius:5px;color:var(--muted);font-size:12px;line-height:1.35}.nav a:hover,.nav a:focus-visible{background:var(--panel);color:var(--accent)}.section{padding:0 0 44px;margin-bottom:42px;border-bottom:1px solid var(--border)}.section p,.section li{color:var(--muted);font-size:15px}.section p{margin:17px 0 0}.section ul,.section ol{margin:17px 0 0;padding-left:21px}.section li+li{margin-top:8px}.card{margin-top:19px;padding:17px 19px;border:1px dashed #3a4048;border-radius:10px;background:var(--soft);color:var(--quiet);font-size:14px}.card strong{color:var(--text)}.notice{margin-top:20px;padding:17px 19px;border:1px solid var(--accent-border);border-radius:10px;background:var(--accent-soft);color:var(--muted);font-size:14px}.notice b{color:var(--accent)}.path{display:grid;gap:10px;margin-top:20px}.path-item{padding:16px 18px;border:1px solid var(--border);border-radius:10px;background:var(--soft)}.step{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.path-item p{margin:6px 0 0;font-size:14px}.table-wrap{overflow-x:auto;margin-top:20px;border:1px solid var(--border);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:590px;font-size:13px}th,td{padding:13px 15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}th{color:var(--accent);background:var(--panel);font-size:11px;letter-spacing:.07em;text-transform:uppercase}td{color:var(--muted)}tr:last-child td{border-bottom:0}.footer{padding:30px 0 46px;border-top:1px solid var(--border);color:var(--quiet);font-size:12px}@media(max-width:760px){.status{display:none}.layout{grid-template-columns:1fr;gap:36px}.nav{position:static}h1{font-size:38px}.container{width:min(calc(100% - 28px),var(--container))}}
+  </style>
+  <style>
+    body { overflow-x: hidden; }
+    article { min-width: 0; }
+    h1, h2, h3, p, li, td, th, .notice, .card { overflow-wrap: anywhere; }
+    .section p strong, .section li strong { color: var(--text); }
+    .mobile-nav { display: none; }
 
+    @media (max-width: 920px) {
+      .container { width: min(calc(100% - 32px), var(--container)); }
+      .layout { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+      .nav { display: none; }
+      .mobile-nav { display: block; width: 100%; border: 1px solid var(--border); border-radius: 10px; background: var(--soft); }
+      .mobile-nav summary { display: flex; align-items: center; justify-content: space-between; padding: 15px 16px; cursor: pointer; color: var(--text); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      .mobile-nav summary::after { content: '+'; color: var(--accent); font-size: 20px; font-weight: 400; }
+      .mobile-nav[open] summary { border-bottom: 1px solid var(--border); }
+      .mobile-nav[open] summary::after { content: '−'; }
+      .mobile-nav nav { display: grid; padding: 8px; }
+      .mobile-nav a { display: block; padding: 10px 8px; border-radius: 6px; color: var(--muted); font-size: 14px; line-height: 1.35; }
+      .mobile-nav a:active, .mobile-nav a:focus-visible { background: var(--panel); color: var(--accent); }
+      .document { padding: 32px 0 64px; }
+      .section { padding-bottom: 32px; margin-bottom: 32px; }
+      h1 { font-size: clamp(34px, 10vw, 48px); }
+      h2 { font-size: clamp(26px, 7.5vw, 34px); }
+      .hero { padding: 46px 0 36px; }
+      .hero p, .section p, .section li { font-size: 16px; }
+      .table-wrap { margin-right: 0; }
+      table { min-width: 0; }
+      th, td { padding: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { width: min(calc(100% - 24px), var(--container)); }
+      .header-inner { min-height: 60px; }
+      .logo { font-size: 21px; }
+      .hero { padding-top: 36px; }
+      .badges { margin-top: 20px; }
+      .badge { font-size: 10px; }
+      .notice, .card { padding: 15px; }
+      .path-item { padding: 14px; }
+    }
+  </style>
+  <style>
+    .header-menu { display: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+    @media (max-width: 920px) {
+      .header-inner { position: relative; }
+      .header-status { display: none; }
+      .mobile-nav { display: none !important; }
+      .header-menu { display: block; position: relative; }
+      .header-menu summary { display: grid; place-items: center; width: 38px; height: 38px; border: 0; border-radius: 6px; cursor: pointer; list-style: none; }
+      .header-menu summary::-webkit-details-marker { display: none; }
+      .menu-icon, .menu-icon::before, .menu-icon::after { display: block; width: 18px; height: 2px; border-radius: 1px; background: var(--muted); transition: transform .18s ease, opacity .18s ease; }
+      .menu-icon { position: relative; }
+      .menu-icon::before, .menu-icon::after { content: ''; position: absolute; left: 0; }
+      .menu-icon::before { top: -6px; }
+      .menu-icon::after { top: 6px; }
+      .header-menu[open] .menu-icon { background: transparent; }
+      .header-menu[open] .menu-icon::before { top: 0; transform: rotate(45deg); }
+      .header-menu[open] .menu-icon::after { top: 0; transform: rotate(-45deg); }
+      .header-menu nav { position: absolute; z-index: 20; top: calc(100% + 10px); right: 0; width: min(calc(100vw - 32px), 360px); padding: 8px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); box-shadow: 0 18px 42px rgba(0,0,0,.38); }
+      .header-menu a { display: block; padding: 11px 10px; border-radius: 6px; color: var(--muted); font-size: 14px; line-height: 1.35; }
+      .header-menu a:active, .header-menu a:focus-visible { background: var(--soft); color: var(--accent); }
+      .header-menu .menu-resources a::after { content: ' ↗'; color: var(--accent); }
+      .header-menu .menu-separator { height: 1px; margin: 5px 10px; background: var(--border); }
+      .hero-links { display: none; }
+    }
+  </style>
+  <style>
+    .notice.neutral { border: 1px dashed #3a4048; background: var(--soft); color: var(--quiet); }
+    .notice.neutral b { color: var(--text); }
+    #s6 .notice { border: 1px dashed #3a4048; background: var(--soft); color: var(--quiet); }
+    #s6 .notice b { color: var(--text); }
+    #s7 .notice { border: 1px dashed #3a4048; background: var(--soft); color: var(--quiet); }
+    #s7 .notice b { color: var(--text); }
+    #s8 .notice { margin-top: 17px; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--muted); font-size: 15px; }
+    #s8 .notice b { color: var(--text); }
+    #s8.section { margin-bottom: 0; border-bottom: 0; }
+    #s3 .step-number { color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .hero-links { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-top: 27px; }
+    .hero-links a { color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); padding-bottom: 3px; }
+    .hero-links a::after { content: ' ↗'; color: var(--accent); }
+    .hero-links a:hover, .hero-links a:focus-visible { color: var(--text); border-color: var(--accent-border); }
+  </style>
+  <style>
+    /* Единая компактная шкала типографики: минус 5 px там, где это не нарушает читаемость. */
+    .logo { font-size: 19px; }
+    .logo span { font-size: 9px; }
+    .header-status { font-size: 9px; }
+    .eyebrow, .section-number { font-size: 9px; }
+    h1 { font-size: clamp(31px, calc(5vw - 5px), 49px); }
+    h2 { font-size: 22px; }
+    h3 { font-size: 10px; }
+    .hero p { font-size: 12px; }
+    .badge { font-size: 9px; }
+    .nav strong, .nav a { font-size: 9px; }
+    .section p, .section li { font-size: 11px; }
+    .card, .notice { font-size: 11px; }
+    .step, #s3 .step-number { font-size: 9px; }
+    .path-item p { font-size: 10px; }
+    table { font-size: 10px; }
+    th { font-size: 9px; }
+    .footer { font-size: 9px; }
+    .hero-links a { font-size: 9px; }
+
+    @media (max-width: 920px) {
+      h1 { font-size: clamp(29px, calc(10vw - 5px), 43px); }
+      h2 { font-size: clamp(21px, calc(7.5vw - 5px), 29px); }
+      .hero p, .section p, .section li { font-size: 12px; }
+      .mobile-nav summary { font-size: 9px; }
+      .mobile-nav a, .header-menu a { font-size: 10px; }
+      .hero-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Перейти к методологии</a>
+  <header class="header"><div class="container header-inner"><a class="logo" href="#top" aria-label="QUD"><span>QUD</span></a><span class="status">Методология TDA</span><details class="header-menu"><summary aria-label="Открыть содержание"><span class="sr-only">Содержание</span><span class="menu-icon" aria-hidden="true"></span></summary><nav aria-label="Содержание"><div class="menu-resources"><a href="https://fx-qud.com/#audit" target="_blank" rel="noopener noreferrer">Философия QUD</a><a href="https://fx-qud.com/traders/tradermap/" target="_blank" rel="noopener noreferrer">Ценность стратегии</a></div><div class="menu-separator" aria-hidden="true"></div><a href="#s1">01 · Назначение методологии</a><a href="#s2">02 · Данные и периоды отчёта</a><a href="#s3">03 · Обозначения верхней части отчёта</a><a href="#s4">04 · Риск, Risk CV и защита позиции</a><a href="#s5">05 · QUD Leak Map</a><a href="#s6">06 · Остальные графики отчёта</a><a href="#s7">07 · PERSONAL AI ASSISTANT и боковая панель</a><a href="#s8">08 · Непрерывная история Trial и Basic</a><a href="#s9">09 · Изменения методологии</a></nav></details></div></header>
+  <main id="top">
+    <section class="hero"><div class="container"><span class="eyebrow">QUD · TDA</span><h1>Методология TDA</h1><p><strong>Ознакомительное описание показателей, графиков и периодов наблюдения в отчётах Trial и Basic.</strong></p><div class="hero-links"><a href="https://fx-qud.com/#audit" target="_blank" rel="noopener noreferrer">Философия QUD</a><a href="https://fx-qud.com/traders/tradermap/" target="_blank" rel="noopener noreferrer">Как стратегия может создавать ценность для трейдера</a></div></div></section>
+    <section id="content" class="document"><div class="container layout">
+      <aside class="nav"><strong>Содержание</strong><nav aria-label="Разделы"><a href="#s1">01 · Назначение методологии</a><a href="#s2">02 · Данные и периоды отчёта</a><a href="#s3">03 · Обозначения верхней части отчёта</a><a href="#s4">04 · Риск, Risk CV и защита позиции</a><a href="#s5">05 · QUD Leak Map</a><a href="#s6">06 · Остальные графики отчёта</a><a href="#s7">07 · PERSONAL AI ASSISTANT и боковая панель</a><a href="#s8">08 · Непрерывная история Trial и Basic</a><a href="#s9">09 · Изменения методологии</a></nav></aside>
+      <article>
+<section id="s1" class="section"><span class="number">Раздел 01</span><h2>Назначение методологии</h2><p><strong>TDA</strong> — система наблюдения, сбора и структурирования данных торгового процесса. Отчёт показывает историю сделок, параметры риска, защиту позиций, исполнение заявленного плана и изменения этих данных во времени. Методология охватывает первый период Trial и продолжение наблюдения в Basic.</p><p>Показатели относятся к зафиксированным торговым событиям и доступной истории. Они не являются независимым заключением QUD о стратегии, подтверждением будущей доходности или основанием для автоматического допуска к капиталу. Торговые решения остаются за трейдером.</p><div class="notice"><b>Границы документа.</b> Здесь приведены назначения показателей и правила их отображения. Внутренние формулы, коэффициенты и технические процедуры QUD не раскрываются.</div></section>
+<section id="s2" class="section"><span class="number">Раздел 02</span><h2>Данные и периоды отчёта</h2><p>Отчёт формируется из доступных записей о торговых операциях и событиях по позициям. Закрытые сделки входят в показатели реализованного результата. Открытые позиции отражаются отдельно; их текущий результат не приравнивается к реализованному.</p><p><strong>Risk After Loss</strong> и <strong>PERSONAL AI ASSISTANT</strong> относятся к прошедшей отчётной неделе. <strong>Остальные аналитические показатели торгового процесса имеют накопительный формат:</strong> они охватывают доступную историю наблюдения с начала Trial и далее в Basic до конца указанного периода.</p><p>Изменение относительно предыдущего периода сопоставляет два последовательных накопленных состояния. Если исходных данных недостаточно, показатель может быть обозначен как недоступный или ограниченный по выборке; это не равно нулевому значению.</p></section>
+<section id="s3" class="section"><span class="number">Раздел 03</span><h2>Обозначения верхней части отчёта</h2><p><strong>Trust Score</strong> — сводный показатель наблюдаемой истории торгового процесса. Рядом с ним расположены три поля: <strong>risk</strong>, <strong>trust</strong> и <strong>prev.period</strong>. Подписи полей постоянны, а отображаемые статусы и числа формируются из данных конкретного отчёта и могут меняться от периода к периоду.</p><ul><li><strong>risk</strong> — текущий режим риска по доступным данным. Отображаемый статус меняется вместе с данными отчётного периода. Цвет поля соответствует показанному режиму.</li><li><strong>trust</strong> — текущая визуальная зона Trust Score. В зависимости от положения показателя на шкале отображается одна из зон: pre QUD, QUD Room или QUD Elite. Название зоны само по себе не является решением о статусе стратегии.</li><li><strong>prev.period</strong> — изменение Trust Score по сравнению с предыдущим отчётным периодом. Стрелка вверх обозначает рост, стрелка вниз — снижение, ноль — отсутствие изменения. Число рядом со стрелкой не фиксировано. Сравнение возможно при наличии предыдущего отчётного периода.</li></ul><p>Постепенное формирование Trust Score для новой стратегии связано с накоплением последовательной истории торговых действий. Верхние статусы отражают данные на дату конкретного отчёта и не служат постоянными характеристиками стратегии.</p><p><strong>STRATEGY INTEREST</strong> показывает два отдельных счётчика: <strong>DEMO</strong> — число владельцев капитала, наблюдающих за стратегией на виртуальном счёте; это не подключение и не основание для вознаграждения. <strong>REAL</strong> — число подтверждённых QUD подключений к стратегии; окончательное количество для расчёта вознаграждения может отличаться от текущего значения в отчёте.</p></section>
+<section id="s4" class="section"><span class="number">Раздел 04</span><h2>Риск, Risk CV и защита позиции</h2><p><strong>Planned Risk</strong> обозначает риск, зафиксированный для сделки до её исхода. <strong>Average Risk</strong> отражает типичный уровень риска по доступной истории, а <strong>Risk Consistency</strong> — его изменчивость между сделками.</p><p><strong>Risk CV</strong> — относительный показатель разброса планового риска. Значение и положение маркера на шкале показывают, насколько изменчив плановый риск в доступной истории. Это не процент риска на одну сделку и не показатель прибыли.</p><p><strong>SL Safe</strong> отражает наблюдаемую историю защитного Stop Loss по закрытым сделкам: наличие защиты, момент её установки и изменения, способные увеличить риск. При неполной истории событий статус показателя может быть ограничен.</p><p><strong>Planned Risk vs Actual Loss</strong> сопоставляет первоначальный риск и реализованный убыток по сделкам, для которых обе величины достоверны. Превышение отображается как отклонение факта от плана, без вывода о мотивах торгового решения.</p></section>
+<section id="s5" class="section"><span class="number">Раздел 05</span><h2>QUD Leak Map</h2><p><strong>QUD LEAK MAP</strong> — накопительная карта направлений, в которых наблюдаются отклонения торгового процесса. Каждый маркер расположен на цветовой шкале: движение вправо означает более выраженный сигнал в соответствующем блоке. Карта не устанавливает причину финансового результата и не является характеристикой стратегии в целом.</p><ul><li><strong>RISK LEAK</strong> — неоднородность или расширение планового риска между сделками.</li><li><strong>SL LEAK</strong> — события, связанные с отсутствием, несвоевременной установкой или изменением Stop Loss с увеличением риска.</li><li><strong>BEHAVIOR LEAK</strong> — наблюдаемые изменения риска и торгового поведения после убытков при наличии достаточных данных.</li><li><strong>EXECUTION LEAK</strong> — расхождение зафиксированного плана риска и фактического исполнения сделки.</li></ul><p>Показания карты охватывают накопленную историю наблюдения. Отсутствие сигнала в блоке означает отсутствие соответствующего подтверждённого отклонения в доступных данных, а не гарантию его невозможности.</p></section>
+<section id="s6" class="section"><span class="number">Раздел 06</span><h2>Остальные графики отчёта</h2><p>Графики ниже показывают разные стороны накопленной истории. Их состав зависит от данных и версии отчёта.</p><ul><li><strong>Win Ratio / Profit Factor.</strong> Доля результативных закрытых сделок и соотношение совокупной прибыли с совокупными убытками.</li><li><strong>Trust Score Over Time.</strong> Последовательность значений Trust Score по отчётным периодам.</li><li><strong>Account Balance / Equity.</strong> Динамика зафиксированного баланса и доступных снимков состояния счёта. Снимки не описывают непрерывно каждое внутридневное изменение.</li><li><strong>Holding Time Efficiency.</strong> Распределение результатов закрытых сделок по длительности удержания.</li><li><strong>Instrument Contribution &amp; Load.</strong> Вклад инструментов в количество результативных сделок и распределение торгового объёма.</li><li><strong>Long / Short.</strong> Раздельное представление данных по покупкам и продажам.</li><li><strong>Risk After Loss.</strong> Риск последующих сделок после убыточных событий за прошедшую неделю; при недостатке таких событий значение недоступно.</li></ul></section>
+<section id="s7" class="section"><span class="number">Раздел 07</span><h2>PERSONAL AI ASSISTANT и боковая панель</h2><p><strong>PERSONAL AI ASSISTANT</strong> — блок отчёта с краткими структурированными наблюдениями по торговым данным <strong>за прошедшую неделю</strong>. Формулировки привязаны к доступным данным и не являются торговыми сигналами или утверждениями о причинах действий трейдера.</p><p>Правая панель предоставляет доступ к материалам QUD, включая <strong>Trader Map</strong>, <strong>Strategy Subscription</strong> и методологию TDA, а также к разделу <strong>Support</strong> для связи с поддержкой.</p><p>Отдельная кнопка <strong>AI Assistant</strong> открывает <strong>Patterns</strong> — структурированную информацию о наблюдаемых торговых закономерностях. Для этого раздела предусмотрено обновление по итогам каждого месяца на основе накопленных аналитических данных. Месячные наблюдения в боковой панели и недельная сводка PERSONAL AI ASSISTANT относятся к разным периодам представления информации.</p></section>
+<section id="s8" class="section"><span class="number">Раздел 08</span><h2>Непрерывная история Trial и Basic</h2><p><strong>Trial</strong> формирует первый период наблюдения. При продолжении в <strong>Basic</strong> последующие периоды добавляются к истории, поэтому накопительные показатели отражают последовательность данных, а не только последнюю неделю.</p><p>При начале наблюдения новой стратегии Trust Score формируется постепенно. Такой порядок связан со сбором истории стратегии и наблюдением повторяемости её торговых действий на протяжении нескольких периодов. Короткий период не приравнивается к длительной истории.</p><p>Финансовый результат прошедшей недели учитывается в Trust Score через блок результативности наряду с данными о прибыльных и убыточных сделках. На показатель также влияют риск-дисциплина, защита позиций, поведение после убытков, соблюдение плана и накопленная история наблюдения; отдельные критические нарушения риска и защиты позиции учитываются дополнительно. Поэтому прибыльная неделя сама по себе не гарантирует роста Trust Score, а убыточная неделя не означает его автоматического снижения. При сопоставлении с предыдущим периодом итог зависит от совокупности наблюдаемых факторов.</p><p>Наличие отчёта, отдельного показателя или визуальной зоны Trust Score не гарантирует прибыль, дальнейшее сотрудничество либо предоставление капитала.</p></section>
+<section id="s9" class="section"><span class="number">Раздел 09</span><h2>Изменения методологии</h2><p>QUD вправе совершенствовать правила методологии <strong>неограниченное количество раз</strong>, в том числе формировать и добавлять новые метрики, источники данных и способы их представления. Версия методологии, применённая к отчётному периоду, служит контекстом для чтения его показателей.</p><p>При исправлении ранее опубликованных данных изменение должно быть обозначено как новая версия соответствующей истории. Текущая публичная редакция описывает назначение показателей без раскрытия внутренних расчётных правил QUD.</p></section>
+      </article>
+    </div></section>
+  </main>
+  <footer class="footer"><div class="container">QUD · Методология TDA<br>Редакция 1.0</div></footer>
+  <script>
+    document.querySelectorAll('.header-menu a').forEach((link) => {
+      link.addEventListener('click', () => document.querySelector('.header-menu').removeAttribute('open'));
+    });
+  </script>
+</body>
+</html>
