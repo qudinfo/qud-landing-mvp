@@ -42,13 +42,13 @@
     "current_period": "2026-10-12 — 2026-10-16"
   },
   "score": {
-    "qud_tda_score": 61,
-    "weekly_quality_score": 71.25,
+    "qud_tda_score": 97,
+    "weekly_quality_score": 96.92,
     "history_trust_factor": 1,
-    "trust_zone": "QUD Room",
-    "risk_mode": "critical",
-    "trust_score_delta": -27.75,
-    "display_class": "warn",
+    "trust_zone": "QUD Elite",
+    "risk_mode": "low",
+    "trust_score_delta": 7.92,
+    "display_class": "good",
     "zones": [
       {
         "from": 0,
@@ -69,7 +69,7 @@
         "status": "qud_elite"
       }
     ],
-    "main_damage_source": "Block A",
+    "main_damage_source": "Block E",
     "history": [
       {
         "label": "W1",
@@ -182,7 +182,7 @@
       {
         "label": "W19",
         "period": "2026-10-12 — 2026-10-16",
-        "value": 61.25,
+        "value": 96.92,
         "source": "current_report_recalculated"
       }
     ],
@@ -496,7 +496,7 @@
       },
       {
         "period": "2026-10-12 — 2026-10-16",
-        "value": 2.6,
+        "value": 1.22,
         "source": "cumulative_to_period_end"
       }
     ],
@@ -599,13 +599,13 @@
     ]
   },
   "leaks": {
-    "risk_leak_score": 80,
+    "risk_leak_score": 35,
     "sl_leak_score": 50,
     "behavior_leak_score": 40,
-    "execution_leak_score": 60,
+    "execution_leak_score": 70,
     "performance_leak_score": 0,
     "data_quality_leak_score": 0,
-    "main_leak": "Risk Leak",
+    "main_leak": "Execution Leak",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
     "history_end": "2026-10-16",
@@ -614,7 +614,7 @@
     "items": [
       {
         "name": "Risk Leak",
-        "score": 80
+        "score": 35
       },
       {
         "name": "SL Leak",
@@ -626,43 +626,43 @@
       },
       {
         "name": "Execution Leak",
-        "score": 60
+        "score": 70
       }
     ]
   },
   "risk": {
-    "avg_pct": 27.14,
-    "median_pct": 1.42,
-    "max_pct": 104.64,
+    "avg_pct": 1.3,
+    "median_pct": 1.32,
+    "max_pct": 1.52,
     "min_pct": 1.07,
-    "std_pct": 51.67,
-    "cv_value": 4.59,
+    "std_pct": 0.22,
+    "cv_value": 0.33,
     "cv": {
-      "value": 4.59,
-      "marker_pct": 100,
+      "value": 0.33,
+      "marker_pct": 32.8,
       "label": "RISK CV",
-      "status": "unstable",
+      "status": "stable",
       "min_label": "0.0",
       "mid_label": "0.5",
       "max_label": "1.0+",
       "scope": "cumulative_to_period_end",
-      "sample_trades_count": 75,
-      "source_average_risk_pct": 2.6015,
-      "source_std_risk_pct": 11.9479,
+      "sample_trades_count": 74,
+      "source_average_risk_pct": 1.2226,
+      "source_std_risk_pct": 0.401,
       "methodology_version": "BASIC_AUDIT_v1_RISK_CV_CUMULATIVE_v1"
     },
-    "personal_risk_baseline_pct": 1.1955,
-    "personal_risk_low_bound_pct": 0.5977,
-    "personal_risk_high_bound_pct": 1.7932,
+    "personal_risk_baseline_pct": 1.188,
+    "personal_risk_low_bound_pct": 0.594,
+    "personal_risk_high_bound_pct": 1.782,
     "risk_reduced_count": 0,
     "risk_normal_count": 3,
-    "risk_expansion_count": 1,
-    "risk_expansion_pct": 25,
-    "risk_drift_count": 1,
+    "risk_expansion_count": 0,
+    "risk_expansion_pct": 0,
+    "risk_drift_count": 0,
     "drift": {
-      "count": 1,
-      "value": 1,
-      "status": "expansion",
+      "count": 0,
+      "value": 0,
+      "status": "neutral",
       "label": "Risk Drift"
     },
     "zone_items": [
@@ -675,13 +675,13 @@
       {
         "label": "Normal Risk",
         "count": 3,
-        "pct": 75,
+        "pct": 100,
         "status": "normal"
       },
       {
         "label": "Risk Expansion",
-        "count": 1,
-        "pct": 25,
+        "count": 0,
+        "pct": 0,
         "status": "expansion"
       }
     ],
@@ -690,20 +690,20 @@
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
       "history_end": "2026-10-16",
-      "valid_risk_trades_count": 75,
-      "personal_risk_baseline_pct": 1.1955,
-      "personal_risk_low_bound_pct": 0.5977,
-      "personal_risk_high_bound_pct": 1.7932,
+      "valid_risk_trades_count": 74,
+      "personal_risk_baseline_pct": 1.188,
+      "personal_risk_low_bound_pct": 0.594,
+      "personal_risk_high_bound_pct": 1.782,
       "risk_reduced_count": 1,
       "risk_normal_count": 69,
-      "risk_expansion_count": 5,
-      "risk_expansion_pct": 6.67,
-      "risk_drift_count": 4,
-      "risk_drift_pct": 5.33,
+      "risk_expansion_count": 4,
+      "risk_expansion_pct": 5.41,
+      "risk_drift_count": 3,
+      "risk_drift_pct": 4.05,
       "drift": {
-        "count": 4,
-        "pct": 5.33,
-        "value": 5.33,
+        "count": 3,
+        "pct": 4.05,
+        "value": 4.05,
         "direction": "toward_expansion",
         "status": "expansion",
         "label": "Risk Drift"
@@ -712,19 +712,19 @@
         {
           "label": "Reduced Risk",
           "count": 1,
-          "pct": 1.33,
+          "pct": 1.35,
           "status": "reduced"
         },
         {
           "label": "Normal Risk",
           "count": 69,
-          "pct": 92,
+          "pct": 93.24,
           "status": "normal"
         },
         {
           "label": "Risk Expansion",
-          "count": 5,
-          "pct": 6.67,
+          "count": 4,
+          "pct": 5.41,
           "status": "expansion"
         }
       ],
@@ -1248,23 +1248,16 @@
         "timestamp": "2026-10-15 09:49:07",
         "week": "W19",
         "status": "normal"
-      },
-      {
-        "trade_id": "aud_00003_756010900_58928038630",
-        "risk_pct": 104.6371,
-        "timestamp": "2026-10-16 09:51:46",
-        "week": "W19",
-        "status": "expansion"
       }
     ],
-    "trades_above_2pct": 1,
-    "trades_above_3pct": 1,
-    "valid_risk_trades_count": 4,
+    "trades_above_2pct": 0,
+    "trades_above_3pct": 0,
+    "valid_risk_trades_count": 3,
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
     "history_end": "2026-10-16",
-    "risk_drift_pct": 5.33,
+    "risk_drift_pct": 4.05,
     "methodology_version": "BASIC_AUDIT_v1_RISK_ZONE_CUMULATIVE_v2"
   },
   "sl": {
@@ -1281,8 +1274,8 @@
     "sl_changed_count": 0,
     "sl_removed_count": 0,
     "risk_increase_after_sl_change_count": 0,
-    "personal_risk_baseline_pct": 1.4192,
-    "sl_risk_high_bound_pct": 2.1288,
+    "personal_risk_baseline_pct": 1.3227,
+    "sl_risk_high_bound_pct": 1.984,
     "sl_risk_expansion_after_change_count": 0,
     "max_risk_after_sl_change_pct": null,
     "block_score": 100,
@@ -1343,7 +1336,7 @@
   "behavior": {
     "trade_after_loss_count": 0,
     "risk_after_loss_avg_pct": null,
-    "risk_after_win_avg_pct": 27.14,
+    "risk_after_win_avg_pct": 1.3,
     "risk_after_1_loss_pct": null,
     "risk_after_2_losses_pct": null,
     "risk_after_3_losses_pct": null,
@@ -1371,8 +1364,8 @@
       }
     ],
     "post_loss_summary": {
-      "baseline_pct": 1.42,
-      "high_bound_pct": 2.13,
+      "baseline_pct": 1.32,
+      "high_bound_pct": 1.98,
       "avg_risk_pct": null,
       "risk_drift_pct": null,
       "expansion_count": 0,
@@ -1383,17 +1376,17 @@
   },
   "plan_fact": {
     "trades_total": 75,
-    "trades_count": 75,
-    "excluded_trades_count": 0,
-    "valid_sample_pct": 100,
-    "planned_risk_avg_pct": 2.6,
-    "actual_loss_avg_pct": 0.97,
-    "deviation_avg_pct": -3.38,
+    "trades_count": 74,
+    "excluded_trades_count": 1,
+    "valid_sample_pct": 98.67,
+    "planned_risk_avg_pct": 1.22,
+    "actual_loss_avg_pct": 0.98,
+    "deviation_avg_pct": -0.13,
     "deviation_max_pct": 0.19,
-    "deviation_avg_abs_pct": 3.39,
-    "deviation_max_abs_pct": 104.04,
+    "deviation_avg_abs_pct": 0.14,
+    "deviation_max_abs_pct": 1,
     "negative_deviation_trades": 10,
-    "negative_deviation_trades_pct": 13.33,
+    "negative_deviation_trades_pct": 13.51,
     "execution_leak_flag": true,
     "data_status": "live",
     "points": [
@@ -2136,38 +2129,28 @@
         "status": "within_plan",
         "week": "W19",
         "timestamp": "2026-10-15 09:49:07"
-      },
-      {
-        "trade_id": "aud_00003_756010900_58928038630",
-        "planned": 104.6371,
-        "actual": 0.5936,
-        "within_plan": 0.5936,
-        "excess_loss": 0,
-        "status": "within_plan",
-        "week": "W19",
-        "timestamp": "2026-10-16 09:51:46"
       }
     ],
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-04",
     "period_end": "2026-10-16",
-    "eligible_loss_trades_count": 32,
-    "excluded_loss_trades_count": 0,
+    "eligible_loss_trades_count": 31,
+    "excluded_loss_trades_count": 1,
     "methodology_version": "BASIC_AUDIT_v1_PLAN_FACT_CUMULATIVE_v1"
   },
   "findings": {
     "items": [
       {
-        "text": "16.10.2026 сделка EURUSD sell №58928038630 открыта по 1,12364 объёмом 1,10 лота с SL 1,23470. При балансе 11 675,21 USD риск до SL составил 12 216,60 USD (104,64%). Перенос SL в доступных журналах не зафиксирован; фактический убыток — 69,30 USD.",
-        "severity": "critical",
-        "display_class": "danger",
+        "text": "Максимальный плановый риск сделки за неделю составил 1,52% счёта.",
+        "severity": "medium",
+        "display_class": "warn",
         "source_block": "Block A",
         "metric": "weekly_max_planned_risk"
       },
       {
-        "text": "Trust Score снизился с 89,00 до 61,25. За неделю Block A = 40, Block D = 60; критические нарушения вычли 10 баллов. Block C без выборки исключён из расчёта.",
-        "severity": "high",
-        "display_class": "danger",
+        "text": "Trust Score вырос с 89,00 до 96,92. За неделю Block A = 100, Block D = N/A; критические нарушения вычли 0 баллов. Block C без выборки исключён из расчёта.",
+        "severity": "positive",
+        "display_class": "good",
         "source_block": "Score Model",
         "metric": "weekly_trust_score_change"
       },
@@ -2194,9 +2177,9 @@
       }
     ],
     "review_notice": {
-      "status": "pending_review",
+      "status": "adjudicated_excluded",
       "title": "ВНИМАНИЕ ТРЕЙДЕРУ!",
-      "text": "По сделке №58928038630 зафиксирован SL 1,23470 при открытии и расчётный риск 104,64% счёта. Обстоятельства установки SL будут дополнительно проверены; просим трейдера предоставить письменное объяснение. До завершения проверки Trust Score 61,25 рассчитан по зафиксированным данным. После проверки журналов и рассмотрения пояснения будет принято окончательное решение, признавать ли эпизод ошибкой и требуется ли пересчёт Trust Score."
+      "text": "По сделке №58928038630 исходный SL 1,23470 и фактический результат сделки сохранены. На основании письменного объяснения трейдера и принятого решения плановый риск 104,64% исключён только из риск-метрик и Plan vs Fact. Предполагаемый правильный SL не подставлялся. Trust Score пересчитан: 96,92. Это ручное исключение для оценки, а не изменение истории терминала."
     }
   },
   "technical_warning": {
@@ -3408,8 +3391,8 @@
       },
       {
         "name": "Risk Expansion",
-        "marker_pct": 6.67,
-        "display_value": "6.67%",
+        "marker_pct": 5.41,
+        "display_value": "5.41%",
         "status": "expansion",
         "label_left": "Reduced",
         "label_right": "Expanded",
@@ -3417,19 +3400,19 @@
           {
             "label": "Reduced Risk",
             "count": 1,
-            "pct": 1.33,
+            "pct": 1.35,
             "status": "reduced"
           },
           {
             "label": "Normal Risk",
             "count": 69,
-            "pct": 92,
+            "pct": 93.24,
             "status": "normal"
           },
           {
             "label": "Risk Expansion",
-            "count": 5,
-            "pct": 6.67,
+            "count": 4,
+            "pct": 5.41,
             "status": "expansion"
           }
         ]
@@ -3456,15 +3439,15 @@
       {
         "metric": "QUD TDA Score",
         "previous": 89,
-        "current": 61.25,
-        "change": -27.75,
-        "status": "worse"
+        "current": 96.92,
+        "change": 7.92,
+        "status": "improved"
       },
       {
         "metric": "Risk CV",
         "previous": 0.150513816,
-        "current": 1.9040502779,
-        "change": 1.7535364618,
+        "current": 0.1726833162,
+        "change": 0.0221695001,
         "status": "worse"
       },
       {
@@ -3484,14 +3467,14 @@
       {
         "metric": "Plan vs Fact Deviation",
         "previous": -0.4309147889,
-        "current": -104.0435,
-        "change": -103.6125852111,
-        "status": "improved"
+        "current": null,
+        "change": 0.4309147889,
+        "status": "not_available"
       },
       {
         "metric": "Main Leak",
         "previous": "Performance Leak",
-        "current": "Risk Leak",
+        "current": "Execution Leak",
         "change": "changed",
         "status": "changed"
       }
@@ -3589,7 +3572,7 @@
       },
       {
         "period": "2026-10-12 — 2026-10-16",
-        "value": 61.25,
+        "value": 96.92,
         "source": "current_report_recalculated"
       }
     ]
@@ -3614,7 +3597,29 @@
       "account.balance_series",
       "account.equity_series"
     ]
-  }
+  },
+  "manual_adjudications": [
+    {
+      "trade_id": "aud_00003_756010900_58928038630",
+      "position_ticket": "58928038630",
+      "decision_date": "2026-10-18",
+      "decision": "exclude_unreliable_planned_risk_from_scoring",
+      "basis": "Письменное объяснение трейдера и подтверждённое владельцем отчёта решение. Точное предполагаемое значение SL не установлено.",
+      "raw_sl_at_open": 1.2347,
+      "raw_planned_risk_pct": 104.6371,
+      "raw_planned_risk_money": 12216.6,
+      "keep_actual_trade_result": true,
+      "keep_sl_event_history": true,
+      "corrected_sl": null,
+      "scoring_scope": "Исключить только недостоверный плановый риск из риск-метрик и Plan vs Fact; результат сделки, баланс, просадку и факт установки SL оставить без изменений.",
+      "raw_profit_money": -69.3,
+      "excluded_from_scored_risk": true,
+      "excluded_from_plan_fact": true,
+      "included_in_performance": true,
+      "included_in_balance": true,
+      "included_in_sl_discipline": true
+    }
+  ]
 }
 </script>
 <script>
@@ -4704,7 +4709,7 @@ function renderFindings(container,items){
 function renderReviewNotice(notice){
   const container=$('reviewNotice');
   if(!container)return;
-  container.hidden=!notice||notice.status!=='pending_review';
+  container.hidden=!notice||!['pending_review','adjudicated_excluded'].includes(notice.status);
   $('reviewNoticeTitle').textContent=notice?.title||'';
   $('reviewNoticeText').textContent=notice?.text||'';
 }
