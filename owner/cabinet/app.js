@@ -16,6 +16,26 @@
   const closeButton = document.getElementById('sidebar-close');
   const backdrop = document.getElementById('sidebar-backdrop');
   const viewTitle = document.getElementById('view-title');
+  const topbarSectionIcon = document.querySelector('.topbar-section-icon use');
+  const brokerApplicationDialog = document.getElementById('broker-application-dialog');
+  const brokerApplicationForm = document.getElementById('broker-application-form');
+  const brokerAccountDialog = document.getElementById('broker-account-dialog');
+  const brokerAccountForm = document.getElementById('broker-account-form');
+  const brokerAccountCard = document.querySelector('.broker-account-card');
+  const brokerAccountEntry = document.querySelector('.broker-account-entry');
+  const brokerAccountTemplate = brokerAccountEntry.cloneNode(true);
+  const brokerAccountBroker = document.getElementById('broker-account-input-broker');
+  const brokerAccountNumber = document.getElementById('broker-account-input-number');
+  const brokerAccountPassword = document.getElementById('broker-account-input-password');
+  const applicationStrategy = document.getElementById('application-strategy');
+  const applicationPeriod = document.getElementById('application-period');
+  const applicationAccount = document.getElementById('application-account');
+  const applicationAccountHelp = document.getElementById('application-account-help');
+  const costPeriod = document.getElementById('broker-cost-period');
+  const costAmount = document.getElementById('broker-cost-amount');
+  const costNote = document.getElementById('broker-cost-note');
+  const tariffBlock = document.getElementById('broker-tariffs');
+  const oneMonthOption = applicationPeriod.querySelector('option[value="1"]');
   const content = document.getElementById('cabinet-content');
   const ownerShell = document.getElementById('owner-shell');
   const ownerLogin = document.getElementById('owner-login');
@@ -23,6 +43,7 @@
   const strategyView = document.getElementById('view-strategies');
   const strategyCatalog = document.getElementById('strategy-catalog');
   const strategyCount = document.getElementById('strategy-count');
+  const catalogDescription = document.getElementById('catalog-description');
   const navItems = Array.from(document.querySelectorAll('.nav-item[data-view]'));
   const viewTriggers = Array.from(document.querySelectorAll('[data-view], [data-open-view]'));
   const demoTriggers = Array.from(document.querySelectorAll('[data-demo-action]'));
@@ -42,6 +63,58 @@
   let selectedStrategyId = '';
   let strategyDetailRequest = 0;
   let strategyDetailController;
+  let applicationStrategies = null;
+  let applicationRequest = 0;
+  let applicationController;
+  const maxDemoBrokerAccounts = 3;
+  let demoBrokerAccounts = [];
+  const viewIcons = {
+    overview: '#icon-overview',
+    strategies: '#icon-strategies',
+    portfolio: '#icon-portfolio',
+    'real-account': '#icon-account',
+    documents: '#icon-documents',
+    profile: '#icon-users'
+  };
+
+  function accountField(entry, id) {
+    return entry.querySelector(`[id^="${id}"]`);
+  }
+
+  function hideDemoPassword(entry) {
+    const entries = entry ? [entry] : Array.from(brokerAccountCard.querySelectorAll('.broker-account-entry'));
+    entries.forEach((accountEntry) => {
+      accountField(accountEntry, 'broker-password-value').textContent = '••••••••';
+      const toggle = accountField(accountEntry, 'broker-password-toggle');
+      toggle.setAttribute('aria-pressed', 'false');
+      toggle.setAttribute('aria-label', 'Показать мастер-пароль');
+      toggle.querySelector('use').setAttribute('href', '#icon-eye');
+    });
+  }
+
+  function clearDemoBrokerAccount() {
+    brokerAccountForm.reset();
+    if (brokerAccountDialog.open) brokerAccountDialog.close();
+    hideDemoPassword();
+    if (!demoBrokerAccounts.length) return;
+    demoBrokerAccounts = [];
+    brokerAccountCard.querySelectorAll('.broker-account-entry[data-demo-id]').forEach((entry) => {
+      if (entry !== brokerAccountEntry) entry.remove();
+    });
+    accountField(brokerAccountEntry, 'broker-password-field').hidden = true;
+    delete brokerAccountEntry.dataset.demoId;
+    delete brokerAccountEntry.dataset.connected;
+    document.getElementById('broker-account-name').textContent = 'Новый брокерский счёт';
+    document.getElementById('broker-account-badge').textContent = 'Заявка № —';
+    document.getElementById('broker-account-status').textContent = 'Не подключён';
+    document.getElementById('broker-account-description').textContent =
+      'После подключения здесь появятся подтверждённые данные счёта и выбранной стратегии.';
+    document.getElementById('broker-account-broker').textContent = '—';
+    document.getElementById('broker-account-number').textContent = '—';
+    document.getElementById('broker-account-state').textContent = 'Ожидает подключения';
+    document.getElementById('open-broker-account').hidden = false;
+    brokerAccountEntry.open = false;
+  }
 
   function closeSidebar({ restoreFocus = false } = {}) {
     sidebar.classList.remove('is-open');
@@ -131,7 +204,9 @@
         Number.isFinite(row.period_return_pct) &&
         Number.isFinite(row.strategy_return_since_start_pct) &&
         Number.isFinite(row.closed_trades_period) &&
-        Number.isFinite(row.trust_score_snapshot) &&
+        (Number.isFinite(row.trust_score_snapshot) ||
+          (row.closed_trades_period === 0 && row.trust_score_snapshot === null &&
+            row.trust_zone_snapshot === 'NO_TRADES')) &&
         typeof row.trust_zone_snapshot === 'string' && row.trust_zone_snapshot.trim() !== ''
       );
   }
@@ -166,6 +241,13 @@
     strategyCatalog.replaceChildren();
     strategyCatalog.setAttribute('aria-busy', 'false');
     strategyCount.textContent = formatStrategyCount(strategies.length);
+    const confirmedRealData = strategies.length > 0 && strategies.every((strategy) =>
+      strategy.data_status.toUpperCase() === 'CONFIRMED' &&
+      !strategy.strategy_id.includes('-DEMO-')
+    );
+    catalogDescription.textContent = confirmedRealData
+      ? 'В каталоге представлены реальные торговые стратегии QUD. Показатели основаны на подтверждённой истории сделок и аналитике доходности и риска, что помогает оценивать стратегию перед виртуальным наблюдением. Исторические результаты не гарантируют будущую доходность.'
+      : 'Каталог QUD предназначен для анализа реальных торговых стратегий на основе подтверждённой истории сделок и актуальной аналитики риска. Демонстрационные значения не являются основанием для инвестиционных решений.';
 
     if (strategies.length === 0) {
       const empty = document.createElement('div');
@@ -450,7 +532,6 @@
   function openStrategy(strategyId) {
     selectedStrategyId = strategyId;
     strategyView.classList.add('is-detail');
-    strategyCount.textContent = '';
     content.scrollTop = 0;
     if (strategyDetailCache.has(strategyId)) {
       renderStrategyDetail(strategyDetailCache.get(strategyId));
@@ -583,6 +664,130 @@
     strategyCount.textContent = '';
     strategyCatalog.setAttribute('aria-busy', 'false');
     strategyCatalog.innerHTML = '<div class="strategy-state" role="status">Загрузка стратегий…</div>';
+    applicationRequest += 1;
+    if (applicationController) applicationController.abort();
+    applicationController = undefined;
+    applicationStrategies = null;
+    applicationStrategy.disabled = true;
+    applicationStrategy.replaceChildren(new Option('Загрузка стратегий…', ''));
+  }
+
+  function renderApplicationStrategies(strategies) {
+    applicationStrategies = strategies;
+    applicationStrategy.replaceChildren(new Option(
+      strategies.length ? 'Выберите стратегию' : 'Доступных стратегий пока нет',
+      ''
+    ));
+    strategies.forEach((strategy) => {
+      applicationStrategy.add(new Option(strategy.strategy_id, strategy.strategy_id));
+    });
+    applicationStrategy.disabled = strategies.length === 0;
+    updateApplicationCost();
+  }
+
+  function renderApplicationAccounts() {
+    const connected = Array.from(document.querySelectorAll('.broker-account-entry[data-connected="true"]'))
+      .filter((entry) => ['accountId', 'broker', 'server', 'accountNumber']
+        .every((key) => entry.dataset[key]?.trim()));
+    const availableDemoAccounts = demoBrokerAccounts.filter((account) =>
+      !connected.some((entry) => entry.dataset.demoId === account.id)
+    );
+    const accountCount = connected.length + availableDemoAccounts.length;
+    applicationAccount.replaceChildren(new Option(
+      accountCount ? 'Выберите брокерский счёт' : 'Нет брокерских счетов',
+      ''
+    ));
+    connected.forEach((entry) => {
+      const { accountId, broker, server, accountNumber } = entry.dataset;
+      applicationAccount.add(new Option(`${broker} · ${server} · ${accountNumber}`, accountId));
+    });
+    availableDemoAccounts.forEach((account) => {
+      applicationAccount.add(new Option(
+        `${account.broker} · ${account.accountNumber} (тестовый счёт)`,
+        account.id
+      ));
+    });
+    applicationAccount.disabled = accountCount === 0;
+    applicationAccountHelp.textContent = availableDemoAccounts.length
+      ? 'Тестовые счета доступны для предварительного выбора; заявка пока не отправляется в QUD.'
+      : 'Выберите счёт из блока «Мои брокерские счета».';
+  }
+
+  function updateApplicationCost() {
+    const months = Number(applicationPeriod.value);
+    costPeriod.textContent = months === 1 ? '1 месяц' : months === 3 ? '3 месяца' : 'Не выбран';
+    costAmount.textContent = '—';
+    if (!applicationStrategy.value || !months) {
+      costNote.textContent = 'Выберите стратегию и период обслуживания.';
+      return;
+    }
+
+    const strategy = applicationStrategies?.find((item) => item.strategy_id === applicationStrategy.value);
+    const category = typeof strategy?.category === 'string' ? strategy.category.trim().toLowerCase() : '';
+    // Published tariff rows belong to the visible "Тарифы" block; no rate is inferred from placeholder text.
+    const rates = Array.from(tariffBlock.querySelectorAll('[data-service-tariff]'));
+    const rate = rates.find((item) => Number(item.dataset.periodMonths) === months &&
+      item.dataset.strategyCategory?.trim().toLowerCase() === category) ||
+      rates.find((item) => Number(item.dataset.periodMonths) === months &&
+        item.dataset.strategyCategory?.trim().toLowerCase() === 'all');
+    const amount = rate?.dataset.priceRub ? Number(rate.dataset.priceRub) : NaN;
+    if (!Number.isSafeInteger(amount) || amount <= 0) {
+      costNote.textContent = 'Утверждённый тариф для выбранных параметров пока не опубликован.';
+      return;
+    }
+    costAmount.textContent = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(amount);
+    costNote.textContent = 'Предварительная сумма по опубликованному тарифу; окончательные условия подтвердит QUD.';
+  }
+
+  function syncApplicationPeriod() {
+    const selected = applicationStrategies?.find((strategy) =>
+      strategy.strategy_id === applicationStrategy.value
+    );
+    const isElite = typeof selected?.category === 'string' &&
+      selected.category.trim().toLowerCase() === 'elite';
+    oneMonthOption.disabled = isElite;
+    if (isElite) applicationPeriod.value = '3';
+    updateApplicationCost();
+  }
+
+  async function loadApplicationStrategies() {
+    if (strategyCache || applicationStrategies) {
+      renderApplicationStrategies(strategyCache || applicationStrategies);
+      return;
+    }
+    applicationStrategy.disabled = true;
+    applicationStrategy.replaceChildren(new Option('Загрузка стратегий…', ''));
+    const requestId = ++applicationRequest;
+    const controller = new AbortController();
+    applicationController = controller;
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const response = await fetch('/owner/api/strategies', {
+        method: 'GET',
+        credentials: 'same-origin',
+        cache: 'no-store',
+        signal: controller.signal,
+        headers: { Accept: 'application/json' }
+      });
+      if (response.status === 401) {
+        window.location.reload();
+        return;
+      }
+      const data = await response.json();
+      if (!response.ok || data.ok !== true || !Array.isArray(data.strategies) ||
+          !data.strategies.every(isValidStrategy)) {
+        throw new Error('INVALID_STRATEGY_RESPONSE');
+      }
+      if (requestId !== applicationRequest || !brokerApplicationDialog.open) return;
+      renderApplicationStrategies(data.strategies);
+    } catch {
+      if (requestId !== applicationRequest || !brokerApplicationDialog.open) return;
+      applicationStrategy.replaceChildren(new Option('Не удалось загрузить стратегии', ''));
+    } finally {
+      window.clearTimeout(timeout);
+      if (applicationController === controller) applicationController = undefined;
+    }
   }
 
   function activateView(requestedView, { updateHash = true, moveFocus = false } = {}) {
@@ -604,6 +809,8 @@
     });
 
     viewTitle.textContent = activeView.dataset.title || 'Owner Cabinet';
+    topbarSectionIcon.setAttribute('href', viewIcons[viewName]);
+    if (viewName !== 'real-account') hideDemoPassword();
     document.title = `${viewTitle.textContent} — QUD Capital Owner`;
 
     if (updateHash && window.location.hash !== `#${viewName}`) {
@@ -637,6 +844,108 @@
     });
   });
 
+  function appendDemoBrokerAccount(broker, accountNumber, masterPassword) {
+    const index = demoBrokerAccounts.length + 1;
+    const account = { id: `demo-local-account-${index}`, broker, accountNumber, masterPassword };
+    const entry = index === 1 ? brokerAccountEntry : brokerAccountTemplate.cloneNode(true);
+    if (index > 1) {
+      entry.querySelectorAll('[id]').forEach((node) => { node.id = `${node.id}-${index}`; });
+      brokerAccountCard.append(entry);
+    }
+    hideDemoPassword();
+    entry.dataset.demoId = account.id;
+    entry.dataset.connected = 'false';
+    accountField(entry, 'broker-account-name').textContent = `${broker} · ${accountNumber}`;
+    accountField(entry, 'broker-account-badge').textContent = 'Тестовый счёт';
+    accountField(entry, 'broker-account-status').textContent = 'Без стратегии';
+    accountField(entry, 'broker-account-description').textContent =
+      'Счёт добавлен только для локального предпросмотра. Данные не отправлены QUD; стратегия не подключена.';
+    accountField(entry, 'broker-account-broker').textContent = broker;
+    accountField(entry, 'broker-account-number').textContent = accountNumber;
+    accountField(entry, 'broker-account-state').textContent = 'Тестовый режим';
+    accountField(entry, 'broker-password-field').hidden = false;
+    entry.addEventListener('toggle', () => {
+      if (!entry.open) hideDemoPassword(entry);
+    });
+    demoBrokerAccounts.push(account);
+    entry.open = true;
+    document.getElementById('open-broker-account').hidden = demoBrokerAccounts.length >= maxDemoBrokerAccounts;
+  }
+
+  document.getElementById('open-broker-account').addEventListener('click', () => {
+    if (demoBrokerAccounts.length >= maxDemoBrokerAccounts) return;
+    brokerAccountForm.reset();
+    hideDemoPassword();
+    brokerAccountBroker.setCustomValidity('');
+    brokerAccountNumber.setCustomValidity('');
+    brokerAccountDialog.showModal();
+    brokerAccountBroker.focus();
+  });
+  document.getElementById('close-broker-account').addEventListener('click', () => brokerAccountDialog.close());
+  document.getElementById('cancel-broker-account').addEventListener('click', () => brokerAccountDialog.close());
+  brokerAccountDialog.addEventListener('close', () => brokerAccountForm.reset());
+  [brokerAccountBroker, brokerAccountNumber].forEach((input) => {
+    input.addEventListener('input', () => input.setCustomValidity(''));
+  });
+  brokerAccountCard.addEventListener('click', (event) => {
+    const toggle = event.target.closest('button[id^="broker-password-toggle"]');
+    if (!toggle) return;
+    const entry = toggle.closest('.broker-account-entry');
+    const account = demoBrokerAccounts.find((item) => item.id === entry?.dataset.demoId);
+    if (!account) return;
+    const reveal = toggle.getAttribute('aria-pressed') !== 'true';
+    if (reveal) hideDemoPassword();
+    accountField(entry, 'broker-password-value').textContent = reveal ? account.masterPassword : '••••••••';
+    toggle.setAttribute('aria-pressed', String(reveal));
+    toggle.setAttribute('aria-label', reveal ? 'Скрыть мастер-пароль' : 'Показать мастер-пароль');
+    toggle.querySelector('use').setAttribute('href', reveal ? '#icon-eye-off' : '#icon-eye');
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) hideDemoPassword();
+  });
+  brokerAccountForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (demoBrokerAccounts.length >= maxDemoBrokerAccounts) return;
+    const broker = brokerAccountBroker.value.trim();
+    const accountNumber = brokerAccountNumber.value.trim();
+    if (!broker) {
+      brokerAccountBroker.setCustomValidity('Укажите брокера.');
+      brokerAccountBroker.reportValidity();
+      return;
+    }
+    if (!accountNumber) {
+      brokerAccountNumber.setCustomValidity('Укажите номер счёта.');
+      brokerAccountNumber.reportValidity();
+      return;
+    }
+    const masterPassword = brokerAccountPassword.value;
+    brokerAccountForm.reset();
+    appendDemoBrokerAccount(broker, accountNumber, masterPassword);
+    brokerAccountDialog.close();
+  });
+
+  new MutationObserver(() => {
+    if (ownerShell.hidden) clearDemoBrokerAccount();
+  }).observe(ownerShell, { attributes: true, attributeFilter: ['hidden'] });
+
+  document.getElementById('open-broker-application').addEventListener('click', () => {
+    brokerApplicationForm.reset();
+    oneMonthOption.disabled = false;
+    renderApplicationAccounts();
+    updateApplicationCost();
+    brokerApplicationDialog.showModal();
+    loadApplicationStrategies();
+  });
+  document.getElementById('close-broker-application').addEventListener('click', () => brokerApplicationDialog.close());
+  brokerApplicationDialog.addEventListener('close', () => {
+    applicationRequest += 1;
+    if (applicationController) applicationController.abort();
+    applicationController = undefined;
+  });
+  applicationStrategy.addEventListener('change', syncApplicationPeriod);
+  applicationPeriod.addEventListener('change', updateApplicationCost);
+  brokerApplicationForm.addEventListener('submit', (event) => event.preventDefault());
+
   menuButton.addEventListener('click', () => {
     if (sidebar.classList.contains('is-open')) closeSidebar({ restoreFocus: true });
     else openSidebar();
@@ -665,4 +974,196 @@
   }).observe(ownerLogin, { attributes: true, attributeFilter: ['hidden'] });
 
   activateView(window.location.hash.slice(1), { updateHash: false });
+})();
+
+// Support uses only the authenticated Owner API. No email or Owner ID is sent by the browser.
+(() => {
+  'use strict';
+  const byId = (id) => document.getElementById(id);
+  const dialog = byId('support-dialog');
+  const openButton = byId('open-support');
+  const unreadBadge = byId('support-unread');
+  const from = byId('support-from');
+  const ownerId = byId('support-owner-id');
+  const historyState = byId('support-history-state');
+  const historyCount = byId('support-history-count');
+  const messages = byId('support-messages');
+  const messageInput = byId('support-message');
+  const feedback = byId('support-feedback');
+  const sendButton = byId('support-send');
+  const endpoint = '/owner/api/support';
+  let authenticated = false;
+  let available = false;
+  let ownerEmail = '';
+  let unreadCount = 0;
+  let refreshTimer;
+  let requestVersion = 0;
+  let sending = false;
+
+  function showUnread(count) {
+    unreadCount = Math.max(0, Math.min(Number(count) || 0, 999));
+    unreadBadge.hidden = unreadCount === 0;
+    unreadBadge.textContent = unreadCount > 9 ? '9+' : String(unreadCount);
+    const label = unreadCount ? `Поддержка, новых сообщений: ${unreadCount}` : 'Поддержка';
+    openButton.setAttribute('aria-label', label);
+    openButton.title = label;
+  }
+
+  function updateComposer() {
+    const canSend = authenticated && available && ownerEmail && !sending;
+    messageInput.disabled = !canSend;
+    sendButton.disabled = !canSend || !messageInput.value.trim();
+  }
+
+  async function supportRequest(path, options = {}) {
+    const response = await fetch(path, {
+      credentials: 'same-origin', cache: 'no-store',
+      headers: { Accept: 'application/json', ...(options.body ? { 'Content-Type': 'application/json' } : {}) },
+      ...options
+    });
+    const payload = await response.json().catch(() => null);
+    if (!response.ok || !payload || payload.ok !== true) {
+      const error = new Error('SUPPORT_UNAVAILABLE');
+      error.status = response.status;
+      throw error;
+    }
+    return payload;
+  }
+
+  function renderMessages(items) {
+    messages.replaceChildren();
+    historyCount.textContent = items.length ? `${items.length} сообщ.` : '';
+    historyState.hidden = items.length > 0;
+    if (!items.length) historyState.textContent = 'Сообщений пока нет.';
+    items.forEach((item) => {
+      if (!item || typeof item.id !== 'string' ||
+          !['owner', 'qud'].includes(item.direction) || typeof item.body !== 'string') return;
+      const entry = document.createElement('details');
+      entry.className = `support-message support-message-${item.direction}`;
+      const summary = document.createElement('summary');
+      const label = document.createElement('strong');
+      label.textContent = item.direction === 'qud' ? 'QUD' : 'Вы';
+      const date = document.createElement('time');
+      if (typeof item.created_at === 'string') {
+        const parsed = new Date(item.created_at);
+        if (Number.isFinite(parsed.getTime())) {
+          date.dateTime = parsed.toISOString();
+          date.textContent = new Intl.DateTimeFormat('ru-RU', {
+            dateStyle: 'short', timeStyle: 'short'
+          }).format(parsed);
+        }
+      }
+      const preview = document.createElement('span');
+      preview.textContent = item.body.replace(/\s+/g, ' ').slice(0, 90);
+      summary.append(label, date, preview);
+      if (item.direction === 'qud' && !item.read_at) {
+        const newLabel = document.createElement('em');
+        newLabel.textContent = 'Новое';
+        summary.append(newLabel);
+        entry.addEventListener('toggle', () => {
+          if (entry.open) markRead(item.id, newLabel);
+        }, { once: true });
+      }
+      const body = document.createElement('p');
+      body.textContent = item.body;
+      entry.append(summary, body);
+      messages.append(entry);
+    });
+  }
+
+  async function refreshSupport() {
+    if (!authenticated) return;
+    const version = ++requestVersion;
+    try {
+      const data = await supportRequest(endpoint);
+      if (version !== requestVersion || !authenticated) return;
+      if (!Array.isArray(data.messages)) throw new Error('INVALID_SUPPORT_RESPONSE');
+      available = true;
+      const email = typeof data.owner_email === 'string' ? data.owner_email.trim() : '';
+      ownerEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : '';
+      from.textContent = ownerEmail || 'Электронная почта не указана';
+      ownerId.textContent = data.owner_id ? `Owner ID: ${String(data.owner_id)}` : 'Owner ID не назначен';
+      showUnread(data.unread_count);
+      renderMessages(data.messages);
+      feedback.textContent = ownerEmail
+        ? 'Сообщение и история доступны только владельцу этого кабинета.'
+        : 'Отправка недоступна: к кабинету не привязан подтверждённый email.';
+    } catch (error) {
+      if (version !== requestVersion || !authenticated) return;
+      available = false;
+      ownerEmail = '';
+      from.textContent = 'Электронная почта не указана';
+      ownerId.textContent = 'Owner ID не назначен';
+      showUnread(0);
+      messages.replaceChildren();
+      historyCount.textContent = '';
+      historyState.hidden = false;
+      historyState.textContent = error.status === 404
+        ? 'Канал поддержки ещё не подключён.'
+        : 'Не удалось загрузить переписку. Попробуйте открыть окно снова.';
+      feedback.textContent = 'Отправка недоступна, пока защищённый канал поддержки не работает.';
+    }
+    updateComposer();
+  }
+
+  async function markRead(messageId, newLabel) {
+    try {
+      await supportRequest(`${endpoint}/read`, {
+        method: 'POST', body: JSON.stringify({ message_id: messageId })
+      });
+      newLabel.remove();
+      if (authenticated) showUnread(unreadCount - 1);
+    } catch {
+      // The unread indication remains until the server confirms the change.
+    }
+  }
+
+  openButton.addEventListener('click', () => {
+    dialog.showModal();
+    refreshSupport();
+    byId('close-support').focus();
+  });
+  byId('close-support').addEventListener('click', () => dialog.close());
+  messageInput.addEventListener('input', updateComposer);
+  byId('support-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const body = messageInput.value.trim();
+    if (!authenticated || !available || !ownerEmail || !body || sending) return;
+    sending = true;
+    updateComposer();
+    feedback.textContent = 'Отправка сообщения…';
+    try {
+      await supportRequest(endpoint, { method: 'POST', body: JSON.stringify({ message: body }) });
+      messageInput.value = '';
+      await refreshSupport();
+      feedback.textContent = available
+        ? 'Сообщение отправлено QUD.'
+        : 'Сообщение отправлено, но историю пока не удалось обновить.';
+    } catch {
+      feedback.textContent = 'Не удалось отправить сообщение. Текст сохранён в форме; попробуйте ещё раз.';
+    } finally {
+      sending = false;
+      updateComposer();
+    }
+  });
+
+  window.addEventListener('owner:session', (event) => {
+    authenticated = event.detail && event.detail.authenticated === true;
+    clearInterval(refreshTimer);
+    requestVersion++;
+    if (!authenticated) {
+      if (dialog.open) dialog.close();
+      available = false;
+      ownerEmail = '';
+      messageInput.value = '';
+      messages.replaceChildren();
+      showUnread(0);
+      updateComposer();
+      return;
+    }
+    refreshSupport();
+    refreshTimer = setInterval(() => {
+      if (document.visibilityState === 'visible') refreshSupport();
+    }, 60000);
+  });
 })();

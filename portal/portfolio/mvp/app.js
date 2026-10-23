@@ -1,7 +1,13 @@
 (() => {
   'use strict';
 
-  const ENDPOINTS = Object.freeze({
+  const ownerMode = Boolean(document.getElementById('view-portfolio'));
+  const ENDPOINTS = Object.freeze(ownerMode ? {
+    session: '/owner/api/session',
+    portfolios: '/owner/api/vp/portfolios',
+    portfolio: '/owner/api/vp/portfolio',
+    strategies: '/owner/api/vp/strategies'
+  } : {
     session: '/portal/vp/session',
     portfolios: '/portal/vp/portfolios',
     portfolio: '/portal/vp/portfolio',
@@ -123,6 +129,11 @@
     return `${signed && number > 0 ? '+' : ''}${compactNumberFormatter.format(number)}%`;
   }
 
+  function formatDrawdown(value) {
+    const number = finiteNumber(value);
+    return number === null ? '—' : formatPercent(-Math.abs(number));
+  }
+
   function formatNumber(value) {
     const number = finiteNumber(value);
     return number === null ? '—' : compactNumberFormatter.format(number);
@@ -150,6 +161,12 @@
   function formatDate(value) {
     const date = parseDate(value);
     return date ? dateFormatter.format(date) : '—';
+  }
+
+  function formatChartDate(value) {
+    const date = parseDate(value);
+    if (!date) return '—';
+    return `${String(date.getUTCDate()).padStart(2, '0')}.${String(date.getUTCMonth() + 1).padStart(2, '0')}`;
   }
 
   function formatPeriod(code, startDate, endDate) {
@@ -255,7 +272,7 @@
     dom.accessView.hidden = false;
     dom.accessMessage.textContent = message;
     dom.headerStatus.textContent = 'Защищённый кабинет';
-    dom.accessKey.focus();
+    if (!ownerMode) dom.accessKey.focus();
   }
 
   function showWorkspace() {
@@ -404,7 +421,7 @@
     dom.metricBalance.textContent = formatMoney(balance);
     dom.metricReturnUsd.textContent = formatSignedMoney(returnUsd);
     dom.metricReturnPct.textContent = formatPercent(returnPct, true);
-    dom.metricDrawdown.textContent = formatPercent(drawdown);
+    dom.metricDrawdown.textContent = formatDrawdown(drawdown);
     dom.metricActive.textContent = formatNumber(active);
     applySignedClass(dom.metricReturnUsd, returnUsd);
     applySignedClass(dom.metricReturnPct, returnPct);
@@ -429,11 +446,28 @@
 
     const balancePoints = [];
     const allocatedPoints = [];
+    const firstHistory = history[0];
+    const startingBalance = firstHistory
+      ? finiteNumber(firstHistory.opening_balance_usd) ?? finiteNumber(firstHistory.total_allocated_usd)
+      : null;
+    const firstClosing = firstHistory ? finiteNumber(firstHistory.closing_balance_usd) : null;
+    if (ownerMode && startingBalance !== null && firstClosing !== null &&
+        Math.abs(startingBalance - firstClosing) > 0.005) {
+      const firstEnd = parseDate(firstHistory.period_end_utc);
+      const previousWeek = firstEnd
+        ? new Date(firstEnd.getTime() - 7 * 86400000).toISOString().slice(0, 10)
+        : firstHistory.period_end_utc;
+      balancePoints.push({
+        date: firstHistory.period_start_utc || previousWeek,
+        value: startingBalance,
+        allocated: startingBalance
+      });
+    }
     history.forEach((row) => {
       const closing = finiteNumber(row.closing_balance_usd);
       const allocatedForPeriod = finiteNumber(row.total_allocated_usd);
       if (closing !== null) {
-        balancePoints.push({ date: row.period_end_utc, value: closing });
+        balancePoints.push({ date: row.period_end_utc, value: closing, allocated: allocatedForPeriod });
       }
       if (allocatedForPeriod !== null) {
         allocatedPoints.push({ date: row.period_end_utc, value: allocatedForPeriod });
@@ -445,14 +479,108 @@
       'Тренд общего баланса портфеля',
       {
         referencePoints: allocatedPoints,
-        referenceLabel: 'Распределено'
+        referenceLabel: 'Распределено',
+        ownerPortfolio: ownerMode,
+        startingBalance
       }
     );
+    if (ownerMode) renderOwnerOverview(payload, balancePoints, allocatedPoints);
+  }
+
+  function renderOwnerOverview(payload, balancePoints, allocatedPoints) {
+    const portfolio = payload.portfolio;
+    const values = {
+      'overview-vp-allocated': formatMoney(valueFrom(portfolio, ['total_allocated_usd'])),
+      'overview-vp-balance': formatMoney(valueFrom(portfolio, ['current_balance_usd'])),
+      'overview-vp-result': formatSignedMoney(valueFrom(portfolio, ['portfolio_return_usd'])),
+      'overview-vp-return': formatPercent(valueFrom(portfolio, ['portfolio_return_pct']), true),
+      'overview-vp-drawdown': formatDrawdown(valueFrom(portfolio, ['current_drawdown_pct'])),
+      'overview-vp-active': formatNumber(valueFrom(portfolio, ['active_strategies_count']))
+    };
+    Object.entries(values).forEach(([id, value]) => {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value;
+    });
+    [
+      ['overview-vp-result', portfolio.portfolio_return_usd],
+      ['overview-vp-return', portfolio.portfolio_return_pct]
+    ].forEach(([id, value]) => {
+      const card = document.getElementById(id)?.closest('.metric-card');
+      if (!card) return;
+      card.classList.toggle('is-positive', Number(value) > 0);
+      card.classList.toggle('is-negative', Number(value) < 0);
+    });
+    const overviewChart = document.getElementById('overview-portfolio-chart');
+    if (overviewChart) renderSparkline(overviewChart, balancePoints);
+  }
+
+  function renderSparkline(container, points) {
+    container.replaceChildren();
+    if (points.length < 2) {
+      container.textContent = 'Тренд появится после второго обновления';
+      return;
+    }
+    const values = points.map((point) => Number(point.value));
+    const low = Math.min(...values);
+    const high = Math.max(...values);
+    const spread = Math.max(high - low, Math.abs(high) * .02, 1);
+    const width = 300;
+    const height = 90;
+    const x = (index) => 10 + index / (points.length - 1) * 280;
+    const y = (value) => 73 - (value - low) / spread * 55;
+    const coordinates = values.map((value, index) => [x(index), y(value)]);
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.setAttribute('aria-hidden', 'true');
+    const line = document.createElementNS(ns, 'path');
+    line.setAttribute('d', coordinates.map(([px, py], index) =>
+      `${index ? 'L' : 'M'} ${px.toFixed(2)} ${py.toFixed(2)}`).join(' '));
+    line.setAttribute('class', 'sparkline-line');
+    const endpoint = document.createElementNS(ns, 'circle');
+    endpoint.setAttribute('cx', String(coordinates.at(-1)[0]));
+    endpoint.setAttribute('cy', String(coordinates.at(-1)[1]));
+    endpoint.setAttribute('r', '4');
+    endpoint.setAttribute('class', 'sparkline-endpoint');
+    svg.append(line, endpoint);
+    container.append(svg);
+  }
+
+  function renderOwnerOverviewStrategies(slots) {
+    const container = document.getElementById('overview-vp-strategies');
+    if (!container) return;
+    container.replaceChildren();
+    if (!slots.length) {
+      const empty = document.createElement('p');
+      empty.className = 'vp-note';
+      empty.textContent = 'Наблюдений пока нет.';
+      container.append(empty);
+      return;
+    }
+    slots.forEach((slot) => {
+      const row = document.createElement('div');
+      row.className = 'strategy-row';
+      const name = document.createElement('span');
+      const title = document.createElement('strong');
+      title.textContent = String(slot.strategy_id || 'Стратегия');
+      const subtitle = document.createElement('small');
+      subtitle.textContent = `Наблюдение ${String(slot.request_id || '—')}`;
+      name.append(title, subtitle);
+      const status = document.createElement('em');
+      status.textContent = statusView(slot.status).label;
+      const result = document.createElement('span');
+      result.className = 'result';
+      result.textContent = formatPercent(slot.strategy_return_pct, true);
+      if (Number(slot.strategy_return_pct) > 0) result.classList.add('positive');
+      row.append(name, result, status);
+      container.append(row);
+    });
   }
 
   function renderStrategyList(payload) {
     dom.strategyList.replaceChildren();
     const slots = payload.strategySlots;
+    if (ownerMode) renderOwnerOverviewStrategies(slots);
     if (!slots.length) {
       const empty = document.createElement('p');
       empty.className = 'strategy-list-empty';
@@ -508,8 +636,8 @@
     dom.strategyContent.hidden = false;
     dom.strategyDetailTitle.textContent = String(slot.strategy_id || 'Стратегия');
     dom.strategyRequestId.textContent = slot.request_id
-      ? `Наблюдение ${slot.request_id}`
-      : 'Наблюдение';
+      ? (ownerMode ? `№ наблюдения: ${slot.request_id}` : `Наблюдение ${slot.request_id}`)
+      : (ownerMode ? '№ наблюдения: —' : 'Наблюдение');
     applyStatus(dom.strategyStatus, slot.status);
 
     dom.detailAllocated.textContent = formatMoney(slot.allocated_balance_usd);
@@ -517,11 +645,24 @@
     dom.detailReturn.textContent = formatPercent(slot.strategy_return_pct, true);
     dom.detailDrawdown.textContent = formatPercent(slot.current_drawdown_pct);
     dom.detailLimit.textContent = formatPercent(slot.max_drawdown_limit_pct);
-    dom.detailPeriod.textContent = formatPeriod(
+    const periodText = formatPeriod(
       slot.period_code,
       slot.start_date_utc,
       slot.end_date_utc
     );
+    if (ownerMode) {
+      const [periodLabel, periodDates] = periodText.split(' · ');
+      const labelLine = document.createElement('span');
+      labelLine.textContent = periodLabel;
+      dom.detailPeriod.replaceChildren(labelLine);
+      if (periodDates) {
+        const datesLine = document.createElement('span');
+        datesLine.textContent = periodDates;
+        dom.detailPeriod.append(datesLine);
+      }
+    } else {
+      dom.detailPeriod.textContent = periodText;
+    }
     applySignedClass(dom.detailReturn, slot.strategy_return_pct);
 
     dom.qualityReturn.textContent = formatPercent(slot.strategy_return_since_start_pct, true);
@@ -538,20 +679,31 @@
     });
     dom.strategyChartCount.textContent = pluralWeeks(history.length);
     const chartPoints = [];
+    const startingBalance = history.length
+      ? finiteNumber(history[0].opening_balance_usd) ?? finiteNumber(slot.allocated_balance_usd)
+      : finiteNumber(slot.allocated_balance_usd);
     if (history.length) {
       const firstOpening = finiteNumber(history[0].opening_balance_usd);
       if (firstOpening !== null) {
         chartPoints.push({
           date: history[0].period_start_utc || slot.start_date_utc,
-          value: firstOpening
+          value: firstOpening,
+          allocated: startingBalance
         });
       }
       history.forEach((row) => {
         const closing = finiteNumber(row.closing_balance_usd);
-        if (closing !== null) chartPoints.push({ date: row.period_end_utc, value: closing });
+        if (closing !== null) chartPoints.push({
+          date: row.period_end_utc,
+          value: closing,
+          allocated: finiteNumber(slot.allocated_balance_usd)
+        });
       });
     }
-    renderLineChart(dom.strategyChart, chartPoints, `История баланса ${slot.strategy_id}`);
+    renderLineChart(dom.strategyChart, chartPoints, `История баланса ${slot.strategy_id}`, {
+      ownerPortfolio: ownerMode,
+      startingBalance
+    });
     renderHistory(history);
   }
 
@@ -596,6 +748,11 @@
     dom.historyContainer.append(scroll);
   }
 
+  function niceChartStep(value) {
+    const magnitude = 10 ** Math.floor(Math.log10(Math.max(value, 0.000001)));
+    return [1, 2, 2.5, 5, 10].find((factor) => factor * magnitude >= value) * magnitude;
+  }
+
   function renderLineChart(container, points, ariaLabel, options = {}) {
     container.replaceChildren();
     if (points.length < 2) {
@@ -606,24 +763,38 @@
     const referencePoints = Array.isArray(options.referencePoints)
       ? options.referencePoints.filter((point) => finiteNumber(point?.value) !== null)
       : [];
+    const ownerPortfolio = options.ownerPortfolio === true;
     const referenceLabel = String(options.referenceLabel || 'Распределено');
     const width = 920;
     const height = container.classList.contains('small') ? 230 : 275;
     const padding = { top: 24, right: 22, bottom: 36, left: 70 };
     const chartWidth = width - padding.left - padding.right;
     const chartHeight = height - padding.top - padding.bottom;
-    const values = [
-      ...points.map((point) => point.value),
-      ...referencePoints.map((point) => point.value)
-    ];
+    const values = ownerPortfolio
+      ? points.map((point) => point.value)
+      : [...points.map((point) => point.value), ...referencePoints.map((point) => point.value)];
     let min = Math.min(...values);
     let max = Math.max(...values);
-    const spread = max - min;
-    const buffer = spread === 0
-      ? Math.max(Math.abs(max) * 0.015, 1)
-      : spread * 0.17;
-    min -= buffer;
-    max += buffer;
+    let yTicks = [];
+    const startingBalance = finiteNumber(options.startingBalance) ?? points[0].value;
+    if (ownerPortfolio) {
+      const step = niceChartStep(Math.max(max - min, Math.abs(max) * 0.005, 1) / 4);
+      min = min >= startingBalance
+        ? startingBalance
+        : Math.floor(min / step) * step;
+      max = Math.ceil(max / step) * step;
+      if (max <= min) max = min + step;
+      for (let tick = Math.ceil(min / step) * step; tick <= max + step * 0.001; tick += step) {
+        yTicks.push(Number(tick.toFixed(6)));
+      }
+    } else {
+      const spread = max - min;
+      const buffer = spread === 0
+        ? Math.max(Math.abs(max) * 0.015, 1)
+        : spread * 0.17;
+      min -= buffer;
+      max += buffer;
+    }
 
     const x = (index) => padding.left + (index / (points.length - 1)) * chartWidth;
     const y = (value) => padding.top + ((max - value) / (max - min)) * chartHeight;
@@ -648,7 +819,7 @@
         y: y(point.value)
       };
     });
-    const referenceLinePath = referenceCoordinates.length >= 2
+    const referenceLinePath = !ownerPortfolio && referenceCoordinates.length >= 2
       ? referenceCoordinates.map((point, index) => {
           return `${index === 0 ? 'M' : 'L'} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`;
         }).join(' ')
@@ -665,25 +836,28 @@
 
     const defs = document.createElementNS(svgNs, 'defs');
     const gradient = document.createElementNS(svgNs, 'linearGradient');
-    gradient.id = 'qud-chart-fill';
+    const gradientId = `qud-chart-fill-${String(container.id || 'chart').replace(/[^a-zA-Z0-9_-]/g, '')}`;
+    gradient.id = gradientId;
     gradient.setAttribute('x1', '0');
     gradient.setAttribute('y1', '0');
     gradient.setAttribute('x2', '0');
     gradient.setAttribute('y2', '1');
     const topStop = document.createElementNS(svgNs, 'stop');
     topStop.setAttribute('offset', '0%');
-    topStop.setAttribute('stop-color', '#74b47d');
-    topStop.setAttribute('stop-opacity', '0.30');
+    topStop.setAttribute('stop-color', ownerMode ? '#aeb5bb' : '#74b47d');
+    topStop.setAttribute('stop-opacity', ownerMode ? '0.20' : '0.30');
     const bottomStop = document.createElementNS(svgNs, 'stop');
     bottomStop.setAttribute('offset', '100%');
-    bottomStop.setAttribute('stop-color', '#74b47d');
+    bottomStop.setAttribute('stop-color', ownerMode ? '#aeb5bb' : '#74b47d');
     bottomStop.setAttribute('stop-opacity', '0');
     gradient.append(topStop, bottomStop);
     defs.append(gradient);
     svg.append(defs);
 
-    for (let index = 0; index < 4; index += 1) {
-      const lineY = padding.top + (index / 3) * chartHeight;
+    const gridLevels = ownerPortfolio
+      ? yTicks.map(y)
+      : Array.from({ length: 4 }, (_, index) => padding.top + (index / 3) * chartHeight);
+    gridLevels.forEach((lineY) => {
       const line = document.createElementNS(svgNs, 'line');
       line.setAttribute('class', 'chart-grid-line');
       line.setAttribute('x1', String(padding.left));
@@ -691,11 +865,12 @@
       line.setAttribute('y1', String(lineY));
       line.setAttribute('y2', String(lineY));
       svg.append(line);
-    }
+    });
 
     const area = document.createElementNS(svgNs, 'path');
     area.setAttribute('class', 'chart-area');
     area.setAttribute('d', areaPath);
+    area.style.fill = `url(#${gradientId})`;
     svg.append(area);
 
     if (referenceLinePath) {
@@ -722,27 +897,54 @@
     line.setAttribute('d', linePath);
     svg.append(line);
 
+    const hoverTargets = [];
     coordinates.forEach((point) => {
+      const group = ownerPortfolio ? document.createElementNS(svgNs, 'g') : svg;
       const circle = document.createElementNS(svgNs, 'circle');
       circle.setAttribute('class', 'chart-point');
       circle.setAttribute('cx', String(point.x));
       circle.setAttribute('cy', String(point.y));
       circle.setAttribute('r', '4');
-      const title = document.createElementNS(svgNs, 'title');
-      title.textContent = `Баланс: ${formatMoney(point.value)} · ${formatDate(point.date)}`;
-      circle.append(title);
-      svg.append(circle);
+      group.append(circle);
+      if (ownerPortfolio) {
+        const hit = document.createElementNS(svgNs, 'circle');
+        hit.setAttribute('class', 'chart-hit-target');
+        hit.setAttribute('cx', String(point.x));
+        hit.setAttribute('cy', String(point.y));
+        hit.setAttribute('r', '14');
+        group.append(hit);
+        group.setAttribute('tabindex', '0');
+        group.setAttribute('role', 'img');
+        group.setAttribute('aria-label', `Баланс ${formatMoney(point.value)} на ${formatDate(point.date)}`);
+        svg.append(group);
+        hoverTargets.push({ group, point });
+      } else {
+        const title = document.createElementNS(svgNs, 'title');
+        title.textContent = `Баланс: ${formatMoney(point.value)} · ${formatDate(point.date)}`;
+        circle.append(title);
+      }
     });
 
-    const axisLabels = [
-      { x: 4, y: padding.top + 4, text: formatMoney(max), anchor: 'start' },
-      { x: 4, y: baseY, text: formatMoney(min), anchor: 'start' },
-      { x: padding.left, y: height - 8, text: formatDate(points[0].date), anchor: 'start' },
-      { x: padding.left + chartWidth, y: height - 8, text: formatDate(points[points.length - 1].date), anchor: 'end' }
-    ];
+    const axisMoney = (value) => `$${new Intl.NumberFormat('ru-RU', {
+      maximumFractionDigits: Number.isInteger(value) ? 0 : 2
+    }).format(value)}`;
+    const axisLabels = ownerPortfolio
+      ? yTicks.map((tick) => ({ x: 4, y: y(tick) + 4, text: axisMoney(tick), anchor: 'start' }))
+      : [
+          { x: 4, y: padding.top + 4, text: formatMoney(max), anchor: 'start' },
+          { x: 4, y: baseY, text: formatMoney(min), anchor: 'start' }
+        ];
+    if (ownerPortfolio && !yTicks.some((tick) => Math.abs(y(tick) - y(startingBalance)) < 13)) {
+      axisLabels.push({ x: 4, y: y(startingBalance) + 4, text: axisMoney(startingBalance), anchor: 'start' });
+    }
+    axisLabels.push(
+      { x: padding.left, y: height - 8, text: formatChartDate(points[0].date), anchor: 'start' },
+      { x: padding.left + chartWidth, y: height - 8, text: formatChartDate(points[points.length - 1].date), anchor: 'end' }
+    );
     axisLabels.forEach((label) => {
       const text = document.createElementNS(svgNs, 'text');
       text.setAttribute('class', 'chart-label');
+      text.classList.add(label.y === height - 8 ? 'chart-label-date' : 'chart-label-money');
       text.setAttribute('x', String(label.x));
       text.setAttribute('y', String(label.y));
       text.setAttribute('text-anchor', label.anchor);
@@ -751,6 +953,33 @@
     });
 
     container.append(svg);
+    if (ownerPortfolio) {
+      const tooltip = document.createElement('div');
+      tooltip.className = 'chart-tooltip';
+      tooltip.hidden = true;
+      container.append(tooltip);
+      const showTooltip = (point) => {
+        const allocated = finiteNumber(point.allocated) ?? startingBalance;
+        const result = point.value - allocated;
+        const resultPct = allocated ? result / allocated * 100 : 0;
+        const heading = document.createElement('strong');
+        heading.textContent = `${formatDate(point.date)} · ${formatMoney(point.value)}`;
+        const detail = document.createElement('span');
+        detail.textContent = `Результат: ${formatSignedMoney(result)} (${formatPercent(resultPct, true)})`;
+        tooltip.replaceChildren(heading, detail);
+        tooltip.hidden = false;
+        const scale = svg.getBoundingClientRect().width / width;
+        tooltip.style.left = `${Math.max(4, Math.min(point.x * scale + 12, container.clientWidth - tooltip.offsetWidth - 4))}px`;
+        const top = point.y * scale - tooltip.offsetHeight - 8;
+        tooltip.style.top = `${top < 4 ? point.y * scale + 16 : top}px`;
+      };
+      hoverTargets.forEach(({ group, point }) => {
+        group.addEventListener('pointerenter', () => showTooltip(point));
+        group.addEventListener('pointerleave', () => { tooltip.hidden = true; });
+        group.addEventListener('focus', () => showTooltip(point));
+        group.addEventListener('blur', () => { tooltip.hidden = true; });
+      });
+    }
   }
 
   function renderAvailableStrategies(items) {
@@ -861,7 +1090,7 @@
       }
       state.portfolios = portfolios;
 
-      const queryId = String(
+      const queryId = ownerMode ? '' : String(
         new URLSearchParams(window.location.search).get('portfolio_id') || ''
       ).trim();
       const listed = portfolios.find((item) => (
@@ -951,7 +1180,7 @@
     return messages[error?.code] || 'Не удалось начать наблюдение. Повторите попытку.';
   }
 
-  dom.accessForm.addEventListener('submit', async (event) => {
+  if (!ownerMode) dom.accessForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const key = dom.accessKey.value.trim();
     dom.accessMessage.textContent = '';
@@ -997,7 +1226,7 @@
     }
   });
 
-  dom.logoutButton.addEventListener('click', async () => {
+  if (!ownerMode) dom.logoutButton.addEventListener('click', async () => {
     dom.logoutButton.disabled = true;
     dom.logoutButton.textContent = 'Выход…';
     try {
@@ -1064,5 +1293,18 @@
     }
   });
 
-  checkSession();
+  if (ownerMode) {
+    window.addEventListener('owner:session', (event) => {
+      if (event.detail?.authenticated === true) loadWorkspace();
+      else showAccess();
+    });
+    const refresh = document.getElementById('vp-refresh');
+    refresh?.addEventListener('click', () => loadWorkspace());
+    // Owner session.js performs the only login. Inspect its shell to close the
+    // race where the first event arrived before this listener was registered.
+    if (document.getElementById('owner-shell')?.hidden === false) loadWorkspace();
+    else showAccess();
+  } else {
+    checkSession();
+  }
 })();

@@ -6,9 +6,31 @@
   const key = byId('owner-key');
   const submit = byId('owner-login-submit');
   const message = byId('owner-login-message');
+  const accessPill = document.querySelector('.access-pill');
+  const subscriptionLabels = {
+    active: 'Подписка активна',
+    expired: 'Срок подписки истёк',
+    inactive: 'Доступ к данным не активен'
+  };
   let busy = false;
   let authenticated = false;
   let expiryTimer;
+
+  function renderOwnerAccess(data = {}) {
+    // These fields may only come from the authenticated, protected Owner API.
+    const ownerId = typeof data.owner_id === 'string' && data.owner_id.trim()
+      ? data.owner_id.trim() : 'Не назначен';
+    byId('header-owner-id').textContent = ownerId;
+    byId('profile-owner-id').textContent = ownerId;
+
+    const status = Object.hasOwn(subscriptionLabels, data.subscription_status)
+      ? data.subscription_status : 'inactive';
+    const label = subscriptionLabels[status];
+    accessPill.dataset.subscriptionStatus = status;
+    byId('subscription-status-label').textContent = label;
+    accessPill.setAttribute('aria-label', `Статус доступа: ${label.toLowerCase()}`);
+    accessPill.title = `Статус доступа: ${label.toLowerCase()}`;
+  }
 
   function show(name, text = '') {
     Object.entries(screens).forEach(([id, element]) => { element.hidden = id !== name; });
@@ -17,6 +39,8 @@
       byId('demo-toast').hidden = true;
       authenticated = false;
       clearTimeout(expiryTimer);
+      renderOwnerAccess();
+      window.dispatchEvent(new CustomEvent('owner:session', { detail: { authenticated: false } }));
     }
     if (name !== 'unavailable') {
       byId('unavailable-title').textContent = 'Не удалось проверить сессию';
@@ -52,7 +76,9 @@
       return;
     }
     show('shell');
+    renderOwnerAccess(data);
     authenticated = true;
+    window.dispatchEvent(new CustomEvent('owner:session', { detail: { authenticated: true } }));
     key.value = '';
     clearTimeout(expiryTimer);
     if (Number.isFinite(data.expires_at)) {
