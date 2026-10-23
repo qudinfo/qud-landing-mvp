@@ -7,7 +7,8 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20260911-11">
+  <link rel="stylesheet" href="./styles.css?v=20261023-36">
+  <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 </head>
 <body>
   <section class="auth-screen" id="owner-loading" role="status" aria-live="polite"><p>Загрузка данных</p></section>
@@ -41,10 +42,13 @@
     <symbol id="icon-strategies" viewBox="0 0 24 24"><path d="m3 17 5.2-5.2 3.2 3.2L20 6.4"/><path d="M15 6h5v5"/></symbol>
     <symbol id="icon-portfolio" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9h-9Z"/><path d="M14.5 3.4A8.6 8.6 0 0 1 20.6 9h-6.1Z"/></symbol>
     <symbol id="icon-account" viewBox="0 0 24 24"><path d="M3 20h18M5 17h14M6 10v7m4-7v7m4-7v7m4-7v7M3.5 8h17L12 3Z"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.4 4 5.4 4 9s-1.4 6.6-4 9M12 3c-2.6 2.4-4 5.4-4 9s1.4 6.6 4 9"/></symbol>
     <symbol id="icon-documents" viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H11v18H6.5A2.5 2.5 0 0 0 4 22ZM20 4.5A2.5 2.5 0 0 0 17.5 2H13v18h4.5A2.5 2.5 0 0 1 20 22Z"/></symbol>
     <symbol id="icon-exit" viewBox="0 0 24 24"><path d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5M14 8l4 4-4 4M8 12h10"/></symbol>
     <symbol id="icon-wallet" viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H19v16H6.5A2.5 2.5 0 0 1 4 17.5Z"/><path d="M4 7h13M15 11h6v5h-6a2.5 2.5 0 0 1 0-5Z"/></symbol>
     <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 20h18M5 17l4-5 4 2 6-8"/></symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></symbol>
+    <symbol id="icon-money" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M5.5 9c1.4 0 2-.8 2-2M18.5 15c-1.4 0-2 .8-2 2"/></symbol>
     <symbol id="icon-percent" viewBox="0 0 24 24"><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><path d="m18 4-12 16"/></symbol>
     <symbol id="icon-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M14 15a4.5 4.5 0 0 1 6.5 4"/></symbol>
     <symbol id="icon-file" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6Z"/><path d="M14 2v5h5M9 12h6M9 16h6"/></symbol>
@@ -56,6 +60,8 @@
     <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
     <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.5"/></symbol>
+    <symbol id="icon-eye-off" viewBox="0 0 24 24"><path d="M3 3 21 21M9.8 6.8A10.6 10.6 0 0 1 12 6.5c6 0 9.5 5.5 9.5 5.5a15 15 0 0 1-3.4 3.6M6.4 8.4A15.5 15.5 0 0 0 2.5 12S6 17.5 12 17.5c.9 0 1.8-.1 2.6-.4M10.2 10.2a2.5 2.5 0 0 0 3.6 3.6"/></symbol>
   </svg>
 
   <div class="cabinet-shell" id="owner-shell" hidden>
@@ -72,7 +78,7 @@
         <button class="nav-item is-active" type="button" data-view="overview" aria-label="Обзор" aria-current="page"><svg class="nav-icon"><use href="#icon-overview"></use></svg><span class="nav-index">01</span><span class="nav-text">Обзор</span></button>
         <button class="nav-item" type="button" data-view="strategies" aria-label="Стратегии"><svg class="nav-icon"><use href="#icon-strategies"></use></svg><span class="nav-index">02</span><span class="nav-text">Стратегии</span></button>
         <button class="nav-item" type="button" data-view="portfolio" aria-label="Virtual Portfolio"><svg class="nav-icon"><use href="#icon-portfolio"></use></svg><span class="nav-index">03</span><span class="nav-text">Virtual Portfolio</span></button>
-        <button class="nav-item" type="button" data-view="real-account" aria-label="Реальный счёт"><svg class="nav-icon"><use href="#icon-account"></use></svg><span class="nav-index">04</span><span class="nav-text">Реальный счёт</span></button>
+        <button class="nav-item" type="button" data-view="real-account" aria-label="Брокерский счёт"><svg class="nav-icon"><use href="#icon-account"></use></svg><span class="nav-index">04</span><span class="nav-text">Брокерский счёт</span></button>
         <button class="nav-item" type="button" data-view="documents" aria-label="Документы и регламенты"><svg class="nav-icon"><use href="#icon-documents"></use></svg><span class="nav-index">05</span><span class="nav-text">Документы<br>и регламенты</span></button>
       </nav>
 
@@ -90,17 +96,17 @@
       <header class="topbar">
         <div class="topbar-context">
           <button class="icon-button menu-button" id="menu-button" type="button" aria-label="Открыть меню" aria-controls="sidebar" aria-expanded="false"><svg><use href="#icon-menu"></use></svg></button>
-          <div><p class="topbar-kicker">Owner Cabinet</p><h1 id="view-title">Обзор</h1></div>
+          <div class="topbar-heading"><svg class="topbar-section-icon" aria-hidden="true"><use href="#icon-overview"></use></svg><div class="topbar-heading-copy"><p class="topbar-kicker">Owner Cabinet</p><h1 id="view-title">Исследовательский доступ</h1></div></div>
         </div>
         <div class="topbar-actions">
-          <div class="access-pill" data-demo="true" aria-label="Owner-сессия активна"><span class="status-dot"></span><span><strong>Статус доступа</strong><small>Вход выполнен</small></span></div>
-          <button class="top-profile" type="button" data-view="profile" aria-label="Открыть профиль владельца"><span class="avatar">QC</span><span class="top-profile-copy"><strong>QUD Capital Owner</strong><small>Профиль MVP</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
+          <div class="access-pill" data-subscription-status="inactive" aria-label="Статус доступа: доступ к данным не активен" title="Статус доступа: доступ к данным не активен"><span class="status-dot"></span><span><strong>Статус доступа</strong><small id="subscription-status-label">Доступ к данным не активен</small></span></div>
+          <button class="top-support" id="open-support" type="button" aria-label="Поддержка" aria-haspopup="dialog" aria-controls="support-dialog" title="Поддержка"><svg aria-hidden="true"><use href="#icon-support"></use></svg><span>Поддержка</span><span class="support-unread" id="support-unread" hidden></span></button>
+          <button class="top-profile" type="button" data-view="profile" aria-label="Открыть профиль владельца"><span class="avatar">QC</span><span class="top-profile-copy"><strong id="header-owner-id">Не назначен</strong><small>Owner ID</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
         </div>
       </header>
 
       <main class="content" id="cabinet-content" tabindex="-1">
-        <section class="view is-active" id="view-overview" data-title="Обзор" aria-labelledby="overview-title">
-          <div class="demo-notice" role="note"><span>Frontend MVP</span><p>Все показатели на экране — демонстрационный контент для проверки композиции.</p></div>
+        <section class="view is-active" id="view-overview" data-title="Исследовательский доступ" aria-labelledby="overview-title">
           <div class="overview-grid">
             <div class="overview-main">
               <section class="hero-card panel" aria-labelledby="overview-title">
@@ -108,71 +114,268 @@
                 <div class="hero-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="core-cube"><span>QUD</span></div><i class="node node-one"></i><i class="node node-two"></i><i class="node node-three"></i><i class="node node-four"></i></div>
               </section>
 
-              <section class="portfolio-summary" aria-labelledby="portfolio-summary-title" data-demo="true">
-                <div class="section-heading compact-heading"><div><p class="eyebrow">Мой Virtual Portfolio</p><h3 id="portfolio-summary-title">Состояние наблюдения</h3></div><span class="demo-badge">Demo values</span></div>
+              <section class="portfolio-summary" aria-labelledby="portfolio-summary-title">
+                <div class="section-heading compact-heading"><div><p class="eyebrow">Мой Virtual Portfolio</p><h3 id="portfolio-summary-title">Состояние наблюдения</h3></div></div>
                 <div class="metric-grid">
-                  <article class="metric-card panel"><span>Распределено</span><strong>$5,000</strong><small>Виртуальный капитал</small><svg><use href="#icon-wallet"></use></svg></article>
-                  <article class="metric-card panel"><span>Текущий баланс</span><strong>$5,214</strong><small>Демонстрационная сумма</small><svg><use href="#icon-portfolio"></use></svg></article>
-                  <article class="metric-card panel is-positive"><span>Результат</span><strong>+$214</strong><small>Финансовый результат</small><svg><use href="#icon-chart"></use></svg></article>
-                  <article class="metric-card panel is-positive"><span>Доходность</span><strong>+4.28%</strong><small>Относительно капитала</small><svg><use href="#icon-percent"></use></svg></article>
-                  <article class="metric-card panel is-negative"><span>Просадка</span><strong>−3.12%</strong><small>От peak balance</small><svg><use href="#icon-chart"></use></svg></article>
-                  <article class="metric-card panel"><span>Активные стратегии</span><strong>2</strong><small>В наблюдении</small><svg><use href="#icon-users"></use></svg></article>
+                  <article class="metric-card"><span>Текущий баланс</span><strong id="overview-vp-balance">—</strong><small>Виртуальный баланс</small><svg><use href="#icon-wallet"></use></svg></article>
+                  <article class="metric-card"><span>Результат</span><strong id="overview-vp-result">—</strong><small>Финансовый результат</small><svg><use href="#icon-money"></use></svg></article>
+                  <article class="metric-card"><span>Доходность</span><strong id="overview-vp-return">—</strong><small>Относительно капитала</small><svg><use href="#icon-percent"></use></svg></article>
+                  <article class="metric-card"><span>Просадка</span><strong id="overview-vp-drawdown">—</strong><small>От пика баланса</small><svg><use href="#icon-chart"></use></svg></article>
+                  <article class="metric-card"><span>Активные стратегии</span><strong id="overview-vp-active">—</strong><small>В наблюдении</small><svg><use href="#icon-users"></use></svg></article>
                 </div>
               </section>
 
-              <section class="portfolio-panel panel" aria-labelledby="chart-title" data-demo="true">
-                <div class="chart-header"><div><p class="eyebrow">Динамика портфеля</p><h3 id="chart-title">Виртуальный баланс</h3></div><div class="chart-meta"><span><small>Портфель изменён</small>19.08.2026</span><span><small>История рассчитана по</small>30.08.2026</span><button type="button" disabled>Недели⌄</button></div></div>
-                <div class="chart-and-strategies">
-                  <div class="chart-wrap" aria-label="Демонстрационный график динамики портфеля"><div class="chart-legend"><span class="legend-balance">Виртуальный баланс</span><span class="legend-capital">Распределённый капитал</span></div><svg class="demo-chart" viewBox="0 0 760 260" role="img" aria-label="Демонстрационный график"><defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#aeb5bb" stop-opacity=".16"/><stop offset="1" stop-color="#aeb5bb" stop-opacity="0"/></linearGradient></defs><g class="chart-grid-lines"><path d="M48 25H742M48 80H742M48 135H742M48 190H742M48 245H742"/><path d="M48 25V245M188 25V245M328 25V245M468 25V245M608 25V245M742 25V245"/></g><path class="capital-line" d="M48 165H742"/><path class="chart-area" d="M48 216 86 195 124 137 162 150 200 139 238 133 276 128 314 110 352 85 390 98 428 90 466 106 504 113 542 103 580 99 618 63 656 69 694 58 742 36V245H48Z"/><path class="balance-line" d="M48 216 86 195 124 137 162 150 200 139 238 133 276 128 314 110 352 85 390 98 428 90 466 106 504 113 542 103 580 99 618 63 656 69 694 58 742 36"/><g class="chart-points"><circle cx="124" cy="137" r="4"/><circle cx="352" cy="85" r="4"/><circle cx="618" cy="63" r="4"/><circle cx="742" cy="36" r="4"/></g></svg><div class="chart-axis"><span>07.07</span><span>21.07</span><span>04.08</span><span>18.08</span><span>01.09</span></div></div>
-                  <aside class="strategy-preview" aria-labelledby="my-strategies-title"><div class="preview-heading"><h4 id="my-strategies-title">Мои стратегии</h4><button type="button" data-open-view="portfolio">Все <span>→</span></button></div><div class="strategy-row"><span><strong>QUD-ALPHA</strong><small>Наблюдение #1024</small></span><em>ACTIVE</em><span class="result positive">+$135<small>+4.50%</small></span></div><div class="strategy-row"><span><strong>QUD-BETA</strong><small>Наблюдение #1026</small></span><em>ACTIVE</em><span class="result positive">+$79<small>+3.08%</small></span></div><button class="button button-outline full-width" type="button" data-open-view="portfolio">Открыть Virtual Portfolio <svg><use href="#icon-arrow"></use></svg></button></aside>
-                </div>
-              </section>
-
-              <section class="documents-panel panel" aria-labelledby="documents-overview-title"><div class="section-heading"><div><p class="eyebrow">Документы и регламенты</p><h3 id="documents-overview-title">Основы работы с QUD</h3></div><button class="text-action" type="button" data-open-view="documents">Все документы →</button></div><div class="document-grid"><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-shield"></use></svg><strong>Регламент QUD</strong><small>Правила работы платформы</small></button><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-file"></use></svg><strong>Условия доступа</strong><small>Owner Access и подписка</small></button><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-portfolio"></use></svg><strong>Virtual Portfolio</strong><small>Как работает модель</small></button><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-strategies"></use></svg><strong>Стратегии QUD</strong><small>Качество и Trust Score</small></button><button class="document-card" type="button" data-demo-action="document"><svg><use href="#icon-help"></use></svg><strong>Риски</strong><small>Важная информация</small></button><button class="document-card" type="button" data-open-view="documents"><svg><use href="#icon-folder"></use></svg><strong>Все документы</strong><small>Перейти к разделу</small></button></div></section>
+              <div class="overview-vp-lower">
+                <section class="overview-trend" aria-label="Краткий тренд виртуального портфеля">
+                  <p class="eyebrow">Динамика виртуального портфеля</p>
+                  <div class="overview-sparkline" id="overview-portfolio-chart" role="img" aria-label="Краткий тренд виртуального баланса"></div>
+                </section>
+                <aside class="strategy-preview" aria-labelledby="my-strategies-title"><div class="preview-heading"><h4 id="my-strategies-title">Мои стратегии</h4><button type="button" data-open-view="portfolio">Все <span>→</span></button></div><div id="overview-vp-strategies" aria-live="polite"><p class="vp-note">Загрузка наблюдений…</p></div></aside>
+              </div>
             </div>
 
             <aside class="overview-aside">
-              <section class="next-step-card panel"><div class="aside-label"><span>Следующий шаг</span><svg><use href="#icon-account"></use></svg></div><h3>Подключите реальный счёт</h3><p>Здесь позднее появится безопасный путь от виртуального наблюдения к реальному подключению.</p><button class="button button-outline full-width" type="button" data-open-view="real-account">Перейти к разделу <svg><use href="#icon-arrow"></use></svg></button></section>
+              <section class="next-step-card panel"><div class="aside-label"><span>Инвестиционный уровень</span><svg><use href="#icon-account"></use></svg></div><h3>Брокерский счёт</h3><p>Переход к работе с реальным капиталом через брокерский счёт — для участия в стратегиях QUD с целью потенциального прироста капитала.</p><button class="button button-outline full-width" type="button" data-open-view="real-account">Перейти к разделу <svg><use href="#icon-arrow"></use></svg></button></section>
               <section class="access-card panel" data-demo="true"><p class="eyebrow">Ваш доступ</p><dl><div><dt>Статус</dt><dd class="muted-value">Не подключён</dd></div><div><dt>Тип доступа</dt><dd>Owner Access</dd></div><div><dt>Оплачено до</dt><dd>—</dd></div><div><dt>Стоимость</dt><dd>—</dd></div></dl><button class="button button-outline full-width" type="button" data-open-view="profile">Управление доступом</button></section>
-              <section class="help-card panel"><p class="eyebrow">Нужна помощь?</p><button type="button" data-demo-action="help"><svg><use href="#icon-help"></use></svg><span><strong>Как работает QUD</strong><small>Краткое руководство</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="help"><svg><use href="#icon-help"></use></svg><span><strong>Вопросы и ответы</strong><small>Частые вопросы</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="help"><svg><use href="#icon-support"></use></svg><span><strong>Поддержка</strong><small>Будущий канал связи</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button></section>
+              <section class="help-card panel"><p class="eyebrow">Ответы на вопросы</p><button type="button" data-demo-action="help"><svg><use href="#icon-help"></use></svg><span><strong>Как работает QUD</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="help"><svg><use href="#icon-help"></use></svg><span><strong>Частые вопросы</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="document"><svg><use href="#icon-shield"></use></svg><span><strong>Регламент QUD</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="document"><svg><use href="#icon-file"></use></svg><span><strong>Условия доступа</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="document"><svg><use href="#icon-help"></use></svg><span><strong>Риски</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button></section>
             </aside>
           </div>
-          <footer class="cabinet-footer">QUD Capital Owner Cabinet MVP <span>·</span> Frontend-каркас без подключения данных</footer>
         </section>
 
         <section class="view strategy-view" id="view-strategies" data-title="Стратегии" aria-labelledby="strategies-title" hidden>
-          <div class="page-heading catalog-heading">
-            <div>
-              <p class="eyebrow">Strategy Library</p>
-              <h2 id="strategies-title">Доступные стратегии</h2>
-              <p>Компактный каталог стратегий QUD с актуальными подтверждёнными показателями.</p>
-            </div>
-            <span class="status-chip">Данные QUD</span>
+          <div class="catalog-toolbar">
+            <div class="catalog-intro"><h2 class="eyebrow" id="strategies-title" lang="en">Strategy Catalog</h2><p id="catalog-description">Каталог QUD предназначен для анализа реальных торговых стратегий на основе подтверждённой истории сделок и аналитики доходности и риска. Демонстрационные значения не являются основанием для инвестиционных решений.</p></div>
           </div>
 
-          <div class="catalog-toolbar">
-            <p>Стратегии представлены в стабильном порядке источника данных.</p>
-            <span class="catalog-count" id="strategy-count" aria-live="polite"></span>
-          </div>
+          <div class="catalog-summary"><span class="catalog-count" id="strategy-count" aria-live="polite"></span></div>
 
           <div class="strategy-catalog" id="strategy-catalog" aria-live="polite" aria-busy="false">
             <div class="strategy-state" role="status">Загрузка стратегий…</div>
           </div>
         </section>
 
-        <section class="view" id="view-portfolio" data-title="Virtual Portfolio" aria-labelledby="portfolio-title" hidden><div class="page-heading"><div><p class="eyebrow">Наблюдение без реального капитала</p><h2 id="portfolio-title">Мой Virtual Portfolio</h2><p>Рабочий MVP остаётся отдельным защищённым модулем. На этом этапе мы не переносим и не изменяем его расчётную логику.</p></div><span class="status-chip is-ready">Рабочее ядро сохранено</span></div><section class="module-card panel"><div class="module-icon"><svg><use href="#icon-portfolio"></use></svg></div><div><p class="eyebrow">Текущая интеграция</p><h3>Virtual Portfolio не изменён</h3><p>Будущая интеграция будет выполнена через защищённый API после утверждения структуры кабинета и Owner Identity.</p></div><a class="button button-primary" href="/portal/portfolio/mvp/">Открыть существующий MVP <svg><use href="#icon-arrow"></use></svg></a></section><div class="feature-placeholder-grid"><article class="panel"><span>01</span><h3>Показатели портфеля</h3><p>Распределённый капитал, баланс, результат, доходность и просадка.</p></article><article class="panel"><span>02</span><h3>История</h3><p>График виртуального баланса и распределённого капитала.</p></article><article class="panel"><span>03</span><h3>Наблюдения</h3><p>ACTIVE, COMPLETED и STOPPED_DD без изменения базовой логики.</p></article></div></section>
+        <section class="view owner-vp" id="view-portfolio" data-title="Virtual Portfolio" aria-labelledby="portfolio-title" hidden>
+          <div class="page-heading broker-heading vp-instructions">
+            <h2 class="eyebrow" id="portfolio-title">Инструкции</h2>
+            <div class="broker-documents" aria-label="Инструкции Virtual Portfolio">
+              <details class="broker-document-card panel" name="vp-instruction">
+                <summary><svg><use href="#icon-strategies"></use></svg><span><strong>Выбор стратегии</strong><small>Как выбрать доступную стратегию</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                <div class="broker-document-content"><p>Изучите показатели стратегии в разделе «Стратегии». Для нового наблюдения в Virtual Portfolio доступны только подготовленные и допущенные стратегии.</p></div>
+              </details>
+              <details class="broker-document-card panel" name="vp-instruction">
+                <summary><svg><use href="#icon-portfolio"></use></svg><span><strong>Создание наблюдения</strong><small>Сумма, срок и лимит просадки</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                <div class="broker-document-content"><p>Нажмите «Добавить наблюдение», выберите стратегию и задайте виртуальную сумму, срок и лимит просадки. Проверьте параметры перед запуском: после создания наблюдения их изменить нельзя.</p></div>
+              </details>
+              <details class="broker-document-card panel" name="vp-instruction">
+                <summary><svg><use href="#icon-chart"></use></svg><span><strong>Результаты наблюдения</strong><small>Баланс, график и история</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                <div class="broker-document-content"><p>Выберите созданное наблюдение в списке, чтобы открыть его показатели и историю. Общая динамика портфеля показана выше списка стратегий.</p></div>
+              </details>
+            </div>
+          </div>
+          <span id="header-status" hidden>Защищённый раздел</span>
+          <div id="access-view" hidden><p role="status" id="access-message">Для просмотра портфеля войдите в кабинет.</p></div>
+          <div id="workspace" hidden>
+            <section class="vp-summary" aria-labelledby="vp-summary-title">
+              <div class="vp-summary-toolbar"><h2 class="eyebrow" id="vp-summary-title">Мой Virtual Portfolio</h2><div class="vp-summary-refresh"><button id="vp-refresh" type="button" aria-label="Обновить данные портфеля" title="Обновить данные портфеля"><svg aria-hidden="true"><use href="#icon-refresh"></use></svg></button><span id="update-label" role="status">Загрузка данных…</span></div><span class="status-badge" id="portfolio-status" hidden>—</span></div>
+              <span id="portfolio-identity" hidden>Получение портфеля…</span>
+              <div class="vp-metrics"><article><span>Распределено</span><strong id="metric-allocated">—</strong><small>Виртуальный капитал</small><svg><use href="#icon-portfolio"></use></svg></article><article><span>Текущий баланс</span><strong id="metric-balance">—</strong><small>Виртуальный баланс</small><svg><use href="#icon-wallet"></use></svg></article><article><span>Результат</span><strong id="metric-return-usd">—</strong><small>Финансовый результат</small><svg><use href="#icon-money"></use></svg></article><article><span>Доходность</span><strong id="metric-return-pct">—</strong><small>Относительно капитала</small><svg><use href="#icon-percent"></use></svg></article><article><span>Просадка</span><strong id="metric-drawdown">—</strong><small>От пика баланса</small><svg><use href="#icon-chart"></use></svg></article><article><span>Активные стратегии</span><strong id="metric-active">—</strong><small>В наблюдении</small><svg><use href="#icon-users"></use></svg></article></div>
+            </section>
+            <section class="panel vp-chart-panel" aria-labelledby="vp-chart-title"><div class="vp-chart-heading"><h3 class="eyebrow" id="vp-chart-title">Динамика виртуального баланса</h3><span id="portfolio-chart-count">0 недель</span></div><div class="chart-stage" id="portfolio-chart"></div></section>
+            <div class="vp-columns">
+              <aside class="vp-observations" aria-label="Стратегии портфеля">
+                <div class="vp-section-heading"><div><p class="eyebrow">Наблюдаемые стратегии</p></div></div>
+                <div class="strategy-list" id="strategy-list"></div>
+                <button class="button button-primary" id="toggle-observation" type="button">Добавить наблюдение</button>
+                <form class="observation-form" id="observation-form" hidden novalidate>
+                  <div class="vp-form-head"><h4>Новое наблюдение</h4><button type="button" id="close-observation" aria-label="Закрыть форму">×</button></div>
+                  <p class="vp-note">После запуска сумму, срок и лимит просадки изменить нельзя.</p>
+                  <label class="vp-field">Стратегия<select id="strategy-select" name="strategy_id" required><option value="">Загрузка…</option></select></label>
+                  <p class="vp-note" id="strategy-availability-note">Получение доступных стратегий.</p>
+                  <div class="vp-strategy-preview" id="strategy-preview" hidden><div><span>Доходность</span><strong id="preview-return">—</strong></div><div><span>Макс. просадка</span><strong id="preview-dd">—</strong></div><div><span>Сделки</span><strong id="preview-trades">—</strong></div><div><span>Win Rate</span><strong id="preview-winrate">—</strong></div><div><span>Profit Factor</span><strong id="preview-pf">—</strong></div><div><span>Trust Score</span><strong id="preview-trust">—</strong></div></div>
+                  <label class="vp-field">Виртуальная сумма, USD<input id="capital-input" name="start_balance_usd" type="number" min="1000" step="100" value="1000" required></label>
+                  <div class="vp-form-grid"><label class="vp-field">Срок<select id="period-select" name="period" required><option value="2_weeks">2 недели</option><option value="1_month">1 месяц</option><option value="3_months">3 месяца</option></select></label><label class="vp-field">Лимит просадки, %<input id="drawdown-input" name="max_drawdown_limit_pct" type="number" min="1" max="50" step="0.5" value="7" required></label></div>
+                  <button class="button button-primary" id="submit-observation" type="submit">Начать наблюдение</button><p id="observation-message" role="status"></p>
+                </form>
+              </aside>
+              <section class="panel vp-detail" aria-label="Подробности наблюдения">
+                <div id="strategy-empty-state" class="vp-empty"><strong>Выберите стратегию</strong><p>Здесь появятся условия наблюдения, результат и история недель.</p></div>
+                <div id="strategy-content" hidden>
+                  <div class="vp-section-heading"><div><p class="eyebrow">Выбранная стратегия</p><h3 id="strategy-detail-title">—</h3><p id="strategy-request-id">—</p></div><span class="status-badge" id="strategy-status">—</span></div>
+                  <div class="vp-chart-block"><div class="vp-chart-heading"><h4>История баланса</h4><span id="strategy-chart-count">0 недель</span></div><div class="chart-stage" id="strategy-chart"></div></div>
+                  <details class="history-section vp-history-details"><summary>Недельная история <span aria-hidden="true">⌄</span></summary><div id="history-container"></div></details>
+                  <h4>Ваше наблюдение</h4><div class="vp-metrics vp-detail-metrics vp-observation-metrics"><article><span>Выделено</span><strong id="detail-allocated">—</strong></article><article><span>Текущий баланс</span><strong id="detail-balance">—</strong></article><article><span>Результат</span><strong id="detail-return">—</strong></article><article><span>Просадка</span><strong id="detail-drawdown">—</strong></article><article><span>Лимит</span><strong id="detail-limit">—</strong></article><article><span>Период</span><strong id="detail-period">—</strong></article></div>
+                  <h4>Показатели стратегии</h4><div class="vp-metrics vp-detail-metrics vp-quality-metrics"><article><span>Trust Score</span><strong id="quality-trust">—</strong></article><article><span>История доходности</span><strong id="quality-return">—</strong></article><article><span>Макс. просадка</span><strong id="quality-dd">—</strong></article><article><span>Закрытые сделки</span><strong id="quality-trades">—</strong></article><article><span>Win Rate</span><strong id="quality-winrate">—</strong></article><article><span>Profit Factor</span><strong id="quality-pf">—</strong></article></div>
+                </div>
+              </section>
+            </div>
+            <p class="vp-disclaimer">Виртуальное наблюдение не задействует реальные деньги и не является инвестиционной рекомендацией.</p>
+          </div>
+          <template id="empty-chart-template"><div class="chart-empty"><strong>Первая точка ещё не сформирована</strong><p>График появится после первого подтверждённого недельного периода.</p></div></template>
+        </section>
 
-        <section class="view" id="view-real-account" data-title="Реальный счёт" aria-labelledby="account-title" hidden><div class="page-heading"><div><p class="eyebrow">Следующий уровень</p><h2 id="account-title">Подключение реального счёта</h2><p>Информационный placeholder будущего сценария. Брокерская интеграция и реальные деньги не входят в текущий этап.</p></div><span class="status-chip">Не подключено</span></div><section class="placeholder-hero panel accent-panel"><div><span class="large-index">04</span><p class="eyebrow">Только структура</p><h3>Сначала наблюдение, затем решение</h3><p>Раздел будет сформирован отдельно после проверки полного пользовательского пути в Virtual Portfolio и отдельного согласования инфраструктуры.</p></div><svg><use href="#icon-account"></use></svg></section><ol class="journey-list"><li class="panel"><span>01</span><div><strong>Изучить стратегию</strong><small>Подтверждённые данные и риск-профиль</small></div></li><li class="panel"><span>02</span><div><strong>Проверить в Virtual Portfolio</strong><small>Виртуальный капитал и собственный DD Limit</small></div></li><li class="panel is-future"><span>03</span><div><strong>Рассмотреть подключение</strong><small>Будущий этап после отдельного согласования</small></div></li></ol></section>
+        <section class="view broker-view" id="view-real-account" data-title="Брокерский счёт" aria-labelledby="account-title" hidden>
+          <div class="page-heading broker-heading">
+            <p class="eyebrow" id="account-title">Документы и инструкции</p>
+            <div class="broker-documents" aria-label="Регламенты по брокерскому счёту">
+              <details class="broker-document-card panel" name="broker-document">
+                <summary><svg><use href="#icon-file"></use></svg><span><strong>Порядок открытия счёта</strong><small>Краткая инструкция и регламент</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                <div class="broker-document-content"><p>Изучите порядок открытия, подготовьте необходимые сведения и пройдите оформление через официальный канал выбранного брокера. После открытия сохраните данные счёта для дальнейшего подключения в QUD.</p><button type="button" data-demo-action="document">Открыть регламент ↗</button><small>Ссылка на внешний регламент будет добавлена.</small></div>
+              </details>
+              <details class="broker-document-card panel" name="broker-document">
+                <summary><svg><use href="#icon-shield"></use></svg><span><strong>Условия подключения</strong><small>Краткая инструкция и регламент</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                <div class="broker-document-content"><p>Перед подачей заявки проверьте требования к владельцу, брокеру и типу счёта. Точные критерии и порядок проверки будут приведены в утверждённом регламенте.</p><button type="button" data-demo-action="document">Открыть регламент ↗</button><small>Ссылка на внешний регламент будет добавлена.</small></div>
+              </details>
+              <details class="broker-document-card panel" id="broker-tariffs" name="broker-document">
+                <summary><svg><use href="#icon-percent"></use></svg><span><strong>Тарифы</strong><small>Краткое описание и регламент</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                <div class="broker-document-content"><p>Здесь появятся стоимость подключения, периодические платежи и другие применимые расходы после утверждения тарифов. До публикации регламента суммы не показываются.</p><button type="button" data-demo-action="document">Открыть регламент ↗</button><small>Ссылка на внешний регламент будет добавлена.</small></div>
+              </details>
+            </div>
+          </div>
+
+          <div class="broker-workspace">
+            <section class="broker-accounts" aria-labelledby="broker-accounts-title">
+              <div class="section-heading broker-accounts-heading">
+                <p class="eyebrow" id="broker-accounts-title">Мои брокерские счета</p>
+              </div>
+              <div class="broker-account-card panel">
+                <details class="broker-account-entry">
+                  <summary><strong id="broker-account-name">Новый брокерский счёт</strong><svg class="broker-account-chevron" aria-hidden="true"><use href="#icon-chevron"></use></svg></summary>
+                  <div class="broker-account-detail">
+                    <div class="broker-account-detail-head"><span class="broker-account-badge" id="broker-account-badge">Заявка № —</span><span class="status-chip" id="broker-account-status">Не подключён</span></div>
+                    <p id="broker-account-description">После подключения здесь появятся подтверждённые данные счёта и выбранной стратегии.</p>
+                    <div class="broker-account-fields">
+                      <div class="broker-account-field-group" role="group" aria-label="Реквизиты брокера">
+                        <span>Брокер <strong id="broker-account-broker">—</strong></span>
+                        <span>Номер счёта <strong id="broker-account-number">—</strong></span>
+                        <span class="broker-password-field" id="broker-password-field" hidden>Мастер-пароль <span class="broker-password-control"><strong id="broker-password-value">••••••••</strong><button id="broker-password-toggle" type="button" aria-label="Показать мастер-пароль" aria-pressed="false"><svg aria-hidden="true"><use href="#icon-eye"></use></svg></button></span></span>
+                      </div>
+                      <div class="broker-account-field-group" role="group" aria-label="Подключение стратегии">
+                        <span>Состояние <strong id="broker-account-state">Ожидает подключения</strong></span>
+                        <span>Стратегия <strong>—</strong></span>
+                        <span>Дата подключения <strong>—</strong></span>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+              <button class="button button-secondary broker-add-account" id="open-broker-account" type="button">+ Добавить брокерский счёт</button>
+            </section>
+
+            <section class="broker-connect broker-connect-aside" aria-labelledby="broker-application-title">
+              <h3 class="eyebrow" id="broker-application-title">Новое подключение к стратегии</h3>
+              <div class="broker-connect-actions"><button class="button button-primary" id="open-broker-application" type="button">Новая заявка <svg><use href="#icon-arrow"></use></svg></button><details class="broker-guide"><summary>Как подать заявку <span aria-hidden="true">⌄</span></summary><div class="broker-guide-content panel"><ol><li>Изучите документы и условия подключения.</li><li>Выберите стратегию, брокерский счёт и параметры обслуживания.</li><li>Проверьте данные перед отправкой в QUD.</li></ol><button type="button" data-demo-action="document">Полная инструкция ↗</button><small>Внешняя ссылка будет добавлена после утверждения документа.</small></div></details></div>
+              <div class="broker-terminal-context"><p class="eyebrow">Сделки на графике</p>
+                <div class="broker-terminal-inline">
+                  <a class="broker-terminal-wordmark" href="https://web.metatrader.app/terminal" target="_blank" rel="noopener noreferrer" aria-label="Открыть WebTerminal в новой вкладке"><svg aria-hidden="true"><use href="#icon-globe"></use></svg>WebTerminal</a>
+                  <details class="broker-terminal-guide">
+                    <summary>Как войти <span aria-hidden="true">⌄</span></summary>
+                    <div class="broker-terminal-guide-content panel"><ol><li>Откройте WebTerminal по ссылке.</li><li>Выберите сервер брокера и укажите номер счёта.</li><li>Введите инвесторский пароль, затем откройте график, позиции или историю операций.</li></ol><p>Если сервер брокера недоступен, используйте WebTerminal на его сайте. Пароль вводится только в терминале, не в кабинете QUD.</p></div>
+                  </details>
+                </div>
+              </div>
+            </section>
+
+            <section class="broker-recommendations" aria-labelledby="broker-recommendations-title">
+              <h3 class="eyebrow" id="broker-recommendations-title">Выбор брокера</h3>
+              <details class="broker-side" open>
+                <summary class="broker-side-heading"><strong>Рекомендуемые брокеры</strong><span class="broker-side-toggle"><span class="broker-toggle-close">Свернуть</span><span class="broker-toggle-open">Показать</span><span class="broker-side-chevron" aria-hidden="true"></span></span></summary>
+                <div class="recommended-brokers panel">
+                  <div class="broker-recommendation-list">
+                    <article class="broker-recommendation"><div><strong>Брокер 01</strong><small>Описание условий будет добавлено после согласования.</small></div><button type="button" disabled>Перейти ↗</button></article>
+                    <article class="broker-recommendation"><div><strong>Брокер 02</strong><small>Описание условий будет добавлено после согласования.</small></div><button type="button" disabled>Перейти ↗</button></article>
+                    <article class="broker-recommendation"><div><strong>Брокер 03</strong><small>Описание условий будет добавлено после согласования.</small></div><button type="button" disabled>Перейти ↗</button></article>
+                  </div>
+                  <p class="broker-benefit">Владельцам, открывшим счёт у рекомендованного брокера, QUD предоставляет сниженные тарифы на сервисное обслуживание в течение первых двух месяцев после подключения.</p>
+                  <p class="broker-partner-note">Переходы к брокерам могут быть партнёрскими; QUD может получать вознаграждение.</p>
+                </div>
+              </details>
+            </section>
+          </div>
+        </section>
 
         <section class="view" id="view-documents" data-title="Документы и регламенты" aria-labelledby="documents-title" hidden><div class="page-heading"><div><p class="eyebrow">Knowledge Base</p><h2 id="documents-title">Документы и регламенты</h2><p>Будущая библиотека правил работы QUD, условий доступа, описаний Virtual Portfolio и риск-дисклеймеров.</p></div><span class="status-chip">Структура раздела</span></div><div class="library-grid"><article class="library-card panel"><svg><use href="#icon-shield"></use></svg><div><span>Регламент</span><h3>Правила работы QUD</h3><p>Принципы инфраструктуры и взаимодействия с платформой.</p></div><button type="button" data-demo-action="document">Открыть →</button></article><article class="library-card panel"><svg><use href="#icon-file"></use></svg><div><span>Доступ</span><h3>Условия Owner Access</h3><p>Статус доступа, правила и будущие условия подписки.</p></div><button type="button" data-demo-action="document">Открыть →</button></article><article class="library-card panel"><svg><use href="#icon-portfolio"></use></svg><div><span>Модель</span><h3>Virtual Portfolio</h3><p>Логика виртуального наблюдения без реального капитала.</p></div><button type="button" data-demo-action="document">Открыть →</button></article><article class="library-card panel"><svg><use href="#icon-help"></use></svg><div><span>Риски</span><h3>Важная информация</h3><p>Исторические данные не гарантируют будущий результат.</p></div><button type="button" data-demo-action="document">Открыть →</button></article></div></section>
 
-        <section class="view" id="view-profile" data-title="Профиль владельца" aria-labelledby="profile-title" hidden><div class="page-heading"><div><p class="eyebrow">Owner Identity</p><h2 id="profile-title">Профиль и доступ</h2><p>Визуальная структура будущего профиля. Вход выполнен. Персональные данные и подписка пока не подключены.</p></div><span class="status-chip">Demo profile</span></div><div class="profile-layout"><section class="profile-card panel"><span class="avatar avatar-large">QC</span><div><p class="eyebrow">Профиль владельца</p><h3>QUD Capital Owner</h3><p>Персональные данные появятся после подключения Owner Identity.</p></div></section><section class="settings-card panel"><h3>Состояние доступа</h3><dl><div><dt>Авторизация</dt><dd>Вход выполнен</dd></div><div><dt>Owner ID</dt><dd>Не назначен</dd></div><div><dt>Portfolio ID</dt><dd>Определяется сервером</dd></div></dl></section></div></section>
+        <section class="view" id="view-profile" data-title="Профиль владельца" aria-labelledby="profile-title" hidden>
+          <div class="profile-layout">
+            <section class="profile-card" aria-labelledby="profile-title">
+              <p class="eyebrow">Профиль владельца</p>
+              <h2 id="profile-title">Owner ID</h2>
+              <p class="profile-id-placeholder" id="profile-owner-id">Не назначен</p>
+              <p class="profile-confidentiality">Owner ID конфиденциален. Сохраните его после выдачи и не разглашайте третьим лицам.</p>
+            </section>
+            <section class="settings-card">
+              <h3>Состояние доступа</h3>
+              <dl>
+                <div><dt>Авторизация<small>Подтверждает право входа в кабинет по ключу доступа.</small></dt><dd>Вход выполнен</dd></div>
+                <div><dt>Дата выдачи ключа доступа</dt><dd>Не указана</dd></div>
+                <div><dt>Электронная почта владельца<small>На этот адрес будут направляться письма от QUD.</small></dt><dd>Не указана</dd></div>
+              </dl>
+            </section>
+          </div>
+        </section>
       </main>
     </section>
   </div>
 
+  <dialog class="support-dialog panel" id="support-dialog" aria-labelledby="support-dialog-title">
+    <div class="broker-dialog-header"><div><p class="eyebrow">Связь с QUD</p><h2 id="support-dialog-title">Поддержка</h2></div><button class="icon-button" id="close-support" type="button" aria-label="Закрыть поддержку"><svg><use href="#icon-close"></use></svg></button></div>
+    <div class="support-addresses"><div><span>От кого</span><strong id="support-from">Электронная почта не указана</strong><small id="support-owner-id">Owner ID не назначен</small></div><div><span>Кому</span><strong>infoqud@gmail.com</strong><small>Официальная почта QUD</small></div></div>
+    <section class="support-history" aria-labelledby="support-history-title"><div class="support-history-heading"><h3 id="support-history-title">История переписки</h3><span id="support-history-count"></span></div><p class="support-history-state" id="support-history-state" role="status">Загрузка сообщений…</p><div id="support-messages"></div></section>
+    <form class="support-form" id="support-form"><label for="support-message">Сообщение</label><textarea id="support-message" name="message" rows="4" maxlength="4000" placeholder="Напишите ваш вопрос для QUD" required disabled></textarea><div class="support-form-footer"><p id="support-feedback" role="status">Проверяем доступность канала поддержки.</p><button class="button button-primary" id="support-send" type="submit" disabled>Отправить</button></div></form>
+  </dialog>
+
+  <dialog class="broker-application-dialog broker-account-dialog panel" id="broker-account-dialog" aria-labelledby="broker-account-dialog-title">
+    <div class="broker-dialog-header"><div><p class="eyebrow">Мои брокерские счета</p><h2 id="broker-account-dialog-title">Добавить брокерский счёт</h2></div><button class="icon-button" id="close-broker-account" type="button" aria-label="Закрыть форму счёта"><svg><use href="#icon-close"></use></svg></button></div>
+    <form class="broker-application-form" id="broker-account-form" autocomplete="off">
+      <div class="broker-form-field"><label for="broker-account-input-broker">Брокер</label><input id="broker-account-input-broker" name="broker" type="text" maxlength="120" placeholder="Название брокера" required></div>
+      <div class="broker-form-field"><label for="broker-account-input-number">Номер счёта</label><input id="broker-account-input-number" name="account_number" type="text" inputmode="numeric" maxlength="40" placeholder="Номер брокерского счёта" required></div>
+      <div class="broker-form-field"><label for="broker-account-input-password">Мастер-пароль</label><input id="broker-account-input-password" type="password" autocomplete="new-password" maxlength="256" placeholder="Только тестовое значение" aria-describedby="broker-password-help broker-demo-help" required><small id="broker-password-help">Для технического подключения стратегии QUD нужен мастер-пароль. QUD не передаёт данные брокерского счёта трейдеру и другим лицам; информация конфиденциальна.</small></div>
+      <p class="broker-credential-warning" id="broker-demo-help">Демонстрационный режим: пароль виден по нажатию на значок глаза и остаётся только в памяти этой вкладки до выхода или обновления страницы. В QUD он не отправляется. Не вводите действующий мастер-пароль.</p>
+      <div class="broker-account-dialog-actions"><button class="button button-secondary" id="cancel-broker-account" type="button">Отмена</button><button class="button button-primary" type="submit">Добавить тестовый счёт</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="broker-application-dialog panel" id="broker-application-dialog" aria-labelledby="broker-dialog-title">
+    <div class="broker-dialog-header"><div><p class="eyebrow">Новая заявка</p><h2 id="broker-dialog-title">Заявка на сервисное обслуживание</h2></div><button class="icon-button" id="close-broker-application" type="button" aria-label="Закрыть форму"><svg><use href="#icon-close"></use></svg></button></div>
+    <form class="broker-application-form" id="broker-application-form">
+      <div class="broker-form-field">
+        <label for="application-strategy">Стратегия</label>
+        <select id="application-strategy" name="strategy" required disabled><option value="">Загрузка стратегий…</option></select>
+        <small>QUD выполнит настройку обслуживания для выбранной стратегии.</small>
+      </div>
+      <div class="broker-form-field">
+        <label for="application-period">Период обслуживания</label>
+        <select id="application-period" name="period_months" required><option value="">Выберите период</option><option value="1">1 месяц</option><option value="3">3 месяца</option></select>
+        <small>Для стратегии категории Elite автоматически устанавливается 3 месяца.</small>
+      </div>
+      <div class="broker-form-field">
+        <label for="application-account">Ваш брокерский счёт</label>
+        <select id="application-account" name="broker_account" required disabled><option value="">Нет брокерских счетов</option></select>
+        <small id="application-account-help">Выберите счёт из блока «Мои брокерские счета».</small>
+      </div>
+      <fieldset class="broker-form-field broker-instruments">
+        <legend>Инструменты</legend>
+        <div class="broker-instrument-option">
+          <label for="application-instruments-liquid"><input id="application-instruments-liquid" type="radio" name="instruments" value="liquid" required><span><strong>Основные ликвидные</strong><small>Валютные пары majors; условия проверяет QUD</small></span></label>
+          <details class="broker-instrument-info"><summary aria-label="Показать основные инструменты"><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></summary><div><p>Предварительный перечень основных валютных пар:</p><ul><li>EUR/USD</li><li>GBP/USD</li><li>USD/JPY</li><li>USD/CHF</li><li>USD/CAD</li><li>AUD/USD</li><li>NZD/USD</li></ul><small>Окончательный набор и условия по спреду QUD проверит для выбранного брокера.</small></div></details>
+        </div>
+        <div class="broker-instrument-option">
+          <label for="application-instruments-broker"><input id="application-instruments-broker" type="radio" name="instruments" value="broker_all"><span><strong>Все доступные у брокера</strong><small>С обязательными проверками QUD</small></span></label>
+          <details class="broker-instrument-info"><summary aria-label="Показать пояснение об инструментах брокера"><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></summary><div><p>Со списком доступных инструментов можно ознакомиться на сайте выбранного брокера, в разделе спецификаций контрактов. QUD проверит выбранные инструменты и условия торговли перед настройкой.</p></div></details>
+        </div>
+      </fieldset>
+      <div class="broker-form-field">
+        <label for="application-risk">Предел риска на одну позицию</label>
+        <select id="application-risk" name="risk_limit" required><option value="">Выберите значение</option><option value="1">1%</option><option value="2">2%</option><option value="3">3%</option><option value="4">4%</option><option value="5">5%</option></select>
+        <small>Предел расчётного риска по Stop Loss; он не гарантирует открытие сделки, если объём ниже минимума брокера.</small>
+      </div>
+      <section class="broker-cost-preview" aria-labelledby="broker-cost-title"><p class="eyebrow">Предварительный расчёт</p><h3 id="broker-cost-title">Стоимость обслуживания</h3><div class="broker-cost-row"><span>Период</span><strong id="broker-cost-period">Не выбран</strong></div><div class="broker-cost-row broker-cost-total"><span>Предварительная стоимость</span><strong id="broker-cost-amount">—</strong></div><p id="broker-cost-note" role="status">Выберите стратегию и период обслуживания.</p></section>
+      <div class="broker-dialog-footer"><p class="broker-submit-note" id="broker-submit-note" role="status">Отправка заявки пока не подключена; доступен предварительный выбор параметров.</p><button class="button button-primary" id="submit-broker-application" type="submit" disabled>Отправить заявку на настройку</button></div>
+    </form>
+  </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
-  <script src="./app.js?v=20260911-10" defer></script>
-  <script src="./session.js?v=20260910-7" defer></script>
+  <script src="./app.js?v=20261016-16" defer></script>
+  <script src="./session.js?v=20261016-9" defer></script>
+  <script src="/portal/portfolio/mvp/app.js?v=20261023-owner-9" defer></script>
 </body>
 </html>

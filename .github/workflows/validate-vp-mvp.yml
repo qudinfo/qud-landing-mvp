@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'portal/portfolio/mvp/**'
+      - 'owner/cabinet/index.html'
       - '.github/workflows/validate-vp-mvp.yml'
   push:
     branches:
@@ -30,6 +31,7 @@ jobs:
 
           root = Path('portal/portfolio/mvp')
           html = (root / 'index.html').read_text()
+          owner_html = Path('owner/cabinet/index.html').read_text()
           js = (root / 'app.js').read_text()
 
           required_files = ['./styles.css', './app.js']
@@ -38,8 +40,14 @@ jobs:
                   raise SystemExit(f'missing asset reference: {item}')
 
           ids = set(re.findall(r'id="([^"]+)"', html))
+          owner_ids = set(re.findall(r'id="([^"]+)"', owner_html))
           used = set(re.findall(r"getElementById\('([^']+)'\)", js))
-          missing = sorted(used - ids)
+          owner_only = {'owner-shell', 'view-portfolio', 'vp-refresh',
+                        'overview-portfolio-chart', 'overview-vp-strategies'}
+          missing_owner = sorted(owner_only - owner_ids)
+          if missing_owner:
+              raise SystemExit('missing Owner Cabinet HTML ids: ' + ', '.join(missing_owner))
+          missing = sorted(used - ids - owner_only)
           if missing:
               raise SystemExit('missing HTML ids: ' + ', '.join(missing))
 
