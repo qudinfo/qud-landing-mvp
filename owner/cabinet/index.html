@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261024-1">
+  <link rel="stylesheet" href="./styles.css?v=20261024-2">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 </head>
 <body>
@@ -136,7 +136,7 @@
 
             <aside class="overview-aside">
               <section class="next-step-card panel"><div class="aside-label"><span>Инвестиционный уровень</span><svg><use href="#icon-account"></use></svg></div><h3>Брокерский счёт</h3><p>Переход к работе с реальным капиталом через брокерский счёт — для участия в стратегиях QUD с целью потенциального прироста капитала.</p><button class="button button-outline full-width" type="button" data-open-view="real-account">Перейти к разделу <svg><use href="#icon-arrow"></use></svg></button></section>
-              <section class="access-card panel" data-demo="true"><p class="eyebrow">Ваш доступ</p><dl><div><dt>Статус</dt><dd class="muted-value">Не подключён</dd></div><div><dt>Тип доступа</dt><dd>Owner Access</dd></div><div><dt>Оплачено до</dt><dd>—</dd></div><div><dt>Стоимость</dt><dd>—</dd></div></dl><button class="button button-outline full-width" type="button" data-open-view="profile">Управление доступом</button></section>
+              <section class="access-card panel" data-demo="true"><p class="eyebrow">Ваш доступ</p><dl><div><dt>Статус</dt><dd id="overview-access-status" data-access-status="inactive">Вход не подтверждён</dd></div><div><dt>Тип доступа</dt><dd>Owner Access</dd></div><div><dt>Оплачено до</dt><dd>—</dd></div><div><dt>Стоимость</dt><dd>—</dd></div></dl><button class="button button-outline full-width" type="button" data-open-view="profile">Управление доступом</button></section>
               <section class="help-card panel"><p class="eyebrow">Ответы на вопросы</p><button type="button" data-demo-action="help"><svg><use href="#icon-help"></use></svg><span><strong>Как работает QUD</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="help"><svg><use href="#icon-help"></use></svg><span><strong>Частые вопросы</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="document"><svg><use href="#icon-shield"></use></svg><span><strong>Регламент QUD</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="document"><svg><use href="#icon-file"></use></svg><span><strong>Условия доступа</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button><button type="button" data-demo-action="document"><svg><use href="#icon-help"></use></svg><span><strong>Риски</strong></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button></section>
             </aside>
           </div>
@@ -375,7 +375,7 @@
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
   <script src="./app.js?v=20261016-16" defer></script>
-  <script src="./session.js?v=20261024-1" defer></script>
+  <script src="./session.js?v=20261024-2" defer></script>
   <script src="/portal/portfolio/mvp/app.js?v=20261023-owner-9" defer></script>
 </body>
 </html>

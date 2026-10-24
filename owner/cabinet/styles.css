@@ -287,7 +287,8 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .access-card dl div { display: flex; justify-content: space-between; gap: 20px; }
 .access-card dt { color: var(--muted); font-size: 11px; }
 .access-card dd { margin: 0; color: var(--text-soft); font-size: 11px; text-align: right; }
-.access-card .muted-value { color: var(--muted); }
+.access-card dd[data-access-status="inactive"] { color: var(--muted); }
+.access-card dd[data-access-status="active"] { color: var(--green); }
 .help-card { min-height: 0; }
 .help-card > button { width: 100%; display: grid; grid-template-columns: 30px minmax(0, 1fr) 16px; align-items: center; gap: 12px; border: 0; border-bottom: 1px solid var(--border-soft); background: transparent; color: var(--text); padding: 16px 0; text-align: left; }
 .help-card > button:hover strong { color: var(--gold-bright); }

@@ -23,6 +23,9 @@
     const label = active ? 'Доступ к кабинету активен' : 'Вход не подтверждён';
     accessPill.dataset.accessStatus = active ? 'active' : 'inactive';
     byId('access-status-label').textContent = label;
+    const overviewStatus = byId('overview-access-status');
+    overviewStatus.dataset.accessStatus = active ? 'active' : 'inactive';
+    overviewStatus.textContent = label;
     accessPill.setAttribute('aria-label', `Статус доступа: ${label.toLowerCase()}`);
     accessPill.title = `Статус доступа: ${label.toLowerCase()}`;
   }
