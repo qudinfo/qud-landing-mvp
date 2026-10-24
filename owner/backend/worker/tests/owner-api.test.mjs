@@ -105,7 +105,7 @@ assert.equal(response.status, 200);
 const loginPayload = await payload(response);
 assert.equal(loginPayload.ok, true);
 assert.equal(loginPayload.authenticated, true);
-assert.equal(Object.hasOwn(loginPayload, 'owner_id'), false);
+assert.equal(loginPayload.owner_id, env.QUD_OWNER_ID);
 
 const setCookie = response.headers.get('set-cookie');
 assert.match(setCookie, /^qud_owner_session=/);
@@ -122,7 +122,7 @@ response = await worker.fetch(request('/owner/api/session', {
 assert.equal(response.status, 200);
 const sessionPayload = await payload(response);
 assert.equal(sessionPayload.authenticated, true);
-assert.equal(Object.hasOwn(sessionPayload, 'owner_id'), false);
+assert.equal(sessionPayload.owner_id, env.QUD_OWNER_ID);
 
 response = await worker.fetch(request('/owner/api/strategies', {
   headers: { cookie: `${sessionCookie}x` }

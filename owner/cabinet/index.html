@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261023-36">
+  <link rel="stylesheet" href="./styles.css?v=20261024-1">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 </head>
 <body>
@@ -99,9 +99,9 @@
           <div class="topbar-heading"><svg class="topbar-section-icon" aria-hidden="true"><use href="#icon-overview"></use></svg><div class="topbar-heading-copy"><p class="topbar-kicker">Owner Cabinet</p><h1 id="view-title">Исследовательский доступ</h1></div></div>
         </div>
         <div class="topbar-actions">
-          <div class="access-pill" data-subscription-status="inactive" aria-label="Статус доступа: доступ к данным не активен" title="Статус доступа: доступ к данным не активен"><span class="status-dot"></span><span><strong>Статус доступа</strong><small id="subscription-status-label">Доступ к данным не активен</small></span></div>
+          <div class="access-pill" data-access-status="inactive" aria-label="Статус доступа: вход не подтверждён" title="Статус доступа: вход не подтверждён"><span class="status-dot"></span><span><strong>Статус доступа</strong><small id="access-status-label">Вход не подтверждён</small></span></div>
           <button class="top-support" id="open-support" type="button" aria-label="Поддержка" aria-haspopup="dialog" aria-controls="support-dialog" title="Поддержка"><svg aria-hidden="true"><use href="#icon-support"></use></svg><span>Поддержка</span><span class="support-unread" id="support-unread" hidden></span></button>
-          <button class="top-profile" type="button" data-view="profile" aria-label="Открыть профиль владельца"><span class="avatar">QC</span><span class="top-profile-copy"><strong id="header-owner-id">Не назначен</strong><small>Owner ID</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
+          <button class="top-profile" type="button" data-view="profile" aria-label="Открыть профиль владельца"><span class="avatar">QC</span><span class="top-profile-copy"><strong id="header-owner-id">Owner ID недоступен</strong><small>Owner ID</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
         </div>
       </header>
 
@@ -300,7 +300,7 @@
             <section class="profile-card" aria-labelledby="profile-title">
               <p class="eyebrow">Профиль владельца</p>
               <h2 id="profile-title">Owner ID</h2>
-              <p class="profile-id-placeholder" id="profile-owner-id">Не назначен</p>
+              <p class="profile-id-placeholder" id="profile-owner-id">Owner ID недоступен</p>
               <p class="profile-confidentiality">Owner ID конфиденциален. Сохраните его после выдачи и не разглашайте третьим лицам.</p>
             </section>
             <section class="settings-card">
@@ -375,7 +375,7 @@
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
   <script src="./app.js?v=20261016-16" defer></script>
-  <script src="./session.js?v=20261016-9" defer></script>
+  <script src="./session.js?v=20261024-1" defer></script>
   <script src="/portal/portfolio/mvp/app.js?v=20261023-owner-9" defer></script>
 </body>
 </html>

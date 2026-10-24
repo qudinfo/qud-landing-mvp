@@ -7,27 +7,22 @@
   const submit = byId('owner-login-submit');
   const message = byId('owner-login-message');
   const accessPill = document.querySelector('.access-pill');
-  const subscriptionLabels = {
-    active: 'Подписка активна',
-    expired: 'Срок подписки истёк',
-    inactive: 'Доступ к данным не активен'
-  };
   let busy = false;
   let authenticated = false;
   let expiryTimer;
 
   function renderOwnerAccess(data = {}) {
-    // These fields may only come from the authenticated, protected Owner API.
+    // Identity comes only from the authenticated Owner session, never from VP data.
     const ownerId = typeof data.owner_id === 'string' && data.owner_id.trim()
-      ? data.owner_id.trim() : 'Не назначен';
+      ? data.owner_id.trim() : 'Owner ID недоступен';
     byId('header-owner-id').textContent = ownerId;
     byId('profile-owner-id').textContent = ownerId;
 
-    const status = Object.hasOwn(subscriptionLabels, data.subscription_status)
-      ? data.subscription_status : 'inactive';
-    const label = subscriptionLabels[status];
-    accessPill.dataset.subscriptionStatus = status;
-    byId('subscription-status-label').textContent = label;
+    // The MVP session proves cabinet access, not a paid subscription status.
+    const active = data.authenticated === true;
+    const label = active ? 'Доступ к кабинету активен' : 'Вход не подтверждён';
+    accessPill.dataset.accessStatus = active ? 'active' : 'inactive';
+    byId('access-status-label').textContent = label;
     accessPill.setAttribute('aria-label', `Статус доступа: ${label.toLowerCase()}`);
     accessPill.title = `Статус доступа: ${label.toLowerCase()}`;
   }

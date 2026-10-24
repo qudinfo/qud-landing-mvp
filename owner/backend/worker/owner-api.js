@@ -93,6 +93,7 @@ async function handleSession(request, env) {
     return jsonResponse({
       ok: true,
       authenticated: true,
+      owner_id: session.owner_id,
       expires_at: session.expires_at
     });
   }
@@ -141,6 +142,7 @@ async function handleSession(request, env) {
       {
         ok: true,
         authenticated: true,
+        owner_id: session.owner_id,
         expires_at: session.expires_at
       },
       200,

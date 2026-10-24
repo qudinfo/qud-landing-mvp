@@ -181,8 +181,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .topbar-actions { display: flex; align-items: center; gap: 24px; }
 .access-pill { min-width: 205px; min-height: 56px; display: flex; align-items: center; gap: 11px; border: 1px solid var(--border-gold); border-radius: 9px; background: #0d1013; padding: 8px 15px; }
 .status-dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: #747e84; box-shadow: 0 0 0 4px rgba(116, 126, 132, 0.08); }
-.access-pill[data-subscription-status="active"] .status-dot { background: var(--green); box-shadow: 0 0 0 4px var(--green-soft); }
-.access-pill[data-subscription-status="expired"] .status-dot { background: var(--red); box-shadow: 0 0 0 4px rgba(208, 100, 92, 0.12); }
+.access-pill[data-access-status="active"] .status-dot { background: var(--green); box-shadow: 0 0 0 4px var(--green-soft); }
 .access-pill > span:last-child, .top-profile-copy { display: grid; gap: 3px; }
 .access-pill strong { color: var(--text-soft); font-size: 12px; font-weight: 650; }
 .access-pill small, .top-profile small { color: var(--muted); font-size: 10px; }
