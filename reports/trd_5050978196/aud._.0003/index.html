@@ -29,7 +29,7 @@
     "plan": "TDA_BASIC",
     "display_name": "QUD TDA Basic",
     "type": "TRADER_REGULAR",
-    "generated_at": "2026-10-18",
+    "generated_at": "2026-10-25",
     "version": "BASIC_AUDIT_v1"
   },
   "trader": {
@@ -37,17 +37,17 @@
     "account_login": 756010900
   },
   "period": {
-    "start": "2026-10-12",
-    "end": "2026-10-16",
-    "current_period": "2026-10-12 — 2026-10-16"
+    "start": "2026-10-19",
+    "end": "2026-10-23",
+    "current_period": "2026-10-19 — 2026-10-23"
   },
   "score": {
-    "qud_tda_score": 97,
-    "weekly_quality_score": 96.92,
+    "qud_tda_score": 94,
+    "weekly_quality_score": 94,
     "history_trust_factor": 1,
     "trust_zone": "QUD Elite",
     "risk_mode": "low",
-    "trust_score_delta": 7.92,
+    "trust_score_delta": -2.92,
     "display_class": "good",
     "zones": [
       {
@@ -69,7 +69,7 @@
         "status": "qud_elite"
       }
     ],
-    "main_damage_source": "Block E",
+    "main_damage_source": "Block C",
     "history": [
       {
         "label": "W1",
@@ -183,10 +183,16 @@
         "label": "W19",
         "period": "2026-10-12 — 2026-10-16",
         "value": 96.92,
+        "source": "recalculated_from_raw"
+      },
+      {
+        "label": "W20",
+        "period": "2026-10-19 — 2026-10-23",
+        "value": 94,
         "source": "current_report_recalculated"
       }
     ],
-    "history_calculation_scope": "weekly_raw_recalculated_W1_W19",
+    "history_calculation_scope": "weekly_raw_recalculated_W1_W20",
     "unavailable_block_rule": "exclude_and_normalize_available_weights"
   },
   "trends": {
@@ -284,6 +290,11 @@
       {
         "period": "2026-10-12 — 2026-10-16",
         "value": 57.33,
+        "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-10-19 — 2026-10-23",
+        "value": 58.23,
         "source": "cumulative_to_period_end"
       }
     ],
@@ -401,6 +412,12 @@
         "value": 1.406335,
         "source": "cumulative_to_period_end",
         "status": "live"
+      },
+      {
+        "period": "2026-10-19 — 2026-10-23",
+        "value": 1.504272,
+        "source": "cumulative_to_period_end",
+        "status": "live"
       }
     ],
     "average_risk_pct": [
@@ -496,6 +513,11 @@
       },
       {
         "period": "2026-10-12 — 2026-10-16",
+        "value": 1.22,
+        "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-10-19 — 2026-10-23",
         "value": 1.22,
         "source": "cumulative_to_period_end"
       }
@@ -595,6 +617,11 @@
         "period": "2026-10-12 — 2026-10-16",
         "value": 98.67,
         "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-10-19 — 2026-10-23",
+        "value": 98.73,
+        "source": "cumulative_to_period_end"
       }
     ]
   },
@@ -608,8 +635,8 @@
     "main_leak": "Execution Leak",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
-    "history_end": "2026-10-16",
-    "sample_trades_count": 75,
+    "history_end": "2026-10-23",
+    "sample_trades_count": 79,
     "methodology_version": "BASIC_AUDIT_v1_LEAK_MAP_CUMULATIVE_v1",
     "items": [
       {
@@ -631,31 +658,31 @@
     ]
   },
   "risk": {
-    "avg_pct": 1.3,
-    "median_pct": 1.32,
-    "max_pct": 1.52,
-    "min_pct": 1.07,
-    "std_pct": 0.22,
-    "cv_value": 0.33,
+    "avg_pct": 1.18,
+    "median_pct": 1.2,
+    "max_pct": 1.28,
+    "min_pct": 1.06,
+    "std_pct": 0.1,
+    "cv_value": 0.32,
     "cv": {
-      "value": 0.33,
-      "marker_pct": 32.8,
+      "value": 0.32,
+      "marker_pct": 32.04,
       "label": "RISK CV",
       "status": "stable",
       "min_label": "0.0",
       "mid_label": "0.5",
       "max_label": "1.0+",
       "scope": "cumulative_to_period_end",
-      "sample_trades_count": 74,
-      "source_average_risk_pct": 1.2226,
-      "source_std_risk_pct": 0.401,
+      "sample_trades_count": 78,
+      "source_average_risk_pct": 1.2206,
+      "source_std_risk_pct": 0.391,
       "methodology_version": "BASIC_AUDIT_v1_RISK_CV_CUMULATIVE_v1"
     },
     "personal_risk_baseline_pct": 1.188,
     "personal_risk_low_bound_pct": 0.594,
     "personal_risk_high_bound_pct": 1.782,
     "risk_reduced_count": 0,
-    "risk_normal_count": 3,
+    "risk_normal_count": 4,
     "risk_expansion_count": 0,
     "risk_expansion_pct": 0,
     "risk_drift_count": 0,
@@ -674,7 +701,7 @@
       },
       {
         "label": "Normal Risk",
-        "count": 3,
+        "count": 4,
         "pct": 100,
         "status": "normal"
       },
@@ -689,21 +716,21 @@
       "data_status": "live",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
-      "history_end": "2026-10-16",
-      "valid_risk_trades_count": 74,
+      "history_end": "2026-10-23",
+      "valid_risk_trades_count": 78,
       "personal_risk_baseline_pct": 1.188,
       "personal_risk_low_bound_pct": 0.594,
       "personal_risk_high_bound_pct": 1.782,
       "risk_reduced_count": 1,
-      "risk_normal_count": 69,
+      "risk_normal_count": 73,
       "risk_expansion_count": 4,
-      "risk_expansion_pct": 5.41,
+      "risk_expansion_pct": 5.13,
       "risk_drift_count": 3,
-      "risk_drift_pct": 4.05,
+      "risk_drift_pct": 3.85,
       "drift": {
         "count": 3,
-        "pct": 4.05,
-        "value": 4.05,
+        "pct": 3.85,
+        "value": 3.85,
         "direction": "toward_expansion",
         "status": "expansion",
         "label": "Risk Drift"
@@ -712,19 +739,19 @@
         {
           "label": "Reduced Risk",
           "count": 1,
-          "pct": 1.35,
+          "pct": 1.28,
           "status": "reduced"
         },
         {
           "label": "Normal Risk",
-          "count": 69,
-          "pct": 93.24,
+          "count": 73,
+          "pct": 93.59,
           "status": "normal"
         },
         {
           "label": "Risk Expansion",
           "count": 4,
-          "pct": 5.41,
+          "pct": 5.13,
           "status": "expansion"
         }
       ],
@@ -1248,16 +1275,44 @@
         "timestamp": "2026-10-15 09:49:07",
         "week": "W19",
         "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58966980514",
+        "risk_pct": 1.0615,
+        "timestamp": "2026-10-20 10:19:48",
+        "week": "W20",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58984519921",
+        "risk_pct": 1.2826,
+        "timestamp": "2026-10-21 09:53:16",
+        "week": "W20",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59003310592",
+        "risk_pct": 1.2395,
+        "timestamp": "2026-10-22 09:54:13",
+        "week": "W20",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59023392149",
+        "risk_pct": 1.1517,
+        "timestamp": "2026-10-23 09:53:03",
+        "week": "W20",
+        "status": "normal"
       }
     ],
     "trades_above_2pct": 0,
     "trades_above_3pct": 0,
-    "valid_risk_trades_count": 3,
+    "valid_risk_trades_count": 4,
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
-    "history_end": "2026-10-16",
-    "risk_drift_pct": 4.05,
+    "history_end": "2026-10-23",
+    "risk_drift_pct": 3.85,
     "methodology_version": "BASIC_AUDIT_v1_RISK_ZONE_CUMULATIVE_v2"
   },
   "sl": {
@@ -1274,8 +1329,8 @@
     "sl_changed_count": 0,
     "sl_removed_count": 0,
     "risk_increase_after_sl_change_count": 0,
-    "personal_risk_baseline_pct": 1.3227,
-    "sl_risk_high_bound_pct": 1.984,
+    "personal_risk_baseline_pct": 1.1956,
+    "sl_risk_high_bound_pct": 1.7934,
     "sl_risk_expansion_after_change_count": 0,
     "max_risk_after_sl_change_pct": null,
     "block_score": 100,
@@ -1296,13 +1351,13 @@
       "data_status": "live",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
-      "history_end": "2026-10-16",
-      "trades_total": 75,
+      "history_end": "2026-10-23",
+      "trades_total": 79,
       "no_sl_count": 0,
       "sl_removed_count": 0,
       "sl_changed_count": 1,
-      "sl_safe_count": 74,
-      "sl_safe_pct": 98.67,
+      "sl_safe_count": 78,
+      "sl_safe_pct": 98.73,
       "segments": [
         {
           "label": "No SL",
@@ -1319,13 +1374,13 @@
         {
           "label": "SL Changed",
           "value": 1,
-          "pct": 1.33,
+          "pct": 1.27,
           "status": "changed"
         },
         {
           "label": "SL Safe",
-          "value": 74,
-          "pct": 98.67,
+          "value": 78,
+          "pct": 98.73,
           "status": "safe"
         }
       ],
@@ -1334,28 +1389,28 @@
     "event_timeline": []
   },
   "behavior": {
-    "trade_after_loss_count": 0,
-    "risk_after_loss_avg_pct": null,
-    "risk_after_win_avg_pct": 1.3,
-    "risk_after_1_loss_pct": null,
-    "risk_after_2_losses_pct": null,
+    "trade_after_loss_count": 2,
+    "risk_after_loss_avg_pct": 1.17,
+    "risk_after_win_avg_pct": 1.2,
+    "risk_after_1_loss_pct": 1.06,
+    "risk_after_2_losses_pct": 1.28,
     "risk_after_3_losses_pct": null,
-    "max_risk_after_loss_streak_pct": null,
-    "risk_increase_after_loss_count": 0,
+    "max_risk_after_loss_streak_pct": 1.28,
+    "risk_increase_after_loss_count": 1,
     "position_size_increased_after_loss_count": 0,
     "revenge_trading_signal_count": 0,
-    "avg_minutes_after_loss_to_next_trade": null,
-    "min_minutes_after_loss_to_next_trade": null,
+    "avg_minutes_after_loss_to_next_trade": 3554.56,
+    "min_minutes_after_loss_to_next_trade": 1360.6,
     "risk_after_loss_items": [
       {
         "label": "1 Loss",
-        "value": null,
-        "status": "not_available"
+        "value": 1.06,
+        "status": "reduced"
       },
       {
         "label": "2 Losses",
-        "value": null,
-        "status": "not_available"
+        "value": 1.28,
+        "status": "normal"
       },
       {
         "label": "3+ Losses",
@@ -1364,29 +1419,29 @@
       }
     ],
     "post_loss_summary": {
-      "baseline_pct": 1.32,
-      "high_bound_pct": 1.98,
-      "avg_risk_pct": null,
-      "risk_drift_pct": null,
+      "baseline_pct": 1.2,
+      "high_bound_pct": 1.79,
+      "avg_risk_pct": 1.17,
+      "risk_drift_pct": -0.02,
       "expansion_count": 0,
-      "expansion_pct": null,
+      "expansion_pct": 0,
       "revenge_signal_count": 0,
-      "status": "normal"
+      "status": "reduced"
     }
   },
   "plan_fact": {
-    "trades_total": 75,
-    "trades_count": 74,
+    "trades_total": 79,
+    "trades_count": 78,
     "excluded_trades_count": 1,
-    "valid_sample_pct": 98.67,
+    "valid_sample_pct": 98.73,
     "planned_risk_avg_pct": 1.22,
-    "actual_loss_avg_pct": 0.98,
-    "deviation_avg_pct": -0.13,
+    "actual_loss_avg_pct": 0.96,
+    "deviation_avg_pct": -0.15,
     "deviation_max_pct": 0.19,
-    "deviation_avg_abs_pct": 0.14,
+    "deviation_avg_abs_pct": 0.17,
     "deviation_max_abs_pct": 1,
     "negative_deviation_trades": 10,
-    "negative_deviation_trades_pct": 13.51,
+    "negative_deviation_trades_pct": 12.82,
     "execution_leak_flag": true,
     "data_status": "live",
     "points": [
@@ -2129,58 +2184,94 @@
         "status": "within_plan",
         "week": "W19",
         "timestamp": "2026-10-15 09:49:07"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58966980514",
+        "planned": 1.0615,
+        "actual": 0.2369,
+        "within_plan": 0.2369,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W20",
+        "timestamp": "2026-10-20 10:19:48"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58984519921",
+        "planned": 1.2826,
+        "actual": 0,
+        "within_plan": 0,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W20",
+        "timestamp": "2026-10-21 09:53:16"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59003310592",
+        "planned": 1.2395,
+        "actual": 0,
+        "within_plan": 0,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W20",
+        "timestamp": "2026-10-22 09:54:13"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59023392149",
+        "planned": 1.1517,
+        "actual": 0,
+        "within_plan": 0,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W20",
+        "timestamp": "2026-10-23 09:53:03"
       }
     ],
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-04",
-    "period_end": "2026-10-16",
-    "eligible_loss_trades_count": 31,
+    "period_end": "2026-10-23",
+    "eligible_loss_trades_count": 32,
     "excluded_loss_trades_count": 1,
     "methodology_version": "BASIC_AUDIT_v1_PLAN_FACT_CUMULATIVE_v1"
   },
   "findings": {
     "items": [
       {
-        "text": "Максимальный плановый риск сделки за неделю составил 1,52% счёта.",
+        "text": "Максимальный плановый риск сделки за неделю составил 1,28% счёта.",
         "severity": "medium",
         "display_class": "warn",
         "source_block": "Block A",
         "metric": "weekly_max_planned_risk"
       },
       {
-        "text": "Trust Score вырос с 89,00 до 96,92. За неделю Block A = 100, Block D = N/A; критические нарушения вычли 0 баллов. Block C без выборки исключён из расчёта.",
-        "severity": "positive",
-        "display_class": "good",
-        "source_block": "Score Model",
-        "metric": "weekly_trust_score_change"
+        "text": "После 2 убыточных сделок подряд плановый риск следующей сделки вырос с 1,06% до 1,28%; результат этой сделки: +136,40 USD.",
+        "severity": "medium",
+        "display_class": "warn",
+        "source_block": "Block A",
+        "metric": "risk_change_after_loss"
       },
       {
-        "text": "За неделю закрыто 4 сделки: 3 прибыльные и 1 убыточная. Результат +284,90 USD; Win Rate 75,0%, Profit Factor 5,11.",
+        "text": "За неделю закрыто 4 сделки: 3 прибыльные и 1 убыточная. Результат +356,40 USD; Win Rate 75,0%, Profit Factor 13,96.",
         "severity": "positive",
         "display_class": "good",
         "source_block": "Block E",
         "metric": "weekly_performance"
       },
       {
-        "text": "Во всех 4 сделках недели Stop Loss был установлен при открытии; удалений и изменений SL не зафиксировано. За всю историю SL Safe = 98,67% (74/75 сделок).",
+        "text": "Во всех 4 сделках недели Stop Loss был установлен при открытии; удалений и изменений SL не зафиксировано. За всю историю SL Safe = 98,73% (78/79 сделок).",
         "severity": "positive",
         "display_class": "good",
         "source_block": "Block B",
         "metric": "weekly_sl_discipline"
       },
       {
-        "text": "Максимальная дневная просадка недели пришлась на 16.10.2026 и составила 1,21%. Итог этого дня: -69,30 USD.",
+        "text": "Максимальная дневная просадка недели пришлась на 22.10.2026 и составила 0,49%. Итог этого дня: 128,70 USD.",
         "severity": "medium",
         "display_class": "warn",
         "source_block": "Block A",
         "metric": "daily_drawdown_peak"
       }
     ],
-    "review_notice": {
-      "status": "adjudicated_excluded",
-      "title": "ВНИМАНИЕ ТРЕЙДЕРУ!",
-      "text": "По сделке №58928038630 исходный SL 1,23470 и фактический результат сделки сохранены. На основании письменного объяснения трейдера и принятого решения плановый риск 104,64% исключён только из риск-метрик и Plan vs Fact. Предполагаемый правильный SL не подставлялся. Trust Score пересчитан: 96,92. Это ручное исключение для оценки, а не изменение истории терминала."
-    }
+    "review_notice": null
   },
   "technical_warning": {
     "active": false,
@@ -2192,16 +2283,16 @@
     "minimum_sample_valid": true
   },
   "basic_stats": {
-    "average_win": 118.07,
-    "average_loss": 69.3,
+    "average_win": 127.97,
+    "average_loss": 27.5,
     "win_ratio": 75,
-    "profit_factor": 5.111111,
+    "profit_factor": 13.96,
     "number_of_days": 4,
     "total_trades_taken": 4,
     "total_lots_used": 4.4,
-    "biggest_win": 122.1,
-    "biggest_loss": 69.3,
-    "net_profit": 284.9,
+    "biggest_win": 136.4,
+    "biggest_loss": 27.5,
+    "net_profit": 356.4,
     "win_ratio_pct": 75
   },
   "account": {
@@ -2581,6 +2672,26 @@
         "timestamp": "2026-10-16 10:31:17",
         "position_ticket": "58928038630",
         "balance": 11605.91
+      },
+      {
+        "timestamp": "2026-10-20 11:12:40",
+        "position_ticket": "58966980514",
+        "balance": 11578.41
+      },
+      {
+        "timestamp": "2026-10-21 10:58:25",
+        "position_ticket": "58984519921",
+        "balance": 11714.81
+      },
+      {
+        "timestamp": "2026-10-22 11:24:29",
+        "position_ticket": "59003310592",
+        "balance": 11843.51
+      },
+      {
+        "timestamp": "2026-10-23 10:18:03",
+        "position_ticket": "59023392149",
+        "balance": 11962.31
       }
     ],
     "equity_series": [
@@ -3066,22 +3177,57 @@
         "min_equity": 11605.91,
         "max_equity": 11675.21,
         "source_count": 96
+      },
+      {
+        "timestamp": "2026-10-19 23:45:29",
+        "equity": 11605.91,
+        "min_equity": 11605.91,
+        "max_equity": 11605.91,
+        "source_count": 96
+      },
+      {
+        "timestamp": "2026-10-20 23:46:11",
+        "equity": 11590.92,
+        "min_equity": 11578.41,
+        "max_equity": 11605.91,
+        "source_count": 96
+      },
+      {
+        "timestamp": "2026-10-21 23:50:59",
+        "equity": 11651.82,
+        "min_equity": 11534.41,
+        "max_equity": 11714.81,
+        "source_count": 96
+      },
+      {
+        "timestamp": "2026-10-22 23:48:26",
+        "equity": 11782.19,
+        "min_equity": 11714.81,
+        "max_equity": 11843.51,
+        "source_count": 94
+      },
+      {
+        "timestamp": "2026-10-23 23:49:00",
+        "equity": 11912.44,
+        "min_equity": 11843.51,
+        "max_equity": 11962.31,
+        "source_count": 96
       }
     ],
     "equity_sampling": {
       "method": "time_weighted_average",
       "window_minutes": 2880,
-      "raw_points_count": 8682,
-      "rendered_points_count": 69
+      "raw_points_count": 9160,
+      "rendered_points_count": 74
     }
   },
   "direction": {
-    "long_trades_count": 2,
-    "long_profit": 232.1,
-    "long_win_rate": 100,
-    "short_trades_count": 2,
-    "short_profit": 52.8,
-    "short_win_rate": 50,
+    "long_trades_count": 3,
+    "long_profit": 237.6,
+    "long_win_rate": 66.67,
+    "short_trades_count": 1,
+    "short_profit": 118.8,
+    "short_win_rate": 100,
     "imbalance_flag": true
   },
   "profitability": {
@@ -3095,45 +3241,45 @@
   "duration": {
     "pnl_by_trade_duration": [
       {
-        "trade_id": "aud_00003_756010900_58869634370",
-        "symbol": "GBPUSD",
-        "duration_min": 102.52,
-        "profit_money": 116.6,
-        "result_type": "win"
-      },
-      {
-        "trade_id": "aud_00003_756010900_58887084514",
-        "symbol": "GBPUSD",
-        "duration_min": 24.7,
-        "profit_money": 122.1,
-        "result_type": "win"
-      },
-      {
-        "trade_id": "aud_00003_756010900_58908592973",
-        "symbol": "GBPUSD",
-        "duration_min": 27.45,
-        "profit_money": 115.5,
-        "result_type": "win"
-      },
-      {
-        "trade_id": "aud_00003_756010900_58928038630",
+        "trade_id": "aud_00003_756010900_58966980514",
         "symbol": "EURUSD",
-        "duration_min": 39.52,
-        "profit_money": -69.3,
+        "duration_min": 52.88,
+        "profit_money": -27.5,
         "result_type": "loss"
+      },
+      {
+        "trade_id": "aud_00003_756010900_58984519921",
+        "symbol": "GBPUSD",
+        "duration_min": 65.18,
+        "profit_money": 136.4,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59003310592",
+        "symbol": "GBPUSD",
+        "duration_min": 90.27,
+        "profit_money": 128.7,
+        "result_type": "win"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59023392149",
+        "symbol": "GBPUSD",
+        "duration_min": 25.02,
+        "profit_money": 118.8,
+        "result_type": "win"
       }
     ],
     "items": [
       {
         "name": "Winning Trades",
-        "duration_min": 51.56,
-        "deviation_pct": 6.2,
+        "duration_min": 60.16,
+        "deviation_pct": 3.12,
         "status": "positive"
       },
       {
         "name": "Losing Trades",
-        "duration_min": 39.52,
-        "deviation_pct": -18.6,
+        "duration_min": 52.88,
+        "deviation_pct": -9.35,
         "status": "negative"
       }
     ],
@@ -3141,91 +3287,91 @@
       "grouping_method": "equal_frequency_nearest_rank",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-05",
-      "history_end": "2026-10-16",
+      "history_end": "2026-10-23",
       "target_trades_per_group": 5,
       "max_groups": 5,
       "ties_preserved": true,
       "quartile_method": "inclusive",
       "duration_unit": "minutes",
       "pnl_unit": "account_currency",
-      "total_trades": 75,
-      "baseline_win_rate_pct": 57.33,
+      "total_trades": 79,
+      "baseline_win_rate_pct": 58.23,
       "groups_count": 5,
       "groups": [
         {
           "group_index": 1,
           "duration_min": 8.33,
           "duration_max": 33.9,
-          "duration_avg": 22.41,
-          "sample_size": 15,
+          "duration_avg": 22.57,
+          "sample_size": 16,
           "pnl_min": -176.4,
-          "pnl_q1": 28.35,
-          "pnl_median": 119.9,
-          "pnl_q3": 129.25,
+          "pnl_q1": 62.93,
+          "pnl_median": 119.35,
+          "pnl_q3": 125.68,
           "pnl_max": 176.4,
-          "pnl_total": 985.25,
-          "pnl_avg": 65.68,
-          "wins_count": 11,
+          "pnl_total": 1104.05,
+          "pnl_avg": 69,
+          "wins_count": 12,
           "losses_count": 4,
           "breakeven_count": 0,
-          "win_rate_pct": 73.33,
+          "win_rate_pct": 75,
           "sample_status": "valid"
         },
         {
           "group_index": 2,
           "duration_min": 36.68,
-          "duration_max": 50.13,
-          "duration_avg": 42.87,
-          "sample_size": 15,
+          "duration_max": 51.6,
+          "duration_avg": 43.42,
+          "sample_size": 16,
           "pnl_min": -145.2,
-          "pnl_q1": -91.6,
-          "pnl_median": 15.6,
-          "pnl_q3": 105.3,
+          "pnl_q1": -82.96,
+          "pnl_median": 41.35,
+          "pnl_q3": 106.98,
           "pnl_max": 157.2,
-          "pnl_total": 121.49,
-          "pnl_avg": 8.1,
-          "wins_count": 8,
+          "pnl_total": 234.79,
+          "pnl_avg": 14.67,
+          "wins_count": 9,
           "losses_count": 7,
           "breakeven_count": 0,
-          "win_rate_pct": 53.33,
+          "win_rate_pct": 56.25,
           "sample_status": "valid"
         },
         {
           "group_index": 3,
-          "duration_min": 51.6,
+          "duration_min": 51.87,
           "duration_max": 74.43,
-          "duration_avg": 62.26,
-          "sample_size": 15,
+          "duration_avg": 62.52,
+          "sample_size": 16,
           "pnl_min": -166.8,
-          "pnl_q1": -113.3,
-          "pnl_median": -35.2,
-          "pnl_q3": 94.5,
-          "pnl_max": 114.4,
-          "pnl_total": -280.6,
-          "pnl_avg": -18.71,
+          "pnl_q1": -103.4,
+          "pnl_median": -31.35,
+          "pnl_q3": 90.25,
+          "pnl_max": 136.4,
+          "pnl_total": -285,
+          "pnl_avg": -17.81,
           "wins_count": 6,
-          "losses_count": 9,
+          "losses_count": 10,
           "breakeven_count": 0,
-          "win_rate_pct": 40,
+          "win_rate_pct": 37.5,
           "sample_status": "valid"
         },
         {
           "group_index": 4,
           "duration_min": 75.8,
           "duration_max": 162.97,
-          "duration_avg": 115.29,
-          "sample_size": 15,
+          "duration_avg": 113.73,
+          "sample_size": 16,
           "pnl_min": -153.6,
-          "pnl_q1": -65.21,
-          "pnl_median": 111.1,
-          "pnl_q3": 137.75,
+          "pnl_q1": -50.81,
+          "pnl_median": 113.85,
+          "pnl_q3": 137.63,
           "pnl_max": 170.4,
-          "pnl_total": 760.57,
-          "pnl_avg": 50.7,
-          "wins_count": 10,
+          "pnl_total": 889.27,
+          "pnl_avg": 55.58,
+          "wins_count": 11,
           "losses_count": 5,
           "breakeven_count": 0,
-          "win_rate_pct": 66.67,
+          "win_rate_pct": 68.75,
           "sample_status": "valid"
         },
         {
@@ -3256,12 +3402,12 @@
       {
         "symbol": "EURUSD",
         "trades_count": 1,
-        "profit_money": -69.3
+        "profit_money": -27.5
       },
       {
         "symbol": "GBPUSD",
         "trades_count": 3,
-        "profit_money": 354.2
+        "profit_money": 383.9
       }
     ],
     "volume_analysis": [
@@ -3280,18 +3426,18 @@
       {
         "symbol": "EURUSD",
         "trades_count": 1,
-        "profit_money": -69.3,
+        "profit_money": -27.5,
         "volume": 1.1,
-        "profit_share_pct": -24.32,
+        "profit_share_pct": -7.72,
         "volume_share_pct": 25,
         "status": "negative"
       },
       {
         "symbol": "GBPUSD",
         "trades_count": 3,
-        "profit_money": 354.2,
+        "profit_money": 383.9,
         "volume": 3.3,
-        "profit_share_pct": 124.32,
+        "profit_share_pct": 107.72,
         "volume_share_pct": 75,
         "status": "positive"
       }
@@ -3301,39 +3447,39 @@
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-05",
-    "period_end": "2026-10-16",
+    "period_end": "2026-10-23",
     "groups": [
       {
         "symbol": "EURUSD",
-        "trades": 24,
+        "trades": 25,
         "wins": 10,
-        "volume": 18.2,
-        "win_contribution_pct": 23.26,
-        "load_volume_pct": 25.24
+        "volume": 19.3,
+        "win_contribution_pct": 21.74,
+        "load_volume_pct": 25.23
       },
       {
         "symbol": "GBPUSD",
-        "trades": 41,
-        "wins": 28,
-        "volume": 44,
-        "win_contribution_pct": 65.12,
-        "load_volume_pct": 61.03
+        "trades": 44,
+        "wins": 31,
+        "volume": 47.3,
+        "win_contribution_pct": 67.39,
+        "load_volume_pct": 61.83
       },
       {
         "symbol": "USDCAD",
         "trades": 8,
         "wins": 4,
         "volume": 7.9,
-        "win_contribution_pct": 9.3,
-        "load_volume_pct": 10.96
+        "win_contribution_pct": 8.7,
+        "load_volume_pct": 10.33
       },
       {
         "symbol": "USDJPY",
         "trades": 2,
         "wins": 1,
         "volume": 2,
-        "win_contribution_pct": 2.33,
-        "load_volume_pct": 2.77
+        "win_contribution_pct": 2.17,
+        "load_volume_pct": 2.61
       }
     ]
   },
@@ -3343,42 +3489,42 @@
     "items": [
       {
         "name": "Direction Balance",
-        "marker_pct": 58.67,
-        "display_value": "31 / 44",
+        "marker_pct": 56.96,
+        "display_value": "34 / 45",
         "status": "neutral",
         "label_left": "Long",
         "label_right": "Short",
         "segments": [
           {
             "label": "Long",
-            "value": 31,
-            "pct": 41.33
+            "value": 34,
+            "pct": 43.04
           },
           {
             "label": "Short",
-            "value": 44,
-            "pct": 58.67
+            "value": 45,
+            "pct": 56.96
           }
         ]
       },
       {
         "name": "Profitability",
-        "marker_pct": 57.33,
-        "display_value": "57.33%",
+        "marker_pct": 58.23,
+        "display_value": "58.23%",
         "status": "live",
         "label_left": "Losses",
         "label_right": "Wins",
         "segments": [
           {
             "label": "Wins",
-            "value": 43,
-            "pct": 57.33,
+            "value": 46,
+            "pct": 58.23,
             "status": "positive"
           },
           {
             "label": "Losses",
-            "value": 32,
-            "pct": 42.67,
+            "value": 33,
+            "pct": 41.77,
             "status": "negative"
           },
           {
@@ -3391,8 +3537,8 @@
       },
       {
         "name": "Risk Expansion",
-        "marker_pct": 5.41,
-        "display_value": "5.41%",
+        "marker_pct": 5.13,
+        "display_value": "5.13%",
         "status": "expansion",
         "label_left": "Reduced",
         "label_right": "Expanded",
@@ -3400,61 +3546,61 @@
           {
             "label": "Reduced Risk",
             "count": 1,
-            "pct": 1.35,
+            "pct": 1.28,
             "status": "reduced"
           },
           {
             "label": "Normal Risk",
-            "count": 69,
-            "pct": 93.24,
+            "count": 73,
+            "pct": 93.59,
             "status": "normal"
           },
           {
             "label": "Risk Expansion",
             "count": 4,
-            "pct": 5.41,
+            "pct": 5.13,
             "status": "expansion"
           }
         ]
       }
     ],
     "history_start": "2026-06-05",
-    "history_end": "2026-10-16",
-    "sample_trades_count": 75,
-    "short_cover_ratio": 1.223128,
+    "history_end": "2026-10-23",
+    "sample_trades_count": 79,
+    "short_cover_ratio": 1.277282,
     "short_cover_status": "live",
-    "short_win_rate_pct": 54.55,
-    "profit_factor": 1.406335,
+    "short_win_rate_pct": 55.56,
+    "profit_factor": 1.504272,
     "profit_factor_status": "live",
-    "total_win_rate_pct": 57.33,
-    "long_cover_ratio": 1.714617,
+    "total_win_rate_pct": 58.23,
+    "long_cover_ratio": 1.878337,
     "long_cover_status": "live",
-    "long_win_rate_pct": 61.29,
+    "long_win_rate_pct": 61.76,
     "methodology_version": "BASIC_AUDIT_v1_COVER_CUMULATIVE_v1"
   },
   "comparison": {
-    "previous_period": "2026-10-05 — 2026-10-09",
-    "current_period": "2026-10-12 — 2026-10-16",
+    "previous_period": "2026-10-12 — 2026-10-16",
+    "current_period": "2026-10-19 — 2026-10-23",
     "items": [
       {
         "metric": "QUD TDA Score",
-        "previous": 89,
-        "current": 96.92,
-        "change": 7.92,
-        "status": "improved"
-      },
-      {
-        "metric": "Risk CV",
-        "previous": 0.150513816,
-        "current": 0.1726833162,
-        "change": 0.0221695001,
+        "previous": 96.92,
+        "current": 94,
+        "change": -2.92,
         "status": "worse"
       },
       {
+        "metric": "Risk CV",
+        "previous": 0.1726833162,
+        "current": 0.0828136878,
+        "change": -0.0898696283,
+        "status": "improved"
+      },
+      {
         "metric": "Avg Risk After Loss",
-        "previous": 1.0784118707,
-        "current": null,
-        "change": -1.0784118707,
+        "previous": null,
+        "current": 1.1720438285,
+        "change": 1.1720438285,
         "status": "not_available"
       },
       {
@@ -3466,15 +3612,15 @@
       },
       {
         "metric": "Plan vs Fact Deviation",
-        "previous": -0.4309147889,
-        "current": null,
-        "change": 0.4309147889,
+        "previous": null,
+        "current": -0.824628135,
+        "change": -0.824628135,
         "status": "not_available"
       },
       {
         "metric": "Main Leak",
-        "previous": "Performance Leak",
-        "current": "Execution Leak",
+        "previous": "Execution Leak",
+        "current": "Behavior Leak",
         "change": "changed",
         "status": "changed"
       }
@@ -3573,6 +3719,11 @@
       {
         "period": "2026-10-12 — 2026-10-16",
         "value": 96.92,
+        "source": "recalculated_from_raw"
+      },
+      {
+        "period": "2026-10-19 — 2026-10-23",
+        "value": 94,
         "source": "current_report_recalculated"
       }
     ]
@@ -4848,7 +4999,7 @@ function initStrategyInterest(){
     demoBadge=referenceBadge.cloneNode(true);
     demoBadge.id='strategyDemoBadge';
     demoBadge.className='badge neutral';
-    demoBadge.textContent='2 DEMO';
+    demoBadge.textContent='4 DEMO';
     demoBadge.style.position='absolute';
     demoBadge.style.margin='0';
     demoBadge.style.zIndex='20';
@@ -4907,5 +5058,294 @@ function initStrategyInterest(){
 render();
 initStrategyInterest();
 initHelp();
+</script>
+<!-- QUD PATTERNS START -->
+<style>
+/* Isolated navigation: no dashboard layout, data or global styles are changed. */
+.qd-root{position:fixed;right:max(7px,env(safe-area-inset-right));top:50%;width:48px;height:270px;transform:translateY(-50%);z-index:10010;pointer-events:none;font:13px/1.5 Inter,Arial,sans-serif;color:#d6dadd;--qd-gold:#9ca3a7;--qd-border:#23272c}
+.qd-rail{position:relative;display:flex;flex-direction:column;align-items:center;width:48px;padding:8px 2px;gap:2px;border:1px solid #23272c;border-radius:18px;background:#0b0d10;box-shadow:0 8px 24px #0004;opacity:.48;transform:scale(1);transform-origin:right center;transition:transform .2s ease,opacity .2s ease;pointer-events:auto}
+.qd-root.qd-expanded .qd-rail{transform:scale(1.2);opacity:1}
+.qd-root .qd-button{appearance:none;display:grid;place-items:center;flex:0 0 44px;width:42px;height:44px;padding:0;border:0;border-radius:12px;color:#9ca3a7;background:transparent;cursor:pointer;touch-action:manipulation;transition:color .16s,background .16s;font:600 16px/1 Arial,sans-serif;letter-spacing:-.6px}
+.qd-root .qd-button[aria-expanded="true"]{background:#16191e;color:#f3f4f6}
+@media(hover:hover){.qd-root .qd-button:hover{background:#16191e;color:#f3f4f6}}
+.qd-root .qd-icon{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.qd-root .qd-ai-icon{font:600 16px/1 Arial,sans-serif;letter-spacing:-.6px;pointer-events:none}
+.qd-root .qd-separator{height:1px;flex:0 0 1px;width:19px;margin:6px 0;background:#23272c}
+.qd-root .qd-popover{position:fixed;right:72px;top:0;width:292px;max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;margin:0;padding:18px;border:1px solid #23272c;border-radius:14px;background:#111317;color:#d6dadd;box-shadow:0 12px 38px #0005;pointer-events:auto;scrollbar-width:thin;scrollbar-color:#5c646c #111317}
+.qd-root .qd-popover[hidden],.qd-root [hidden]{display:none!important}
+.qd-root .qd-popover:before{content:'';position:absolute;right:-14px;top:0;width:14px;height:100%}
+.qd-root .qd-popover h2{font:600 15px/1.4 Inter,Arial,sans-serif;letter-spacing:0;text-transform:none;margin:0 30px 9px 0;color:#f3f4f6}
+.qd-root .qd-description{font-size:12px;line-height:1.55;color:#8f969e;margin:0 0 16px}
+.qd-root .qd-close{position:absolute;right:4px;top:4px;display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:9px;background:transparent;color:#8f969e;font:400 23px/1 Arial,sans-serif;cursor:pointer}
+.qd-root .qd-close:hover{background:#ffffff08;color:#f3f4f6}
+.qd-root .qd-open,.qd-root .qd-local-open{display:block;width:100%;padding:11px 0 0;margin:0;border:0;border-top:1px solid var(--qd-border);border-radius:0;background:transparent;color:#b8c0c7;text-align:left;text-decoration:none;font:500 12px/1.5 Inter,Arial,sans-serif;cursor:pointer;min-height:36px}
+.qd-root .qd-open:disabled{color:#8f969e;cursor:not-allowed}
+.qd-root .qd-pending{display:block;font-size:10px;color:#8f969e;margin-top:5px}
+.qd-root .qd-email{display:block;font-size:16px;letter-spacing:.1px;color:#d6dadd;user-select:text;overflow-wrap:anywhere;margin:2px 0 6px}
+.qd-root button:focus-visible,.qd-root a:focus-visible,.qd-root summary:focus-visible{outline:2px solid #9ca3a7;outline-offset:2px}
+.qd-root .qd-popover:focus{outline:none}
+.qd-root .qd-popover:focus-visible{outline:2px solid #9ca3a7;outline-offset:2px}
+.qd-root.qd-pinned .qd-ai-popover{width:370px;padding:0;overflow:hidden;display:flex;flex-direction:column}
+.qd-root .qd-ai-head{flex:0 0 auto}
+.qd-root.qd-pinned .qd-ai-head{padding:18px 20px 0}
+.qd-root.qd-pinned .qd-ai-head .qd-description{margin-bottom:12px}
+.qd-root:not(.qd-pinned) .qd-pattern-content,.qd-root.qd-pinned .qd-local-open{display:none}
+.qd-root .qd-pattern-content{min-height:0;overflow:auto;overscroll-behavior:contain;max-height:min(460px,calc(100dvh - 145px));scrollbar-width:thin;scrollbar-color:#5c646c #111317}
+.qd-root .pt-panel{font:12px/1.55 Inter,Arial,sans-serif}
+.qd-root .pt-head{padding:4px 20px 12px;border-bottom:1px solid var(--qd-border)}
+.qd-root .pt-eyebrow{display:none}
+.qd-root .pt-head h2{font-size:13px;margin:0 0 4px;color:#d9d7d0}
+.qd-root .pt-head p{margin:0;color:#9c9f98;font-size:11px}
+.qd-root .pt-scroll{padding:14px 16px 18px}
+.qd-root .pt-intro{font-size:11px;line-height:1.55;color:#a3a69f;margin:0 0 14px}
+.qd-root .pt-card{border:1px solid var(--qd-border);border-radius:10px;background:#16191e;margin-bottom:10px;overflow:hidden}
+.qd-root .pt-card summary{list-style:none;padding:13px 14px;cursor:pointer;position:relative}
+.qd-root .pt-card summary::-webkit-details-marker{display:none}
+.qd-root .pt-type{font-size:9px;letter-spacing:.45px;color:#bda979;display:block;padding-right:14px}
+.qd-root .pt-card.pt-good .pt-type{color:#91b38a}.qd-root .pt-card.pt-neutral .pt-type{color:#9cacc0}
+.qd-root .pt-card h3{font-size:13px;line-height:1.45;margin:6px 8px;color:#e0e0d9;margin-left:0;letter-spacing:0;font-weight:600}
+.qd-root .pt-fact{display:block;color:#b4b7b0;font-size:11px;line-height:1.55}
+.qd-root .pt-card summary:after{content:'+';position:absolute;right:12px;top:10px;font-size:18px;color:#9ca3a7}
+.qd-root .pt-card[open] summary:after{content:'−'}
+.qd-root .pt-detail{padding:0 14px 14px;font-size:11px;color:#b8bbb4}
+.qd-root .pt-detail p{margin:0 0 10px}
+.qd-root .pt-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:5px 10px;border-top:1px solid var(--qd-border);padding:8px 0}
+.qd-root .pt-row b{color:#e0e0d9;white-space:nowrap;font-weight:500}
+.qd-root .pt-detail small{display:block;color:#969b94;font-size:10px;line-height:1.6;margin:10px 0}
+.qd-root .pt-link{margin-top:6px;padding:9px 10px;border:1px solid #5c646c;border-radius:6px;color:#b8c0c7;background:transparent;font:inherit;cursor:pointer;min-height:38px;text-align:left}
+.qd-root .pt-link:hover{background:#ffffff08}
+.qd-root .pt-note{font-size:10px;line-height:1.6;color:#989e95;border-top:1px solid var(--qd-border);padding-top:14px;margin:16px 0 0}
+.qd-root .pt-meter{height:4px;border-radius:4px;background:#393c36;margin:10px 0}
+.qd-root .pt-meter span{height:100%;display:block;background:#8ca780;border-radius:4px;width:97.35%}
+.pt-highlight{outline:2px solid #b9a578;outline-offset:6px}
+@media(max-width:640px){.qd-root{right:max(4px,env(safe-area-inset-right))}.qd-rail{transform:scale(1)}.qd-root .qd-popover{right:68px;width:min(292px,calc(100vw - 88px));padding:15px}.qd-root.qd-pinned .qd-ai-popover{width:min(370px,calc(100vw - 88px))}.qd-root.qd-pinned .qd-ai-head{padding:16px 14px 0}.qd-root .pt-head{padding:4px 14px 12px}.qd-root .pt-scroll{padding:12px 10px 16px}.qd-root .qd-email{font-size:14px}.qd-root .qd-popover h2{font-size:14px}.qd-root .qd-pattern-content{max-height:calc(100dvh - 150px)}.qd-root .qd-close{width:40px;height:40px}.qd-root .pt-card summary{padding:12px}.qd-root .pt-card summary:after{right:9px}.qd-root .qd-local-open,.qd-root .pt-link{min-height:44px}}
+@media(max-height:320px){.qd-root{height:240px}.qd-rail{gap:0;padding:4px 2px}.qd-root .qd-separator{margin:2px 0}}
+@media(prefers-reduced-motion:reduce){.qd-root .qd-rail,.qd-root .qd-button{transition:none}}
+</style>
+<div class="qd-root" id="qud-dock" lang="ru">
+<nav class="qd-rail" aria-label="Разделы QUD">
+  <button type="button" class="qd-button" id="qd-ai" data-qd-section="ai" aria-label="AI Assistant — Patterns" aria-haspopup="dialog" aria-controls="qd-panel-ai" aria-expanded="false"><span class="qd-ai-icon" aria-hidden="true">AI</span></button>
+  <span class="qd-separator" aria-hidden="true"></span>
+  <button type="button" class="qd-button" id="qd-map" data-qd-section="map" aria-label="Trader Map" aria-haspopup="dialog" aria-controls="qd-panel-map" aria-expanded="false"><svg class="qd-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2Z M9 3v16 M15 5v16"/></svg></button>
+  <button type="button" class="qd-button" id="qd-subscription" data-qd-section="subscription" aria-label="Strategy Subscription" aria-haspopup="dialog" aria-controls="qd-panel-subscription" aria-expanded="false"><svg class="qd-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="14" height="12" rx="2"/><path d="M7 8V4h14v12h-4 M7 12h6 M7 16h4"/></svg></button>
+  <button type="button" class="qd-button" id="qd-methodology" data-qd-section="methodology" aria-label="TDA Methodology" aria-haspopup="dialog" aria-controls="qd-panel-methodology" aria-expanded="false"><svg class="qd-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Z M12 5v15"/></svg></button>
+  <button type="button" class="qd-button" id="qd-signed" data-qd-section="signed" aria-label="Подписанные документы" title="Подписанные документы" aria-haspopup="dialog" aria-controls="qd-panel-signed" aria-expanded="false"><svg class="qd-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H5v18h14V8Z M14 3v5h5 M8 14l3 3 5-6"/></svg></button>
+  <span class="qd-separator" aria-hidden="true"></span>
+  <button type="button" class="qd-button" id="qd-support" data-qd-section="support" aria-label="Support" aria-haspopup="dialog" aria-controls="qd-panel-support" aria-expanded="false"><svg class="qd-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></button>
+</nav>
+<section class="qd-popover qd-ai-popover" id="qd-panel-ai" role="dialog" aria-modal="false" aria-labelledby="qd-title-ai" tabindex="-1" hidden>
+  <header class="qd-ai-head"><h2 id="qd-title-ai">AI Assistant</h2><button type="button" class="qd-close" aria-label="Закрыть AI Assistant">×</button><p class="qd-description">Patterns · ежемесячный обзор торговых закономерностей.</p><button type="button" class="qd-local-open">Открыть Patterns</button></header>
+  <div class="qd-pattern-content"><section class="pt-panel" lang="ru"><header class="pt-head"><div class="pt-eyebrow">PERSONAL AI ASSISTANT</div><h2 id="pt-title">Ежемесячный обзор</h2><p>Аудит aud_00003</p></header><div class="pt-scroll"><p class="pt-intro">Аналитические данные обновляются ежемесячно.</p></div></section></div>
+</section>
+<section class="qd-popover" id="qd-panel-map" role="dialog" aria-modal="false" aria-labelledby="qd-title-map" tabindex="-1" hidden><h2 id="qd-title-map">Trader Map</h2><button type="button" class="qd-close" aria-label="Закрыть Trader Map">×</button><p class="qd-description">Дорожная карта развития стратегии в системе QUD.</p><button type="button" class="qd-open" disabled>Открыть страницу ↗</button><small class="qd-pending">Ссылка пока не добавлена</small><small class="qud-document-state" id="qud-doc-state-map" hidden></small></section>
+<section class="qd-popover" id="qd-panel-subscription" role="dialog" aria-modal="false" aria-labelledby="qd-title-subscription" tabindex="-1" hidden><h2 id="qd-title-subscription">Strategy Subscription</h2><button type="button" class="qd-close" aria-label="Закрыть Strategy Subscription">×</button><p class="qd-description">Как стратегия может создавать ценность в рамках подписки.</p><button type="button" class="qd-open" disabled>Открыть страницу ↗</button><small class="qd-pending">Ссылка пока не добавлена</small><small class="qud-document-state" id="qud-doc-state-subscription" hidden></small></section>
+<section class="qd-popover" id="qd-panel-methodology" role="dialog" aria-modal="false" aria-labelledby="qd-title-methodology" tabindex="-1" hidden><h2 id="qd-title-methodology">TDA Methodology</h2><button type="button" class="qd-close" aria-label="Закрыть TDA Methodology">×</button><p class="qd-description">Принципы обработки и оценки торговых решений.</p><button type="button" class="qd-open" disabled>Открыть страницу ↗</button><small class="qd-pending">Ссылка пока не добавлена</small><small class="qud-document-state" id="qud-doc-state-methodology" hidden></small></section>
+<section class="qd-popover" id="qd-panel-signed" role="dialog" aria-modal="false" aria-labelledby="qd-title-signed" tabindex="-1" hidden>
+<h2 id="qd-title-signed">Подписанные документы</h2><button type="button" class="qd-close" aria-label="Закрыть подписанные документы">×</button>
+<p class="qd-description">Документы, с которыми вы ознакомились, и подтверждение участия в QUD.</p>
+<ul id="qud-document-history" class="qud-document-history"></ul>
+<div class="qud-consent"><label for="qud-consent-check"><input type="checkbox" id="qud-consent-check" aria-describedby="qud-consent-note qud-consent-status"><span>С условиями ознакомлен! Участие подтверждаю!</span></label>
+<small id="qud-consent-note"></small><p id="qud-consent-status" class="qud-consent-status" role="status" aria-live="polite"></p></div>
+</section>
+<section class="qd-popover" id="qd-panel-support" role="dialog" aria-modal="false" aria-labelledby="qd-title-support" tabindex="-1" hidden><h2 id="qd-title-support">Support</h2><button type="button" class="qd-close" aria-label="Закрыть Support">×</button><p class="qd-description">По вопросам QUD:</p><span class="qd-email">infoqud@gmail.com</span></section>
+</div>
+<script>
+(()=>{
+  const root=document.getElementById('qud-dock');
+  const buttons=[...root.querySelectorAll('[data-qd-section]')];
+  const panels=[...root.querySelectorAll('.qd-popover')];
+  // Fill only with the approved destination URLs when they are supplied.
+  const destinations={map:'https://fx-qud.com/documents/map-traders/',subscription:'https://fx-qud.com/documents/subs-trader/',methodology:'https://fx-qud.com/documents/metod/'};
+  let active=null,pinned=false,leaveTimer=0,hoverTimer=0,expandOnly=false;
+  const expanded=()=>root.classList.contains('qd-expanded');
+  const expand=()=>root.classList.add('qd-expanded');
+  const cancelLeave=()=>clearTimeout(leaveTimer);
+  function place(){
+    if(!active)return;
+    const panel=document.getElementById('qd-panel-'+active);
+    const button=document.getElementById('qd-'+active);
+    const viewport=window.visualViewport;
+    const visibleTop=viewport?viewport.offsetTop:0;
+    const height=viewport?viewport.height:window.innerHeight;
+    panel.style.maxHeight=Math.max(100,height-24)+'px';
+    const scroll=panel.querySelector('.qd-pattern-content');
+    if(scroll)scroll.style.maxHeight=Math.max(80,Math.min(460,height-135))+'px';
+    const r=button.getBoundingClientRect(),base=root.getBoundingClientRect();
+    const target=r.top+r.height/2-panel.offsetHeight/2;
+    panel.style.top=(Math.max(visibleTop+12,Math.min(target,visibleTop+height-panel.offsetHeight-12))-base.top)+'px';
+  }
+  function show(key,lock=false){
+    cancelLeave();clearTimeout(hoverTimer);expand();active=key;pinned=lock;
+    root.classList.toggle('qd-pinned',pinned);
+    buttons.forEach(b=>b.setAttribute('aria-expanded',String(b.dataset.qdSection===key)));
+    panels.forEach(p=>p.hidden=p.id!=='qd-panel-'+key);
+    place();requestAnimationFrame(place);
+    root.dispatchEvent(new CustomEvent('qud:section-change',{detail:key}));
+  }
+  root.addEventListener('qud:open-section',event=>{if(['map','subscription','methodology','signed'].includes(event.detail)){show(event.detail,true);document.getElementById('qd-panel-'+event.detail).focus({preventScroll:true})}});
+  function close(restore=false){
+    const previous=active;
+    clearTimeout(hoverTimer);cancelLeave();active=null;pinned=false;expandOnly=false;
+    panels.forEach(p=>p.hidden=true);
+    buttons.forEach(b=>b.setAttribute('aria-expanded','false'));
+    root.classList.remove('qd-pinned','qd-expanded');
+    root.dispatchEvent(new CustomEvent('qud:section-change',{detail:null}));
+    if(restore&&previous)document.getElementById('qd-'+previous).focus({preventScroll:true});
+  }
+  root.addEventListener('pointerdown',e=>{
+    expandOnly=(e.pointerType==='touch'||e.pointerType==='pen')&&!expanded()&&!!e.target.closest('[data-qd-section]');
+    if(expandOnly)expand();
+  });
+  root.querySelector('.qd-rail').addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){cancelLeave();expand()}});
+  root.addEventListener('pointerenter',cancelLeave);
+  root.addEventListener('pointerleave',e=>{
+    if(e.pointerType==='mouse'&&!pinned){clearTimeout(hoverTimer);leaveTimer=setTimeout(()=>{if(!root.contains(document.activeElement))close()},220)}
+  });
+  root.addEventListener('focusin',()=>{cancelLeave();expand()});
+  root.addEventListener('focusout',()=>{setTimeout(()=>{if(!root.contains(document.activeElement)&&!root.matches(':hover'))close()},0)});
+  buttons.forEach(button=>{
+    const key=button.dataset.qdSection;
+    button.addEventListener('pointerenter',e=>{
+      if(e.pointerType!=='mouse'||pinned)return;
+      cancelLeave();clearTimeout(hoverTimer);hoverTimer=setTimeout(()=>show(key),160);
+    });
+    button.addEventListener('pointerleave',()=>clearTimeout(hoverTimer));
+    button.addEventListener('click',e=>{
+      // A collapsed touch rail expands before any small icon can perform an action.
+      if(e.detail!==0&&expandOnly){expandOnly=false;return}
+      if(active===key&&pinned){close();return}
+      show(key,true);
+      if(e.detail===0)document.getElementById('qd-panel-'+key).focus({preventScroll:true});
+    });
+  });
+  root.querySelectorAll('.qd-close').forEach(b=>b.addEventListener('click',()=>close(true)));
+  root.querySelector('.qd-local-open').addEventListener('click',()=>{show('ai',true);document.getElementById('qd-panel-ai').focus({preventScroll:true})});
+  document.addEventListener('pointerdown',e=>{if(!root.contains(e.target))close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(active||expanded())){e.preventDefault();close(true)}});
+  root.addEventListener('qud:content-change',place);
+  window.addEventListener('resize',place);
+  if(window.visualViewport){window.visualViewport.addEventListener('resize',place);window.visualViewport.addEventListener('scroll',place)}
+  root.querySelector('.qd-rail').addEventListener('transitionend',place);
+  root.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',place));
+  Object.entries(destinations).forEach(([key,url])=>{
+    if(!url)return;
+    try{if(new URL(url).protocol!=='https:')return}catch{return}
+    const panel=document.getElementById('qd-panel-'+key),button=panel.querySelector('.qd-open');
+    const link=document.createElement('a');link.className='qd-open';link.href=url;link.textContent=button.textContent;
+    link.target='_blank';link.rel='noopener noreferrer';link.dataset.qudDocument=key;
+    button.replaceWith(link);panel.querySelector('.qd-pending').hidden=true;
+  });
+  root.querySelectorAll('[data-pt-target]').forEach(button=>button.addEventListener('click',()=>{
+    const target=document.getElementById(button.dataset.ptTarget);if(!target)return;
+    close(true);
+    const card=target.closest('.panel')||target.parentElement;
+    card.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});
+    card.classList.add('pt-highlight');setTimeout(()=>card.classList.remove('pt-highlight'),2200);
+  }));
+})();
+</script>
+<!-- QUD PATTERNS END -->
+<style id="qud-participation-style">
+#qud-dock{height:318px}
+.qud-invite{position:fixed;right:80px;bottom:22px;z-index:10005;width:248px;max-width:calc(100vw - 100px);padding:14px;border:1px solid #59664d;border-radius:12px;background:#111517;color:#d6dadd;box-shadow:0 10px 30px #0008;font:12px/1.5 Inter,Arial,sans-serif}
+.qud-invite[hidden]{display:none}.qud-invite h2{margin:0 20px 8px 0;font:600 12px/1.4 Inter,Arial,sans-serif;letter-spacing:0;text-transform:none;color:#f0f0ed}.qud-invite p{margin:0 0 11px;color:#a6adb1}.qud-invite-close{position:absolute;right:3px;top:3px;width:32px;height:32px;background:none;border:0;color:#9fa6ad;font-size:21px;cursor:pointer}.qud-invite-cta{width:100%;min-height:40px;padding:9px 10px;background:#a3b392;color:#10140e;border:1px solid #a3b392;border-radius:7px;font:600 11px Inter,Arial,sans-serif;cursor:pointer}
+@keyframes qud-invite-glow{0%,65%,100%{box-shadow:0 10px 30px #0008,0 0 0 0 #a3b39200}78%{box-shadow:0 10px 30px #0008,0 0 0 4px #a3b39220}}
+@keyframes qud-doc-glow{0%,65%,100%{box-shadow:0 0 0 0 #a3b39200}78%{box-shadow:0 0 0 4px #a3b39235;color:#dce7d4;background:#a3b39220}}
+.qud-invite.qud-invite-pulse{animation:qud-invite-glow 3s ease-in-out infinite}#qud-dock .qd-button.qud-doc-pulse{animation:qud-doc-glow 3s ease-in-out infinite}#qud-dock.qud-inviting .qd-rail{opacity:1}
+#qud-dock .qud-document-state{display:block;color:#a3b392;font-size:10px;line-height:1.5;margin:10px 0 0}
+#qud-dock .qud-document-history{padding:0;margin:12px 0;list-style:none}#qud-dock .qud-document-history li{padding:10px 0;border-bottom:1px solid #293035}#qud-dock .qud-document-history strong{display:block;color:#d6dadd;font-size:12px;font-weight:500}#qud-dock .qud-document-history small{display:block;margin:4px 0 0;font-size:10px;color:#969fa7;line-height:1.5}
+#qud-dock .qud-consent{margin-top:15px;padding-top:3px}#qud-dock .qud-consent label{display:flex;align-items:flex-start;gap:9px;font-size:12px;line-height:1.6;color:#d6dadd;cursor:pointer}#qud-dock .qud-consent input{width:18px;height:18px;flex:0 0 18px;margin:2px 0 0;accent-color:#a3b392}#qud-dock .qud-consent input:disabled{cursor:default}#qud-dock .qud-consent small{display:block;font-size:10px;line-height:1.55;color:#969fa7;margin:9px 0}#qud-dock .qud-consent-status{font-size:11px;line-height:1.6;color:#a3b392;margin:10px 0 0}#qud-dock .qud-consent-status[data-error="true"]{color:#d79b88}#qud-dock #qd-signed{position:relative}#qud-dock #qd-signed.qud-confirmed:after{content:'✓';position:absolute;right:1px;top:1px;color:#a3b392;font-size:11px}
+.qud-invite button:focus-visible,#qud-dock .qud-consent input:focus-visible{outline:2px solid #a3b392;outline-offset:3px}
+@media(max-width:640px){.qud-invite{right:76px;bottom:14px;width:min(232px,calc(100vw - 92px));max-width:none;padding:13px;max-height:calc(100dvh - 28px);overflow:auto}.qud-invite-cta{min-height:44px}}
+@media(max-height:360px){#qud-dock{height:244px}#qud-dock .qd-button{flex-basis:36px;height:36px}#qud-dock .qd-rail{gap:0;padding:4px 2px}#qud-dock .qd-separator{margin:2px 0}}
+@media(prefers-reduced-motion:reduce){.qud-invite.qud-invite-pulse,#qud-dock .qd-button.qud-doc-pulse{animation:none;outline:1px solid #a3b392}}
+</style>
+<aside id="qud-invite" class="qud-invite" role="region" aria-labelledby="qud-invite-title" lang="ru" hidden>
+<button type="button" class="qud-invite-close" id="qud-invite-close" aria-label="Закрыть подсказку">×</button>
+<h2 id="qud-invite-title">Продолжить участие в QUD</h2>
+<p id="qud-invite-description">Ознакомьтесь с документами через значки карты, подписки и книги справа.</p>
+<button type="button" class="qud-invite-cta" id="qud-invite-start">Ознакомиться</button>
+</aside>
+<script id="qud-participation-script">
+(()=>{
+  const report=JSON.parse(document.getElementById('report-data').textContent);
+  const audit=report.report.audit_id,account=String(report.trader.account_login);
+  const key=`qud:participation:v1:${audit}:${account}`;
+  const root=document.getElementById('qud-dock'),hint=document.getElementById('qud-invite');
+  const signedButton=document.getElementById('qd-signed');
+  const checkbox=document.getElementById('qud-consent-check'),status=document.getElementById('qud-consent-status'),note=document.getElementById('qud-consent-note');
+  const docs=[{id:'map',title:'Дорожная карта трейдера'},{id:'subscription',title:'Подписка на стратегию'},{id:'methodology',title:'Методология TDA'}].map(doc=>({...doc,link:root.querySelector(`[data-qud-document="${doc.id}"]`),button:document.getElementById('qd-'+doc.id),state:document.getElementById('qud-doc-state-'+doc.id)}));
+  const statement='С условиями ознакомлен! Участие подтверждаю!';
+  const validConfirmation=s=>Boolean(s?.confirmation?.statement===statement&&Number.isFinite(Date.parse(s.confirmation.confirmed_at)));
+  const blank=()=>({audit_id:audit,account_login:account,opened:[],opened_at:{},dismissed:false,engaged:false,confirmation:null});
+  const read=()=>{try{const s=JSON.parse(localStorage.getItem(key));return s&&s.audit_id===audit&&s.account_login===account&&Array.isArray(s.opened)?{...blank(),...s}:blank()}catch{return blank()}};
+  let state=read(),panelOpen=false,snoozed=false,reminderTimer=null;
+  const write=next=>{try{const json=JSON.stringify(next);localStorage.setItem(key,json);return localStorage.getItem(key)===json}catch{return false}};
+  const confirmed=()=>validConfirmation(state);
+  const ready=()=>docs.every(doc=>state.opened.includes(doc.id));
+  const date=value=>new Intl.DateTimeFormat('ru-RU',{dateStyle:'short',timeStyle:'short'}).format(new Date(value));
+  const stopPulse=()=>{hint.classList.remove('qud-invite-pulse');docs.forEach(doc=>doc.button.classList.remove('qud-doc-pulse'));root.classList.remove('qud-inviting')};
+  const update=()=>{
+    if(confirmed()&&reminderTimer!==null){clearTimeout(reminderTimer);reminderTimer=null;snoozed=false}
+    hint.hidden=confirmed()||snoozed||panelOpen;
+    stopPulse();
+    if(!hint.hidden){hint.classList.add('qud-invite-pulse');docs.filter(doc=>!state.opened.includes(doc.id)).forEach(doc=>doc.button.classList.add('qud-doc-pulse'));root.classList.add('qud-inviting')}
+    document.getElementById('qud-invite-description').textContent=ready()?'Документы открыты. После ознакомления подтвердите участие в разделе «Подписанные документы».':'Ознакомьтесь с документами через значки карты, подписки и книги справа.';
+    document.getElementById('qud-invite-start').textContent=ready()?'Подтвердить участие':'Ознакомиться';
+    const history=document.getElementById('qud-document-history');history.replaceChildren();
+    docs.forEach(doc=>{
+      const signed=confirmed();
+      const opened=state.opened.includes(doc.id),time=state.opened_at?.[doc.id];
+      const text=signed?'Ознакомление подтверждено':opened?'Открыт'+(time&&Number.isFinite(Date.parse(time))?' · '+date(time):''):'Документ ещё не открыт';
+      doc.state.hidden=!opened&&!signed;doc.state.textContent=text;
+      const row=document.createElement('li'),title=document.createElement('strong'),detail=document.createElement('small');title.textContent=doc.title;detail.textContent=text;row.append(title,detail);history.appendChild(row);
+    });
+    checkbox.checked=confirmed();checkbox.disabled=confirmed()||!ready();
+    signedButton.classList.toggle('qud-confirmed',confirmed());
+    signedButton.classList.toggle('qud-doc-pulse',ready()&&!confirmed()&&!panelOpen);
+    status.dataset.error='false';
+    if(confirmed()){
+      note.textContent='Подтверждение зафиксировано. Отметка недоступна для редактирования.';
+      status.textContent='Участие подтверждено';
+    }else{
+      note.textContent=ready()?'После подтверждения отметка сохраняется и недоступна для редактирования.':'Откройте документы по ссылкам в значках карты, подписки и книги. Затем подтвердите ознакомление здесь.';
+      status.textContent='';
+    }
+    root.dispatchEvent(new CustomEvent('qud:content-change'));
+  };
+  const syncConfirmed=()=>{const stored=read();if(validConfirmation(stored)){state=stored;update();return true}return confirmed()};
+  docs.forEach(doc=>doc.link.addEventListener('click',()=>{
+    if(syncConfirmed())return;
+    state.engaged=true;
+    if(!state.opened.includes(doc.id)){state.opened.push(doc.id);state.opened_at[doc.id]=new Date().toISOString()}
+    write(state);update();
+  }));
+  checkbox.addEventListener('change',()=>{
+    if(syncConfirmed()){update();return}
+    if(!checkbox.checked||!ready()){update();return}
+    const next={...state,dismissed:true,engaged:true,confirmation:{statement,confirmed_at:new Date().toISOString(),trader_id:report.trader.trader_id,documents:docs.map(doc=>({id:doc.id,title:doc.title,url:doc.link.href})),document_set:'qud-dashboard-links-2026-10-04'}};
+    if(write(next)){state=next;update()}else{checkbox.checked=false;status.dataset.error='true';status.textContent='Подтверждение не сохранено. Проверьте разрешение браузера на сохранение данных и повторите попытку.'}
+  });
+  const dismiss=()=>{
+    if(syncConfirmed())return;
+    snoozed=true;
+    if(reminderTimer!==null)clearTimeout(reminderTimer);
+    reminderTimer=setTimeout(()=>{reminderTimer=null;snoozed=false;syncConfirmed();update()},30000);
+    update();
+  };
+  document.getElementById('qud-invite-close').addEventListener('click',dismiss);
+  document.getElementById('qud-invite-start').addEventListener('click',()=>{
+    if(syncConfirmed())return;
+    state.engaged=true;write(state);
+    const next=docs.find(doc=>!state.opened.includes(doc.id));
+    root.dispatchEvent(new CustomEvent('qud:open-section',{detail:next?next.id:'signed'}));
+    update();
+  });
+  root.addEventListener('qud:section-change',event=>{panelOpen=Boolean(event.detail);if(panelOpen){state.engaged=true;if(!syncConfirmed())write(state)}update()});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!hint.hidden)dismiss()});
+  window.addEventListener('storage',event=>{if(event.key===key){const incoming=read();if(!confirmed()||validConfirmation(incoming))state=incoming;update()}});
+  window.addEventListener('focus',()=>{syncConfirmed()});
+  update();
+})();
 </script>
 </body></html>
