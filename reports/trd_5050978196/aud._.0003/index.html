@@ -29,7 +29,7 @@
     "plan": "TDA_BASIC",
     "display_name": "QUD TDA Basic",
     "type": "TRADER_REGULAR",
-    "generated_at": "2026-10-25",
+    "generated_at": "2026-10-31",
     "version": "BASIC_AUDIT_v1"
   },
   "trader": {
@@ -37,17 +37,17 @@
     "account_login": 756010900
   },
   "period": {
-    "start": "2026-10-19",
-    "end": "2026-10-23",
-    "current_period": "2026-10-19 — 2026-10-23"
+    "start": "2026-10-26",
+    "end": "2026-10-30",
+    "current_period": "2026-10-26 — 2026-10-30"
   },
   "score": {
-    "qud_tda_score": 94,
-    "weekly_quality_score": 94,
+    "qud_tda_score": 93,
+    "weekly_quality_score": 93,
     "history_trust_factor": 1,
     "trust_zone": "QUD Elite",
     "risk_mode": "low",
-    "trust_score_delta": -2.92,
+    "trust_score_delta": -1,
     "display_class": "good",
     "zones": [
       {
@@ -69,7 +69,7 @@
         "status": "qud_elite"
       }
     ],
-    "main_damage_source": "Block C",
+    "main_damage_source": "Block E",
     "history": [
       {
         "label": "W1",
@@ -189,10 +189,16 @@
         "label": "W20",
         "period": "2026-10-19 — 2026-10-23",
         "value": 94,
+        "source": "recalculated_from_raw"
+      },
+      {
+        "label": "W21",
+        "period": "2026-10-26 — 2026-10-30",
+        "value": 93,
         "source": "current_report_recalculated"
       }
     ],
-    "history_calculation_scope": "weekly_raw_recalculated_W1_W20",
+    "history_calculation_scope": "weekly_raw_recalculated_W1_W21",
     "unavailable_block_rule": "exclude_and_normalize_available_weights"
   },
   "trends": {
@@ -295,6 +301,11 @@
       {
         "period": "2026-10-19 — 2026-10-23",
         "value": 58.23,
+        "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-10-26 — 2026-10-30",
+        "value": 57.32,
         "source": "cumulative_to_period_end"
       }
     ],
@@ -418,6 +429,12 @@
         "value": 1.504272,
         "source": "cumulative_to_period_end",
         "status": "live"
+      },
+      {
+        "period": "2026-10-26 — 2026-10-30",
+        "value": 1.444428,
+        "source": "cumulative_to_period_end",
+        "status": "live"
       }
     ],
     "average_risk_pct": [
@@ -518,6 +535,11 @@
       },
       {
         "period": "2026-10-19 — 2026-10-23",
+        "value": 1.22,
+        "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-10-26 — 2026-10-30",
         "value": 1.22,
         "source": "cumulative_to_period_end"
       }
@@ -622,6 +644,11 @@
         "period": "2026-10-19 — 2026-10-23",
         "value": 98.73,
         "source": "cumulative_to_period_end"
+      },
+      {
+        "period": "2026-10-26 — 2026-10-30",
+        "value": 98.78,
+        "source": "cumulative_to_period_end"
       }
     ]
   },
@@ -635,8 +662,8 @@
     "main_leak": "Execution Leak",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
-    "history_end": "2026-10-23",
-    "sample_trades_count": 79,
+    "history_end": "2026-10-30",
+    "sample_trades_count": 82,
     "methodology_version": "BASIC_AUDIT_v1_LEAK_MAP_CUMULATIVE_v1",
     "items": [
       {
@@ -658,31 +685,31 @@
     ]
   },
   "risk": {
-    "avg_pct": 1.18,
-    "median_pct": 1.2,
-    "max_pct": 1.28,
-    "min_pct": 1.06,
-    "std_pct": 0.1,
-    "cv_value": 0.32,
+    "avg_pct": 1.24,
+    "median_pct": 1.23,
+    "max_pct": 1.35,
+    "min_pct": 1.14,
+    "std_pct": 0.11,
+    "cv_value": 0.31,
     "cv": {
-      "value": 0.32,
-      "marker_pct": 32.04,
+      "value": 0.31,
+      "marker_pct": 31.44,
       "label": "RISK CV",
       "status": "stable",
       "min_label": "0.0",
       "mid_label": "0.5",
       "max_label": "1.0+",
       "scope": "cumulative_to_period_end",
-      "sample_trades_count": 78,
-      "source_average_risk_pct": 1.2206,
-      "source_std_risk_pct": 0.391,
+      "sample_trades_count": 81,
+      "source_average_risk_pct": 1.2213,
+      "source_std_risk_pct": 0.384,
       "methodology_version": "BASIC_AUDIT_v1_RISK_CV_CUMULATIVE_v1"
     },
-    "personal_risk_baseline_pct": 1.188,
-    "personal_risk_low_bound_pct": 0.594,
-    "personal_risk_high_bound_pct": 1.782,
+    "personal_risk_baseline_pct": 1.1955,
+    "personal_risk_low_bound_pct": 0.5977,
+    "personal_risk_high_bound_pct": 1.7932,
     "risk_reduced_count": 0,
-    "risk_normal_count": 4,
+    "risk_normal_count": 3,
     "risk_expansion_count": 0,
     "risk_expansion_pct": 0,
     "risk_drift_count": 0,
@@ -701,7 +728,7 @@
       },
       {
         "label": "Normal Risk",
-        "count": 4,
+        "count": 3,
         "pct": 100,
         "status": "normal"
       },
@@ -716,21 +743,21 @@
       "data_status": "live",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
-      "history_end": "2026-10-23",
-      "valid_risk_trades_count": 78,
-      "personal_risk_baseline_pct": 1.188,
-      "personal_risk_low_bound_pct": 0.594,
-      "personal_risk_high_bound_pct": 1.782,
+      "history_end": "2026-10-30",
+      "valid_risk_trades_count": 81,
+      "personal_risk_baseline_pct": 1.1955,
+      "personal_risk_low_bound_pct": 0.5977,
+      "personal_risk_high_bound_pct": 1.7932,
       "risk_reduced_count": 1,
-      "risk_normal_count": 73,
+      "risk_normal_count": 76,
       "risk_expansion_count": 4,
-      "risk_expansion_pct": 5.13,
+      "risk_expansion_pct": 4.94,
       "risk_drift_count": 3,
-      "risk_drift_pct": 3.85,
+      "risk_drift_pct": 3.7,
       "drift": {
         "count": 3,
-        "pct": 3.85,
-        "value": 3.85,
+        "pct": 3.7,
+        "value": 3.7,
         "direction": "toward_expansion",
         "status": "expansion",
         "label": "Risk Drift"
@@ -739,19 +766,19 @@
         {
           "label": "Reduced Risk",
           "count": 1,
-          "pct": 1.28,
+          "pct": 1.23,
           "status": "reduced"
         },
         {
           "label": "Normal Risk",
-          "count": 73,
-          "pct": 93.59,
+          "count": 76,
+          "pct": 93.83,
           "status": "normal"
         },
         {
           "label": "Risk Expansion",
           "count": 4,
-          "pct": 5.13,
+          "pct": 4.94,
           "status": "expansion"
         }
       ],
@@ -1303,34 +1330,55 @@
         "timestamp": "2026-10-23 09:53:03",
         "week": "W20",
         "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59059940396",
+        "risk_pct": 1.3517,
+        "timestamp": "2026-10-27 08:58:59",
+        "week": "W21",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59093847749",
+        "risk_pct": 1.2329,
+        "timestamp": "2026-10-29 08:54:00",
+        "week": "W21",
+        "status": "normal"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59111555423",
+        "risk_pct": 1.1356,
+        "timestamp": "2026-10-30 08:53:33",
+        "week": "W21",
+        "status": "normal"
       }
     ],
     "trades_above_2pct": 0,
     "trades_above_3pct": 0,
-    "valid_risk_trades_count": 4,
+    "valid_risk_trades_count": 3,
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "history_start": "2026-06-04",
-    "history_end": "2026-10-23",
-    "risk_drift_pct": 3.85,
+    "history_end": "2026-10-30",
+    "risk_drift_pct": 3.7,
     "methodology_version": "BASIC_AUDIT_v1_RISK_ZONE_CUMULATIVE_v2"
   },
   "sl": {
     "trades_without_sl_at_open": 0,
-    "trades_with_sl_at_open": 4,
-    "sl_set_within_30s_count": 4,
+    "trades_with_sl_at_open": 3,
+    "sl_set_within_30s_count": 3,
     "sl_set_after_30s_count": 0,
     "closed_without_sl_count": 0,
     "avg_sl_install_delay_sec": 0,
     "max_sl_install_delay_sec": 0,
     "unsafe_trades_count": 0,
-    "sl_safe_count": 4,
+    "sl_safe_count": 3,
     "sl_safe_pct": 100,
     "sl_changed_count": 0,
     "sl_removed_count": 0,
     "risk_increase_after_sl_change_count": 0,
-    "personal_risk_baseline_pct": 1.1956,
-    "sl_risk_high_bound_pct": 1.7934,
+    "personal_risk_baseline_pct": 1.2329,
+    "sl_risk_high_bound_pct": 1.8493,
     "sl_risk_expansion_after_change_count": 0,
     "max_risk_after_sl_change_pct": null,
     "block_score": 100,
@@ -1338,7 +1386,7 @@
     "protection_segments": [
       {
         "label": "Protected",
-        "value": 4,
+        "value": 3,
         "status": "safe"
       },
       {
@@ -1351,13 +1399,13 @@
       "data_status": "live",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-04",
-      "history_end": "2026-10-23",
-      "trades_total": 79,
+      "history_end": "2026-10-30",
+      "trades_total": 82,
       "no_sl_count": 0,
       "sl_removed_count": 0,
       "sl_changed_count": 1,
-      "sl_safe_count": 78,
-      "sl_safe_pct": 98.73,
+      "sl_safe_count": 81,
+      "sl_safe_pct": 98.78,
       "segments": [
         {
           "label": "No SL",
@@ -1374,13 +1422,13 @@
         {
           "label": "SL Changed",
           "value": 1,
-          "pct": 1.27,
+          "pct": 1.22,
           "status": "changed"
         },
         {
           "label": "SL Safe",
-          "value": 78,
-          "pct": 98.73,
+          "value": 81,
+          "pct": 98.78,
           "status": "safe"
         }
       ],
@@ -1390,27 +1438,27 @@
   },
   "behavior": {
     "trade_after_loss_count": 2,
-    "risk_after_loss_avg_pct": 1.17,
-    "risk_after_win_avg_pct": 1.2,
-    "risk_after_1_loss_pct": 1.06,
-    "risk_after_2_losses_pct": 1.28,
+    "risk_after_loss_avg_pct": 1.18,
+    "risk_after_win_avg_pct": 1.35,
+    "risk_after_1_loss_pct": 1.23,
+    "risk_after_2_losses_pct": 1.14,
     "risk_after_3_losses_pct": null,
-    "max_risk_after_loss_streak_pct": 1.28,
-    "risk_increase_after_loss_count": 1,
+    "max_risk_after_loss_streak_pct": 1.23,
+    "risk_increase_after_loss_count": 0,
     "position_size_increased_after_loss_count": 0,
     "revenge_trading_signal_count": 0,
-    "avg_minutes_after_loss_to_next_trade": 3554.56,
-    "min_minutes_after_loss_to_next_trade": 1360.6,
+    "avg_minutes_after_loss_to_next_trade": 2074.56,
+    "min_minutes_after_loss_to_next_trade": 1387.37,
     "risk_after_loss_items": [
       {
         "label": "1 Loss",
-        "value": 1.06,
-        "status": "reduced"
+        "value": 1.23,
+        "status": "normal"
       },
       {
         "label": "2 Losses",
-        "value": 1.28,
-        "status": "normal"
+        "value": 1.14,
+        "status": "reduced"
       },
       {
         "label": "3+ Losses",
@@ -1419,10 +1467,10 @@
       }
     ],
     "post_loss_summary": {
-      "baseline_pct": 1.2,
-      "high_bound_pct": 1.79,
-      "avg_risk_pct": 1.17,
-      "risk_drift_pct": -0.02,
+      "baseline_pct": 1.23,
+      "high_bound_pct": 1.85,
+      "avg_risk_pct": 1.18,
+      "risk_drift_pct": -0.17,
       "expansion_count": 0,
       "expansion_pct": 0,
       "revenge_signal_count": 0,
@@ -1430,18 +1478,18 @@
     }
   },
   "plan_fact": {
-    "trades_total": 79,
-    "trades_count": 78,
+    "trades_total": 82,
+    "trades_count": 81,
     "excluded_trades_count": 1,
-    "valid_sample_pct": 98.73,
+    "valid_sample_pct": 98.78,
     "planned_risk_avg_pct": 1.22,
     "actual_loss_avg_pct": 0.96,
-    "deviation_avg_pct": -0.15,
+    "deviation_avg_pct": -0.16,
     "deviation_max_pct": 0.19,
     "deviation_avg_abs_pct": 0.17,
     "deviation_max_abs_pct": 1,
-    "negative_deviation_trades": 10,
-    "negative_deviation_trades_pct": 12.82,
+    "negative_deviation_trades": 11,
+    "negative_deviation_trades_pct": 13.58,
     "execution_leak_flag": true,
     "data_status": "live",
     "points": [
@@ -2224,47 +2272,77 @@
         "status": "within_plan",
         "week": "W20",
         "timestamp": "2026-10-23 09:53:03"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59059940396",
+        "planned": 1.3517,
+        "actual": 0.8,
+        "within_plan": 0.8,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W21",
+        "timestamp": "2026-10-27 08:58:59"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59093847749",
+        "planned": 1.2329,
+        "actual": 1.2329,
+        "within_plan": 1.2329,
+        "excess_loss": 0,
+        "status": "excess",
+        "week": "W21",
+        "timestamp": "2026-10-29 08:54:00"
+      },
+      {
+        "trade_id": "aud_00003_756010900_59111555423",
+        "planned": 1.1356,
+        "actual": 0,
+        "within_plan": 0,
+        "excess_loss": 0,
+        "status": "within_plan",
+        "week": "W21",
+        "timestamp": "2026-10-30 08:53:33"
       }
     ],
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-04",
-    "period_end": "2026-10-23",
-    "eligible_loss_trades_count": 32,
+    "period_end": "2026-10-30",
+    "eligible_loss_trades_count": 34,
     "excluded_loss_trades_count": 1,
     "methodology_version": "BASIC_AUDIT_v1_PLAN_FACT_CUMULATIVE_v1"
   },
   "findings": {
     "items": [
       {
-        "text": "Максимальный плановый риск сделки за неделю составил 1,28% счёта.",
+        "text": "Максимальный плановый риск сделки за неделю составил 1,35% счёта.",
         "severity": "medium",
         "display_class": "warn",
         "source_block": "Block A",
         "metric": "weekly_max_planned_risk"
       },
       {
-        "text": "После 2 убыточных сделок подряд плановый риск следующей сделки вырос с 1,06% до 1,28%; результат этой сделки: +136,40 USD.",
+        "text": "За неделю плановый риск менялся в диапазоне 1,14–1,35% счёта.",
         "severity": "medium",
         "display_class": "warn",
         "source_block": "Block A",
         "metric": "risk_change_after_loss"
       },
       {
-        "text": "За неделю закрыто 4 сделки: 3 прибыльные и 1 убыточная. Результат +356,40 USD; Win Rate 75,0%, Profit Factor 13,96.",
-        "severity": "positive",
-        "display_class": "good",
+        "text": "За неделю закрыто сделок: 3; прибыльных — 1, убыточных — 2. Результат -103,40 USD; Win Rate 33,3%, Profit Factor 0,57.",
+        "severity": "high",
+        "display_class": "danger",
         "source_block": "Block E",
         "metric": "weekly_performance"
       },
       {
-        "text": "Во всех 4 сделках недели Stop Loss был установлен при открытии; удалений и изменений SL не зафиксировано. За всю историю SL Safe = 98,73% (78/79 сделок).",
+        "text": "Во всех 3 сделках недели Stop Loss был установлен при открытии; удалений и изменений SL не зафиксировано. За всю историю SL Safe = 98,78% (81/82 сделок).",
         "severity": "positive",
         "display_class": "good",
         "source_block": "Block B",
         "metric": "weekly_sl_discipline"
       },
       {
-        "text": "Максимальная дневная просадка недели пришлась на 22.10.2026 и составила 0,49%. Итог этого дня: 128,70 USD.",
+        "text": "Максимальная дневная просадка недели пришлась на 29.10.2026 и составила 1,23%. Итог этого дня: -146,30 USD.",
         "severity": "medium",
         "display_class": "warn",
         "source_block": "Block A",
@@ -2283,17 +2361,17 @@
     "minimum_sample_valid": true
   },
   "basic_stats": {
-    "average_win": 127.97,
-    "average_loss": 27.5,
-    "win_ratio": 75,
-    "profit_factor": 13.96,
-    "number_of_days": 4,
-    "total_trades_taken": 4,
-    "total_lots_used": 4.4,
-    "biggest_win": 136.4,
-    "biggest_loss": 27.5,
-    "net_profit": 356.4,
-    "win_ratio_pct": 75
+    "average_win": 138.6,
+    "average_loss": 121,
+    "win_ratio": 33.33,
+    "profit_factor": 0.572727,
+    "number_of_days": 3,
+    "total_trades_taken": 3,
+    "total_lots_used": 3.3,
+    "biggest_win": 138.6,
+    "biggest_loss": 146.3,
+    "net_profit": -103.4,
+    "win_ratio_pct": 33.33
   },
   "account": {
     "balance_equity_curve": [],
@@ -2692,6 +2770,21 @@
         "timestamp": "2026-10-23 10:18:03",
         "position_ticket": "59023392149",
         "balance": 11962.31
+      },
+      {
+        "timestamp": "2026-10-27 10:52:15",
+        "position_ticket": "59059940396",
+        "balance": 11866.61
+      },
+      {
+        "timestamp": "2026-10-29 09:46:11",
+        "position_ticket": "59093847749",
+        "balance": 11720.31
+      },
+      {
+        "timestamp": "2026-10-30 09:20:16",
+        "position_ticket": "59111555423",
+        "balance": 11858.91
       }
     ],
     "equity_series": [
@@ -3212,74 +3305,95 @@
         "min_equity": 11843.51,
         "max_equity": 11962.31,
         "source_count": 96
+      },
+      {
+        "timestamp": "2026-10-26 23:45:31",
+        "equity": 11962.31,
+        "min_equity": 11962.31,
+        "max_equity": 11962.31,
+        "source_count": 96
+      },
+      {
+        "timestamp": "2026-10-27 19:37:54",
+        "equity": 11866.61,
+        "min_equity": 11853.41,
+        "max_equity": 11990.91,
+        "source_count": 78
+      },
+      {
+        "timestamp": "2026-10-29 09:46:11",
+        "equity": 11720.31,
+        "min_equity": 11720.31,
+        "max_equity": 11865.51,
+        "source_count": 4
+      },
+      {
+        "timestamp": "2026-10-30 09:20:16",
+        "equity": 11858.91,
+        "min_equity": 11720.31,
+        "max_equity": 11858.91,
+        "source_count": 4
       }
     ],
     "equity_sampling": {
       "method": "time_weighted_average",
       "window_minutes": 2880,
-      "raw_points_count": 9160,
-      "rendered_points_count": 74
+      "raw_points_count": 9342,
+      "rendered_points_count": 78
     }
   },
   "direction": {
-    "long_trades_count": 3,
-    "long_profit": 237.6,
-    "long_win_rate": 66.67,
+    "long_trades_count": 2,
+    "long_profit": 42.9,
+    "long_win_rate": 50,
     "short_trades_count": 1,
-    "short_profit": 118.8,
-    "short_win_rate": 100,
+    "short_profit": -146.3,
+    "short_win_rate": 0,
     "imbalance_flag": true
   },
   "profitability": {
-    "wins_count": 3,
-    "losses_count": 1,
+    "wins_count": 1,
+    "losses_count": 2,
     "breakeven_count": 0,
-    "wins_pct": 75,
-    "losses_pct": 25,
+    "wins_pct": 33.33,
+    "losses_pct": 66.67,
     "be_pct": 0
   },
   "duration": {
     "pnl_by_trade_duration": [
       {
-        "trade_id": "aud_00003_756010900_58966980514",
-        "symbol": "EURUSD",
-        "duration_min": 52.88,
-        "profit_money": -27.5,
+        "trade_id": "aud_00003_756010900_59059940396",
+        "symbol": "GBPUSD",
+        "duration_min": 113.3,
+        "profit_money": -95.7,
         "result_type": "loss"
       },
       {
-        "trade_id": "aud_00003_756010900_58984519921",
+        "trade_id": "aud_00003_756010900_59093847749",
         "symbol": "GBPUSD",
-        "duration_min": 65.18,
-        "profit_money": 136.4,
-        "result_type": "win"
+        "duration_min": 52.18,
+        "profit_money": -146.3,
+        "result_type": "loss"
       },
       {
-        "trade_id": "aud_00003_756010900_59003310592",
+        "trade_id": "aud_00003_756010900_59111555423",
         "symbol": "GBPUSD",
-        "duration_min": 90.27,
-        "profit_money": 128.7,
-        "result_type": "win"
-      },
-      {
-        "trade_id": "aud_00003_756010900_59023392149",
-        "symbol": "GBPUSD",
-        "duration_min": 25.02,
-        "profit_money": 118.8,
+        "duration_min": 26.75,
+        "profit_money": 138.6,
         "result_type": "win"
       }
     ],
     "items": [
       {
         "name": "Winning Trades",
-        "duration_min": 60.16,
-        "deviation_pct": 3.12,
+        "duration_min": 26.75,
+        "deviation_pct": -58.25,
         "status": "positive"
       },
       {
         "name": "Losing Trades",
-        "duration_min": 52.88,
-        "deviation_pct": -9.35,
+        "duration_min": 82.74,
+        "deviation_pct": 29.13,
         "status": "negative"
       }
     ],
@@ -3287,34 +3401,34 @@
       "grouping_method": "equal_frequency_nearest_rank",
       "scope": "cumulative_to_period_end",
       "history_start": "2026-06-05",
-      "history_end": "2026-10-23",
+      "history_end": "2026-10-30",
       "target_trades_per_group": 5,
       "max_groups": 5,
       "ties_preserved": true,
       "quartile_method": "inclusive",
       "duration_unit": "minutes",
       "pnl_unit": "account_currency",
-      "total_trades": 79,
-      "baseline_win_rate_pct": 58.23,
+      "total_trades": 82,
+      "baseline_win_rate_pct": 57.32,
       "groups_count": 5,
       "groups": [
         {
           "group_index": 1,
           "duration_min": 8.33,
           "duration_max": 33.9,
-          "duration_avg": 22.57,
-          "sample_size": 16,
+          "duration_avg": 22.82,
+          "sample_size": 17,
           "pnl_min": -176.4,
-          "pnl_q1": 62.93,
-          "pnl_median": 119.35,
-          "pnl_q3": 125.68,
+          "pnl_q1": 97.5,
+          "pnl_median": 119.9,
+          "pnl_q3": 136.4,
           "pnl_max": 176.4,
-          "pnl_total": 1104.05,
-          "pnl_avg": 69,
-          "wins_count": 12,
+          "pnl_total": 1242.65,
+          "pnl_avg": 73.1,
+          "wins_count": 13,
           "losses_count": 4,
           "breakeven_count": 0,
-          "win_rate_pct": 75,
+          "win_rate_pct": 76.47,
           "sample_status": "valid"
         },
         {
@@ -3340,57 +3454,57 @@
           "group_index": 3,
           "duration_min": 51.87,
           "duration_max": 74.43,
-          "duration_avg": 62.52,
-          "sample_size": 16,
+          "duration_avg": 61.91,
+          "sample_size": 17,
           "pnl_min": -166.8,
-          "pnl_q1": -103.4,
-          "pnl_median": -31.35,
-          "pnl_q3": 90.25,
+          "pnl_q1": -133.1,
+          "pnl_median": -35.2,
+          "pnl_q3": 86,
           "pnl_max": 136.4,
-          "pnl_total": -285,
-          "pnl_avg": -17.81,
+          "pnl_total": -431.3,
+          "pnl_avg": -25.37,
           "wins_count": 6,
-          "losses_count": 10,
+          "losses_count": 11,
           "breakeven_count": 0,
-          "win_rate_pct": 37.5,
+          "win_rate_pct": 35.29,
           "sample_status": "valid"
         },
         {
           "group_index": 4,
           "duration_min": 75.8,
-          "duration_max": 162.97,
-          "duration_avg": 113.73,
+          "duration_max": 156.35,
+          "duration_avg": 110.62,
           "sample_size": 16,
           "pnl_min": -153.6,
-          "pnl_q1": -50.81,
-          "pnl_median": 113.85,
-          "pnl_q3": 137.63,
+          "pnl_q1": -94.42,
+          "pnl_median": 108.95,
+          "pnl_q3": 130.9,
           "pnl_max": 170.4,
-          "pnl_total": 889.27,
-          "pnl_avg": 55.58,
-          "wins_count": 11,
-          "losses_count": 5,
+          "pnl_total": 640.67,
+          "pnl_avg": 40.04,
+          "wins_count": 10,
+          "losses_count": 6,
           "breakeven_count": 0,
-          "win_rate_pct": 68.75,
+          "win_rate_pct": 62.5,
           "sample_status": "valid"
         },
         {
           "group_index": 5,
-          "duration_min": 171.92,
+          "duration_min": 162.97,
           "duration_max": 497.97,
-          "duration_avg": 293.08,
-          "sample_size": 15,
+          "duration_avg": 284.94,
+          "sample_size": 16,
           "pnl_min": -205.2,
-          "pnl_q1": -140.25,
-          "pnl_median": 12,
-          "pnl_q3": 110.23,
+          "pnl_q1": -128.98,
+          "pnl_median": 57.7,
+          "pnl_q3": 115.2,
           "pnl_max": 170.5,
-          "pnl_total": -165.56,
-          "pnl_avg": -11.04,
-          "wins_count": 8,
+          "pnl_total": -12.66,
+          "pnl_avg": -0.79,
+          "wins_count": 9,
           "losses_count": 7,
           "breakeven_count": 0,
-          "win_rate_pct": 53.33,
+          "win_rate_pct": 56.25,
           "sample_status": "valid"
         }
       ],
@@ -3400,22 +3514,12 @@
   "instrument": {
     "profit_analysis": [
       {
-        "symbol": "EURUSD",
-        "trades_count": 1,
-        "profit_money": -27.5
-      },
-      {
         "symbol": "GBPUSD",
         "trades_count": 3,
-        "profit_money": 383.9
+        "profit_money": -103.4
       }
     ],
     "volume_analysis": [
-      {
-        "symbol": "EURUSD",
-        "trades_count": 1,
-        "volume": 1.1
-      },
       {
         "symbol": "GBPUSD",
         "trades_count": 3,
@@ -3424,22 +3528,13 @@
     ],
     "items": [
       {
-        "symbol": "EURUSD",
-        "trades_count": 1,
-        "profit_money": -27.5,
-        "volume": 1.1,
-        "profit_share_pct": -7.72,
-        "volume_share_pct": 25,
-        "status": "negative"
-      },
-      {
         "symbol": "GBPUSD",
         "trades_count": 3,
-        "profit_money": 383.9,
+        "profit_money": -103.4,
         "volume": 3.3,
-        "profit_share_pct": 107.72,
-        "volume_share_pct": 75,
-        "status": "positive"
+        "profit_share_pct": 100,
+        "volume_share_pct": 100,
+        "status": "negative"
       }
     ]
   },
@@ -3447,39 +3542,39 @@
     "data_status": "live",
     "scope": "cumulative_to_period_end",
     "period_start": "2026-06-05",
-    "period_end": "2026-10-23",
+    "period_end": "2026-10-30",
     "groups": [
       {
         "symbol": "EURUSD",
         "trades": 25,
         "wins": 10,
         "volume": 19.3,
-        "win_contribution_pct": 21.74,
-        "load_volume_pct": 25.23
+        "win_contribution_pct": 21.28,
+        "load_volume_pct": 24.19
       },
       {
         "symbol": "GBPUSD",
-        "trades": 44,
-        "wins": 31,
-        "volume": 47.3,
-        "win_contribution_pct": 67.39,
-        "load_volume_pct": 61.83
+        "trades": 47,
+        "wins": 32,
+        "volume": 50.6,
+        "win_contribution_pct": 68.09,
+        "load_volume_pct": 63.41
       },
       {
         "symbol": "USDCAD",
         "trades": 8,
         "wins": 4,
         "volume": 7.9,
-        "win_contribution_pct": 8.7,
-        "load_volume_pct": 10.33
+        "win_contribution_pct": 8.51,
+        "load_volume_pct": 9.9
       },
       {
         "symbol": "USDJPY",
         "trades": 2,
         "wins": 1,
         "volume": 2,
-        "win_contribution_pct": 2.17,
-        "load_volume_pct": 2.61
+        "win_contribution_pct": 2.13,
+        "load_volume_pct": 2.51
       }
     ]
   },
@@ -3489,42 +3584,42 @@
     "items": [
       {
         "name": "Direction Balance",
-        "marker_pct": 56.96,
-        "display_value": "34 / 45",
+        "marker_pct": 56.1,
+        "display_value": "36 / 46",
         "status": "neutral",
         "label_left": "Long",
         "label_right": "Short",
         "segments": [
           {
             "label": "Long",
-            "value": 34,
-            "pct": 43.04
+            "value": 36,
+            "pct": 43.9
           },
           {
             "label": "Short",
-            "value": 45,
-            "pct": 56.96
+            "value": 46,
+            "pct": 56.1
           }
         ]
       },
       {
         "name": "Profitability",
-        "marker_pct": 58.23,
-        "display_value": "58.23%",
+        "marker_pct": 57.32,
+        "display_value": "57.32%",
         "status": "live",
         "label_left": "Losses",
         "label_right": "Wins",
         "segments": [
           {
             "label": "Wins",
-            "value": 46,
-            "pct": 58.23,
+            "value": 47,
+            "pct": 57.32,
             "status": "positive"
           },
           {
             "label": "Losses",
-            "value": 33,
-            "pct": 41.77,
+            "value": 35,
+            "pct": 42.68,
             "status": "negative"
           },
           {
@@ -3537,8 +3632,8 @@
       },
       {
         "name": "Risk Expansion",
-        "marker_pct": 5.13,
-        "display_value": "5.13%",
+        "marker_pct": 4.94,
+        "display_value": "4.94%",
         "status": "expansion",
         "label_left": "Reduced",
         "label_right": "Expanded",
@@ -3546,62 +3641,62 @@
           {
             "label": "Reduced Risk",
             "count": 1,
-            "pct": 1.28,
+            "pct": 1.23,
             "status": "reduced"
           },
           {
             "label": "Normal Risk",
-            "count": 73,
-            "pct": 93.59,
+            "count": 76,
+            "pct": 93.83,
             "status": "normal"
           },
           {
             "label": "Risk Expansion",
             "count": 4,
-            "pct": 5.13,
+            "pct": 4.94,
             "status": "expansion"
           }
         ]
       }
     ],
     "history_start": "2026-06-05",
-    "history_end": "2026-10-23",
-    "sample_trades_count": 79,
-    "short_cover_ratio": 1.277282,
+    "history_end": "2026-10-30",
+    "sample_trades_count": 82,
+    "short_cover_ratio": 1.197427,
     "short_cover_status": "live",
-    "short_win_rate_pct": 55.56,
-    "profit_factor": 1.504272,
+    "short_win_rate_pct": 54.35,
+    "profit_factor": 1.444428,
     "profit_factor_status": "live",
-    "total_win_rate_pct": 58.23,
-    "long_cover_ratio": 1.878337,
+    "total_win_rate_pct": 57.32,
+    "long_cover_ratio": 1.849494,
     "long_cover_status": "live",
-    "long_win_rate_pct": 61.76,
+    "long_win_rate_pct": 61.11,
     "methodology_version": "BASIC_AUDIT_v1_COVER_CUMULATIVE_v1"
   },
   "comparison": {
-    "previous_period": "2026-10-12 — 2026-10-16",
-    "current_period": "2026-10-19 — 2026-10-23",
+    "previous_period": "2026-10-19 — 2026-10-23",
+    "current_period": "2026-10-26 — 2026-10-30",
     "items": [
       {
         "metric": "QUD TDA Score",
-        "previous": 96.92,
-        "current": 94,
-        "change": -2.92,
+        "previous": 94,
+        "current": 93,
+        "change": -1,
         "status": "worse"
       },
       {
         "metric": "Risk CV",
-        "previous": 0.1726833162,
-        "current": 0.0828136878,
-        "change": -0.0898696283,
-        "status": "improved"
+        "previous": 0.0828136878,
+        "current": 0.08728075,
+        "change": 0.0044670622,
+        "status": "worse"
       },
       {
         "metric": "Avg Risk After Loss",
-        "previous": null,
-        "current": 1.1720438285,
-        "change": 1.1720438285,
-        "status": "not_available"
+        "previous": 1.1720438285,
+        "current": 1.1842532734,
+        "change": 0.0122094449,
+        "status": "worse"
       },
       {
         "metric": "No-SL Trades",
@@ -3612,15 +3707,15 @@
       },
       {
         "metric": "Plan vs Fact Deviation",
-        "previous": null,
-        "current": -0.824628135,
-        "change": -0.824628135,
-        "status": "not_available"
+        "previous": -0.824628135,
+        "current": -0.2758583318,
+        "change": 0.5487698032,
+        "status": "worse"
       },
       {
         "metric": "Main Leak",
-        "previous": "Execution Leak",
-        "current": "Behavior Leak",
+        "previous": "Behavior Leak",
+        "current": "Performance Leak",
         "change": "changed",
         "status": "changed"
       }
@@ -3724,6 +3819,11 @@
       {
         "period": "2026-10-19 — 2026-10-23",
         "value": 94,
+        "source": "recalculated_from_raw"
+      },
+      {
+        "period": "2026-10-26 — 2026-10-30",
+        "value": 93,
         "source": "current_report_recalculated"
       }
     ]
@@ -4979,7 +5079,7 @@ function initStrategyInterest(){
   if(!document.getElementById('qud-design-lab-style')){
     const style=document.createElement('style');
     style.id='qud-design-lab-style';
-    style.textContent='@media(min-width:1101px){.top-title-block{transform:translateY(-18px)!important;}#strategyInterestMobileRow{display:none!important;}}@media(max-width:1100px){#strategyInterestMobileRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 8px;}#strategyInterestMobileRow #strategyInterestLabel,#strategyInterestMobileRow #strategyDemoBadge{position:static!important;left:auto!important;top:auto!important;margin:0!important;}}';
+    style.textContent='@media(min-width:1101px){.top-title-block{transform:translateY(-18px)!important;}#strategyInterestMobileRow{display:none!important;}}@media(max-width:1100px){#strategyInterestMobileRow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 8px;}#strategyInterestMobileRow #strategyInterestLabel,#strategyInterestMobileRow #strategyDemoBadge,#strategyInterestMobileRow #strategyRealBadge{position:static!important;left:auto!important;top:auto!important;margin:0!important;}}@media(max-width:600px){#strategyInterestMobileRow #strategyInterestLabel{flex-basis:100%;}}';
     document.head.appendChild(style);
   }
   let strategyLabel=document.getElementById('strategyInterestLabel');
@@ -4999,13 +5099,26 @@ function initStrategyInterest(){
     demoBadge=referenceBadge.cloneNode(true);
     demoBadge.id='strategyDemoBadge';
     demoBadge.className='badge neutral';
-    demoBadge.textContent='4 DEMO';
+    demoBadge.textContent='3 DEMO';
     demoBadge.style.position='absolute';
     demoBadge.style.margin='0';
     demoBadge.style.zIndex='20';
     demoBadge.style.pointerEvents='none';
     demoBadge.style.visibility='hidden';
     document.body.appendChild(demoBadge);
+  }
+  let realBadge=document.getElementById('strategyRealBadge');
+  if(!realBadge){
+    realBadge=referenceBadge.cloneNode(true);
+    realBadge.id='strategyRealBadge';
+    realBadge.className='badge good';
+    realBadge.textContent='1 REAL';
+    realBadge.style.position='absolute';
+    realBadge.style.margin='0';
+    realBadge.style.zIndex='20';
+    realBadge.style.pointerEvents='none';
+    realBadge.style.visibility='hidden';
+    document.body.appendChild(realBadge);
   }
   let mobileRow=document.getElementById('strategyInterestMobileRow');
   if(!mobileRow){
@@ -5018,6 +5131,7 @@ function initStrategyInterest(){
     if(isMobile){
       if(strategyLabel.parentNode!==mobileRow)mobileRow.appendChild(strategyLabel);
       if(demoBadge.parentNode!==mobileRow)mobileRow.appendChild(demoBadge);
+      if(realBadge.parentNode!==mobileRow)mobileRow.appendChild(realBadge);
       strategyLabel.style.position='static';
       strategyLabel.style.left='';
       strategyLabel.style.top='';
@@ -5026,14 +5140,20 @@ function initStrategyInterest(){
       demoBadge.style.left='';
       demoBadge.style.top='';
       demoBadge.style.visibility='visible';
+      realBadge.style.position='static';
+      realBadge.style.left='';
+      realBadge.style.top='';
+      realBadge.style.visibility='visible';
       mobileRow.style.display='flex';
       return;
     }
     mobileRow.style.display='none';
     if(strategyLabel.parentNode!==document.body)document.body.appendChild(strategyLabel);
     if(demoBadge.parentNode!==document.body)document.body.appendChild(demoBadge);
+    if(realBadge.parentNode!==document.body)document.body.appendChild(realBadge);
     strategyLabel.style.position='absolute';
     demoBadge.style.position='absolute';
+    realBadge.style.position='absolute';
     const titleRect=titleBlock.getBoundingClientRect();
     const headerRect=headerMeta.getBoundingClientRect();
     const trustRect=trustLabel.getBoundingClientRect();
@@ -5050,6 +5170,9 @@ function initStrategyInterest(){
     demoBadge.style.left=left+'px';
     demoBadge.style.top=(badgeTop+window.scrollY)+'px';
     demoBadge.style.visibility='visible';
+    realBadge.style.left=(left+badgeRect.width+10)+'px';
+    realBadge.style.top=(badgeTop+window.scrollY)+'px';
+    realBadge.style.visibility='visible';
   };
   positionStrategyElements();
   window.addEventListener('resize',positionStrategyElements);
@@ -5099,6 +5222,10 @@ initHelp();
 .qd-root .pt-scroll{padding:14px 16px 18px}
 .qd-root .pt-intro{font-size:11px;line-height:1.55;color:#a3a69f;margin:0 0 14px}
 .qd-root .pt-card{border:1px solid var(--qd-border);border-radius:10px;background:#16191e;margin-bottom:10px;overflow:hidden}
+.qd-root .pt-item{margin:0 0 16px;padding:0 0 16px;border-bottom:1px solid var(--qd-border)}
+.qd-root .pt-item:last-of-type{border-bottom:0;padding-bottom:0}
+.qd-root .pt-item h3{margin:0 0 8px;font-size:13px;line-height:1.45;color:#e0e0d9;font-weight:600;letter-spacing:0}
+.qd-root .pt-item p{margin:0;color:#b4b7b0;font-size:11px;line-height:1.58}
 .qd-root .pt-card summary{list-style:none;padding:13px 14px;cursor:pointer;position:relative}
 .qd-root .pt-card summary::-webkit-details-marker{display:none}
 .qd-root .pt-type{font-size:9px;letter-spacing:.45px;color:#bda979;display:block;padding-right:14px}
@@ -5134,8 +5261,12 @@ initHelp();
   <button type="button" class="qd-button" id="qd-support" data-qd-section="support" aria-label="Support" aria-haspopup="dialog" aria-controls="qd-panel-support" aria-expanded="false"><svg class="qd-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></button>
 </nav>
 <section class="qd-popover qd-ai-popover" id="qd-panel-ai" role="dialog" aria-modal="false" aria-labelledby="qd-title-ai" tabindex="-1" hidden>
-  <header class="qd-ai-head"><h2 id="qd-title-ai">AI Assistant</h2><button type="button" class="qd-close" aria-label="Закрыть AI Assistant">×</button><p class="qd-description">Patterns · ежемесячный обзор торговых закономерностей.</p><button type="button" class="qd-local-open">Открыть Patterns</button></header>
-  <div class="qd-pattern-content"><section class="pt-panel" lang="ru"><header class="pt-head"><div class="pt-eyebrow">PERSONAL AI ASSISTANT</div><h2 id="pt-title">Ежемесячный обзор</h2><p>Аудит aud_00003</p></header><div class="pt-scroll"><p class="pt-intro">Аналитические данные обновляются ежемесячно.</p></div></section></div>
+  <header class="qd-ai-head"><h2 id="qd-title-ai">AI Assistant</h2><button type="button" class="qd-close" aria-label="Закрыть AI Assistant">×</button><p class="qd-description">Patterns · обзор торговых закономерностей.</p><button type="button" class="qd-local-open">Открыть Patterns</button></header>
+  <div class="qd-pattern-content"><section class="pt-panel" lang="ru" aria-label="AI Patterns за август — октябрь 2026"><div class="pt-scroll"><p class="pt-intro">1 августа — 30 октября 2026 · 54 закрытые сделки</p>
+<article class="pt-item"><h3>После серии прибылей риск чаще снижался</h3><p>После двух прибыльных закрытий подряд следующий вход открывался с меньшим денежным риском в <strong>6 из 7</strong> пригодных эпизодов. Увеличение встретилось один раз. Эпизоды пришлись на семь разных торговых дней.</p></article>
+<article class="pt-item"><h3>Повторные входы приносили смешанный результат</h3><p>В течение 24 часов после прибыльного закрытия трейдер <strong>12 раз</strong> снова входил в тот же инструмент и направление. Семь повторных входов завершились прибылью, пять — убытком; их суммарный результат <strong>+289,80 USD</strong>. Повторение сценария подтверждено, но закономерности убытка при таком входе данные не показывают.</p></article>
+<article class="pt-item"><h3>Большая часть прибыли компенсировалась убытками</h3><p>28 прибыльных сделок принесли <strong>3 042,29 USD</strong>, а 26 убыточных забрали <strong>2 662,94 USD</strong>. Средняя прибыль (<strong>108,65 USD</strong>) лишь немного превышала средний убыток (<strong>102,42 USD</strong>). Убытки компенсировали <strong>87,53%</strong> прибыли; чистый результат — <strong>+379,35 USD</strong>.</p></article>
+<p class="pt-note">Аналитические данные обновляются ежемесячно.</p></div></section></div>
 </section>
 <section class="qd-popover" id="qd-panel-map" role="dialog" aria-modal="false" aria-labelledby="qd-title-map" tabindex="-1" hidden><h2 id="qd-title-map">Trader Map</h2><button type="button" class="qd-close" aria-label="Закрыть Trader Map">×</button><p class="qd-description">Дорожная карта развития стратегии в системе QUD.</p><button type="button" class="qd-open" disabled>Открыть страницу ↗</button><small class="qd-pending">Ссылка пока не добавлена</small><small class="qud-document-state" id="qud-doc-state-map" hidden></small></section>
 <section class="qd-popover" id="qd-panel-subscription" role="dialog" aria-modal="false" aria-labelledby="qd-title-subscription" tabindex="-1" hidden><h2 id="qd-title-subscription">Strategy Subscription</h2><button type="button" class="qd-close" aria-label="Закрыть Strategy Subscription">×</button><p class="qd-description">Как стратегия может создавать ценность в рамках подписки.</p><button type="button" class="qd-open" disabled>Открыть страницу ↗</button><small class="qd-pending">Ссылка пока не добавлена</small><small class="qud-document-state" id="qud-doc-state-subscription" hidden></small></section>
@@ -5144,7 +5275,7 @@ initHelp();
 <h2 id="qd-title-signed">Подписанные документы</h2><button type="button" class="qd-close" aria-label="Закрыть подписанные документы">×</button>
 <p class="qd-description">Документы, с которыми вы ознакомились, и подтверждение участия в QUD.</p>
 <ul id="qud-document-history" class="qud-document-history"></ul>
-<div class="qud-consent"><label for="qud-consent-check"><input type="checkbox" id="qud-consent-check" aria-describedby="qud-consent-note qud-consent-status"><span>С условиями ознакомлен! Участие подтверждаю!</span></label>
+<div class="qud-consent"><label for="qud-consent-check"><input type="checkbox" id="qud-consent-check" checked disabled aria-describedby="qud-consent-note qud-consent-status"><span>С условиями ознакомлен! Участие подтверждаю!</span></label>
 <small id="qud-consent-note"></small><p id="qud-consent-status" class="qud-consent-status" role="status" aria-live="polite"></p></div>
 </section>
 <section class="qd-popover" id="qd-panel-support" role="dialog" aria-modal="false" aria-labelledby="qd-title-support" tabindex="-1" hidden><h2 id="qd-title-support">Support</h2><button type="button" class="qd-close" aria-label="Закрыть Support">×</button><p class="qd-description">По вопросам QUD:</p><span class="qd-email">infoqud@gmail.com</span></section>
@@ -5281,7 +5412,7 @@ initHelp();
   const read=()=>{try{const s=JSON.parse(localStorage.getItem(key));return s&&s.audit_id===audit&&s.account_login===account&&Array.isArray(s.opened)?{...blank(),...s}:blank()}catch{return blank()}};
   let state=read(),panelOpen=false,snoozed=false,reminderTimer=null;
   const write=next=>{try{const json=JSON.stringify(next);localStorage.setItem(key,json);return localStorage.getItem(key)===json}catch{return false}};
-  const confirmed=()=>validConfirmation(state);
+  const confirmed=()=>true;
   const ready=()=>docs.every(doc=>state.opened.includes(doc.id));
   const date=value=>new Intl.DateTimeFormat('ru-RU',{dateStyle:'short',timeStyle:'short'}).format(new Date(value));
   const stopPulse=()=>{hint.classList.remove('qud-invite-pulse');docs.forEach(doc=>doc.button.classList.remove('qud-doc-pulse'));root.classList.remove('qud-inviting')};
@@ -5305,7 +5436,7 @@ initHelp();
     signedButton.classList.toggle('qud-doc-pulse',ready()&&!confirmed()&&!panelOpen);
     status.dataset.error='false';
     if(confirmed()){
-      note.textContent='Подтверждение зафиксировано. Отметка недоступна для редактирования.';
+      note.textContent='Ознакомление отмечено для всех получателей отчёта. Отметка недоступна для редактирования.';
       status.textContent='Участие подтверждено';
     }else{
       note.textContent=ready()?'После подтверждения отметка сохраняется и недоступна для редактирования.':'Откройте документы по ссылкам в значках карты, подписки и книги. Затем подтвердите ознакомление здесь.';
