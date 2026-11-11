@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QUD Capital Owner Access</title>
+<title>QUD Trader Map</title>
 <style>
 :root{--bg:#090b0d;--panel:#101317;--border:#22272d;--text:#f3f4f6;--muted:#9aa1aa;--accent:#d8a24b}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}.container{max-width:1100px;margin:auto;padding:40px 24px}.section{padding:45px 0;border-bottom:1px solid var(--border)}.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;margin-top:20px}h1{font-size:52px;line-height:1.05;margin:0}h2{font-size:28px}p{line-height:1.6}.small{color:var(--muted);font-size:14px}.header{display:flex;justify-content:space-between;padding:22px 0 45px;border-bottom:1px solid var(--border)}.header a{color:var(--muted);text-decoration:none}.trader-path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:start;gap:16px;margin:0;padding:0;list-style:none}.path-card{padding:24px;background:var(--panel);border:1px solid var(--border);border-radius:14px}.path-card h2{margin:0;font-size:17px;letter-spacing:.04em}.path-card p{margin:14px 0 0}.path-copy{max-height:4.8em;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 48%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 48%,transparent 100%);transition:max-height .4s ease}.path-card.open .path-copy{max-height:18em;-webkit-mask-image:linear-gradient(#000,#000);mask-image:linear-gradient(#000,#000)}.path-toggle{display:grid;place-items:center;width:36px;height:32px;margin:12px 0 -8px;padding:0;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;transition:background .2s,border-color .2s}.path-toggle:hover{background:#15191e;border-color:var(--border)}.path-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.path-arrow{width:10px;height:10px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .3s ease}.path-card.open .path-arrow{transform:translateY(2px) rotate(225deg)}.history-section{padding-top:76px;padding-bottom:76px}.history-section>h2{margin:0 0 44px}.history-columns{display:grid;grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr);gap:48px;align-items:stretch}.history-column h3{margin:0;font-size:20px;letter-spacing:.03em}.history-description{margin:20px 0 0}.history-divider{width:1px;background:var(--border)}.history-price{display:inline-block;margin-top:18px;padding:12px 18px;border:1px solid #353c44;border-radius:12px;color:var(--text);font-size:18px;font-weight:700;line-height:1.2}.history-note{width:100%;margin:48px 0 0;padding-top:28px;border-top:1px solid var(--border);font-size:16px;line-height:1.65}.calculator{display:grid;grid-template-columns:1fr 1fr;gap:24px}.access-layout{
@@ -1075,85 +1075,107 @@ font-size:13px;
 }
 
 }
+
+/* Shared visual treatment for the English preview */
+:root{--bg:#080a0c;--panel:#0e1115;--border:#252c34;--text:#f0f1f3;--muted:#9aa1aa;--accent:#aeb8c2}
+body{background:var(--bg);color:var(--text)}
+.header{align-items:center;margin-top:20px;padding:12px 20px;border:1px solid #292f36;border-radius:14px;background:rgba(14,17,21,.92)}
+.header b a{display:block;width:116px;height:54px;background:url(/qud-logo.svg) left center / contain no-repeat;font-size:0}
+.header-brand{display:flex;align-items:center}.header-home-back{position:absolute;left:0;top:-27px;display:inline-flex;align-items:center;justify-content:center;width:34px;height:25px;color:#9aa1aa;text-decoration:none;font-size:24px;line-height:1;transition:color .2s ease,transform .2s ease}.header{margin-top:36px;top:30px}.header-home-back:hover,.header-home-back:focus-visible{color:#f0f1f3;transform:translateX(-3px)}
+.section{border-color:#1c2228}.card,.path-card{background:var(--panel);border-color:var(--border)}
+.path-card{transition:transform .25s ease,border-color .25s ease,background .25s ease}.path-card:hover{transform:scale(1.025);border-color:#59636d;background:#151a20}
+.access-button,.trial-submit{border-color:#49525d;background:#15191e;color:#dce1e7}
+.access-button:hover,.trial-submit:hover{background:#252b31;border-color:#8c98a3}
+.header{position:sticky;top:18px;z-index:50;background:rgba(16,19,23,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:#30363e;transition:transform .24s ease,border-color .24s ease}
+.trader-actions-section .access-button.primary{background:rgba(154,161,170,.04);border-color:#454c55;color:#b0b7c0;transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease}
+.trader-actions-section .access-button.primary:hover{background:rgba(154,161,170,.1);border-color:#6f7782;color:#f3f4f6;opacity:1;transform:scale(1.025)}
+.history-price .price-amount{font-size:20px;line-height:1;color:var(--text)}
+.history-price .price-period{margin-left:8px;font-size:12px;font-weight:500;color:var(--muted)}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.header:hover{transform:scale(1.01);border-color:#46505b}}
+@media(prefers-reduced-motion:reduce){.header,.trader-actions-section .access-button.primary{transition:none}}
+@media(max-width:650px){.header{margin-top:36px;padding:8px 14px}.header b a{width:90px;height:44px}h1{font-size:clamp(30px,8vw,44px)}}
+
 </style>
+<link rel="stylesheet" href="./risk-assessment.css">
+<link rel="stylesheet" href="./risk-theme.css?v=4">
 </head>
 <body><div class="container">
-<div class="header"><b><a href="https://fx-qud.com">QUD</a></b><span class="small">TRADER MAP</span></div>
-<div class="section"><h1>Сохраняйте независимость, создавая торговую историю, которая работает на вас.</h1></div>
+<div class="header"><div class="header-brand"><a class="header-home-back" href="/" aria-label="Back to the English home page">←</a><b><a href="/" aria-label="QUD home">QUD</a></b></div><span class="small">TRADER MAP</span></div>
+<div class="section"><h1>Maintain your independence while building a trading history that works for you.</h1></div>
 <div class="section">
-<ol class="trader-path" aria-label="Путь трейдера в QUD">
-<li><article class="path-card"><h2>СТАРТ</h2><div id="path-start" class="path-copy"><p class="small">Продолжайте торговать в своём стиле. QUD наблюдает за процессом и формирует первый подтверждённый срез.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-start" aria-label="Развернуть карточку «Старт»"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
-<li><article class="path-card"><h2>ИСТОРИЯ</h2><div id="path-history" class="path-copy"><p class="small">С каждой новой неделей стратегия формирует торговую историю, которая начинает работать на вас.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-history" aria-label="Развернуть карточку «История»"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
-<li><article class="path-card"><h2>СТАТУС</h2><div id="path-status" class="path-copy"><p class="small">Накопленная история формирует статус стратегии и открывает возможность быть представленной владельцам капитала.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-status" aria-label="Развернуть карточку «Статус»"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
-<li><article class="path-card"><h2>ДОХОД</h2><div id="path-income" class="path-copy"><p class="small">Когда владельцы капитала подключаются к стратегии, трейдер получает регулярные выплаты из их подписок.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-income" aria-label="Развернуть карточку «Доход»"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
+<ol class="trader-path" aria-label="The trader journey at QUD">
+<li><article class="path-card"><h2>START</h2><div id="path-start" class="path-copy"><p class="small">Continue trading in your own style. QUD observes the process and creates an initial verified snapshot.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-start" aria-label="Expand Start card"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
+<li><article class="path-card"><h2>HISTORY</h2><div id="path-history" class="path-copy"><p class="small">With each new week, your strategy builds a trading history that begins to work for you.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-history" aria-label="Expand History card"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
+<li><article class="path-card"><h2>STATUS</h2><div id="path-status" class="path-copy"><p class="small">Your accumulated history establishes the strategy’s status and creates the opportunity to present it to capital owners.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-status" aria-label="Expand Status card"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
+<li><article class="path-card"><h2>INCOME</h2><div id="path-income" class="path-copy"><p class="small">When capital owners connect to a strategy, the trader receives regular payments from their subscriptions.</p></div><button class="path-toggle" type="button" aria-expanded="false" aria-controls="path-income" aria-label="Expand Income card"><span class="path-arrow" aria-hidden="true"></span></button></article></li>
 </ol>
 </div>
 <section class="section history-section" aria-labelledby="history-title">
-<h2 id="history-title">Как формируется история</h2>
+<h2 id="history-title">How your history is built</h2>
 <div class="history-columns">
 <article class="history-column">
 <h3>TDA TRIAL</h3>
-<div class="history-price">Без оплаты</div>
-<p class="small history-description">Первая неделя наблюдения. По итогам трейдер получает персональный аудит по стабильности риск-менеджмента и управление риском в своей торговле.</p>
+<div class="history-price">Free of charge</div>
+<p class="small history-description">The first week of observation. At the end, the trader receives a personal audit of risk management stability in their trading.</p>
 </article>
 <div class="history-divider" aria-hidden="true"></div>
 <article class="history-column">
 <h3>TDA BASIC</h3>
-<div class="history-price">$49 / месяц</div>
-<p class="small history-description">Трейдер еженедельно получает отчёт, видит динамику риска и дисциплины, а стратегия формирует подтверждённую историю внутри QUD.</p>
+<div class="history-price"><span class="price-amount">$49</span><span class="price-period">month</span></div>
+<p class="small history-description">The trader receives a weekly report and can track risk and discipline, while the strategy builds a verified history within QUD.</p>
 </article>
 </div>
-<p class="history-note">Чем выше подтверждённый уровень стратегии, тем ниже стоимость TDA Basic. После подключения капитала и начала выплат TDA Basic предоставляется трейдеру без оплаты.</p>
+<p class="history-note">The higher the verified strategy level, the lower the cost of TDA Basic. Once capital is connected and payments begin, TDA Basic is provided to the trader free of charge.</p>
 </section>
-<section class="trader-testimonials" aria-label="Отзывы трейдеров">
-<div class="testimonials-head"><svg class="testimonials-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.25 5.5h8.5a3.25 3.25 0 0 1 3.25 3.25v4.5a3.25 3.25 0 0 1-3.25 3.25h-4.9l-3.6 2.7v-2.7a3.25 3.25 0 0 1-3.25-3.25v-4.5A3.25 3.25 0 0 1 7.25 5.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M15.75 16.5v.75A3.25 3.25 0 0 1 12.5 20.5H8.6L5 23v-2.5a3.25 3.25 0 0 1-2-3V13.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Отзывы трейдеров</span></div>
+<section class="trader-testimonials" aria-label="Trader testimonials">
+<div class="testimonials-head"><svg class="testimonials-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.25 5.5h8.5a3.25 3.25 0 0 1 3.25 3.25v4.5a3.25 3.25 0 0 1-3.25 3.25h-4.9l-3.6 2.7v-2.7a3.25 3.25 0 0 1-3.25-3.25v-4.5A3.25 3.25 0 0 1 7.25 5.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M15.75 16.5v.75A3.25 3.25 0 0 1 12.5 20.5H8.6L5 23v-2.5a3.25 3.25 0 0 1-2-3V13.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Trader testimonials</span></div>
 <div class="testimonials-marquee">
 <ul class="testimonials-rail">
-<li>"QUD очень близко подошли к сути трейдинга. Это удивляет!"</li>
-<li>"Отчёты помогают увидеть динамику прогресса."</li>
-<li>"В отчёт не только win rate, а ещё управление риском — для меня это принципиально."</li>
-<li>"Basic показывает слабые и сильные места трейдера в понятном резюме."</li>
-<li>"Basic — это зеркало для трейдера."</li>
-<li>"У QUD примерно как у Darwinex, но круче."</li>
-<li class="testimonial-duplicate" aria-hidden="true">"QUD очень близко подошли к сути трейдинга. Это удивляет!"</li>
-<li class="testimonial-duplicate" aria-hidden="true">"Отчёты помогают увидеть динамику прогресса."</li>
-<li class="testimonial-duplicate" aria-hidden="true">"В отчёт не только win rate, а ещё управление риском — для меня это принципиально."</li>
-<li class="testimonial-duplicate" aria-hidden="true">"Basic показывает слабые и сильные места трейдера в понятном резюме."</li>
-<li class="testimonial-duplicate" aria-hidden="true">"Basic — это зеркало для трейдера."</li>
-<li class="testimonial-duplicate" aria-hidden="true">"У QUD примерно как у Darwinex, но круче."</li>
+<li>"QUD has come very close to the essence of trading. It is impressive!"</li>
+<li>"The reports help me see my progress over time."</li>
+<li>"The report covers not only win rate but risk management too, which is essential to me."</li>
+<li>"Basic presents a trader’s strengths and weaknesses in a clear summary."</li>
+<li>"Basic is a mirror for the trader."</li>
+<li>"QUD is somewhat like Darwinex, but better."</li>
+<li class="testimonial-duplicate" aria-hidden="true">"QUD has come very close to the essence of trading. It is impressive!"</li>
+<li class="testimonial-duplicate" aria-hidden="true">"The reports help me see my progress over time."</li>
+<li class="testimonial-duplicate" aria-hidden="true">"The report covers not only win rate but risk management too, which is essential to me."</li>
+<li class="testimonial-duplicate" aria-hidden="true">"Basic presents a trader’s strengths and weaknesses in a clear summary."</li>
+<li class="testimonial-duplicate" aria-hidden="true">"Basic is a mirror for the trader."</li>
+<li class="testimonial-duplicate" aria-hidden="true">"QUD is somewhat like Darwinex, but better."</li>
 </ul>
 </div>
 </section>
 <section class="section status-section" aria-labelledby="status-title">
-<h2 id="status-title">Статус начинает открывать возможности</h2>
-<p class="small status-intro">По мере подтверждения статуса торговая история становится рабочим активом трейдера — расширяет доступ к аналитике, возможностям QUD и капиталу.</p>
+<h2 id="status-title">Status opens opportunities</h2>
+<p class="small status-intro">As status is verified, the trading history becomes a working asset for the trader, expanding access to analytics, QUD opportunities and capital.</p>
 <dl class="status-list">
 <div class="status-row">
-<dt>АНАЛИТИКА</dt>
-<dd>Отчётность показывает, насколько устойчиво стратегия на дистанции: как меняется риск, как проходят просадки, управление SL и последовательность торговых решений.</dd>
+<dt>ANALYTICS</dt>
+<dd>Reports show strategy consistency over time: changes in risk, drawdowns, stop-loss management and the sequence of trading decisions.</dd>
 </div>
 <div class="status-row">
-<dt>УСЛОВИЯ</dt>
-<dd>По мере роста статуса стоимость аналитической отчётности снижается. После подключения капитала и начала выплат она становится частью сопровождения стратегии внутри QUD и больше не оплачивается трейдером отдельно.</dd>
+<dt>TERMS</dt>
+<dd>As status increases, reporting costs decrease. Once capital is connected and payments begin, reporting becomes part of strategy support within QUD and is no longer charged separately.</dd>
 </div>
 <div class="status-row">
-<dt>ВОЗМОЖНОСТИ</dt>
-<dd>Подтверждённый статус открывает доступ к возможностям, которые не предоставляются на стартовом этапе: расширенная и сравнительная аналитика, реферальная программа и другие форматам участия внутри QUD.</dd>
+<dt>OPPORTUNITIES</dt>
+<dd>Verified status opens opportunities unavailable at the starting stage, including advanced and comparative analytics, a referral programme and other ways to participate in QUD.</dd>
 </div>
 <div class="status-row">
-<dt>РЕЕСТР</dt>
-<dd>Стратегия получает постоянный Strategy ID и включается в реестр подтверждённых стратегий QUD — пространство, через которое владельцы капитала получают доступ к стратегиям с накопленной и проверяемой историей.</dd>
+<dt>REGISTRY</dt>
+<dd>The strategy receives a permanent Strategy ID and enters the QUD registry of verified strategies, where capital owners can access strategies with an accumulated, verifiable history.</dd>
 </div>
 <div class="status-row">
-<dt>ВЫПЛАТЫ</dt>
-<dd>По мере роста статуса стратегии, увеличиваться её ценность, а вместе с этим, стоимость подписки и регулярные выплаты трейдера.</dd>
+<dt>PAYMENTS</dt>
+<dd>As strategy status grows, so does its value, subscription price and the trader’s regular payments.</dd>
 </div>
 </dl>
-<p class="status-note">Статус стратегии нельзя купить — он формируется из подтверждённой торговой истории.</p>
+<p class="status-note">Strategy status cannot be purchased; it is built from verified trading history.</p>
 </section>
 <section class="section" id="trader-calculator" aria-labelledby="trader-calculator-title">
-<h2 id="trader-calculator-title">Потенциал торговой стратегии</h2>
-<p class="small">Подтверждённая история создаёт ценность стратегии, а подключения владельцев капитала превращают эту ценность в регулярные выплаты.</p>
+<h2 id="trader-calculator-title">Trading strategy potential</h2>
+<p class="small">A verified history creates strategy value, while capital owner connections turn that value into regular payments.</p>
 
 <div class="earnings-calculator">
 <div class="calculator-offer-grid">
@@ -1162,18 +1184,18 @@ font-size:13px;
 <h3 id="subscriptions-heading">STRATEGY SUBSCRIPTIONS</h3>
 <div class="potential-control">
 <div class="potential-slider">
-<div class="calc-control-head"><label for="strategyLevel">Подтверждённый уровень стратегии</label></div>
+<div class="calc-control-head"><label for="strategyLevel">Verified strategy level</label></div>
 <input class="range" id="strategyLevel" type="range" min="1" max="100" step="1" value="78">
 <div class="calc-scale"><span>1</span><span>100</span></div>
 </div>
 <div class="potential-slider">
-<div class="calc-control-head"><label for="subscriptions">Активные подключения</label></div>
+<div class="calc-control-head"><label for="subscriptions">Active connections</label></div>
 <input class="range" id="subscriptions" type="range" min="1" max="30" step="1" value="22">
 <div class="calc-scale"><span>1</span><span>30+</span></div>
 </div>
 </div>
 <div class="potential-result">
-<span class="calculator-kicker">Расчётная выплата / месяц</span>
+<span class="calculator-kicker">Estimated payment / month</span>
 <strong class="calculator-total" id="subscriptionIncome">$1 020</strong>
 </div>
 </div>
@@ -1181,28 +1203,28 @@ font-size:13px;
 
 <article class="card private-capital-summary" aria-labelledby="private-heading">
 <h3 id="private-heading">PRIVATE CAPITAL</h3>
-<p class="private-capital-intro">Высокий статус и история открывает стратегии доступ к новому уровню выплат и взаимодействия с капиталом.</p>
+<p class="private-capital-intro">A strong status and history open access to a new level of payments and capital collaboration.</p>
 <div class="private-capital-metrics">
 <div class="private-capital-metric">
 <strong class="private-capital-money">$50 000+</strong>
-<span>Подключённый капитал</span>
+<span>Connected capital</span>
 </div>
 <div class="private-capital-metric">
-<strong>от 30%<sup>*</sup></strong>
-<span>Доля трейдера</span>
+<strong>from 30%<sup>*</sup></strong>
+<span>Trader share</span>
 </div>
 </div>
-<p class="private-capital-note">Трейдер получает установленную долю положительного результата на подключённом капитале.</p>
-<p class="private-capital-footnote">* Условия участия, расчёта и выплат определяются действующими регламентами QUD и могут изменяться в предусмотренном ими порядке.</p>
+<p class="private-capital-note">The trader receives an agreed share of the positive result on connected capital.</p>
+<p class="private-capital-footnote">* Participation, calculation and payment terms are governed by QUD’s current regulations and may change in accordance with those regulations.</p>
 </article>
 </div>
-<p class="potential-disclaimer">Сценарный расчёт не является гарантией дохода. Показанные значения являются предварительными и предназначены для оценки возможной экономики стратегии.</p>
+<p class="potential-disclaimer">The scenario calculation does not guarantee income. Values shown are preliminary and intended to illustrate possible strategy economics.</p>
 </div>
 </section>
-<section class="section trader-actions-section" aria-label="Действия трейдера">
+<section class="section trader-actions-section" aria-label="Trader actions">
 <div class="access-actions">
 <button class="access-button primary" type="button">
-Начать TDA Trial
+Start TDA Trial
 </button>
 </div>
 </section>
@@ -1210,17 +1232,17 @@ font-size:13px;
 <div class="trial-modal" id="trialModal" aria-hidden="true">
 <div class="trial-modal-backdrop" data-trial-close></div>
 <div class="trial-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="trialModalTitle" tabindex="-1">
-<button class="trial-modal-close" type="button" aria-label="Закрыть окно" data-trial-close>×</button>
+<button class="trial-modal-close" type="button" aria-label="Close dialog" data-trial-close>×</button>
 <span class="trial-modal-kicker">QUD</span>
 <h2 id="trialModalTitle">TDA TRIAL</h2>
-<p class="trial-modal-copy">Первая неделя наблюдения. По итогам трейдер получает персональный аудит по стабильности риск-менеджмента в своей торговле.</p>
+<p class="trial-modal-copy">The first week of observation. At the end, the trader receives a personal audit of risk management stability in their trading.</p>
 <form class="trial-form" id="trialForm" novalidate>
 <label for="trialEmail">Email</label>
 <input id="trialEmail" name="email" type="email" maxlength="50" autocomplete="email" required aria-describedby="trialEmailError trialFormStatus">
 <p class="trial-email-error" id="trialEmailError" aria-live="polite"></p>
-<label class="trial-referral-label" for="trialReferral">Referral Code — при наличии</label>
+<label class="trial-referral-label" for="trialReferral">Referral code — if applicable</label>
 <input id="trialReferral" name="referral_code" type="text" maxlength="20" autocomplete="off" spellcheck="false" placeholder="QRF-XXXX">
-<button class="trial-submit" type="submit">Продолжить</button>
+<button class="trial-submit" type="submit">Continue</button>
 <p class="trial-form-status" id="trialFormStatus" aria-live="polite"></p>
 </form>
 </div>
@@ -1235,7 +1257,7 @@ font-size:13px;
 <h2>FAQ</h2>
 
 <p class="small">
-Основные вопросы о доступе, наблюдении и работе с QUD.
+Key questions about access, observation and working with QUD.
 </p>
 
 </div>
@@ -1246,88 +1268,88 @@ font-size:13px;
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">01</span>
-<span>Чем QUD отличается от проп-компании?</span>
+<span>How is QUD different from a prop firm?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-QUD не продаёт трейдеру попытки пройти challenge и не строит модель на повторной оплате тестов. Трейдер продолжает торговать в своём стиле, а QUD формирует подтверждённую историю его стратегии, отслеживает риск-культуру и создаёт инфраструктуру, через которую эта история может получить экономическую ценность.
+QUD does not sell challenge attempts or rely on repeated test fees. The trader continues trading in their own style while QUD builds a verified strategy history, tracks risk discipline and provides infrastructure through which that history can gain economic value.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">02</span>
-<span>Что именно анализирует QUD в моей торговле?</span>
+<span>What does QUD analyse in my trading?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-QUD фиксирует фактические торговые события: риск по сделкам, работу со SL, изменения риска, поведение в просадке и другие параметры торгового процесса. На основе этих данных формируется аналитический отчёт, позволяющий увидеть повторяющиеся особенности поведения на дистанции.
+QUD records actual trading events, including trade risk, stop-loss use, risk changes, behaviour during drawdown and other process parameters. These data form an analytical report highlighting recurring behaviour over time.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">03</span>
-<span>Как QUD использует AI в аналитике?</span>
+<span>How does QUD use AI in its analysis?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-AI не оценивает сделки вместо системы. Он работает поверх уже собранных и рассчитанных торговых данных, помогая перевести их в понятный разбор: выделить повторяющиеся отклонения, изменения за период и зоны, на которые трейдеру стоит обратить внимание.
+AI does not assess trades in place of the system. It works with collected and calculated trading data to produce a clear explanation, identifying recurring deviations, changes over a period and areas that may need attention.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">04</span>
-<span>Как формируется статус стратегии?</span>
+<span>How is strategy status determined?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Статус не строится только на доходности. QUD использует собственную методологию риск-менеджмента, учитывая его устойчивость и стабильность на дистанции. Хороший короткий результат сам по себе ещё не означает высокий статус.
+Status is not based on returns alone. QUD uses its own risk management methodology, considering consistency and stability over time. A good short-term result alone does not imply high status.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">05</span>
-<span>Как стратегия начинает приносить трейдеру выплаты?</span>
+<span>How does a strategy begin generating payments for a trader?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-На каждую стратегию <strong>должен существовать реальный спрос со стороны владельцев капитала</strong>. При активных подключениях трейдер может получать выплаты из подписной модели, а стратегии с необходимой подтверждённой историей могут получить доступ к Private Capital.
+Each strategy <strong>must have genuine demand from capital owners</strong>. With active connections, traders may receive subscription-based payments, while strategies with the required verified history may access Private Capital.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">06</span>
-<span>Что такое Private Capital и когда он становится доступен?</span>
+<span>What is Private Capital, and when does it become available?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Private Capital — отдельный контур для стратегий, прошедших необходимый исторический этап и сформировавших подтверждённый статус QUD. Он предполагает работу с крупным объёмом подключённого капитала и выплату трейдеру установленной доли от положительного результата. Конкретные условия определяются действующими регламентами QUD.
+Private Capital is a separate arrangement for strategies that have completed the required history stage and achieved verified QUD status. It involves larger connected capital and payment to the trader of an agreed share of positive results. Specific terms are governed by QUD’s current regulations.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">07</span>
-<span>Вмешивается ли QUD в мою торговлю?</span>
+<span>Does QUD intervene in my trading?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Нет. Трейдер самостоятельно принимает торговые решения и сохраняет свой стиль. QUD наблюдает за торговым процессом, фиксирует данные и формирует аналитику. При работе с подключённым капиталом дополнительно действует установленный контур контроля риска.
+No. Traders make their own decisions and retain their style. QUD observes the trading process, records data and produces analytics. An additional risk control framework applies when working with connected capital.
 </div>
 </div>
 
 <div class="faq-item">
 <button class="faq-question" type="button">
 <span class="faq-index">08</span>
-<span>Гарантируют ли статус QUD и подключение капитала доход?</span>
+<span>Do QUD status and connected capital guarantee income?</span>
 <span class="faq-toggle">+</span>
 </button>
 <div class="faq-answer">
-Нет. Подтверждённая история, статус, подписки и доступ к Private Capital не гарантируют будущий торговый результат или размер выплат. Доход зависит от дальнейших результатов стратегии, спроса со стороны владельцев капитала и действующих условий QUD.
+No. Verified history, status, subscriptions and Private Capital access do not guarantee future trading results or payments. Income depends on subsequent strategy performance, capital owner demand and QUD’s current terms.
 </div>
 </div>
 
@@ -1338,7 +1360,7 @@ Private Capital — отдельный контур для стратегий, �
 </div>
 
 <div class="small disclaimer">
-QUD предоставляет аналитическую инфраструктуру для независимых трейдеров. Исторические результаты не гарантируют будущих результатов, а статус стратегии, доступ к капиталу и размер выплат не являются гарантированными. Условия участия и выплат определяются действующими регламентами QUD и могут изменяться в установленном порядке. Трейдер самостоятельно принимает торговые решения и несёт связанные с ними рыночные риски.
+QUD provides analytical infrastructure for independent traders. Past performance does not guarantee future results, and strategy status, capital access and payment amounts are not guaranteed. Participation and payment terms are governed by current QUD regulations and may change accordingly. Traders make their own trading decisions and bear the associated market risks.
 </div>
 
 <script>
@@ -1398,6 +1420,32 @@ byId('subscriptionIncome').textContent = formatPublicUsd(subscriptionIncome);
 ['strategyLevel','subscriptions'].forEach(id=>byId(id).addEventListener('input',updateSubscriptions));
 
 updateSubscriptions();
+
+// Animate the initial example once when the calculator is in view.
+const panel = document.querySelector('.subscription-potential');
+const sliders = [byId('strategyLevel'), byId('subscriptions')];
+if (panel && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let interacted = false;
+  sliders.forEach(slider => ['pointerdown','keydown','touchstart'].forEach(type => slider.addEventListener(type, () => { interacted = true; }, {passive:true})));
+  const observer = new IntersectionObserver(entries => {
+    if (!entries.some(entry => entry.isIntersecting) || interacted) return;
+    observer.disconnect();
+    const targets = sliders.map(slider => Number(slider.value));
+    const starts = sliders.map(slider => Number(slider.min));
+    const startTime = performance.now();
+    const animate = now => {
+      if (interacted) return;
+      const progress = Math.min(1, (now - startTime) / 2400);
+      const eased = 1 - Math.pow(1-progress, 3);
+      sliders.forEach((slider, i) => { slider.value = starts[i] + (targets[i] - starts[i]) * eased; });
+      updateSubscriptions();
+      if (progress < 1) requestAnimationFrame(animate);
+      else { sliders.forEach((slider, i) => { slider.value = targets[i]; }); updateSubscriptions(); }
+    };
+    requestAnimationFrame(animate);
+  }, {threshold:.65});
+  observer.observe(panel);
+}
 })();
 
 (() => {
@@ -1444,17 +1492,17 @@ const value = emailInput.value.trim();
 emailInput.value = value;
 
 if(!value){
-setEmailError('Введите email.');
+setEmailError('Enter your email.');
 return false;
 }
 
 if(value.length>50){
-setEmailError('Email не должен превышать 50 символов.');
+setEmailError('Email must be no more than 50 characters.');
 return false;
 }
 
 if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)){
-setEmailError('Проверьте правильность email.');
+setEmailError('Check your email address.');
 return false;
 }
 
@@ -1482,7 +1530,7 @@ emailInput.focus();
 return;
 }
 referralInput.value = referralInput.value.trim();
-formStatus.textContent = 'Данные заполнены корректно.';
+formStatus.textContent = 'Your details are valid.';
 });
 
 document.addEventListener('keydown',event=>{
@@ -1512,7 +1560,7 @@ const isOpen = card.classList.toggle('open');
 const title = card.querySelector('h2').textContent.toLowerCase();
 
 button.setAttribute('aria-expanded', String(isOpen));
-button.setAttribute('aria-label', `${isOpen ? 'Свернуть' : 'Развернуть'} карточку «${title}»`);
+button.setAttribute('aria-label', `${isOpen ? 'Collapse' : 'Expand'} card “${title}”`);
 
 });
 
@@ -1538,4 +1586,5 @@ item.querySelector('.faq-toggle').textContent = '−';
 
 });  
 </script>
-</div></body></html>
+</div><script src="./risk-assessment.js?v=4"></script>
+</body></html>

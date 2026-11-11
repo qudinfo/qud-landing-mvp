@@ -1,0 +1,77 @@
+/* Palette from qudinfo/qud-landing-mvp/main/traders/tradermap, 2026-09-24.
+   EN-only stylesheet: geometry, typography and interaction stay in style.css. */
+html[lang="en"] {
+  --bg-main: #090b0d;
+  --bg-section: #090b0d;
+  --bg-card: #101317;
+  --bg-card-soft: #15191e;
+  --border-soft: #22272d;
+  --border-muted: #22272d;
+  --text-main: #f3f4f6;
+  --text-muted: #9aa1aa;
+  --text-soft: #6f7782;
+  --accent: #d8a24b;
+  --accent-hover: #d8a24b;
+}
+html[lang="en"] body { background: #090b0d; }
+html[lang="en"] .site-header {
+  background: rgba(9,11,13,.94);
+  border-color: #22272d;
+}
+html[lang="en"] .site-footer { background: #090b0d; border-color: #22272d; }
+html[lang="en"] :is(.hero-panel, .audit-report-card, .investors-tda-preview,
+  .investors-final-card, .contacts-form-card, .contacts-audience-card,
+  .about-process, .legal-modal-panel) {
+  background: #101317;
+  border-color: #22272d;
+}
+html[lang="en"] :is(.metric-card, .info-card, .contacts-role-option) {
+  background: #101317;
+  border-color: #22272d;
+}
+html[lang="en"] :is(.contacts-form input, .contacts-form textarea) {
+  background: #0d1013;
+  border-color: #30363e;
+  color: #f3f4f6;
+}
+html[lang="en"] :is(.contacts-form input, .contacts-form textarea)::placeholder { color: #6f7782; }
+html[lang="en"] :is(.contacts-form input, .contacts-form textarea):focus { border-color: #d8a24b; }
+html[lang="en"] :is(.button-primary, .header-button) {
+  background: #9aa1aa;
+  border-color: #9aa1aa;
+  color: #090b0d;
+  box-shadow: none;
+}
+html[lang="en"] :is(.button-primary, .header-button):hover {
+  background: #9aa1aa;
+  border-color: #9aa1aa;
+  color: #090b0d;
+  opacity: .9;
+  box-shadow: none;
+}
+html[lang="en"] .button-secondary {
+  background: #101317;
+  border-color: #2f353d;
+  color: #f3f4f6;
+}
+html[lang="en"] .button-secondary:hover {
+  background: #15191e;
+  border-color: #353c44;
+  color: #f3f4f6;
+  box-shadow: none;
+}
+html[lang="en"] :is(.section-label, .eyebrow) {
+  background: transparent;
+  border-color: #353c44;
+  color: #d8a24b;
+}
+html[lang="en"] .contacts-role-option:has(input:checked) {
+  background: #15191e;
+  border-color: #d8a24b;
+}
+html[lang="en"] .legal-modal-backdrop { background: rgba(4,6,8,.78); }
+html[lang="en"] .mobile-menu-toggle { background: #101317; border-color: #353c44; }
+html[lang="en"] ::selection { background: rgba(216,162,75,.25); }
+@media (max-width: 980px) {
+  html[lang="en"] .site-header.is-menu-open .main-nav { background: #090b0d; }
+}
