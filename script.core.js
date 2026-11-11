@@ -2,6 +2,8 @@
 
 // QUD Landing — Audit cards slider
 
+const isEnglishPage = document.documentElement.lang === 'en';
+
 const auditCards = document.querySelectorAll(".audit-report-card");
 const auditButtons = document.querySelectorAll(".audit-slider-button");
 
@@ -47,7 +49,7 @@ const auditWorkflow = document.querySelector(".audit-workflow");
 const workflowTitle = document.getElementById("workflow-title");
 const workflowItems = document.querySelector(".workflow-items");
 
-const workflowData = {
+let workflowData = {
   data: {
     title: "Данные",
     items: [
@@ -83,6 +85,15 @@ const workflowData = {
     ]
   }
 };
+
+if (isEnglishPage) {
+  workflowData = {
+    data: { title: 'Data', items: [{ label: 'Audit profile', icon: 'profile' }, { label: 'Observation period', icon: 'period' }, { label: 'Event control', icon: 'flow' }] },
+    processing: { title: 'Processing', items: [{ label: 'Data cleansing', icon: 'cleaning' }, { label: 'Structuring', icon: 'structure' }, { label: 'Deviation detection', icon: 'deviation' }] },
+    analytics: { title: 'Analytics', items: [{ label: 'Risk metrics', icon: 'riskMetrics' }, { label: 'AI analysis', icon: 'aiAnalysis' }, { label: 'Decision patterns', icon: 'decisionPatterns' }] },
+    result: { title: 'Result', items: [{ label: 'Final report', icon: 'finalReport' }, { label: 'Process dynamics', icon: 'processDynamics' }, { label: 'Focus areas', icon: 'focusAttention' }] }
+  };
+}
 
 const workflowIcons = {
   profile: `
@@ -500,11 +511,19 @@ if (tradersPathMap) {
 
 const tradersAuditFlowText = document.getElementById("traders-audit-flow-text");
 
-const tradersAuditFlowTexts = [
+let tradersAuditFlowTexts = [
   "Оставьте заявку и выберите формат наблюдения. QUD TDA подключается к торговому процессу как независимый модуль фиксации событий без вмешательства в сделки.",
   "Торгуете в привычном режиме. Система фиксирует сделки в заданный период по риск-параметрам и поведение стратегии по фактам.",
   "По итогам периода наблюдения получаете структурированный отчёт. Анализируете слабые зоны процесса и начинаете формировать проверяемую историю торговых решений."
 ];
+
+if (isEnglishPage) {
+  tradersAuditFlowTexts = [
+    'Submit a request and select an observation format. QUD TDA connects to the trading process as an independent event-recording module without intervening in trades.',
+    'Trade as usual. The system records trades during the defined period using risk parameters and the strategy’s actual behaviour.',
+    'At the end of the observation period, you receive a structured report. You analyse weak areas of the process and begin building a verifiable history of trading decisions.'
+  ];
+}
 
 let activeTradersAuditFlowIndex = 0;
 let tradersAuditFlowTimer = null;
@@ -643,7 +662,7 @@ const capitalIconsLabel = document.getElementById("capital-icons-label");
 const capitalIconsTitle = document.getElementById("capital-icons-title");
 const capitalIconsDescription = document.getElementById("capital-icons-description");
 
-const capitalIconsData = [
+let capitalIconsData = [
   {
     label: "01",
     title: "Проверка до доверия",
@@ -663,6 +682,14 @@ const capitalIconsData = [
       "Владелец капитала получает регулярную закрытую картину качества решений, дисциплины и динамики доверия к торговому процессу."
   }
 ];
+
+if (isEnglishPage) {
+  capitalIconsData = [
+    { label: '01', title: 'Verification before trust', description: 'The capital owner receives a structured report on a trading strategy or algorithm before deciding whether to entrust capital.' },
+    { label: '02', title: 'Protective framework', description: 'Using its infrastructure, QUD helps establish risk control and limits without managing funds or making investment decisions for the capital owner.' },
+    { label: '03', title: 'Private observation', description: 'The capital owner receives a regular private view of decision quality, discipline and the dynamics of trust in the trading process.' }
+  ];
+}
 
 let activeCapitalIconIndex = 0;
 let capitalIconsTimer = null;
@@ -863,8 +890,17 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
     }
   };
 
+  const englishLegalContent = {
+    privacy: { title: 'Privacy Policy', text: 'QUD may receive data that a user voluntarily provides through the form, correspondence or during an audit: email, Telegram, selected interaction format, task description, trading reports, technical files, trading-process data and materials required to prepare a TDA report.\n\nThis data is used to communicate with the user, conduct an audit, prepare analytical materials, verify report quality and continue interaction within QUD.\n\nQUD does not sell personal data. Data is not shared with third parties except where required for technical processing, storage, the requested interaction or applicable law.\n\nA user may request clarification, restriction of processing or deletion of their data by contacting the project email.' },
+    risk: { title: 'Risk Disclosure', text: 'Trading in financial markets involves a risk of capital loss. Leverage, high volatility, execution errors, market gaps and changes in trading conditions may result in a partial or total loss of funds.\n\nPast results, trading statistics, reports and audit data do not guarantee future returns or confirm the absence of future risk.\n\nQUD materials are not investment advice, a trading signal, an offer to open or close a trade, an offer to invest or a guarantee of any outcome.\n\nQUD records trading-process data and prepares informational and analytical materials. The user makes all trading, investment and management decisions independently.' },
+    disclaimer: { title: 'Disclaimer', text: 'QUD provides informational and analytical materials based on recorded trading data. QUD is not a broker, dealer, management company, investment fund, financial adviser or provider of trading signals.\n\nQUD does not execute trades, manage user funds, make investment decisions or guarantee returns, capital preservation or the achievement of a financial result.\n\nQUD is not liable for losses, trading decisions, user actions, broker actions, trading-platform technical failures, data-transfer errors or incomplete or inaccurate materials supplied.\n\nThe quality of analytical conclusions depends on the completeness and accuracy of the data provided. Report formats, methodology and terms of interaction may change as the project develops.' },
+    services: { title: 'Services & Pricing', html: `<div class="services-modal-content"><p class="services-modal-lead">QUD provides a digital analytical audit of the trading process: it records actual trading events, structures data and prepares a report on risk, discipline and the stability of trading decisions.</p><p class="services-modal-note">QUD does not intervene in trades, manage the account or provide trading signals.</p><section class="services-modal-section"><h3>TDA Trial Audit</h3><div class="services-modal-badge">No charge — 7 days</div><p><strong>A safe first step in the QUD framework.</strong> Initial diagnostics of the trading process based on actual data, not solely on the final result.</p><ul><li>diagnostic view of the trading process;</li><li>understanding of weak areas in risk and discipline;</li><li>recording of actual trading events;</li><li>an initial TDA report after observation.</li></ul><p class="services-modal-small">For a useful view, it is advisable to make at least 5 trades during the observation period.</p></section><section class="services-modal-section"><h3>TDA Basic</h3><div class="services-modal-badge">Monthly subscription</div><p>Regular observation of the trading process and a weekly TDA report: risk, position management, discipline and process dynamics over time.</p><div class="services-price-grid"><div><strong>1 month — $49</strong><span>the first full observation cycle</span></div><div><strong>3 months — $129</strong><span>a cleaner trading history</span></div><div><strong>6 months — $239</strong><span>strategy stability dynamics</span></div></div><ul><li>connection of one MT5 account;</li><li>daily collection of trading data;</li><li>risk-discipline analysis;</li><li>weekly TDA report;</li><li>accumulation of trading-process history.</li></ul></section><section class="services-modal-section"><h3>Individual strategy audit for capital</h3><div class="services-modal-badge">Price on request</div><p>A format for capital owners, partners and teams that need to see a strategy more deeply than through final returns.</p><p>QUD acts as a preliminary verification layer before a discussion of cooperation and helps reveal facts of the trading process before capital is entrusted.</p><ul><li>what risk produced the result;</li><li>whether capital protection was defined in advance;</li><li>what happened to the position after entry;</li><li>how behaviour changed after losses;</li><li>where the strategy may be vulnerable for capital.</li></ul></section><section class="services-modal-section"><h3>How QUD connects to an account</h3><p>For TDA Trial Audit, QUD provides a demo MT5 account. For TDA Basic, a trader’s demo or live MT5 account may be connected, or a QUD-issued demo MT5 account may be used.</p><p>For connection, the trader provides the broker server, MT5 login and investor password.</p><p><strong>The investor password is used only for observation and read-only data access.</strong></p><ul><li>QUD cannot open or close trades;</li><li>QUD cannot change positions or volume;</li><li>QUD cannot withdraw funds;</li><li>QUD does not manage the trader’s account.</li></ul></section><p class="services-modal-disclaimer">QUD does not provide investment advice, trading signals, brokerage services or asset management. Payment is made for a digital analytical audit of the trading process, data collection, processing of trading events and preparation of a TDA report.</p></div>` },
+    partner: { title: 'Partnership', text: 'QUD is open to cooperation with market participants who can strengthen the infrastructure for auditing trading decisions, analysing the trading process and building trust between capital and strategies.\n\nPotential partnership directions include brokerage and technical infrastructure, trader communities, educational projects, capital owners, analytical teams, legal support, marketing and international project development.\n\nPartnership with QUD does not mean the provision of investment advice, fund management, capital transfer, sale of trading signals or a guarantee of returns.\n\nEach partnership is considered individually and requires separate agreement on terms, roles, responsibilities and the format of interaction.' },
+    data_processing: { title: 'Data Processing Terms', text: 'QUD receives and processes only data that the user voluntarily provides through the form, correspondence or interaction with the project.\n\nThe data is used to communicate with the user, process the request, prepare a response, conduct an audit of the trading process and continue interaction within QUD.\n\nBy submitting a request, the user confirms that they provide data voluntarily and understand the purpose of its use. The user may request clarification or deletion of their data through the project email.\n\nQUD does not sell submitted data or use it for purposes unrelated to request processing, auditing or communication with the user.' }
+  };
+
   const openLegalModal = (type) => {
-    const content = legalContent[type];
+    const content = (isEnglishPage ? englishLegalContent : legalContent)[type];
 
     if (!content) return;
 
@@ -923,6 +959,23 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
   );
   const consentInput = form.querySelector('input[name="consent"]');
   const submitButton = form.querySelector('button[type="submit"]');
+  const formMessages = isEnglishPage ? {
+    email: 'Enter your email so we can respond to your request.',
+    message: 'Briefly describe your request before submitting.',
+    consent: 'Provide consent to data processing to submit your request.',
+    prepared: 'The request has been checked. Submission to the database will be enabled after Google Apps Script is configured.',
+    sending: 'Sending your request...',
+    success: 'Request sent. We have received your message and are preparing a response.',
+    error: 'Unable to send the request. Please contact the project by email.'
+  } : {
+    email: 'Укажите email, чтобы мы могли ответить на заявку.',
+    message: 'Коротко опишите запрос перед отправкой заявки.',
+    consent: 'Поставьте согласие на обработку данных, чтобы отправить заявку.',
+    prepared: 'Заявка проверена. Подключение отправки в базу будет активировано после настройки Google Apps Script.',
+    sending: 'Отправляем заявку...',
+    success: 'Заявка отправлена. Мы получили ваше сообщение, уже готовим ответ.',
+    error: 'Не удалось отправить заявку. Напишите нам на контактный email проекта.'
+  };
 
   const QUD_LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxW3MR6BZBOBQFngHgLcLakLc3E-P8RKQoedeNOnB_RsaL6FjjvNNTXtMYY_vzvynkk/exec';
 
@@ -947,19 +1000,19 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
     const consent = Boolean(consentInput?.checked);
 
     if (!email) {
-      setStatus('Укажите email, чтобы мы могли ответить на заявку.', 'error');
+      setStatus(formMessages.email, 'error');
       emailInput?.focus();
       return false;
     }
 
-    if (!message) {
-      setStatus('Коротко опишите запрос перед отправкой заявки.', 'error');
+    if (!message && !form.classList.contains('qud-contact-form')) {
+      setStatus(formMessages.message, 'error');
       messageInput?.focus();
       return false;
     }
 
     if (!consent) {
-      setStatus('Поставьте согласие на обработку данных, чтобы отправить заявку.', 'error');
+      setStatus(formMessages.consent, 'error');
       consentInput?.focus();
       return false;
     }
@@ -986,13 +1039,13 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
 
     if (!QUD_LEADS_ENDPOINT) {
       console.info('QUD lead payload prepared:', payload);
-      setStatus('Заявка проверена. Подключение отправки в базу будет активировано после настройки Google Apps Script.', 'info');
+      setStatus(formMessages.prepared, 'info');
       return;
     }
 
     try {
       submitButton?.setAttribute('disabled', 'disabled');
-      setStatus('Отправляем заявку...', 'info');
+      setStatus(formMessages.sending, 'info');
 
       const response = await fetch(QUD_LEADS_ENDPOINT, {
         method: 'POST',
@@ -1007,10 +1060,10 @@ if (capitalIconsText && capitalIconsLabel && capitalIconsTitle && capitalIconsDe
       }
 
       form.reset();
-      setStatus('Заявка отправлена. Мы получили ваше сообщение, уже готовим ответ.', 'success');
+      setStatus(formMessages.success, 'success');
     } catch (error) {
       console.error(error);
-      setStatus('Не удалось отправить заявку. Напишите нам на контактный email проекта.', 'error');
+      setStatus(formMessages.error, 'error');
     } finally {
       submitButton?.removeAttribute('disabled');
     }

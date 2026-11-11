@@ -1,0 +1,34 @@
+:root{--risk-accent:#aab5c0;--risk-accent-soft:#59636d}
+.risk-launcher{top:50%;right:clamp(24px,calc((100vw - 1100px)/2 + 30px),24vw);transform:translateY(-50%);transition:top .3s ease}
+.risk-launcher-tab{width:68px;height:73px;padding:0;border:0;border-radius:0;background:transparent;overflow:visible;transition:transform .25s ease,color .25s ease}
+.risk-launcher-tab:hover,.risk-launcher-tab:focus-visible{background:transparent;color:#d8e0e7;transform:scale(1.12)}
+.risk-launcher-tab::before,.risk-launcher-tab::after,.risk-launcher-dot{display:none}
+.risk-launcher-icon{display:grid;width:100%;height:100%;border:0;color:#aab5c0}
+.risk-launcher-icon svg{width:100%;height:100%}
+.risk-launcher-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.risk-launcher-preview{right:76px;width:300px;max-width:calc(100vw - 100px);border:1px solid var(--risk-border);border-radius:12px;background:rgba(16,19,23,.94);backdrop-filter:blur(14px);transition:opacity .25s ease,transform .25s ease,visibility .25s ease}
+.risk-launcher-preview strong{font-size:15px}.risk-launcher-preview p{font-size:12px}
+.risk-dialog-backdrop{background:rgba(4,6,8,.38);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.risk-dialog-panel{width:min(760px,100%);max-height:min(640px,calc(100vh - 48px));background:rgba(16,19,23,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.risk-dialog-brand-mark{display:block;width:69px;height:23px;overflow:hidden;line-height:0}
+.risk-dialog-brand-mark img{display:block;width:69px;height:auto}
+.risk-view[data-risk-view="intro"] h2{font-size:clamp(19px,1.55vw,22px);letter-spacing:-.025em}
+.risk-dialog-kicker,.risk-launcher-kicker,.risk-question-count,.risk-option-letter{color:#aab5c0}
+.risk-view h2{font-size:clamp(22px,2.6vw,30px)}
+.risk-view[data-risk-view="question"] .risk-question-title{font-size:clamp(20px,2vw,25px)}
+.risk-view-lead{font-size:14px}.risk-option{font-size:13px}
+.risk-launcher-start,.risk-primary-action{border:1px solid #48525d;background:#1b2026;color:#e4e8eb}
+.risk-launcher-start:hover,.risk-primary-action:hover{background:#293038;border-color:#87939f}
+.risk-dialog :is(a,button,input):focus-visible,.risk-launcher-tab:focus-visible{outline:2px solid #aab5c0;outline-offset:2px}
+@media(max-width:760px){
+ .risk-launcher{top:auto!important;right:auto;left:14px;bottom:calc(14px + env(safe-area-inset-bottom));transform:none}
+ .risk-launcher-tab{width:62px;height:68px;padding:0;border:0;border-radius:0}
+ .risk-launcher-icon{display:grid}.risk-launcher-preview{left:0;right:auto;bottom:76px;width:min(300px,calc(100vw - 28px));max-width:calc(100vw - 28px)}
+ .risk-dialog-content{padding:16px 14px calc(16px + env(safe-area-inset-bottom))}
+ .risk-view h2,.risk-view[data-risk-view="question"] .risk-question-title{font-size:19px;line-height:1.25}
+ .risk-view-lead,.risk-result-context p{font-size:12px;line-height:1.45}
+ .risk-option{font-size:12px;min-height:44px}.risk-profile-name{font-size:21px}
+ .risk-dialog-brand span.risk-dialog-brand-mark{display:block}.risk-form label{font-size:12px}
+ .risk-intro-break{display:none}
+}
+@media(prefers-reduced-motion:reduce){.risk-launcher,.risk-launcher-tab{transition:none}}

@@ -1,0 +1,131 @@
+/* Screen 04. A static photographic scene is intentional: preserve realism,
+   including for reduced motion, rather than simulate steam with CSS shapes. */
+.capital-approach {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #090b0d;
+  color: #f3f4f6;
+  min-height: 720px;
+  padding: 116px 0 108px;
+  scroll-margin-top: 90px;
+}
+.capital-approach-scene {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+.capital-approach-scene img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
+}
+.capital-approach::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, #090b0d 0%, transparent 18%, transparent 82%, #090b0d 100%),
+    linear-gradient(90deg, #090b0d 0%, rgba(9,11,13,.96) 24%, rgba(9,11,13,.86) 45%, rgba(9,11,13,.64) 61%, rgba(9,11,13,.12) 78%, transparent 100%);
+}
+.capital-approach-content { width: 70%; }
+.capital-approach-label {
+  display: block;
+  margin-bottom: 24px;
+  color: #9aa1aa;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  line-height: 1.5;
+}
+.capital-approach h2 {
+  color: #f3f4f6;
+  font-size: clamp(28px, 3.2vw, 44px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.capital-approach-principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 70px 0 64px;
+  padding: 0;
+  list-style: none;
+}
+.capital-approach-principles li { padding: 0 24px; }
+.capital-approach-principles li:first-child { padding-left: 0; }
+.capital-approach-principles li:last-child { padding-right: 0; }
+.capital-approach-principles li + li { border-left: 1px solid rgba(154,161,170,.23); }
+.capital-approach-number {
+  display: block;
+  color: #9aa1aa;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 18px;
+}
+.capital-approach h3 {
+  color: #f3f4f6;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -.018em;
+  margin: 0 0 16px;
+}
+.capital-approach-principles p {
+  color: #a7adb5;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.capital-approach-note {
+  max-width: 780px;
+  color: #9098a2;
+  font-size: 12px;
+  line-height: 1.7;
+}
+@media (min-width: 1900px) {
+  .capital-approach-scene img { object-position: center; }
+}
+@media (max-width: 1100px) {
+  .capital-approach-content { width: 74%; }
+  .capital-approach-principles li { padding: 0 18px; }
+  .capital-approach h3 { font-size: 16px; }
+  .capital-approach-principles p { font-size: 13px; }
+}
+@media (max-width: 800px) {
+  .capital-approach { padding: 76px 0 340px; min-height: 0; }
+  .capital-approach-content { width: 100%; }
+  .capital-approach-scene { top: auto; height: 420px; }
+  .capital-approach-scene img { object-position: right bottom; }
+  .capital-approach::before {
+    background: linear-gradient(180deg, #090b0d 0%, #090b0d calc(100% - 390px), rgba(9,11,13,.5) calc(100% - 290px), transparent calc(100% - 190px), transparent calc(100% - 65px), #090b0d 100%);
+  }
+  .capital-approach-principles { margin: 44px 0 32px; }
+}
+@media (max-width: 560px) {
+  .capital-approach { padding-top: 64px; padding-bottom: 290px; }
+  .capital-approach-label { font-size: 10px; margin-bottom: 20px; }
+  .capital-approach h2 { font-size: 30px; max-width: 360px; text-wrap: initial; }
+  .capital-approach-principles { grid-template-columns: 1fr; gap: 30px; }
+  .capital-approach-principles li,
+  .capital-approach-principles li:first-child,
+  .capital-approach-principles li:last-child { position: relative; padding: 0 0 0 34px; }
+  .capital-approach-principles li + li { border: 0; }
+  .capital-approach-number { position: absolute; top: 3px; left: 0; margin: 0; font-size: 11px; }
+  .capital-approach h3 { font-size: 16px; margin-bottom: 9px; }
+  .capital-approach-principles p { font-size: 14px; line-height: 1.6; }
+  .capital-approach-note { font-size: 12px; }
+  .capital-approach-scene { height: 340px; }
+  .capital-approach::before {
+    background: linear-gradient(180deg, #090b0d 0%, #090b0d calc(100% - 335px), rgba(9,11,13,.48) calc(100% - 245px), transparent calc(100% - 155px), transparent calc(100% - 50px), #090b0d 100%);
+  }
+}
+
+html[lang="en"] .capital-approach .capital-owner-link { display: flex; width: fit-content; max-width: 380px; margin: -14px 0 50px -14px; padding-left: 13px; padding-right: 13px; }
+html[lang="en"] .capital-approach .capital-owner-link .hero-path-title { font-size: 16px; }
+@media (max-width: 800px) { html[lang="en"] .capital-approach .capital-owner-link { margin-top: 0; margin-bottom: 34px; } }
