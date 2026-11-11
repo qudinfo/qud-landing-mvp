@@ -1,0 +1,232 @@
+.qud-contact { background:#090b0d; color:#f3f4f6; padding:128px 0 140px; scroll-margin-top:100px; }
+.qud-contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:clamp(48px,8vw,130px); align-items:start; }
+.qud-contact-label { display:block; color:#9aa1aa; font-size:12px; font-weight:700; letter-spacing:.16em; margin-bottom:32px; }
+.qud-contact-intro h2 { font-size:clamp(36px,4.2vw,56px); line-height:1.12; letter-spacing:-.035em; margin:0 0 28px; }
+.qud-contact-intro p { color:#9aa1aa; font-size:17px; line-height:1.65; max-width:430px; }
+.qud-contact-card { border:1px solid #22272d; border-radius:16px; background:#101317; padding:clamp(24px,3vw,42px); }
+.qud-contact-card h3 { margin:0 0 26px; font-size:28px; }
+.qud-contact-form { display:flex; flex-direction:column; gap:20px; }
+.qud-contact-form fieldset { padding:0; margin:0; border:0; min-width:0; }
+.qud-contact-form legend,.qud-contact-field > span { font-size:14px; color:#e3e6ea; margin-bottom:9px; }
+.qud-contact-form .contacts-role-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.qud-contact-form .contacts-role-option span { display:flex; align-items:center; justify-content:center; padding:12px 5px; border:1px solid #2a3037; border-radius:8px; background:transparent; color:#b0b7c0; font-size:13px; }
+.qud-contact-form .contacts-role-option input:checked + span { border-color:#d8a24b; color:#e4bd76; background:#171715; }
+.qud-contact-form .contacts-role-option input:focus-visible + span { outline:2px solid #d8dde5; outline-offset:2px; }
+.qud-contact-field { display:flex; flex-direction:column; }
+.qud-contact-form input[type=email],.qud-contact-form input[type=text],.qud-contact-form textarea { width:100%; background:#0c1013; border:1px solid #30363e; border-radius:8px; padding:13px 14px; color:#f3f4f6; font:inherit; font-size:14px; }
+.qud-contact-form textarea { min-height:100px; resize:vertical; }
+.qud-contact-form :is(input,textarea):focus-visible { outline:2px solid #8296a6; outline-offset:2px; }
+.qud-referral summary { cursor:pointer; color:#c9ced4; font-size:14px; }
+.qud-referral .qud-contact-field { margin-top:12px; }
+.qud-contact-form .contacts-consent { display:flex; align-items:flex-start; gap:10px; color:#9aa1aa; font-size:12px; line-height:1.5; }
+.qud-contact-form .contacts-consent input { width:auto; margin-top:3px; }
+.qud-contact-form a { color:inherit; text-decoration:underline; }
+.qud-contact-form .contacts-submit { width:100%; letter-spacing:.1em; font-size:13px; }
+.qud-contact-privacy { color:#9aa1aa; font-size:12px; line-height:1.6; margin:0; }
+.qud-contact-form-status { font-size:13px; line-height:1.5; }
+.qud-contact-form-status[data-status=error] { color:#d78f8f; }
+.qud-contact-form-status[data-status=success] { color:#93b79a; }
+@media (max-width:760px) { .qud-contact { padding:75px 0 85px; } .qud-contact-layout { grid-template-columns:1fr; gap:36px; } .qud-contact-intro h2 { font-size:36px; } .qud-contact-card { padding:22px; } }
+
+/* Contact form controls follow the floating navigation style. */
+.qud-contact-form .contacts-role-option span,
+.qud-contact-form .contacts-role-option input:checked + span { border:0; background:transparent; padding:0; }
+.qud-contact-form .contacts-role-option:has(input:focus-visible) { outline:2px solid #d8dde5; outline-offset:2px; }
+.qud-contact-form .contacts-role-option input:focus-visible + span { outline:0; }
+.qud-contact-form .contacts-consent { align-items:center !important; }
+.qud-contact-form .contacts-consent input { flex:0 0 auto; min-height:0; padding:0; margin:0 !important; }
+.qud-contact-form .contacts-consent span { padding-top:0 !important; }
+.qud-contact-form .contacts-consent a { display:inline; margin:0; }
+html[lang="ru"] .qud-contact-form .contacts-submit { border:1px solid #454c55; border-radius:8px; background:rgba(154,161,170,.04); color:var(--text-muted); box-shadow:none; transition:background .2s ease,border-color .2s ease,color .2s ease; }
+html[lang="ru"] .qud-contact-form .contacts-submit:hover { background:rgba(154,161,170,.1); border-color:#6f7782; color:var(--text-main); opacity:1; transform:none; box-shadow:none; }
+html[lang="ru"] .qud-contact-form .contacts-submit:focus-visible { outline:2px solid var(--text-muted); outline-offset:4px; }
+
+/* Interest selection: underline on hover, outline only on the selected option. */
+.qud-contact-form .contacts-role-option { border-color:transparent; background:transparent; }
+.qud-contact-form .contacts-role-option:has(input:checked) { border-color:#6f7782; background:rgba(154,161,170,.06); }
+.qud-contact-form .contacts-role-option span { position:relative; color:#9aa1aa; }
+.qud-contact-form .contacts-role-option span::after { content:""; position:absolute; left:0; right:0; bottom:-7px; height:1px; background:#9aa1aa; transform:scaleX(0); transform-origin:center; transition:transform .2s ease; }
+.qud-contact-form .contacts-role-option:hover:not(:has(input:checked)) span::after { transform:scaleX(1); }
+.qud-contact-form .contacts-role-option:has(input:checked) span { color:#f3f4f6; }
+@media (prefers-reduced-motion:reduce) { .qud-contact-form .contacts-role-option span::after { transition:none; } }
+
+.qud-contact-form .contacts-role-option:not(:has(input:checked)) { border-color:transparent !important; background:transparent !important; }
+.qud-contact-form .contacts-role-option:has(input:checked) { border-color:#6f7782 !important; background:rgba(154,161,170,.06) !important; }
+
+/* Progressive disclosure of the contact form. */
+.qud-contact-card { position:relative; overflow:hidden; }
+.qud-contact-form { gap:0; }
+.qud-contact-form > .contacts-role-group { margin-bottom:0; }
+.qud-contact-form > .qud-contact-field,
+.qud-contact-form > .qud-referral,
+.qud-contact-form > .contacts-consent,
+.qud-contact-form > .contacts-submit,
+.qud-contact-form > .qud-contact-privacy { max-height:0; margin-top:0; opacity:0; visibility:hidden; overflow:hidden; pointer-events:none; transition:max-height .45s ease, margin-top .45s ease, opacity .3s ease, visibility 0s linear .45s; }
+.qud-contact-form:has(input[name="role"]:checked) > .qud-contact-field:has(input[name="email"]) { max-height:120px; margin-top:20px; opacity:1; visibility:visible; overflow:visible; pointer-events:auto; transition:max-height .45s ease, margin-top .45s ease, opacity .3s ease; }
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-contact-field:has(textarea),
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-referral,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .contacts-consent,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .contacts-submit,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-contact-privacy { max-height:300px; margin-top:20px; opacity:1; visibility:visible; pointer-events:auto; transition:max-height .45s ease, margin-top .45s ease, opacity .3s ease; }
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-referral { overflow:visible; }
+.qud-contact-card:not(:has(input[name="email"]:valid:not(:placeholder-shown)))::after { content:""; position:absolute; left:1px; right:1px; bottom:1px; height:34px; pointer-events:none; background:linear-gradient(to bottom,transparent,rgba(9,11,13,.8)); }
+.qud-contact-form:not(:has(input[name="role"]:checked)) legend { position:relative; width:fit-content; }
+.qud-contact-form:not(:has(input[name="role"]:checked)) legend::after { content:""; position:absolute; left:0; right:0; bottom:3px; height:1px; background:#9aa1aa; transform-origin:left; animation:qud-contact-hint 3.5s ease-in-out infinite; }
+@keyframes qud-contact-hint { 0%,15%,100% { transform:scaleX(0); opacity:0; } 35%,70% { transform:scaleX(1); opacity:.8; } }
+@media (prefers-reduced-motion:reduce) { .qud-contact-form > * { transition:none !important; } .qud-contact-form:not(:has(input[name="role"]:checked)) legend::after { animation:none; transform:scaleX(1); opacity:.7; } }
+
+/* Sequential hints and a glimpse of the next step. */
+.qud-contact-form:not(:has(input[name="role"]:checked)) legend::after { display:none; }
+@media (prefers-reduced-motion:no-preference) {
+  .qud-contact-form:not(:has(input[name="role"]:checked)) .contacts-role-option span::after { animation:qud-contact-option-hint 6s ease-in-out infinite; }
+  .qud-contact-form:not(:has(input[name="role"]:checked)) .contacts-role-option:nth-child(2) span::after { animation-delay:2s; }
+  .qud-contact-form:not(:has(input[name="role"]:checked)) .contacts-role-option:nth-child(3) span::after { animation-delay:4s; }
+  .qud-contact-form:not(:has(input[name="role"]:checked)) .contacts-role-option:hover span::after { animation:none; transform:scaleX(1); }
+}
+@keyframes qud-contact-option-hint { 0%,35%,100% { transform:scaleX(0); } 8%,23% { transform:scaleX(1); } }
+.qud-contact-form:not(:has(input[name="role"]:checked)) > .qud-contact-field:has(input[name="email"]),
+.qud-contact-form:has(input[name="role"]:checked):not(:has(input[name="email"]:valid:not(:placeholder-shown))) > .qud-contact-field:has(textarea) { max-height:35px; margin-top:16px; opacity:.45; visibility:visible; overflow:hidden; pointer-events:none; }
+
+/* Preview the next field with a gradual fade instead of clipping it. */
+.qud-contact-form:not(:has(input[name="role"]:checked)) > .qud-contact-field:has(input[name="email"]),
+.qud-contact-form:has(input[name="role"]:checked):not(:has(input[name="email"]:valid:not(:placeholder-shown))) > .qud-contact-field:has(textarea) { max-height:180px; opacity:1; visibility:visible; overflow:hidden; pointer-events:none; -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.65) 48%,transparent 100%); mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.65) 48%,transparent 100%); }
+
+/* Match the floating navigation's subtle hover expansion. */
+.qud-contact-card { transition:transform 240ms ease,border-color 240ms ease; transform-origin:center; }
+@media (hover:hover) and (pointer:fine) and (min-width:981px) {
+  .qud-contact-card:hover { transform:scale(1.012); border-color:#454c55; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .qud-contact-card, .qud-contact-card:hover { transition:none; transform:none; }
+}
+
+/* Consent and send states. */
+.qud-contact-form .contacts-consent input[type="checkbox"] { appearance:none; -webkit-appearance:none; width:15px; height:15px; min-width:15px; min-height:15px; border:1px solid #454c55; border-radius:3px; background:#0c1013; cursor:pointer; transition:border-color .3s ease,background-color .3s ease; }
+.qud-contact-form .contacts-consent input[type="checkbox"]:checked { border-color:#9aaab8; background:#9aaab8; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%230c1013' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) .contacts-consent input:not(:checked) { animation:qud-consent-outline 2.8s ease-in-out 2; }
+@keyframes qud-consent-outline { 0%,100% { border-color:#454c55; } 50% { border-color:#b8c7d2; } }
+html[lang="ru"] .qud-contact-form:has(input[name="consent"]:checked) .contacts-submit { background:rgba(154,161,170,.22); border-color:#929da8; color:#f3f4f6; }
+html[lang="ru"] .qud-contact-form:has(input[name="consent"]:checked) .contacts-submit:hover { background:rgba(154,161,170,.3); border-color:#b1bdc8; }
+@media (prefers-reduced-motion:reduce) { .qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) .contacts-consent input:not(:checked) { animation:none; border-color:#9aaab8; } }
+
+/* Referral disclosure indicator. */
+.qud-referral summary { display:flex; align-items:center; gap:10px; list-style:none; width:fit-content; }
+.qud-referral summary::-webkit-details-marker { display:none; }
+.qud-referral summary::before { content:""; display:block; width:8px; height:8px; flex:none; border-right:1.5px solid #aab2bc; border-bottom:1.5px solid #aab2bc; transform:translateY(-2px) rotate(45deg); transition:transform .2s ease; }
+.qud-referral[open] summary::before { transform:translateY(2px) rotate(225deg); }
+.qud-referral summary:focus-visible { outline:2px solid #9aa1aa; outline-offset:4px; border-radius:2px; }
+@media (prefers-reduced-motion:reduce) { .qud-referral summary::before { transition:none; } }
+
+.qud-contact-form .qud-consent-error:not([hidden]) { display:flex; align-items:center; gap:9px; margin:10px 0 0; padding:10px 12px; border:1px solid #454c55; border-radius:8px; background:#151a20; color:#d6dce2; font-size:12px; line-height:1.4; }
+.qud-contact-form .qud-consent-error > span:first-child { display:inline-flex; align-items:center; justify-content:center; flex:none; width:17px; height:17px; border:1px solid #9aaab8; border-radius:50%; color:#c3d0da; font-weight:700; font-size:11px; }
+
+/* More compact contact form on desktop and mobile. */
+.qud-contact-card { width:85%; justify-self:end; padding:clamp(20px,2.55vw,36px); }
+.qud-contact-card h3 { margin-bottom:22px; font-size:24px; }
+.qud-contact-form legend,.qud-contact-field > span { font-size:12px; margin-bottom:7px; }
+.qud-contact-form .contacts-role-option { min-height:40px; }
+.qud-contact-form .contacts-role-option span { font-size:12px; }
+.qud-contact-form input[type=email],.qud-contact-form input[type=text],.qud-contact-form textarea { padding:11px 12px; font-size:13px; }
+.qud-contact-form input[type=email],.qud-contact-form input[type=text] { min-height:40px; }
+.qud-contact-form textarea { min-height:85px; }
+.qud-contact-form:has(input[name="role"]:checked) > .qud-contact-field:has(input[name="email"]),
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-contact-field:has(textarea),
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-referral,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .contacts-consent,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .contacts-submit,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-contact-privacy { margin-top:17px; }
+@media (max-width:760px) { .qud-contact-card { width:100%; padding:19px; } .qud-contact-card h3 { font-size:24px; } .qud-contact-form input[type=email],.qud-contact-form input[type=text],.qud-contact-form textarea { font-size:16px; } }
+
+/* Further compact contact form. */
+.qud-contact-card { width:76.5%; padding:clamp(18px,2.3vw,32px); }
+.qud-contact-card h3 { margin-bottom:20px; font-size:22px; }
+.qud-contact-form .contacts-role-option { min-height:38px; }
+.qud-contact-form input[type=email],.qud-contact-form input[type=text] { min-height:38px; padding:9px 11px; }
+.qud-contact-form textarea { min-height:76px; padding:9px 11px; }
+.qud-contact-form:has(input[name="role"]:checked) > .qud-contact-field:has(input[name="email"]),
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-contact-field:has(textarea),
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-referral,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .contacts-consent,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .contacts-submit,
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-contact-privacy { margin-top:15px; }
+@media (max-width:760px) { .qud-contact-card { width:100%; padding:17px; } .qud-contact-card h3 { font-size:22px; } }
+
+/* Unboxed consent reminder with a pointer toward the checkbox. */
+.qud-contact-form .qud-consent-error:not([hidden]) { position:relative; margin:8px 0 0; padding:0 0 0 24px; border:0; border-radius:0; background:transparent; color:#b8c3cd; }
+.qud-contact-form .qud-consent-error:not([hidden])::before { content:""; position:absolute; left:4px; top:2px; width:7px; height:7px; border-top:1px solid #9aaab8; border-left:1px solid #9aaab8; transform:rotate(45deg); }
+.qud-contact-form .qud-consent-error > span:first-child { display:none; }
+
+/* Consent reminder and compact mobile form. */
+.qud-contact-form .qud-consent-error:not([hidden]) { padding-left:0; }
+.qud-contact-form .qud-consent-error:not([hidden])::before { display:none; }
+.qud-contact-form .qud-consent-error > span:first-child { display:inline-flex; }
+.qud-contact-form .contacts-consent input[type="checkbox"][aria-invalid="true"] { animation:qud-consent-attention .65s ease-in-out 3; }
+@keyframes qud-consent-attention { 0%,100% { border-color:#454c55; } 50% { border-color:#d6e1ea; background-color:#303d47; } }
+@media (max-width:760px) {
+  .qud-contact-card { padding:15px; }
+  .qud-contact-card h3 { font-size:20px; margin-bottom:16px; }
+  .qud-contact-form legend, .qud-contact-field > span { font-size:12px; margin-bottom:6px; }
+  .qud-contact-form .contacts-role-option { min-height:36px; }
+  .qud-contact-form .contacts-role-option span { font-size:12px; }
+  .qud-contact-form input[type=email], .qud-contact-form input[type=text] { min-height:38px; padding:8px 10px; font-size:16px; }
+  .qud-contact-form textarea { min-height:65px; padding:8px 10px; font-size:16px; }
+  .qud-referral summary { font-size:12px; }
+  .qud-contact-form .contacts-consent, .qud-contact-privacy { font-size:11px; line-height:1.4; }
+  .qud-contact-form .contacts-submit { min-height:40px; font-size:12px; }
+  .qud-contact-form:has(input[name="role"]:checked) > .qud-contact-field:has(input[name="email"]),
+  .qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-contact-field:has(textarea),
+  .qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-referral,
+  .qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .contacts-consent,
+  .qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .contacts-submit,
+  .qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) > .qud-contact-privacy { margin-top:11px; }
+}
+@media (prefers-reduced-motion:reduce) { .qud-contact-form .contacts-consent input[type="checkbox"][aria-invalid="true"] { animation:none; border-color:#b8c7d2; } }
+
+/* Clear error feedback and compact mobile placeholders. */
+.qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) .contacts-consent input[type="checkbox"][aria-invalid="true"] { animation:qud-consent-error-pulse .9s ease-in-out infinite; }
+@keyframes qud-consent-error-pulse { 0%,100% { border-color:#65737f; background-color:#0c1013; box-shadow:none; } 50% { border-color:#e0e9f0; background-color:#6c8393; box-shadow:0 0 0 3px rgba(174,194,208,.25); } }
+@media (max-width:760px) { .qud-contact-form input::placeholder, .qud-contact-form textarea::placeholder { font-size:12px !important; } }
+@media (prefers-reduced-motion:reduce) { .qud-contact-form:has(input[name="email"]:valid:not(:placeholder-shown)) .contacts-consent input[type="checkbox"][aria-invalid="true"] { animation:none; border-color:#d6e1ea; box-shadow:0 0 0 2px rgba(174,194,208,.25); } }
+
+.qud-contact-form .contacts-consent a:hover,
+.qud-contact-form .contacts-consent a:focus-visible { color:#f3f4f6 !important; opacity:1; }
+
+/* Consistent compact legal windows and footer branding. */
+html[lang="ru"] .site-footer .footer-logo-clean { display:inline-block; line-height:0; }
+html[lang="ru"] .site-footer .footer-logo-clean img { display:block; width:auto; height:64px; max-width:100%; }
+html[lang="ru"] .legal-modal { align-items:center; padding:20px; }
+html[lang="ru"] .legal-modal-panel { width:min(100%,600px); max-height:calc(100dvh - 40px); padding:26px 30px 30px; border:1px solid #30363e; border-radius:14px; background:#101317; }
+html[lang="ru"] .legal-modal-panel .section-label { color:#aeb3ba; border-color:#30363e; background:transparent; font-size:10px; }
+html[lang="ru"] .legal-modal-panel h2 { font-size:26px; line-height:1.2; margin:20px 38px 0 0; }
+html[lang="ru"] .legal-modal-text, html[lang="ru"] .legal-modal-text.is-structured { font-size:13px; line-height:1.65; margin-top:16px; color:#aeb3ba; }
+html[lang="ru"] .legal-modal-close:hover, html[lang="ru"] .legal-modal-close:focus-visible { color:#f3f4f6; border-color:#6f7782; background:rgba(154,161,170,.1); }
+html[lang="ru"] .legal-modal.is-open .legal-modal-panel { animation:qud-legal-enter .24s ease both; }
+html[lang="ru"] .legal-modal.is-open .legal-modal-backdrop { animation:qud-legal-fade .24s ease both; }
+@keyframes qud-legal-enter { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@keyframes qud-legal-fade { from { opacity:0; } to { opacity:1; } }
+@media (max-width:760px) { html[lang="ru"] .legal-modal { padding:12px; } html[lang="ru"] .legal-modal-panel { max-height:calc(100dvh - 24px); padding:20px; } html[lang="ru"] .legal-modal-panel h2 { font-size:21px; margin-top:16px; } html[lang="ru"] .legal-modal-text, html[lang="ru"] .legal-modal-text.is-structured { font-size:12px; line-height:1.55; margin-top:14px; } html[lang="ru"] .site-footer .footer-logo-clean img { height:54px; } }
+@media (prefers-reduced-motion:reduce) { html[lang="ru"] .legal-modal.is-open .legal-modal-panel, html[lang="ru"] .legal-modal.is-open .legal-modal-backdrop { animation:none; } }
+
+/* Contact interest selector */
+html[lang="ru"] .qud-contact-form .contacts-role-options { gap: 2px; padding: 3px; border: 1px solid #454c55; border-radius: 10px; background: rgba(154,161,170,.04); }
+html[lang="ru"] .qud-contact-form .contacts-role-option { min-width: 0; min-height: 38px; border-radius: 7px; transition: background .2s ease, border-color .2s ease; }
+html[lang="ru"] .qud-contact-form .contacts-role-option:has(input:checked) { border-color: #6f7782 !important; background: rgba(154,161,170,.13) !important; }
+html[lang="ru"] .qud-contact-form .contacts-role-option:hover:not(:has(input:checked)) { background: rgba(154,161,170,.06) !important; }
+
+/* Separate the selected interest while keeping the others grouped. */
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(input:checked) { border-color: transparent; background: transparent; padding: 3px 0; column-gap: 0; }
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(input:checked) .contacts-role-option:not(:has(input:checked)) { border: 1px solid #454c55 !important; background: rgba(154,161,170,.04) !important; border-radius: 0; }
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(input:checked) .contacts-role-option:has(input:checked) { margin-inline: 5px; border-radius: 8px; }
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(input:checked) .contacts-role-option:first-child:not(:has(input:checked)), html[lang="ru"] .qud-contact-form .contacts-role-option:has(input:checked) + .contacts-role-option { border-radius: 8px 0 0 8px; }
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(input:checked) .contacts-role-option:last-child:not(:has(input:checked)), html[lang="ru"] .qud-contact-form .contacts-role-option:has(+ .contacts-role-option input:checked) { border-radius: 0 8px 8px 0; }
+html[lang="ru"] .qud-contact-form .contacts-role-option:has(input:checked) + .contacts-role-option:last-child, html[lang="ru"] .qud-contact-form .contacts-role-option:first-child:has(+ .contacts-role-option input:checked) { border-radius: 8px; }
+
+/* Join adjacent unselected choices without an interior divider. */
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(input:checked) .contacts-role-option:not(:has(input:checked)):has(+ .contacts-role-option:not(:has(input:checked))) { border-right-color: transparent !important; border-radius: 8px 0 0 8px; }
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(input:checked) .contacts-role-option:not(:has(input:checked)) + .contacts-role-option:not(:has(input:checked)) { border-left-color: transparent !important; border-radius: 0 8px 8px 0; }
+
+/* The two neighbouring unselected options share one outline. */
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(.contacts-role-option:first-child input:checked) .contacts-role-option:nth-child(2),
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(.contacts-role-option:last-child input:checked) .contacts-role-option:nth-child(1) { border-right: 0 !important; border-radius: 8px 0 0 8px !important; }
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(.contacts-role-option:first-child input:checked) .contacts-role-option:nth-child(3),
+html[lang="ru"] .qud-contact-form .contacts-role-options:has(.contacts-role-option:last-child input:checked) .contacts-role-option:nth-child(2) { border-left: 0 !important; border-radius: 0 8px 8px 0 !important; }

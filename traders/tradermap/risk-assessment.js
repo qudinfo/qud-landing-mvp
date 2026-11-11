@@ -211,7 +211,7 @@
           <div class="risk-view" data-risk-view="form">
             <span class="risk-dialog-kicker">TDA Trial Audit</span>
             <h2>Continue with real trading-event diagnostics.</h2>
-            <p class="risk-view-lead">Leave your details. Your preliminary result will be attached to the request in the production version.</p>
+            <p class="risk-view-lead">Leave your details. Your preliminary result will be included with your request.</p>
             <form class="risk-form" novalidate>
               <div class="risk-form-grid">
                 <label>Name<input type="text" name="name" autocomplete="name" required></label>
@@ -219,22 +219,23 @@
                 <label>Telegram<input type="text" name="telegram" placeholder="@username"></label>
                 <label>Comment<input type="text" name="comment" placeholder="Optional"></label>
               </div>
+              <label class="risk-consent"><input type="checkbox" name="consent" required> <span>I consent to the processing of my data and assessment result to respond to my request.</span></label><p class="risk-form-status" role="status" aria-live="polite"></p>
               <div class="risk-actions">
                 <button class="risk-primary-action" type="submit">Send TDA Trial request</button>
                 <button class="risk-secondary-action" type="button" data-risk-result>Back to result</button>
               </div>
-              <p class="risk-prototype-note">Prototype mode: this form does not send or store personal data.</p>
+
             </form>
           </div>
 
           <div class="risk-view" data-risk-view="success">
             <div class="risk-success">
               <div class="risk-success-icon" aria-hidden="true">✓</div>
-              <span class="risk-dialog-kicker">Prototype complete</span>
-              <h2>Your request journey is ready for review.</h2>
-              <p class="risk-view-lead">In the production version, this step will record the request in QUD Leads Center and notify the team.</p>
+              <span class="risk-dialog-kicker">Request sent</span>
+              <h2>Your request has been sent.</h2>
+              <p class="risk-view-lead">We will contact you by email.</p>
               <div class="risk-actions" style="justify-content:center">
-                <button class="risk-primary-action" type="button" data-risk-close>Close prototype</button>
+                <button class="risk-primary-action" type="button" data-risk-close>Close</button>
               </div>
             </div>
           </div>
@@ -390,10 +391,21 @@
     renderQuestion();
   });
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
-    showView('success');
+    const status = form.querySelector('.risk-form-status');
+    const submit = form.querySelector('[type="submit"]');
+    const result = [profileName.textContent, ...Array.from(focusList.children, item => item.textContent)].join(' | ');
+    const name = form.elements.name.value.trim();
+    const comment = form.elements.comment.value.trim();
+    const message = [name && `Name: ${name}`, comment, `Risk self-assessment: ${result}`].filter(Boolean).join('\n');
+    submit.disabled = true; status.textContent = 'Sending your request…';
+    try {
+      await window.qudSendTraderLead({email:form.elements.email.value, telegram:form.elements.telegram.value, message, entryPoint:'risk_self_assessment'});
+      form.reset(); status.textContent = ''; showView('success');
+    } catch (error) { console.error(error); status.textContent = 'Unable to send your request. Please try again.'; }
+    finally { submit.disabled = false; }
   });
 
   document.addEventListener('click', (event) => {

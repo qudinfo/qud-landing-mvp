@@ -1,0 +1,23 @@
+/* Static report stack: opaque upper edges, lower fade only. */
+html[lang="ru"] .hero { overflow: hidden; }
+html[lang="ru"] .hero-grid { isolation: isolate; }
+html[lang="ru"] .hero-content { position: relative; z-index: 2; }
+.report-stack {
+  position: relative; z-index: 1; width: 118%; margin-left: -18%;
+  min-width: 0; aspect-ratio: 1 / 1; perspective: 1400px; pointer-events: none;
+}
+.report-sheet {
+  position: absolute; display: block; width: 88%; height: auto; border-radius: 8px;
+  transform-origin: 65% 45%;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+}
+.report-sheet-back { top: 2%; left: 14%; opacity: 1; filter: saturate(.5) brightness(.72); transform: rotateY(-12deg) rotateZ(5deg) scale(.93); }
+.report-sheet-middle { top: 12%; left: 8%; opacity: 1; filter: saturate(.65) brightness(.8); transform: rotateY(-12deg) rotateZ(5deg) scale(.96); }
+.report-sheet-front { top: 23%; left: 1%; opacity: 1; filter: saturate(.8); transform: rotateY(-12deg) rotateZ(5deg); }
+@media (max-width: 980px) { .report-stack { width: 100%; max-width: 760px; margin-inline: auto; } }
+@media (max-width: 480px) {
+  .report-stack { perspective: 900px; }
+  .report-sheet { width: 92%; }
+  .report-sheet-front { left: 0; }
+}

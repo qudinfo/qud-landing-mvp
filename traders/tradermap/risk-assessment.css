@@ -933,3 +933,5 @@ body.is-risk-assessment-open {
     transition: none;
   }
 }
+
+.risk-form .risk-consent{display:flex;align-items:center;gap:8px;font-size:12px;line-height:1.4;color:#aab5c0}.risk-form .risk-consent input{width:15px;height:15px;min-height:0;flex:none;accent-color:#aab5c0}.risk-form-status{font-size:12px;color:#aab5c0}

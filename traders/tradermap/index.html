@@ -184,6 +184,7 @@ line-height:1.65;
 margin-top:24px;
 }
 
+.trial-form .trial-consent{display:flex;align-items:center;gap:8px;font-size:12px;line-height:1.4;color:#aab5c0}.trial-form .trial-consent input{width:15px;height:15px;flex:none;margin:0;accent-color:#aab5c0}
 .trial-form label{
 display:block;
 margin-bottom:8px;
@@ -1096,7 +1097,7 @@ body{background:var(--bg);color:var(--text)}
 @media(max-width:650px){.header{margin-top:36px;padding:8px 14px}.header b a{width:90px;height:44px}h1{font-size:clamp(30px,8vw,44px)}}
 
 </style>
-<link rel="stylesheet" href="./risk-assessment.css">
+<link rel="stylesheet" href="./risk-assessment.css?v=5">
 <link rel="stylesheet" href="./risk-theme.css?v=4">
 </head>
 <body><div class="container">
@@ -1242,6 +1243,7 @@ Start TDA Trial
 <p class="trial-email-error" id="trialEmailError" aria-live="polite"></p>
 <label class="trial-referral-label" for="trialReferral">Referral code — if applicable</label>
 <input id="trialReferral" name="referral_code" type="text" maxlength="20" autocomplete="off" spellcheck="false" placeholder="QRF-XXXX">
+<label class="trial-consent"><input type="checkbox" name="consent" required> <span>I consent to data processing under the Privacy Policy.</span></label>
 <button class="trial-submit" type="submit">Continue</button>
 <p class="trial-form-status" id="trialFormStatus" aria-live="polite"></p>
 </form>
@@ -1363,6 +1365,7 @@ No. Verified history, status, subscriptions and Private Capital access do not gu
 QUD provides analytical infrastructure for independent traders. Past performance does not guarantee future results, and strategy status, capital access and payment amounts are not guaranteed. Participation and payment terms are governed by current QUD regulations and may change accordingly. Traders make their own trading decisions and bear the associated market risks.
 </div>
 
+<script src="./trader-leads.js?v=1"></script>
 <script>
 (() => {
 'use strict';
@@ -1522,22 +1525,21 @@ if(emailInput.value.trim()) validateEmail();
 referralInput.addEventListener('input',()=>{
 formStatus.textContent = '';
 });
-form.addEventListener('submit',event=>{
-event.preventDefault();
-formStatus.textContent = '';
-if(!validateEmail()){
-emailInput.focus();
-return;
-}
-referralInput.value = referralInput.value.trim();
-formStatus.textContent = 'Your details are valid.';
+form.addEventListener('submit',async event=>{
+event.preventDefault(); formStatus.textContent='';
+if(!validateEmail()){emailInput.focus();return;}
+if(!form.elements.consent.checked){formStatus.textContent='Please confirm your consent to data processing.';form.elements.consent.focus();return;}
+submitButton.disabled=true;formStatus.textContent='Sending your request…';
+try{await window.qudSendTraderLead({email:emailInput.value,referral:referralInput.value,entryPoint:'trader_map_trial'});form.reset();formStatus.textContent='Your request has been sent. We will contact you by email.';}
+catch(error){console.error(error);formStatus.textContent='Unable to send your request. Please try again.';}
+finally{submitButton.disabled=false;}
 });
 
 document.addEventListener('keydown',event=>{
 if(!modal.classList.contains('is-open')) return;
 if(event.key==='Escape') closeTrialModal();
 if(event.key==='Tab'){
-const focusable = [closeButton,emailInput,referralInput,submitButton];
+const focusable = [closeButton,emailInput,referralInput,form.elements.consent,submitButton];
 const first = focusable[0];
 const last = focusable[focusable.length-1];
 if(event.shiftKey && document.activeElement===first){
@@ -1586,5 +1588,5 @@ item.querySelector('.faq-toggle').textContent = '−';
 
 });  
 </script>
-</div><script src="./risk-assessment.js?v=4"></script>
+</div><script src="./risk-assessment.js?v=5"></script>
 </body></html>
