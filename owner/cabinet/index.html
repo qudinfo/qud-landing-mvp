@@ -9,25 +9,31 @@
   <title>Обзор — QUD Capital Owner</title>
   <link rel="stylesheet" href="./styles.css?v=20261024-2">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
+<link rel="stylesheet" href="./login-design.css?v=1">
 </head>
 <body>
   <section class="auth-screen" id="owner-loading" role="status" aria-live="polite"><p>Загрузка данных</p></section>
   <section class="auth-screen" id="owner-login" hidden aria-labelledby="login-title">
     <div class="auth-login-layout">
+      <img class="auth-login-logo" src="./qud-logo.svg" alt="QUD" width="1320" height="620">
       <div class="auth-login-pane">
-        <div class="auth-card panel">
-          <p class="eyebrow">QUD Capital Owner</p><h1 id="login-title">Вход в кабинет</h1>
+        <div class="auth-login-content">
+          <h1 id="login-title">Вход в кабинет</h1>
           <form id="owner-login-form">
-            <label for="owner-key">Owner access key</label>
+            <label for="owner-key">Access key</label>
             <input id="owner-key" name="access_key" type="password" required maxlength="512" autocomplete="current-password" spellcheck="false" aria-describedby="owner-login-message">
+            <label for="owner-email">Email</label>
+            <input id="owner-email" name="email" type="text" maxlength="254" autocomplete="email" inputmode="email" spellcheck="false" aria-describedby="owner-login-message">
+
             <p id="owner-login-message" role="alert"></p>
-            <button class="button button-primary" id="owner-login-submit" type="submit">Войти</button>
+            <a href="../access/">О доступе QUD</a>
+            <button class="button" id="owner-login-submit" type="submit">Войти</button>
+
           </form>
-          <a href="/owner/access/">О доступе QUD Owner</a>
         </div>
       </div>
-      <div class="hero-visual auth-login-visual" aria-hidden="true">
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="core-cube"><span>QUD</span></div><i class="node node-one"></i><i class="node node-two"></i><i class="node node-three"></i><i class="node node-four"></i>
+      <div class="auth-login-visual" aria-hidden="true">
+        <img src="./login-world-map.svg?v=20261026-3" alt="" width="1000" height="500">
       </div>
     </div>
   </section>
@@ -375,7 +381,8 @@
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
   <script src="./app.js?v=20261016-16" defer></script>
-  <script src="./session.js?v=20261024-2" defer></script>
+  <script src="./login-language.js?v=1"></script>
+  <script src="./session.js?v=20261112-login-1" defer></script>
   <script src="/portal/portfolio/mvp/app.js?v=20261023-owner-9" defer></script>
 </body>
 </html>

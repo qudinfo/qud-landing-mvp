@@ -1,5 +1,7 @@
 (() => {
   'use strict';
+  const isRu = new URLSearchParams(location.search).get('lang') === 'ru';
+  const t = (ru, en) => isRu ? ru : en;
   const byId = (id) => document.getElementById(id);
   const screens = { loading: byId('owner-loading'), login: byId('owner-login'), unavailable: byId('owner-unavailable'), shell: byId('owner-shell') };
   const form = byId('owner-login-form');
@@ -41,8 +43,8 @@
       window.dispatchEvent(new CustomEvent('owner:session', { detail: { authenticated: false } }));
     }
     if (name !== 'unavailable') {
-      byId('unavailable-title').textContent = 'Не удалось проверить сессию';
-      byId('owner-retry').textContent = 'Повторить';
+      byId('unavailable-title').textContent = t('Не удалось проверить сессию', 'Unable to check your session');
+      byId('owner-retry').textContent = t('Повторить', 'Try again');
       delete byId('owner-retry').dataset.action;
     }
     message.textContent = text;
@@ -70,7 +72,7 @@
 
   function accept(data, wasAuthenticated = false) {
     if (!data.authenticated) {
-      show('login', wasAuthenticated ? 'Сессия завершена. Введите ключ доступа снова.' : '');
+      show('login', wasAuthenticated ? t('Сессия завершена. Введите ключ доступа снова.', 'Your session has ended. Please enter your access key again.') : '');
       return;
     }
     show('shell');
@@ -97,24 +99,24 @@
     event.preventDefault();
     if (busy) return;
     const accessKey = key.value.trim();
-    if (!accessKey) { message.textContent = 'Введите ключ доступа.'; key.focus(); return; }
+    if (!accessKey) { message.textContent = t('Введите ключ доступа.', 'Enter your access key.'); key.focus(); return; }
     busy = true;
     submit.disabled = true;
     key.disabled = true;
-    submit.textContent = 'Вход…';
+    submit.textContent = t('Вход…', 'Signing in…');
     message.textContent = '';
     try { accept(await request('POST', accessKey)); }
     catch (error) {
       message.textContent = error.code === 'INVALID_ACCESS_KEY'
-        ? 'Неверный ключ доступа. Проверьте ключ и попробуйте снова.'
+        ? t('Неверный ключ доступа. Проверьте ключ и попробуйте снова.', 'Incorrect access key. Please try again.')
         : error.code === 'TOO_MANY_ATTEMPTS'
-          ? 'Слишком много попыток входа. Попробуйте позже.'
-          : 'Не удалось выполнить вход. Сервис временно недоступен. Попробуйте ещё раз.';
+          ? t('Слишком много попыток входа. Попробуйте позже.', 'Too many sign-in attempts. Please try again later.')
+          : t('Не удалось выполнить вход. Сервис временно недоступен. Попробуйте ещё раз.', 'Unable to sign in. Please try again later.');
     } finally {
       key.value = '';
       key.disabled = false;
       submit.disabled = false;
-      submit.textContent = 'Войти';
+      submit.textContent = t('Войти', 'Log in');
       busy = false;
       if (!screens.login.hidden) key.focus();
     }
@@ -131,8 +133,8 @@
     } catch {
       // Do not claim logout succeeded while the server cookie may still exist.
       show('unavailable');
-      byId('unavailable-title').textContent = 'Не удалось завершить сессию';
-      byId('owner-retry').textContent = 'Повторить выход';
+      byId('unavailable-title').textContent = t('Не удалось завершить сессию', 'Unable to sign out');
+      byId('owner-retry').textContent = t('Повторить выход', 'Try signing out again');
       byId('owner-retry').dataset.action = 'logout';
     } finally { busy = false; }
   });
