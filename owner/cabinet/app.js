@@ -217,6 +217,10 @@
     return `${prefix}${normalized.toFixed(2).replace(/\.00$/, '')}%`;
   }
 
+  function formatTrustScore(value) {
+    return Number.isFinite(value) ? String(Math.round(value)) : '—';
+  }
+
   function formatNumber(value) {
     return value.toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
   }
@@ -279,7 +283,7 @@
 
       row.append(
         identity,
-        createMetric('Trust Score', String(strategy.trust_score)),
+        createMetric('Trust Score', formatTrustScore(strategy.trust_score)),
         createMetric('Trust Zone', strategy.trust_zone),
         createMetric('Win Ratio', `${strategy.win_ratio_pct.toFixed(1).replace(/\.0$/, '')}%`),
         createMetric('История', formatWeeks(strategy.history_weeks_count))
@@ -461,7 +465,7 @@
     const trust = document.createElement('dl');
     trust.className = 'strategy-trust-summary';
     trust.append(
-      createDetailMetric('Trust Score', String(strategy.trust_score)),
+      createDetailMetric('Trust Score', formatTrustScore(strategy.trust_score)),
       createDetailMetric('Trust Zone', strategy.trust_zone)
     );
     header.append(identity, trust);
