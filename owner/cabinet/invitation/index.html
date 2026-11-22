@@ -1,16 +1,36 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
-<title>Получить ключ доступа — QUD</title>
-<style>
-:root{color-scheme:dark;font:16px/1.55 system-ui,sans-serif;color:#e9edef;background:#090c0e}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px}main{width:min(100%,450px);background:#101417;border:1px solid #30383e;border-radius:14px;padding:clamp(20px,5vw,36px)}img{display:block;width:86px;height:auto;margin-bottom:28px}h1{font-size:26px;line-height:1.2}p{color:#bac3c9}button,a{display:inline-block;padding:9px 16px;border-radius:6px;border:1px solid #556068;font:inherit;color:white;background:#1d252b;text-decoration:none;cursor:pointer}button:disabled{opacity:.65}input{display:block;width:100%;margin:8px 0 16px;padding:10px;border:1px solid #667078;background:#0a0d10;color:#fff;font:20px monospace;letter-spacing:.08em}small{color:#b3c3cd}[hidden]{display:none!important}#message:empty{display:none}
-</style><script src="./claim.js" defer></script></head><body><main>
-<img src="../qud-logo.svg" alt="QUD"><small id="demo" hidden>Предпросмотр для администратора</small>
-<h1 id="title">Получение ключа доступа</h1>
-<p id="instruction">Нажмите «Получить ключ», чтобы подтвердить почту и получить ключ для входа в кабинет QUD.</p>
-<button id="claim" type="button" disabled>Получить ключ</button>
-<div id="received" hidden><label>Ваш ключ доступа<input id="key" readonly spellcheck="false" autocomplete="off"></label>
-<p id="next">Сохраните ключ. Для входа понадобятся этот ключ и адрес, на который пришло приглашение.</p>
-<button type="button" id="copy">Скопировать ключ</button> <a href="../?lang=ru" id="login">Перейти ко входу</a></div>
-<p id="message" role="status" aria-live="polite"></p><noscript>Включите JavaScript, чтобы получить ключ.</noscript></main></body></html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>Ключ доступа — QUD</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="./invitation.css?v=2">
+  <script src="./claim.js?v=2" defer></script>
+</head>
+<body>
+  <main class="invitation" aria-labelledby="title">
+    <header>
+      <img src="../qud-logo.svg" width="68" height="32" alt="QUD">
+      <span id="status" hidden></span>
+    </header>
+    <h1 id="title" aria-live="polite">Получаем ключ…</h1>
+    <noscript>Для получения ключа включите JavaScript и снова откройте письмо.</noscript>
+    <div id="received" hidden>
+      <div class="key-field">
+        <input id="key" aria-labelledby="title" readonly spellcheck="false" autocomplete="off" dir="ltr">
+        <button type="button" id="copy" aria-label="Скопировать ключ">
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+          <span id="copy-label">Скопировать</span>
+        </button>
+      </div>
+    </div>
+    <p id="message" role="status"></p>
+    <button id="retry" class="button button-secondary" type="button" hidden>Повторить попытку</button>
+    <a id="login" class="button button-secondary" href="../?lang=ru" hidden>Войти в кабинет <span aria-hidden="true">→</span></a>
+  </main>
+</body>
+</html>
