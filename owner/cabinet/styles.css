@@ -576,7 +576,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .profile-id-placeholder { margin: 7px 0 26px; color: var(--text-soft); font-size: 15px; }
 .profile-confidentiality { max-width: 390px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
 .settings-card { min-width: 0; padding: 30px 0 0; }
-.settings-card h3 { margin: 0 0 25px; font-size: 17px; font-weight: 550; }
+.settings-card .eyebrow { margin: 0 0 25px; color: var(--muted); }
 .settings-card dl { margin: 0; display: grid; }
 .settings-card dl div { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--border-soft); padding: 17px 0; }
 .settings-card dt { color: var(--muted); font-size: 11px; }
@@ -911,18 +911,18 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 }
 .owner-name-actions { display: flex; gap: .65rem; flex-wrap: wrap; }
 
-#owner-profile-editor #owner-name-form { width: min(100%, 14rem); gap: .32rem; }
-#owner-profile-editor #owner-name-label { font-size: .625rem; }
+#owner-profile-editor #owner-name-form { width: min(100%, 16rem); gap: .45rem; }
+#owner-profile-editor #owner-name-label { font-size: .75rem; }
 #owner-profile-editor #owner-name {
-  height: 24px;
-  padding: 0 26px 0 7px;
+  height: 32px;
+  padding: 0 34px 0 10px;
   border-color: #344047;
-  font-size: .5rem;
+  font-size: .8125rem;
 }
 #owner-name-edit {
   position: absolute;
   inset: 0 0 0 auto;
-  width: 24px;
+  width: 32px;
   display: grid;
   place-items: center;
   padding: 0;
@@ -931,18 +931,18 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   background: transparent;
   color: var(--text-soft);
 }
-#owner-name-edit svg { width: 12px; height: 12px; }
+#owner-name-edit svg { width: 15px; height: 15px; }
 #owner-name-edit:hover, #owner-name-edit:focus-visible { color: var(--text); background: var(--panel-strong); }
 #owner-profile-editor #owner-name-save {
   width: auto;
-  min-width: 66px;
-  min-height: 23px;
-  padding: 0 8px;
+  min-width: 78px;
+  min-height: 28px;
+  padding: 0 10px;
   border: 1px solid #344047;
   border-radius: 5px;
   background: var(--panel-strong);
   color: var(--text);
-  font-size: 10px;
+  font-size: 12px;
 }
 #owner-profile-editor #owner-name-save:hover { border-color: var(--text-soft); }
 #owner-profile-editor .owner-name-actions:has(#owner-name-save[hidden]),
