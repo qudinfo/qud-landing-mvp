@@ -428,3 +428,33 @@ console.log('Owner Worker tests passed');
     assert.equal(received.owner_id,env.QUD_OWNER_ID);
   } finally { globalThis.fetch=savedFetch; }
 }
+
+{
+  const {prepareVerificationEmail} = await import('../../mail/verification.mjs');
+  const {message, accessEvent} = prepareVerificationEmail({ownerId:'A', email:'a@example.com'});
+  const html = message.payload.body.content;
+  assert.match(html, /<p>Здравствуйте!<\/p>/);
+  const [, reference, token] = html.match(/#verify-email=([a-f0-9]{64})\.([a-f0-9]{64})/);
+  assert.equal(accessEvent[0], 'EM-' + reference);
+  const profileEnv = {...env, QUD_OWNER_PROFILE_URL:'https://script.google.com/macros/s/test-profile/exec'};
+  let forwarded;
+  const savedFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (_, options) => {
+      forwarded = JSON.parse(options.body);
+      return Response.json({ok:true, verified:true, profile:{name:'private'}});
+    };
+    const send = (data) => worker.fetch(request('/owner/api/confirm-email',
+      {method:'POST',headers:{origin:'https://fx-qud.com','content-type':'application/json'},
+      body:JSON.stringify(data)}),profileEnv);
+    assert.equal((await worker.fetch(request('/owner/api/confirm-email'),profileEnv)).status,405);
+    assert.equal((await send({token:'bad'})).status,400);
+    assert.equal(forwarded,undefined);
+    const res=await send({token,reference,owner_id:'B',action:'owner_profile'});
+    assert.deepEqual(await res.json(),{ok:true,verified:true});
+    assert.equal(res.headers.get('set-cookie'),null);
+    assert.deepEqual(forwarded,{action:'confirm_email_link',token,reference,proxy_secret:env.QUD_OWNER_PROXY_SECRET});
+    await send({token});
+    assert.equal(forwarded.legacy_owner,env.QUD_OWNER_ID);
+  } finally {globalThis.fetch=savedFetch;}
+}

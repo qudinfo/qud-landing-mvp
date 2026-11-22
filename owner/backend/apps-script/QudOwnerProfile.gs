@@ -4,13 +4,19 @@ function doPost(e) {
   try {
     const body = JSON.parse(e.postData.contents);
     qudOwnerApiAssertProxySecret_({parameter: {proxy_secret: body.proxy_secret}});
-    if (body.action !== 'owner_profile') throw qudOwnerApiError_('NOT_FOUND', 404);
+    if (body.action !== 'owner_profile' && body.action !== 'confirm_email_link') throw qudOwnerApiError_('NOT_FOUND', 404);
     const sheetId = PropertiesService.getScriptProperties().getProperty('QUD_OWNER_SERVICE_SHEET_ID') || QUD_OWNER_PROFILE_DEFAULT_SHEET;
     const sheet = SpreadsheetApp.openById(sheetId).getSheetByName('Владельцы');
     if (!sheet) throw qudOwnerApiError_('PROFILE_CONFIGURATION', 500);
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
+      if (body.action === 'confirm_email_link') {
+        const ownerId = qudEmailLinkOwner_(sheet, body);
+        qudOwnerProfileRow_(sheet, {owner_id: ownerId, mode: 'verify_email', token: body.token});
+        SpreadsheetApp.flush();
+        return qudOwnerApiJson_({ok: true, verified: true});
+      }
       const profile = qudOwnerProfileRow_(sheet, body);
       SpreadsheetApp.flush();
       return qudOwnerApiJson_({ok: true, profile: profile});
@@ -66,6 +72,23 @@ function qudOwnerProfileRow_(sheet, body) {
     email_verified: Boolean(values[verified]), key_issued: String(values[issued] instanceof Date ? values[issued].toISOString() : values[issued] || '')};
 }
 
+
+// New links identify an issuance record. The secret is still verified against
+// the latest issuance, the current email and the owner under the same lock.
+function qudEmailLinkOwner_(sheet, body) {
+  if (!/^[a-f0-9]{64}$/.test(body.token || '')) throw qudOwnerApiError_('INVALID_EMAIL_LINK', 400);
+  if (!body.reference && body.legacy_owner) return body.legacy_owner;
+  if (!/^[a-f0-9]{64}$/.test(body.reference || '')) throw qudOwnerApiError_('INVALID_EMAIL_LINK', 400);
+  const log = sheet.getParent().getSheetByName('История доступа');
+  if (!log) throw qudOwnerApiError_('PROFILE_CONFIGURATION', 500);
+  const count = log.getLastRow() - 1;
+  if (count > 0) {
+    const match = log.getRange(2, 1, count, 1).createTextFinder('EM-' + body.reference)
+      .matchEntireCell(true).matchCase(true).findAll();
+    if (match.length === 1) return String(log.getRange(match[0].getRow(), 2).getValue());
+  }
+  throw qudOwnerApiError_('INVALID_EMAIL_LINK', 400);
+}
 
 function qudVerifyOwnerEmail_(sheet, row, column, confirmed, ownerId, email, token) {
   function invalidLink() { return qudOwnerApiError_('INVALID_EMAIL_LINK', 400); }

@@ -45,6 +45,10 @@ export default {
         return await handleSession(request, env);
       }
 
+      if (url.pathname === '/owner/api/confirm-email') {
+        return await handleEmailLink(request, env);
+      }
+
       const session = await readSession(request, env);
       if (!session) {
         return jsonResponse(
@@ -86,6 +90,30 @@ export default {
   }
 };
 
+async function handleEmailLink(request, env) {
+  if (request.method !== 'POST') return methodNotAllowed('POST');
+  if (request.headers.get('origin') !== new URL(request.url).origin ||
+      request.headers.get('content-type')?.split(';')[0] !== 'application/json') {
+    return jsonResponse({ok: false, error: 'INVALID_REQUEST'}, 403);
+  }
+  const {token, reference} = await readJson(request);
+  const hex = /^[a-f0-9]{64}$/;
+  if (typeof token !== 'string' || !hex.test(token) ||
+      (reference !== undefined && (typeof reference !== 'string' || !hex.test(reference)))) {
+    return jsonResponse({ok: false, error: 'INVALID_EMAIL_LINK'}, 400);
+  }
+  // Token-only invitations were issued by the original single-owner deployment.
+  const result = await postProfileAction(env, {action: 'confirm_email_link', token, reference,
+    legacy_owner: reference === undefined ? env.QUD_OWNER_ID : undefined});
+  if (result.payload?.ok === false && result.response.ok && Number(result.payload.status) < 500) {
+    return jsonResponse({ok: false, error: 'INVALID_EMAIL_LINK'}, 400);
+  }
+  if (!result.response.ok || result.payload?.ok !== true || result.payload.verified !== true) {
+    return jsonResponse({ok: false, error: 'UPSTREAM_UNAVAILABLE'}, 502);
+  }
+  return jsonResponse({ok: true, verified: true});
+}
+
 async function handleOwnerProfile(request, env, session) {
   const method = request.method;
   if (method !== 'GET' && method !== 'POST') return methodNotAllowed('GET, POST');
@@ -114,16 +142,8 @@ async function handleOwnerProfile(request, env, session) {
       }
     }
   }
-  const {secret} = requireUpstream(env);
-  const url = new URL(env.QUD_OWNER_PROFILE_URL);
-  if (url.origin !== 'https://script.google.com' || !/^\/macros\/s\/[\w-]+\/exec$/.test(url.pathname)) {
-    throw apiError('PROFILE_NOT_CONFIGURED', 500);
-  }
-  const response = await fetch(url, {
-    method: 'POST', headers: {'content-type': 'application/json'},
-    body: JSON.stringify({action: 'owner_profile', owner_id: session.owner_id, proxy_secret: secret, mode, name, token: verificationToken})
-  });
-  const payload = await response.json();
+  const {response, payload} = await postProfileAction(env, {action: 'owner_profile',
+    owner_id: session.owner_id, mode, name, token: verificationToken});
   const failure = normalizeUpstreamError({response, payload});
   if (failure) return failure;
   const p = payload?.profile;
@@ -133,6 +153,20 @@ async function handleOwnerProfile(request, env, session) {
   }
   return jsonResponse({ok: true, profile: {name: p.name, chosen: p.chosen, email: p.email,
     email_verified: p.email_verified, key_issued: p.key_issued}});
+}
+
+async function postProfileAction(env, action) {
+  const {secret} = requireUpstream(env);
+  const url = new URL(env.QUD_OWNER_PROFILE_URL);
+  if (url.origin !== 'https://script.google.com' || !/^\/macros\/s\/[\w-]+\/exec$/.test(url.pathname)) {
+    throw apiError('PROFILE_NOT_CONFIGURED', 500);
+  }
+  const response = await fetch(url, {
+    method: 'POST', headers: {'content-type': 'application/json'},
+    body: JSON.stringify({...action, proxy_secret: secret})
+  });
+  const payload = await response.json();
+  return {response, payload};
 }
 
 async function handleSession(request, env) {

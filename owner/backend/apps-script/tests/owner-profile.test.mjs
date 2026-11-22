@@ -73,3 +73,18 @@ test('email confirmation binds the active link to one owner and address and pres
   assert.equal(run('A','a@example.com',replacement),date);
   assert.equal(writes,1); assert.equal(entries[2][5],'Подтверждено');
 });
+
+test('public invitation resolves its exact issuance record, independently of browser identity', () => {
+  const reference='b'.repeat(64), token='a'.repeat(64);
+  const log = {getLastRow:()=>2,getRange(row,col,height,width) {
+    if (col===2) return {getValue:()=> 'B'};
+    assert.deepEqual([row,col,height,width],[2,1,1,1]);
+    return {createTextFinder(value){return {
+      matchEntireCell(){return this;},matchCase(){return this;},
+      findAll(){return value==='EM-'+reference?[{getRow:()=>2}]:[];}
+    };}};
+  }};
+  const sheet={getParent:()=>({getSheetByName:()=>log})};
+  assert.equal(api.qudEmailLinkOwner_(sheet,{reference,token,owner_id:'A'}),'B');
+  assert.throws(()=>api.qudEmailLinkOwner_(sheet,{reference:'c'.repeat(64),token}));
+});

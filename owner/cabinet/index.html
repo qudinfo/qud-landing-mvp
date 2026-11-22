@@ -19,6 +19,7 @@
       <div class="auth-login-pane">
         <div class="auth-login-content">
           <h1 id="login-title">Вход в кабинет</h1>
+          <p id="login-email-confirmation" role="status" hidden></p>
           <form id="owner-login-form">
             <label for="owner-key">Access key</label>
             <input id="owner-key" name="access_key" type="password" required maxlength="512" autocomplete="current-password" spellcheck="false" aria-describedby="owner-login-message">
@@ -116,7 +117,6 @@
         <section id="email-verification" class="profile-card" hidden aria-labelledby="email-verification-title">
           <h2 id="email-verification-title">Подтверждение почты</h2>
           <p id="email-verification-status" role="status"></p>
-          <button type="button" id="email-verification-submit" class="button button-primary" hidden>Подтвердить почту</button>
         </section>
         <div id="owner-first-choice"></div>
         <section class="view is-active" id="view-overview" data-title="Исследовательский доступ" aria-labelledby="overview-title">
@@ -400,7 +400,7 @@
     </form>
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
-  <script src="./profile.js?v=3" defer></script>
+  <script src="./profile.js?v=4" defer></script>
   <script src="./app.js?v=20261122-profile-1" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261122-profile-1" defer></script>

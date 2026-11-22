@@ -12,50 +12,53 @@
   let profile;
   let busy = false;
   const confirmation = el('email-verification');
-  const confirmButton = el('email-verification-submit');
   const confirmStatus = el('email-verification-status');
-  let emailToken = '';
+  const loginStatus = el('login-email-confirmation');
+  let linkMessage = '';
+  let emailAttempt = 0;
 
-  function captureEmailLink() {
-    const match = /^#verify-email=([a-f0-9]{64})$/.exec(location.hash);
-    if (!match) return;
-    emailToken = match[1];
-    history.replaceState(null, '', location.pathname + location.search + '#profile');
-    showConfirmation();
-  }
   function showConfirmation() {
-    el('email-inbox-hint').hidden = !owner || !profile?.email || profile.email_verified || Boolean(emailToken);
-    confirmation.hidden = !emailToken || !owner;
-    confirmButton.hidden = !profile || profile.email_verified;
-    confirmButton.disabled = busy;
-    if (!confirmation.hidden) {
-      confirmStatus.textContent = !profile ? 'Загружаем адрес из вашего профиля…'
-        : profile.email_verified ? 'Почта уже подтверждена.' : profile.email;
+    el('email-inbox-hint').hidden = !owner || !profile?.email || profile.email_verified || Boolean(linkMessage);
+    confirmation.hidden = !linkMessage || !owner;
+    loginStatus.hidden = !linkMessage;
+    confirmStatus.textContent = loginStatus.textContent = linkMessage;
+  }
+
+  async function captureEmailLink() {
+    if (!location.hash.startsWith('#verify-email=')) return;
+    if (document.prerendering) {
+      document.addEventListener('prerenderingchange', captureEmailLink, {once: true});
+      return;
+    }
+    const match = /^#verify-email=(?:([a-f0-9]{64})\.)?([a-f0-9]{64})$/.exec(location.hash);
+    const attempt = ++emailAttempt;
+    history.replaceState(null, '', location.pathname + location.search + '#profile');
+    const invalid = 'Ссылка недействительна. Откройте последнее письмо от QUD.';
+    linkMessage = match ? 'Подтверждаем почту…' : invalid;
+    showConfirmation();
+    if (!match) return;
+    try {
+      const response = await fetch('/owner/api/confirm-email', {
+        method: 'POST', credentials: 'omit', cache: 'no-store',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({reference: match[1], token: match[2]})
+      });
+      const data = await response.json();
+      if (attempt !== emailAttempt) return;
+      if (!response.ok || data.ok !== true || data.verified !== true) throw new Error(data.error);
+      linkMessage = 'Почта подтверждена.';
+      showConfirmation();
+      if (owner) await load();
+    } catch (error) {
+      if (attempt !== emailAttempt) return;
+      linkMessage = error.message === 'INVALID_EMAIL_LINK' ? invalid
+        : 'Не удалось проверить ссылку. Откройте письмо и попробуйте ещё раз.';
+      showConfirmation();
     }
   }
+
   captureEmailLink();
   window.addEventListener('hashchange', captureEmailLink);
-  confirmButton.addEventListener('click', async () => {
-    if (busy || !emailToken || !profile || profile.email_verified) return;
-    const current = generation;
-    busy = true;
-    confirmButton.disabled = true;
-    confirmStatus.textContent = 'Подтверждаем почту…';
-    try {
-      const data = await request('POST', {mode: 'verify_email', token: emailToken});
-      if (current !== generation) return;
-      profile = data;
-      render();
-      confirmStatus.textContent = 'Почта подтверждена.';
-    } catch (error) {
-      if (current !== generation) return;
-      confirmStatus.textContent = error.message === 'INVALID_EMAIL_LINK'
-        ? 'Ссылка недействительна. Проверьте, что вы вошли в свой кабинет и открыли последнее письмо QUD.'
-        : 'Не удалось подтвердить почту. Попробуйте ещё раз.';
-    } finally {
-      if (current === generation) { busy = false; confirmButton.disabled = false; }
-    }
-  });
 
   function maskedEmail(address) {
     const at = address.lastIndexOf('@');
