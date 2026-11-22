@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261122-profile-loading">
+  <link rel="stylesheet" href="./styles.css?v=20261122-sidebar">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
@@ -50,7 +50,7 @@
     <symbol id="icon-portfolio" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9h-9Z"/><path d="M14.5 3.4A8.6 8.6 0 0 1 20.6 9h-6.1Z"/></symbol>
     <symbol id="icon-account" viewBox="0 0 24 24"><path d="M3 20h18M5 17h14M6 10v7m4-7v7m4-7v7m4-7v7M3.5 8h17L12 3Z"/></symbol>
     <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.4 4 5.4 4 9s-1.4 6.6-4 9M12 3c-2.6 2.4-4 5.4-4 9s1.4 6.6 4 9"/></symbol>
-    <symbol id="icon-documents" viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H11v18H6.5A2.5 2.5 0 0 0 4 22ZM20 4.5A2.5 2.5 0 0 0 17.5 2H13v18h4.5A2.5 2.5 0 0 1 20 22Z"/></symbol>
+    <symbol id="icon-documents" viewBox="0 0 24 24"><path d="M12 6C9.5 4.5 6.8 4.2 4 4.5v13.3c2.8-.3 5.5.1 8 1.6 2.5-1.5 5.2-1.9 8-1.6V4.5c-2.8-.3-5.5 0-8 1.5Zm0 0v13.4"/><path d="m4 6.7-2 .7v13.4c3.4-1 6.8-1.6 10-1.4 3.2-.2 6.6.4 10 1.4V7.4l-2-.7"/></symbol>
     <symbol id="icon-exit" viewBox="0 0 24 24"><path d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5M14 8l4 4-4 4M8 12h10"/></symbol>
     <symbol id="icon-wallet" viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H19v16H6.5A2.5 2.5 0 0 1 4 17.5Z"/><path d="M4 7h13M15 11h6v5h-6a2.5 2.5 0 0 1 0-5Z"/></symbol>
     <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 20h18M5 17l4-5 4 2 6-8"/></symbol>
@@ -75,18 +75,18 @@
     <aside class="sidebar" id="sidebar" aria-label="Навигация кабинета">
       <div class="sidebar-header">
         <a class="brand" href="#overview" data-open-view="overview" aria-label="QUD Capital Owner — обзор">
-          <span class="brand-mark">QUD</span><span class="brand-divider" aria-hidden="true"></span><span class="brand-product">Capital<br>Owner</span>
+          <img class="brand-mark" src="./qud-logo.svg" alt="" width="1320" height="620"><span class="brand-divider" aria-hidden="true"></span><span class="brand-product">Capital<br>Owner</span>
         </a>
         <button class="icon-button sidebar-close" id="sidebar-close" type="button" aria-label="Закрыть меню"><svg><use href="#icon-close"></use></svg></button>
       </div>
 
       <nav class="primary-nav" aria-label="Основные разделы">
         <p class="nav-label">Навигация</p>
-        <button class="nav-item is-active" type="button" data-view="overview" aria-label="Обзор" aria-current="page"><svg class="nav-icon"><use href="#icon-overview"></use></svg><span class="nav-index">01</span><span class="nav-text">Обзор</span></button>
-        <button class="nav-item" type="button" data-view="strategies" aria-label="Стратегии"><svg class="nav-icon"><use href="#icon-strategies"></use></svg><span class="nav-index">02</span><span class="nav-text">Стратегии</span></button>
-        <button class="nav-item" type="button" data-view="portfolio" aria-label="Virtual Portfolio"><svg class="nav-icon"><use href="#icon-portfolio"></use></svg><span class="nav-index">03</span><span class="nav-text">Virtual Portfolio</span></button>
-        <button class="nav-item" type="button" data-view="real-account" aria-label="Брокерский счёт"><svg class="nav-icon"><use href="#icon-account"></use></svg><span class="nav-index">04</span><span class="nav-text">Брокерский счёт</span></button>
-        <button class="nav-item" type="button" data-view="documents" aria-label="Документы и регламенты"><svg class="nav-icon"><use href="#icon-documents"></use></svg><span class="nav-index">05</span><span class="nav-text">Документы<br>и регламенты</span></button>
+        <button class="nav-item is-active" type="button" data-view="overview" aria-label="Обзор" aria-current="page"><svg class="nav-icon"><use href="#icon-overview"></use></svg><span class="nav-text">Обзор</span></button>
+        <button class="nav-item" type="button" data-view="strategies" aria-label="Стратегии"><svg class="nav-icon"><use href="#icon-strategies"></use></svg><span class="nav-text">Стратегии</span></button>
+        <button class="nav-item" type="button" data-view="portfolio" aria-label="Virtual Portfolio"><svg class="nav-icon"><use href="#icon-portfolio"></use></svg><span class="nav-text">Virtual Portfolio</span></button>
+        <button class="nav-item" type="button" data-view="real-account" aria-label="Брокерский счёт"><svg class="nav-icon"><use href="#icon-account"></use></svg><span class="nav-text">Брокерский счёт</span></button>
+        <button class="nav-item" type="button" data-view="documents" aria-label="Документы и регламенты"><svg class="nav-icon"><use href="#icon-documents"></use></svg><span class="nav-text">Документы<br>и регламенты</span></button>
       </nav>
 
       <div class="sidebar-spacer"></div>

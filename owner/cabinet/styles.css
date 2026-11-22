@@ -78,7 +78,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 
 .sidebar-header { min-height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; }
 .brand { display: inline-flex; align-items: center; gap: 13px; color: var(--text); text-decoration: none; }
-.brand-mark { color: var(--text); font-size: 35px; font-weight: 760; letter-spacing: 0.025em; line-height: 1; }
+.brand-mark { display: block; width: 96px; height: auto; }
 .brand-divider { width: 1px; height: 39px; background: var(--border); }
 .brand-product { color: #aeb4b7; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; line-height: 1.35; text-transform: uppercase; }
 
@@ -92,7 +92,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
   width: 100%;
   min-height: 64px;
   display: grid;
-  grid-template-columns: 34px 28px minmax(0, 1fr);
+  grid-template-columns: 24px minmax(0, 1fr);
   align-items: center;
   gap: 10px;
   border: 1px solid transparent;
@@ -112,13 +112,13 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
   color: var(--text);
   box-shadow: inset -2px 0 0 #8b949d;
 }
-.nav-icon { width: 25px; height: 25px; color: #9ba3a8; }
-.nav-item.is-active .nav-icon, .nav-item.is-active .nav-index { color: var(--gold-bright); }
-.nav-index { color: #687278; font-size: 11px; font-weight: 680; }
+.nav-icon { width: 24px; height: 24px; color: #9ba3a8; }
+.nav-item.is-active .nav-icon { color: var(--gold-bright); }
 .nav-text { min-width: 0; line-height: 1.35; }
 
 .sidebar-spacer { flex: 1; min-height: 30px; }
-.sidebar-account { border-top: 1px solid var(--border-soft); padding-top: 24px; }
+.sidebar-account { position: relative; padding-top: 25px; }
+.sidebar-account::before { content: ""; position: absolute; inset: 0 12px auto; height: 1px; background: var(--border-soft); }
 .profile-entry, .logout-entry {
   width: 100%;
   border: 1px solid var(--border);
@@ -127,12 +127,12 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
   color: var(--text);
 }
 .profile-entry {
-  min-height: 76px;
+  min-height: 52px;
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 20px;
+  grid-template-columns: 24px minmax(0, 1fr) 20px;
   align-items: center;
-  gap: 12px;
-  padding: 10px 15px;
+  gap: 10px;
+  padding: 6px 17px;
   text-align: left;
 }
 .profile-entry:hover, .logout-entry:hover { border-color: #344047; background: var(--panel-strong); }
@@ -149,12 +149,13 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
   font-size: 12px;
   font-weight: 760;
 }
+.profile-entry .avatar { width: 24px; height: 24px; font-size: 9px; }
 .profile-copy { min-width: 0; display: grid; gap: 5px; }
 .profile-copy strong { overflow: hidden; font-size: 13px; font-weight: 620; text-overflow: ellipsis; white-space: nowrap; }
 .profile-copy small { color: var(--muted); font-size: 10px; line-height: 1.35; }
 .chevron { width: 18px; height: 18px; color: #7b858b; }
-.logout-entry { min-height: 54px; display: flex; align-items: center; gap: 14px; margin-top: 10px; padding: 0 18px; color: #db655b; text-align: left; font-size: 13px; font-weight: 620; }
-.logout-entry svg { width: 23px; height: 23px; }
+.logout-entry { min-height: 44px; display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 0 17px; color: #db655b; text-align: left; font-size: 13px; font-weight: 620; }
+.logout-entry svg { width: 24px; height: 24px; }
 
 .sidebar-backdrop { position: fixed; inset: 0; z-index: 30; border: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px); }
 
@@ -632,9 +633,10 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
     box-shadow: 24px 0 54px rgba(0, 0, 0, .42);
     transition-delay: 0ms;
   }
-  .sidebar-header { min-width: 293px; padding-inline: 10px; }
-  .brand { min-width: 250px; white-space: nowrap; }
-  .brand-mark { width: 64px; font-size: 28px; text-align: center; }
+  .sidebar-header { padding-inline: 0; }
+  .brand { white-space: nowrap; }
+  .brand-mark { width: calc(var(--sidebar-width) - 17px); }
+  .sidebar:is(:hover, :focus-within) .brand-mark { width: 96px; }
   .brand-divider, .brand-product, .nav-label {
     opacity: 0;
     visibility: hidden;
@@ -651,16 +653,27 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .sidebar:hover .profile-copy, .sidebar:focus-within .profile-copy { display: grid; }
   .sidebar:hover .profile-entry .chevron, .sidebar:focus-within .profile-entry .chevron { display: block; }
   .sidebar:hover .logout-entry span, .sidebar:focus-within .logout-entry span { display: inline; }
-  .primary-nav { min-width: 293px; margin-top: 38px; }
-  .nav-label { height: 14px; margin-inline: 14px; }
-  .nav-item { width: 76px; grid-template-columns: 28px 20px; gap: 7px; padding-inline: 10px; transition: width 200ms ease, color 160ms ease, background 160ms ease, border-color 160ms ease; }
-  .sidebar:hover .nav-item, .sidebar:focus-within .nav-item { width: 293px; grid-template-columns: 34px 28px minmax(0, 1fr); gap: 10px; padding-inline: 17px; }
-  .nav-icon { width: 24px; height: 24px; }
-  .sidebar-account { min-width: 293px; }
-  .profile-entry { width: 76px; grid-template-columns: 42px; justify-items: center; padding-inline: 16px; transition: width 200ms ease; }
-  .sidebar:hover .profile-entry, .sidebar:focus-within .profile-entry { width: 293px; grid-template-columns: 42px minmax(0, 1fr) 20px; justify-items: stretch; padding-inline: 15px; }
-  .logout-entry { width: 76px; justify-content: center; padding-inline: 0; transition: width 200ms ease; }
-  .sidebar:hover .logout-entry, .sidebar:focus-within .logout-entry { width: 293px; justify-content: flex-start; padding-inline: 18px; }
+  .primary-nav { margin-top: 38px; }
+  .nav-label { height: 14px; margin-inline: 14px; white-space: nowrap; }
+  .sidebar-account { min-height: 193px; display: flex; flex-direction: column; }
+  .sidebar-account .nav-label { margin-bottom: auto; }
+  .sidebar:not(:hover):not(:focus-within) .nav-item {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding-inline: 0;
+    gap: 0;
+  }
+  .sidebar:not(:hover):not(:focus-within) :is(.profile-entry, .logout-entry) {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr;
+    gap: 0;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    margin-inline: auto;
+    padding: 0;
+  }
 }
 
 @media (max-width: 1500px) {
