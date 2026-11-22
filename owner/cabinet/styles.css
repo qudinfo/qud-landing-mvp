@@ -947,4 +947,5 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 #owner-profile-editor #owner-name-save:hover { border-color: var(--text-soft); }
 #owner-profile-editor .owner-name-actions:has(#owner-name-save[hidden]),
 #owner-name-status:empty, #owner-profile-state:empty { display: none; }
+#owner-profile-state:has(+ #owner-profile-retry[hidden]) { font-size: 11px; }
 #owner-profile-editor #owner-name-status { font-size: 11px; color: var(--text-soft); }
