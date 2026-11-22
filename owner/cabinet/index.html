@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261122-mail-hint">
+  <link rel="stylesheet" href="./styles.css?v=20261122-profile-status">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
@@ -114,16 +114,12 @@
 
       <main class="content" id="cabinet-content" tabindex="-1">
         <p id="email-inbox-hint" hidden>Для подтверждения почты откройте письмо от QUD. Если его нет во «Входящих», проверьте папку «Спам».</p>
-        <section id="email-verification" class="profile-card" hidden aria-labelledby="email-verification-title">
-          <h2 id="email-verification-title">Подтверждение почты</h2>
-          <p id="email-verification-status" role="status"></p>
-        </section>
         <div id="owner-first-choice"></div>
         <section class="view is-active" id="view-overview" data-title="Исследовательский доступ" aria-labelledby="overview-title">
           <div class="overview-grid">
             <div class="overview-main">
               <section class="hero-card panel" aria-labelledby="overview-title">
-                <div class="hero-copy"><p class="eyebrow">QUD Capital Owner</p><h2 id="overview-title">Добро пожаловать в пространство осознанного управления капиталом</h2><p>Изучайте стратегии, наблюдайте за ними в Virtual Portfolio и принимайте взвешенные решения на основе подтверждённых данных QUD.</p><div class="hero-actions"><button class="button button-primary" type="button" data-open-view="strategies">Изучить стратегии <svg><use href="#icon-arrow"></use></svg></button><button class="button button-secondary" type="button" data-open-view="portfolio">Открыть Virtual Portfolio <svg><use href="#icon-arrow"></use></svg></button></div></div>
+                <div class="hero-copy"><p class="eyebrow">QUD Capital Owner</p><h2 id="overview-title"><span id="overview-greeting">Добро пожаловать</span> в пространство осознанного управления капиталом</h2><p>Изучайте стратегии, наблюдайте за ними в Virtual Portfolio и принимайте взвешенные решения на основе подтверждённых данных QUD.</p><div class="hero-actions"><button class="button button-primary" type="button" data-open-view="strategies">Изучить стратегии <svg><use href="#icon-arrow"></use></svg></button><button class="button button-secondary" type="button" data-open-view="portfolio">Открыть Virtual Portfolio <svg><use href="#icon-arrow"></use></svg></button></div></div>
                 <div class="hero-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="core-cube"><span>QUD</span></div><i class="node node-one"></i><i class="node node-two"></i><i class="node node-three"></i><i class="node node-four"></i></div>
               </section>
 
@@ -334,8 +330,9 @@
                 <div><dt>Авторизация<small>Подтверждает право входа в кабинет по ключу доступа.</small></dt><dd>Вход выполнен</dd></div>
                 <div><dt>Дата выдачи ключа доступа</dt><dd id="profile-key-issued">—</dd></div>
                 <div><dt>Электронная почта владельца<small>На этот адрес будут направляться письма от QUD.</small></dt><dd id="profile-email">—</dd></div>
-                <div><dt>Подтверждение почты</dt><dd id="profile-email-status">—</dd></div>
+                <div><dt>Подтверждение почты</dt><dd id="profile-email-status" aria-live="polite">—</dd></div>
               </dl>
+              <p id="profile-email-feedback" role="status" hidden></p>
             </section>
           </div>
         </section>
@@ -400,7 +397,7 @@
     </form>
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
-  <script src="./profile.js?v=4" defer></script>
+  <script src="./profile.js?v=5" defer></script>
   <script src="./app.js?v=20261122-profile-1" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261122-profile-1" defer></script>

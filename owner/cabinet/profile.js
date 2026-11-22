@@ -11,17 +11,18 @@
   let generation = 0;
   let profile;
   let busy = false;
-  const confirmation = el('email-verification');
-  const confirmStatus = el('email-verification-status');
+  const profileFeedback = el('profile-email-feedback');
   const loginStatus = el('login-email-confirmation');
   let linkMessage = '';
+  let linkVerified = false;
   let emailAttempt = 0;
 
   function showConfirmation() {
     el('email-inbox-hint').hidden = !owner || !profile?.email || profile.email_verified || Boolean(linkMessage);
-    confirmation.hidden = !linkMessage || !owner;
-    loginStatus.hidden = !linkMessage;
-    confirmStatus.textContent = loginStatus.textContent = linkMessage;
+    profileFeedback.hidden = !owner || !linkMessage || linkVerified;
+    profileFeedback.textContent = profileFeedback.hidden ? '' : linkMessage;
+    loginStatus.hidden = Boolean(owner) || !linkMessage;
+    loginStatus.textContent = loginStatus.hidden ? '' : linkMessage;
   }
 
   async function captureEmailLink() {
@@ -34,6 +35,7 @@
     const attempt = ++emailAttempt;
     history.replaceState(null, '', location.pathname + location.search + '#profile');
     const invalid = 'Ссылка недействительна. Откройте последнее письмо от QUD.';
+    linkVerified = false;
     linkMessage = match ? 'Подтверждаем почту…' : invalid;
     showConfirmation();
     if (!match) return;
@@ -46,6 +48,7 @@
       const data = await response.json();
       if (attempt !== emailAttempt) return;
       if (!response.ok || data.ok !== true || data.verified !== true) throw new Error(data.error);
+      linkVerified = true;
       linkMessage = 'Почта подтверждена.';
       showConfirmation();
       if (owner) await load();
@@ -68,10 +71,15 @@
   function render() {
     showConfirmation();
     const email = profile?.email || '';
+    const name = profile?.name?.trim();
+    el('overview-greeting').textContent = name ? name + ', добро пожаловать' : 'Добро пожаловать';
     el('header-owner-id').textContent = profile?.name || 'Мой профиль';
     el('header-owner-email').textContent = maskedEmail(email);
     el('profile-email').textContent = email || '—';
-    el('profile-email-status').textContent = profile
+    const emailStatus = el('profile-email-status');
+    emailStatus.classList.toggle('is-verified', Boolean(profile?.email_verified));
+    emailStatus.classList.toggle('is-unverified', Boolean(profile && !profile.email_verified));
+    emailStatus.textContent = profile
       ? (profile.email_verified ? 'Подтверждена' : 'Ожидает подтверждения') : '—';
     el('profile-key-issued').textContent = profile?.key_issued || '—';
     const first = profile && !profile.chosen;
