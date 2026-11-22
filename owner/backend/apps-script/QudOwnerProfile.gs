@@ -4,13 +4,16 @@ function doPost(e) {
   try {
     const body = JSON.parse(e.postData.contents);
     qudOwnerApiAssertProxySecret_({parameter: {proxy_secret: body.proxy_secret}});
-    if (body.action !== 'owner_profile' && body.action !== 'confirm_email_link' && body.action !== 'pilot_login') throw qudOwnerApiError_('NOT_FOUND', 404);
+    if (body.action !== 'owner_profile' && body.action !== 'confirm_email_link' && body.action !== 'pilot_login' && body.action !== 'claim_invitation') throw qudOwnerApiError_('NOT_FOUND', 404);
     const sheetId = PropertiesService.getScriptProperties().getProperty('QUD_OWNER_SERVICE_SHEET_ID') || QUD_OWNER_PROFILE_DEFAULT_SHEET;
     const sheet = SpreadsheetApp.openById(sheetId).getSheetByName('Владельцы');
     if (!sheet) throw qudOwnerApiError_('PROFILE_CONFIGURATION', 500);
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
+      if (body.action === 'claim_invitation') {
+        return qudOwnerApiJson_({ok:true, ...qudClaimInvitation_(sheet,body)});
+      }
       if (body.action === 'pilot_login') {
         const login = qudPilotLogin_(sheet, body);
         return qudOwnerApiJson_({ok:true, login:login});
@@ -22,7 +25,7 @@ function doPost(e) {
         return qudOwnerApiJson_({ok: true, verified: true});
       }
       const profile = qudOwnerProfileRow_(sheet, body);
-      if (body.owner_id === 'TEST-OWNER-002' && body.mode === 'read') qudPilotFirstVisit_(sheet,body.owner_id,profile.email);
+      if (/^(TEST-OWNER-002|QUD-[a-f0-9]{32})$/.test(body.owner_id) && body.mode === 'read') qudPilotFirstVisit_(sheet,body.owner_id,profile.email);
       SpreadsheetApp.flush();
       return qudOwnerApiJson_({ok: true, profile: profile});
     } finally {
@@ -128,8 +131,8 @@ function qudVerifyOwnerEmail_(sheet, row, column, confirmed, ownerId, email, tok
 
 
 function qudPilotLogin_(owners, body) {
-  const verified = QudCabinetKeys.verifyPilotLogin(body.email, body.access_key);
-  if (!verified || verified.owner !== 'TEST-OWNER-002') return null;
+  const verified = qudInvitationLogin_(body.email, body.access_key);
+  if (!verified || !/^(TEST-OWNER-002|QUD-[a-f0-9]{32})$/.test(verified.owner)) return null;
   const book = owners.getParent();
   const rows = owners.getDataRange().getValues().slice(1).filter(r => r[0] === verified.owner || r[1] === body.email);
   if (rows.length !== 1 || rows[0][0] !== verified.owner || rows[0][1] !== body.email || rows[0][3] !== 'Активен') return null;

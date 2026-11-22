@@ -495,3 +495,27 @@ console.log('Owner Worker tests passed');
     assert.equal((await signIn(activeKey,email)).status,401);
   } finally { globalThis.fetch = previousFetch; }
 }
+
+{
+  const backend = {...env,QUD_OWNER_PROFILE_URL:env.QUD_OWNER_APPS_SCRIPT_URL};
+  const input = {id:'QA-INVITE', token:'a'.repeat(64), key:'Gr8d!Key42',owner_id:'untrusted'};
+  const saved = globalThis.fetch;
+  let forwarded;
+  try {
+    globalThis.fetch = async (_, options) => {
+      forwarded = JSON.parse(options.body);
+      return Response.json({ok:true,claimed:true});
+    };
+    const claim = origin => worker.fetch(request('/owner/api/claim-invitation', {
+      method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify(input)
+    }),backend);
+    assert.equal((await worker.fetch(request('/owner/api/claim-invitation'),backend)).status,405);
+    assert.equal((await claim('https://example.invalid')).status,403);
+    assert.equal(forwarded,undefined);
+    const result=await claim('https://fx-qud.com');
+    assert.deepEqual(await result.json(),{ok:true,claimed:true});
+    assert.equal(result.headers.get('set-cookie'),null);
+    assert.equal(forwarded.action,'claim_invitation');
+    assert.equal(forwarded.owner_id,undefined);
+  } finally {globalThis.fetch=saved;}
+}

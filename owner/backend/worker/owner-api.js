@@ -45,6 +45,21 @@ export default {
         return await handleSession(request, env);
       }
 
+      if (url.pathname === '/owner/api/claim-invitation') {
+        if (request.method !== 'POST') return methodNotAllowed('POST');
+        if (request.headers.get('origin') !== url.origin || request.headers.get('content-type')?.split(';')[0] !== 'application/json')
+          return jsonResponse({ok:false,error:'INVALID_REQUEST'},403);
+        const {id,token,key} = await readJson(request);
+        if (typeof id !== 'string' || !/^[a-zA-Zа-яА-ЯёЁ0-9_.-]{1,80}$/.test(id) ||
+            typeof token !== 'string' || !/^[a-f0-9]{64}$/.test(token) || typeof key !== 'string' || key.length !== 10)
+          return jsonResponse({ok:false,error:'INVALID_INVITATION'},400);
+        const result = await postProfileAction(env,{action:'claim_invitation',id,token,key});
+        const failure = normalizeUpstreamError(result);
+        if (failure) return failure;
+        return result.payload?.claimed === true ? jsonResponse({ok:true,claimed:true}) :
+          jsonResponse({ok:false,error:'UPSTREAM_UNAVAILABLE'},502);
+      }
+
       if (url.pathname === '/owner/api/confirm-email') {
         return await handleEmailLink(request, env);
       }
@@ -359,7 +374,7 @@ function ownerPortfolioIdentity(session, env) {
   const subscriberId = String(entry?.subscriber_id || '').trim();
   const portfolioId = String(entry?.portfolio_id || '').trim();
   if (!subscriberId || !portfolioId) throw apiError('VP_IDENTITY_NOT_CONFIGURED', 503);
-  if (session.owner_id === 'TEST-OWNER-002' && Object.entries(map).some(([owner,other]) =>
+  if (session.owner_id !== (env.QUD_OWNER_ID || 'TEST-OWNER-001') && Object.entries(map).some(([owner,other]) =>
       owner !== session.owner_id && (String(other?.subscriber_id || '').trim() === subscriberId ||
       String(other?.portfolio_id || '').trim() === portfolioId))) throw apiError('VP_IDENTITY_NOT_CONFIGURED',503);
   return {subscriberId,portfolioId};
@@ -623,7 +638,7 @@ async function resolveOwnerLogin(key, email, env) {
   if (!response.ok || payload?.ok !== true) throw apiError('UPSTREAM_UNAVAILABLE',502);
   const login = payload.login;
   if (login === null) return null;
-  if (login?.owner_id !== 'TEST-OWNER-002' || !Number.isSafeInteger(login.until)) throw apiError('INVALID_UPSTREAM_RESPONSE',502);
+  if (!/^(TEST-OWNER-002|QUD-[a-f0-9]{32})$/.test(login?.owner_id) || !Number.isSafeInteger(login.until)) throw apiError('INVALID_UPSTREAM_RESPONSE',502);
   return login.until > Date.now()/1000 ? {ownerId:login.owner_id,until:login.until} : null;
 }
 
