@@ -52,7 +52,7 @@
       const response = await fetch('/owner/api/session', {
         method, credentials: 'same-origin', cache: 'no-store', signal: controller.signal,
         headers: { Accept: 'application/json', ...(method === 'POST' ? { 'Content-Type': 'application/json' } : {}) },
-        ...(method === 'POST' ? { body: JSON.stringify({ access_key: accessKey }) } : {})
+        ...(method === 'POST' ? { body: JSON.stringify({ access_key: accessKey, email: byId('owner-email').value.trim() }) } : {})
       });
       const data = await response.json();
       if (!response.ok || data.ok !== true || typeof data.authenticated !== 'boolean') {

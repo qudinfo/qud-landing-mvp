@@ -458,3 +458,40 @@ console.log('Owner Worker tests passed');
     assert.equal(forwarded.legacy_owner,env.QUD_OWNER_ID);
   } finally {globalThis.fetch=savedFetch;}
 }
+
+{
+  const pilot = 'TEST-OWNER-002';
+  const email = 'pilot@example.com';
+  const activeKey = 'TestKey!24';
+  const formerKey = 'OldTest!24';
+  const until = Math.floor(Date.now() / 1000) + 120;
+  const pilotEnv = {...env, QUD_OWNER_PROFILE_URL: env.QUD_OWNER_APPS_SCRIPT_URL};
+  const signIn = (access_key, address) => worker.fetch(request('/owner/api/session', {
+    method: 'POST', headers: {'content-type':'application/json'},
+    body: JSON.stringify({access_key, email:address})
+  }), pilotEnv);
+  const previousFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (_, options) => {
+      const body = JSON.parse(options.body);
+      assert.equal(body.action, 'pilot_login');
+      return Response.json({ok:true, login:body.email === email && body.access_key === activeKey
+        ? {owner_id:pilot, until} : null});
+    };
+    for (const [key, address] of [[formerKey,email], [activeKey,'other@example.com']]) {
+      const denied = await signIn(key, address);
+      assert.equal(denied.status, 401);
+      assert.equal(denied.headers.get('set-cookie'), null);
+    }
+    const accepted = await signIn(activeKey, email);
+    assert.equal(accepted.status, 200);
+    const session = await accepted.json();
+    assert.equal(session.owner_id, pilot);
+    assert.equal(session.expires_at, until);
+    const cookie = cookiePair(accepted.headers.get('set-cookie'));
+    const restored = await worker.fetch(request('/owner/api/session',{headers:{cookie}}),pilotEnv);
+    assert.equal((await restored.json()).owner_id,pilot);
+    globalThis.fetch = async () => Response.json({ok:true,login:{owner_id:pilot, until:1}});
+    assert.equal((await signIn(activeKey,email)).status,401);
+  } finally { globalThis.fetch = previousFetch; }
+}

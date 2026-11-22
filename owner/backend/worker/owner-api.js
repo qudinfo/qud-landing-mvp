@@ -205,7 +205,8 @@ async function handleSession(request, env) {
 
     const body = await readJson(request);
     const suppliedKey = String(body.access_key || '').trim();
-    const ownerIdentity = authenticateOwnerAccessKey(suppliedKey, env);
+    const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+    const ownerIdentity = await resolveOwnerLogin(suppliedKey, email, env);
 
     if (!ownerIdentity) {
       recordLoginFailure(rateKey);
@@ -221,7 +222,7 @@ async function handleSession(request, env) {
       version: 1,
       owner_id: ownerIdentity.ownerId,
       issued_at: now,
-      expires_at: now + SESSION_TTL_SECONDS
+      expires_at: Math.min(now + SESSION_TTL_SECONDS, ownerIdentity.until ?? Infinity)
     };
 
     const token = await createSessionToken(session, env);
@@ -233,7 +234,7 @@ async function handleSession(request, env) {
         expires_at: session.expires_at
       },
       200,
-      { 'set-cookie': sessionCookie(token, SESSION_TTL_SECONDS) }
+      { 'set-cookie': sessionCookie(token, session.expires_at - now) }
     );
   }
 
@@ -358,6 +359,9 @@ function ownerPortfolioIdentity(session, env) {
   const subscriberId = String(entry?.subscriber_id || '').trim();
   const portfolioId = String(entry?.portfolio_id || '').trim();
   if (!subscriberId || !portfolioId) throw apiError('VP_IDENTITY_NOT_CONFIGURED', 503);
+  if (session.owner_id === 'TEST-OWNER-002' && Object.entries(map).some(([owner,other]) =>
+      owner !== session.owner_id && (String(other?.subscriber_id || '').trim() === subscriberId ||
+      String(other?.portfolio_id || '').trim() === portfolioId))) throw apiError('VP_IDENTITY_NOT_CONFIGURED',503);
   return {subscriberId,portfolioId};
 }
 
@@ -605,13 +609,24 @@ function requiredEnv(env, name) {
   return value;
 }
 
-/**
- * Single-owner credential resolver for MVP stage 1.
- *
- * When the project moves to five owners, replace only this resolver with a
- * credential store lookup. The signed session and all public routes already
- * use owner_id and therefore do not need to change.
- */
+async function resolveOwnerLogin(key, email, env) {
+  const legacy = authenticateOwnerAccessKey(key, env);
+  if (legacy && !email) return legacy; // Existing key-only clients.
+  if (!email || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return null;
+  if (legacy) {
+    const {response,payload} = await postProfileAction(env,{action:'owner_profile', mode:'read', owner_id:legacy.ownerId});
+    if (!response.ok || payload?.ok !== true) throw apiError('UPSTREAM_UNAVAILABLE',502);
+    return payload.profile?.email?.trim().toLowerCase() === email ? legacy : null;
+  }
+  if (key.length !== 10) return null;
+  const {response,payload} = await postProfileAction(env,{action:'pilot_login', email, access_key:key});
+  if (!response.ok || payload?.ok !== true) throw apiError('UPSTREAM_UNAVAILABLE',502);
+  const login = payload.login;
+  if (login === null) return null;
+  if (login?.owner_id !== 'TEST-OWNER-002' || !Number.isSafeInteger(login.until)) throw apiError('INVALID_UPSTREAM_RESPONSE',502);
+  return login.until > Date.now()/1000 ? {ownerId:login.owner_id,until:login.until} : null;
+}
+
 function authenticateOwnerAccessKey(suppliedKey, env) {
   const expectedKey = requiredEnv(env, 'QUD_OWNER_ACCESS_KEY');
   const ownerId = String(env.QUD_OWNER_ID || 'TEST-OWNER-001').trim();
