@@ -897,4 +897,12 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 #owner-first-choice:not(:empty) { margin-bottom: 1.5rem; padding: 1.25rem; border: 1px solid var(--line, #34383e); border-radius: .8rem; }
 #owner-name { padding: .7rem; background: transparent; color: inherit; font: inherit; border: 1px solid #666; border-radius: .4rem; }
 #owner-name-hint { font-size: .82rem; color: #abb4bc; }
+#email-inbox-hint {
+  margin: 0 0 1rem;
+  padding: .8rem 1rem;
+  border-left: 2px solid #87939d;
+  background: #11161a;
+  color: #d7dee4;
+  line-height: 1.5;
+}
 .owner-name-actions { display: flex; gap: .65rem; flex-wrap: wrap; }

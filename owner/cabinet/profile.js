@@ -24,6 +24,7 @@
     showConfirmation();
   }
   function showConfirmation() {
+    el('email-inbox-hint').hidden = !owner || !profile?.email || profile.email_verified || Boolean(emailToken);
     confirmation.hidden = !emailToken || !owner;
     confirmButton.hidden = !profile || profile.email_verified;
     confirmButton.disabled = busy;
