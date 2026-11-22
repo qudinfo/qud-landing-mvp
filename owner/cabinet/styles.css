@@ -573,7 +573,6 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .profile-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 15px; }
 .profile-card { min-width: 0; padding: 30px 25px 0 0; }
 .profile-card .eyebrow { margin: 0 0 14px; }
-.profile-card h2 { margin: 0; font-size: 25px; font-weight: 530; }
 .profile-id-placeholder { margin: 7px 0 26px; color: var(--text-soft); font-size: 15px; }
 .profile-confidentiality { max-width: 390px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
 .settings-card { min-width: 0; padding: 30px 0 0; }
@@ -895,7 +894,8 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 
 #owner-name-form:not([hidden]) { display: grid; gap: .65rem; max-width: 28rem; }
 #owner-first-choice:not(:empty) { margin-bottom: 1.5rem; padding: 1.25rem; border: 1px solid var(--line, #34383e); border-radius: .8rem; }
-#owner-name { padding: .7rem; background: transparent; color: inherit; font: inherit; border: 1px solid #666; border-radius: .4rem; }
+.owner-name-field { position: relative; min-width: 0; }
+#owner-name { width: 100%; padding: .7rem; background: transparent; color: inherit; font: inherit; border: 1px solid #666; border-radius: .4rem; }
 #owner-name-hint { font-size: .82rem; color: #abb4bc; }
 #overview-greeting { overflow-wrap: anywhere; }
 #profile-email-status.is-verified { color: var(--green); }
@@ -910,3 +910,41 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   line-height: 1.5;
 }
 .owner-name-actions { display: flex; gap: .65rem; flex-wrap: wrap; }
+
+#owner-profile-editor #owner-name-form { width: min(100%, 14rem); gap: .32rem; }
+#owner-profile-editor #owner-name-label { font-size: .625rem; }
+#owner-profile-editor #owner-name {
+  height: 24px;
+  padding: 0 26px 0 7px;
+  border-color: #344047;
+  font-size: .5rem;
+}
+#owner-name-edit {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 24px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-soft);
+}
+#owner-name-edit svg { width: 12px; height: 12px; }
+#owner-name-edit:hover, #owner-name-edit:focus-visible { color: var(--text); background: var(--panel-strong); }
+#owner-profile-editor #owner-name-save {
+  width: auto;
+  min-width: 66px;
+  min-height: 23px;
+  padding: 0 8px;
+  border: 1px solid #344047;
+  border-radius: 5px;
+  background: var(--panel-strong);
+  color: var(--text);
+  font-size: 10px;
+}
+#owner-profile-editor #owner-name-save:hover { border-color: var(--text-soft); }
+#owner-profile-editor .owner-name-actions:has(#owner-name-save[hidden]),
+#owner-name-status:empty, #owner-profile-state:empty { display: none; }
+#owner-profile-editor #owner-name-status { font-size: 11px; color: var(--text-soft); }

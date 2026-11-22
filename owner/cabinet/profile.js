@@ -3,6 +3,7 @@
   const el = id => document.getElementById(id);
   const form = el('owner-name-form');
   const input = el('owner-name');
+  const edit = el('owner-name-edit');
   const save = el('owner-name-save');
   const skip = el('owner-name-skip');
   const status = el('owner-name-status');
@@ -11,6 +12,7 @@
   let generation = 0;
   let profile;
   let busy = false;
+  let editing = false;
   const profileFeedback = el('profile-email-feedback');
   const loginStatus = el('login-email-confirmation');
   let linkMessage = '';
@@ -83,12 +85,24 @@
       ? (profile.email_verified ? 'Подтверждена' : 'Ожидает подтверждения') : '—';
     el('profile-key-issued').textContent = profile?.key_issued || '—';
     const first = profile && !profile.chosen;
-    (first ? el('owner-first-choice') : el('owner-profile-editor')).appendChild(form);
+    const container = first ? el('owner-first-choice') : el('owner-profile-editor');
+    if (form.parentElement !== container) container.appendChild(form);
     form.hidden = !profile;
     skip.hidden = !first;
     input.required = Boolean(first);
-    input.value = profile?.name || '';
-    el('owner-name-label').textContent = first ? 'Укажите пожалуйста имя' : 'Имя для обращения';
+    input.readOnly = !first && !editing;
+    if (!editing) input.value = profile?.name || '';
+    edit.hidden = !profile?.chosen || editing;
+    el('owner-name-hint').hidden = !first;
+    if (first) input.setAttribute('aria-describedby', 'owner-name-hint');
+    else input.removeAttribute('aria-describedby');
+    el('owner-name-label').textContent = first ? 'Укажите пожалуйста имя' : 'Ваше имя';
+    save.textContent = first ? 'Сохранить имя' : 'Сохранить';
+    updateSave();
+  }
+
+  function updateSave() {
+    save.hidden = !profile || (profile.chosen && (!editing || input.value.trim() === (profile.name || '')));
   }
 
   async function request(method, body) {
@@ -120,7 +134,7 @@
   }
 
   async function submit(mode) {
-    if (busy || !profile) return;
+    if (busy || !profile || (mode === 'edit' && save.hidden)) return;
     const token = generation;
     busy = true;
     save.disabled = skip.disabled = input.disabled = true;
@@ -128,8 +142,10 @@
     try {
       const data = await request('POST', {mode, name: mode === 'skip' ? '' : input.value.trim()});
       if (token !== generation) return;
+      editing = false;
       profile = data;
       render();
+      if (mode === 'edit') edit.focus();
       status.textContent = 'Выбор сохранён.';
     } catch (error) {
       if (token !== generation) return;
@@ -142,6 +158,22 @@
       }
     }
   }
+  edit.addEventListener('click', () => {
+    editing = true;
+    status.textContent = '';
+    render();
+    input.focus();
+    input.select();
+  });
+  input.addEventListener('input', updateSave);
+  input.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !editing || busy) return;
+    event.preventDefault();
+    editing = false;
+    status.textContent = '';
+    render();
+    edit.focus();
+  });
   form.addEventListener('submit', event => {
     event.preventDefault();
     submit(profile?.chosen ? 'edit' : 'save');
@@ -153,6 +185,7 @@
     if (id && id === owner) return;
     ++generation;
     owner = id;
+    editing = false;
     profile = null;
     busy = false;
     save.disabled = skip.disabled = input.disabled = false;

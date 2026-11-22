@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261122-profile-status">
+  <link rel="stylesheet" href="./styles.css?v=20261122-name-editor">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
@@ -307,14 +307,18 @@
         <section class="view" id="view-profile" data-title="Профиль владельца" aria-labelledby="profile-title" hidden>
           <div class="profile-layout">
             <section class="profile-card" aria-labelledby="profile-title">
-              <p class="eyebrow">Профиль владельца</p>
-              <h2 id="profile-title">Мой профиль</h2>
+              <h2 class="eyebrow" id="profile-title">Профиль владельца</h2>
               <p id="owner-profile-state" role="status"></p>
               <button id="owner-profile-retry" type="button" class="button button-secondary" hidden>Повторить</button>
               <div id="owner-profile-editor">
                 <form id="owner-name-form" hidden>
                   <label id="owner-name-label" for="owner-name">Укажите пожалуйста имя</label>
-                  <input id="owner-name" type="text" autocomplete="given-name" maxlength="60" aria-describedby="owner-name-hint">
+                  <div class="owner-name-field">
+                    <input id="owner-name" type="text" autocomplete="given-name" maxlength="60" aria-describedby="owner-name-hint">
+                    <button type="button" id="owner-name-edit" aria-label="Изменить имя" title="Изменить имя" hidden>
+                      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 5 4 4M4 20l4.5-1 12-12a2.8 2.8 0 0 0-4-4l-12 12L4 20Z"/></svg>
+                    </button>
+                  </div>
                   <small id="owner-name-hint">Имя можно изменить позже в профиле</small>
                   <div class="owner-name-actions">
                     <button type="submit" id="owner-name-save" class="button button-primary">Сохранить имя</button>
@@ -397,7 +401,7 @@
     </form>
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
-  <script src="./profile.js?v=5" defer></script>
+  <script src="./profile.js?v=6" defer></script>
   <script src="./app.js?v=20261122-profile-1" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261122-profile-1" defer></script>
