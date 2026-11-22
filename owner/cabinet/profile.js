@@ -11,6 +11,50 @@
   let generation = 0;
   let profile;
   let busy = false;
+  const confirmation = el('email-verification');
+  const confirmButton = el('email-verification-submit');
+  const confirmStatus = el('email-verification-status');
+  let emailToken = '';
+
+  function captureEmailLink() {
+    const match = /^#verify-email=([a-f0-9]{64})$/.exec(location.hash);
+    if (!match) return;
+    emailToken = match[1];
+    history.replaceState(null, '', location.pathname + location.search + '#profile');
+    showConfirmation();
+  }
+  function showConfirmation() {
+    confirmation.hidden = !emailToken || !owner;
+    confirmButton.hidden = !profile || profile.email_verified;
+    confirmButton.disabled = busy;
+    if (!confirmation.hidden) {
+      confirmStatus.textContent = !profile ? 'Загружаем адрес из вашего профиля…'
+        : profile.email_verified ? 'Почта уже подтверждена.' : profile.email;
+    }
+  }
+  captureEmailLink();
+  window.addEventListener('hashchange', captureEmailLink);
+  confirmButton.addEventListener('click', async () => {
+    if (busy || !emailToken || !profile || profile.email_verified) return;
+    const current = generation;
+    busy = true;
+    confirmButton.disabled = true;
+    confirmStatus.textContent = 'Подтверждаем почту…';
+    try {
+      const data = await request('POST', {mode: 'verify_email', token: emailToken});
+      if (current !== generation) return;
+      profile = data;
+      render();
+      confirmStatus.textContent = 'Почта подтверждена.';
+    } catch (error) {
+      if (current !== generation) return;
+      confirmStatus.textContent = error.message === 'INVALID_EMAIL_LINK'
+        ? 'Ссылка недействительна. Проверьте, что вы вошли в свой кабинет и открыли последнее письмо QUD.'
+        : 'Не удалось подтвердить почту. Попробуйте ещё раз.';
+    } finally {
+      if (current === generation) { busy = false; confirmButton.disabled = false; }
+    }
+  });
 
   function maskedEmail(address) {
     const at = address.lastIndexOf('@');
@@ -18,6 +62,7 @@
   }
 
   function render() {
+    showConfirmation();
     const email = profile?.email || '';
     el('header-owner-id').textContent = profile?.name || 'Мой профиль';
     el('header-owner-email').textContent = maskedEmail(email);

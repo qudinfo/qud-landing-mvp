@@ -40,3 +40,36 @@ test('missing or duplicated owner and invalid name cannot write', () => {
   assert.throws(()=>run('A','save','Иван'));
   assert.deepEqual(rows.slice(1).map(r=>r.slice(-2)),[['',''],['','']]);
 });
+
+test('email confirmation binds the active link to one owner and address and preserves the date on replay', async () => {
+  const {createHash} = await import('node:crypto');
+  const digest = value => createHash('sha256').update(value).digest();
+  api.Utilities = {DigestAlgorithm:{SHA_256:0},Charset:{UTF_8:0}, computeDigest:(_,v)=>Array.from(digest(v))};
+  api.SpreadsheetApp = {flush() {}};
+  const secret = 'a'.repeat(64);
+  const issue = (owner,email,token,date) => ['EM-' + digest([owner,email,token].join('\n')).toString('hex'),
+    owner,date,'Подтверждение почты','QUD','Ожидает подтверждения'];
+  const entries = [['ID события','Owner ID','Дата и время','Действие','Кто выполнил','Результат'],
+    issue('A','a@example.com',secret,new Date().toISOString())];
+  const log = {getLastRow:()=>entries.length, getRange(r,c,h,w) {
+    return {getValues:()=>entries.slice(r-1,r-1+h).map(a=>a.slice(c-1,c-1+w)),
+      setValue:v=>{entries[r-1][c-1]=v;}};
+  }};
+  let date='', writes=0;
+  const sheet={getParent:()=>({getSheetByName:()=>log}),
+    getRange:(r,c)=>{assert.equal(r,2);assert.equal(c,3);return {setValue:v=>{writes++;date=v;}};}};
+  const run=(id,email,key)=>api.qudVerifyOwnerEmail_(sheet,2,3,date,id,email,key);
+  assert.throws(()=>run('B','a@example.com',secret));
+  assert.throws(()=>run('A','b@example.com',secret));
+  assert.throws(()=>run('A','a@example.com','b'.repeat(64)));
+  const current=entries[1][2];
+  entries[1][2]='2020-01-01T00:00:00Z'; assert.throws(()=>run('A','a@example.com',secret));
+  entries[1][2]=current;
+  const replacement='c'.repeat(64);
+  entries.push(issue('A','a@example.com',replacement,current));
+  assert.throws(()=>run('A','a@example.com',secret));
+  assert.equal(writes,0);
+  assert.equal(run('A','a@example.com',replacement),date);
+  assert.equal(run('A','a@example.com',replacement),date);
+  assert.equal(writes,1); assert.equal(entries[2][5],'Подтверждено');
+});

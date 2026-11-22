@@ -94,6 +94,7 @@ async function handleOwnerProfile(request, env, session) {
   }
   let mode = 'read';
   let name = '';
+  let verificationToken;
   if (method === 'POST') {
     if (request.headers.get('origin') !== new URL(request.url).origin ||
         request.headers.get('content-type')?.split(';')[0] !== 'application/json') {
@@ -101,9 +102,16 @@ async function handleOwnerProfile(request, env, session) {
     }
     const body = await readJson(request);
     mode = body.mode;
-    name = body.name;
-    if (!['save', 'skip', 'edit'].includes(mode) || typeof name !== 'string' || name.length > 120) {
-      return jsonResponse({ok: false, error: 'INVALID_CHOICE'}, 400);
+    if (mode === 'verify_email') {
+      verificationToken = body.token;
+      if (typeof verificationToken !== 'string' || !/^[a-f0-9]{64}$/.test(verificationToken)) {
+        return jsonResponse({ok: false, error: 'INVALID_EMAIL_LINK'}, 400);
+      }
+    } else {
+      name = body.name;
+      if (!['save', 'skip', 'edit'].includes(mode) || typeof name !== 'string' || name.length > 120) {
+        return jsonResponse({ok: false, error: 'INVALID_CHOICE'}, 400);
+      }
     }
   }
   const {secret} = requireUpstream(env);
@@ -113,7 +121,7 @@ async function handleOwnerProfile(request, env, session) {
   }
   const response = await fetch(url, {
     method: 'POST', headers: {'content-type': 'application/json'},
-    body: JSON.stringify({action: 'owner_profile', owner_id: session.owner_id, proxy_secret: secret, mode, name})
+    body: JSON.stringify({action: 'owner_profile', owner_id: session.owner_id, proxy_secret: secret, mode, name, token: verificationToken})
   });
   const payload = await response.json();
   const failure = normalizeUpstreamError({response, payload});
