@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261024-2">
+  <link rel="stylesheet" href="./styles.css?v=20261122-profile-1">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
@@ -107,11 +107,12 @@
         <div class="topbar-actions">
           <div class="access-pill" data-access-status="inactive" aria-label="Статус доступа: вход не подтверждён" title="Статус доступа: вход не подтверждён"><span class="status-dot"></span><span><strong>Статус доступа</strong><small id="access-status-label">Вход не подтверждён</small></span></div>
           <button class="top-support" id="open-support" type="button" aria-label="Поддержка" aria-haspopup="dialog" aria-controls="support-dialog" title="Поддержка"><svg aria-hidden="true"><use href="#icon-support"></use></svg><span>Поддержка</span><span class="support-unread" id="support-unread" hidden></span></button>
-          <button class="top-profile" type="button" data-view="profile" aria-label="Открыть профиль владельца"><span class="avatar">QC</span><span class="top-profile-copy"><strong id="header-owner-id">Owner ID недоступен</strong><small>Owner ID</small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
+          <button class="top-profile" type="button" data-view="profile" aria-label="Открыть профиль владельца"><span class="avatar">QC</span><span class="top-profile-copy"><strong id="header-owner-id">Мой профиль</strong><small id="header-owner-email"></small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
         </div>
       </header>
 
       <main class="content" id="cabinet-content" tabindex="-1">
+        <div id="owner-first-choice"></div>
         <section class="view is-active" id="view-overview" data-title="Исследовательский доступ" aria-labelledby="overview-title">
           <div class="overview-grid">
             <div class="overview-main">
@@ -305,16 +306,29 @@
           <div class="profile-layout">
             <section class="profile-card" aria-labelledby="profile-title">
               <p class="eyebrow">Профиль владельца</p>
-              <h2 id="profile-title">Owner ID</h2>
-              <p class="profile-id-placeholder" id="profile-owner-id">Owner ID недоступен</p>
-              <p class="profile-confidentiality">Owner ID конфиденциален. Сохраните его после выдачи и не разглашайте третьим лицам.</p>
+              <h2 id="profile-title">Мой профиль</h2>
+              <p id="owner-profile-state" role="status"></p>
+              <button id="owner-profile-retry" type="button" class="button button-secondary" hidden>Повторить</button>
+              <div id="owner-profile-editor">
+                <form id="owner-name-form" hidden>
+                  <label id="owner-name-label" for="owner-name">Укажите пожалуйста имя</label>
+                  <input id="owner-name" type="text" autocomplete="given-name" maxlength="60" aria-describedby="owner-name-hint">
+                  <small id="owner-name-hint">Имя можно изменить позже в профиле</small>
+                  <div class="owner-name-actions">
+                    <button type="submit" id="owner-name-save" class="button button-primary">Сохранить имя</button>
+                    <button type="button" id="owner-name-skip" class="button button-secondary">Пропустить</button>
+                  </div>
+                  <span id="owner-name-status" role="status"></span>
+                </form>
+              </div>
             </section>
             <section class="settings-card">
               <h3>Состояние доступа</h3>
               <dl>
                 <div><dt>Авторизация<small>Подтверждает право входа в кабинет по ключу доступа.</small></dt><dd>Вход выполнен</dd></div>
-                <div><dt>Дата выдачи ключа доступа</dt><dd>Не указана</dd></div>
-                <div><dt>Электронная почта владельца<small>На этот адрес будут направляться письма от QUD.</small></dt><dd>Не указана</dd></div>
+                <div><dt>Дата выдачи ключа доступа</dt><dd id="profile-key-issued">—</dd></div>
+                <div><dt>Электронная почта владельца<small>На этот адрес будут направляться письма от QUD.</small></dt><dd id="profile-email">—</dd></div>
+                <div><dt>Подтверждение почты</dt><dd id="profile-email-status">—</dd></div>
               </dl>
             </section>
           </div>
@@ -325,7 +339,7 @@
 
   <dialog class="support-dialog panel" id="support-dialog" aria-labelledby="support-dialog-title">
     <div class="broker-dialog-header"><div><p class="eyebrow">Связь с QUD</p><h2 id="support-dialog-title">Поддержка</h2></div><button class="icon-button" id="close-support" type="button" aria-label="Закрыть поддержку"><svg><use href="#icon-close"></use></svg></button></div>
-    <div class="support-addresses"><div><span>От кого</span><strong id="support-from">Электронная почта не указана</strong><small id="support-owner-id">Owner ID не назначен</small></div><div><span>Кому</span><strong>infoqud@gmail.com</strong><small>Официальная почта QUD</small></div></div>
+    <div class="support-addresses"><div><span>От кого</span><strong id="support-from">Электронная почта не указана</strong><small id="support-owner-id"></small></div><div><span>Кому</span><strong>infoqud@gmail.com</strong><small>Официальная почта QUD</small></div></div>
     <section class="support-history" aria-labelledby="support-history-title"><div class="support-history-heading"><h3 id="support-history-title">История переписки</h3><span id="support-history-count"></span></div><p class="support-history-state" id="support-history-state" role="status">Загрузка сообщений…</p><div id="support-messages"></div></section>
     <form class="support-form" id="support-form"><label for="support-message">Сообщение</label><textarea id="support-message" name="message" rows="4" maxlength="4000" placeholder="Напишите ваш вопрос для QUD" required disabled></textarea><div class="support-form-footer"><p id="support-feedback" role="status">Проверяем доступность канала поддержки.</p><button class="button button-primary" id="support-send" type="submit" disabled>Отправить</button></div></form>
   </dialog>
@@ -380,9 +394,10 @@
     </form>
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
-  <script src="./app.js?v=20261016-16" defer></script>
+  <script src="./app.js?v=20261122-profile-1" defer></script>
   <script src="./login-language.js?v=1"></script>
-  <script src="./session.js?v=20261112-login-1" defer></script>
+  <script src="./profile.js?v=1" defer></script>
+  <script src="./session.js?v=20261122-profile-1" defer></script>
   <script src="/portal/portfolio/mvp/app.js?v=20261023-owner-9" defer></script>
 </body>
 </html>

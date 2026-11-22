@@ -53,6 +53,10 @@ export default {
         );
       }
 
+      if (url.pathname === '/owner/api/profile') {
+        return await handleOwnerProfile(request, env, session);
+      }
+
       if (url.pathname === STRATEGIES_PATH) {
         if (request.method !== 'GET') {
           return methodNotAllowed('GET');
@@ -81,6 +85,47 @@ export default {
     }
   }
 };
+
+async function handleOwnerProfile(request, env, session) {
+  const method = request.method;
+  if (method !== 'GET' && method !== 'POST') return methodNotAllowed('GET, POST');
+  if (request.headers.get('x-qud-profile-owner') !== session.owner_id) {
+    return jsonResponse({ok: false, error: 'SESSION_CHANGED'}, 409);
+  }
+  let mode = 'read';
+  let name = '';
+  if (method === 'POST') {
+    if (request.headers.get('origin') !== new URL(request.url).origin ||
+        request.headers.get('content-type')?.split(';')[0] !== 'application/json') {
+      return jsonResponse({ok: false, error: 'INVALID_REQUEST'}, 403);
+    }
+    const body = await readJson(request);
+    mode = body.mode;
+    name = body.name;
+    if (!['save', 'skip', 'edit'].includes(mode) || typeof name !== 'string' || name.length > 120) {
+      return jsonResponse({ok: false, error: 'INVALID_CHOICE'}, 400);
+    }
+  }
+  const {secret} = requireUpstream(env);
+  const url = new URL(env.QUD_OWNER_PROFILE_URL);
+  if (url.origin !== 'https://script.google.com' || !/^\/macros\/s\/[\w-]+\/exec$/.test(url.pathname)) {
+    throw apiError('PROFILE_NOT_CONFIGURED', 500);
+  }
+  const response = await fetch(url, {
+    method: 'POST', headers: {'content-type': 'application/json'},
+    body: JSON.stringify({action: 'owner_profile', owner_id: session.owner_id, proxy_secret: secret, mode, name})
+  });
+  const payload = await response.json();
+  const failure = normalizeUpstreamError({response, payload});
+  if (failure) return failure;
+  const p = payload?.profile;
+  if (payload.ok !== true || !p || typeof p.name !== 'string' || typeof p.chosen !== 'boolean' ||
+      typeof p.email !== 'string' || typeof p.email_verified !== 'boolean' || typeof p.key_issued !== 'string') {
+    throw apiError('INVALID_UPSTREAM_RESPONSE', 502);
+  }
+  return jsonResponse({ok: true, profile: {name: p.name, chosen: p.chosen, email: p.email,
+    email_verified: p.email_verified, key_issued: p.key_issued}});
+}
 
 async function handleSession(request, env) {
   if (request.method === 'GET') {

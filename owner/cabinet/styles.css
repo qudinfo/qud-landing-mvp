@@ -892,3 +892,9 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .auth-login-visual .core-cube::before { inset: 10px; }
   .auth-login-visual .core-cube span { font-size: 20px; }
 }
+
+#owner-name-form:not([hidden]) { display: grid; gap: .65rem; max-width: 28rem; }
+#owner-first-choice:not(:empty) { margin-bottom: 1.5rem; padding: 1.25rem; border: 1px solid var(--line, #34383e); border-radius: .8rem; }
+#owner-name { padding: .7rem; background: transparent; color: inherit; font: inherit; border: 1px solid #666; border-radius: .4rem; }
+#owner-name-hint { font-size: .82rem; color: #abb4bc; }
+.owner-name-actions { display: flex; gap: .65rem; flex-wrap: wrap; }

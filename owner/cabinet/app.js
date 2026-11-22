@@ -1086,7 +1086,7 @@
       const email = typeof data.owner_email === 'string' ? data.owner_email.trim() : '';
       ownerEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : '';
       from.textContent = ownerEmail || 'Электронная почта не указана';
-      ownerId.textContent = data.owner_id ? `Owner ID: ${String(data.owner_id)}` : 'Owner ID не назначен';
+      ownerId.textContent = '';
       showUnread(data.unread_count);
       renderMessages(data.messages);
       feedback.textContent = ownerEmail
@@ -1097,7 +1097,7 @@
       available = false;
       ownerEmail = '';
       from.textContent = 'Электронная почта не указана';
-      ownerId.textContent = 'Owner ID не назначен';
+      ownerId.textContent = '';
       showUnread(0);
       messages.replaceChildren();
       historyCount.textContent = '';

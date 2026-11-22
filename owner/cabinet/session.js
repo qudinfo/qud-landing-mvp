@@ -14,12 +14,6 @@
   let expiryTimer;
 
   function renderOwnerAccess(data = {}) {
-    // Identity comes only from the authenticated Owner session, never from VP data.
-    const ownerId = typeof data.owner_id === 'string' && data.owner_id.trim()
-      ? data.owner_id.trim() : 'Owner ID недоступен';
-    byId('header-owner-id').textContent = ownerId;
-    byId('profile-owner-id').textContent = ownerId;
-
     // The MVP session proves cabinet access, not a paid subscription status.
     const active = data.authenticated === true;
     const label = active ? 'Доступ к кабинету активен' : 'Вход не подтверждён';
@@ -78,7 +72,7 @@
     show('shell');
     renderOwnerAccess(data);
     authenticated = true;
-    window.dispatchEvent(new CustomEvent('owner:session', { detail: { authenticated: true } }));
+    window.dispatchEvent(new CustomEvent('owner:session', { detail: { authenticated: true, owner_id: data.owner_id } }));
     key.value = '';
     clearTimeout(expiryTimer);
     if (Number.isFinite(data.expires_at)) {
@@ -89,7 +83,7 @@
   async function checkSession(wasAuthenticated = authenticated) {
     if (busy) return;
     busy = true;
-    show('loading');
+    if (!wasAuthenticated) show('loading');
     try { accept(await request('GET'), wasAuthenticated); }
     catch { show('unavailable'); }
     finally { busy = false; }

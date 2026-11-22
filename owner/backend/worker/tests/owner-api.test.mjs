@@ -402,3 +402,29 @@ assert.deepEqual(await payload(response), { ok: true, authenticated: false });
 assert.match(response.headers.get('set-cookie'), /Max-Age=0/);
 
 console.log('Owner Worker tests passed');
+
+{
+  const profileEnv = {...env, QUD_OWNER_PROFILE_URL: 'https://script.google.com/macros/s/test-profile/exec'};
+  const login = await worker.fetch(request('/owner/api/session', {method:'POST',
+    body:JSON.stringify({access_key: env.QUD_OWNER_ACCESS_KEY})}), profileEnv);
+  const cookie = cookiePair(login.headers.get('set-cookie'));
+  const headers = {cookie, origin:'https://fx-qud.com', 'content-type':'application/json',
+    'x-qud-profile-owner':env.QUD_OWNER_ID};
+  let received;
+  const savedFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (_, options) => {
+      received = JSON.parse(options.body);
+      return Response.json({ok:true, profile:{name:'Анна', chosen:true,email:'a@example.com',email_verified:false,key_issued:''}});
+    };
+    const send = (extra={}) => worker.fetch(request('/owner/api/profile', {
+      method:'POST', headers:{...headers,...extra},body:JSON.stringify({mode:'save',name:'Анна',owner_id:'OTHER'})
+    }),profileEnv);
+    assert.equal((await send({'x-qud-profile-owner':'OTHER'})).status,409);
+    assert.equal((await send({cookie:''})).status,401);
+    assert.equal((await send({origin:'https://example.com'})).status,403);
+    assert.equal(received,undefined);
+    assert.equal((await send()).status,200);
+    assert.equal(received.owner_id,env.QUD_OWNER_ID);
+  } finally { globalThis.fetch=savedFetch; }
+}
