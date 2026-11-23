@@ -158,7 +158,8 @@
 .overview-trend:has(.overview-sparkline:not(:has(svg))){gap:6px}
 .overview-trend .overview-sparkline:not(:has(svg)){min-height:0;align-items:start}
 .owner-shell .nav-item:disabled,.next-step-card .button:disabled{opacity:.55;cursor:default}
-.help-card[hidden]{display:none}
+.help-card > button:disabled{cursor:default;color:var(--muted)}
+.help-card > button:disabled strong{color:inherit}
 .overview-trend .eyebrow{margin:0;white-space:normal}
 .overview-sparkline{width:min(100%,300px);min-height:70px;display:grid;align-items:center;color:#87939d;font-size:11px;text-align:left}
 .overview-vp-lower .strategy-preview{border-left:0;padding-left:0}
