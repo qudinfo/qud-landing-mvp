@@ -119,10 +119,11 @@
     return number === null ? '—' : `$${formatter.format(number)}`;
   }
 
-  function formatSignedMoney(value) {
+  function formatSignedMoney(value, formatter = moneyFormatter) {
     const number = finiteNumber(value);
     if (number === null) return '—';
-    return `${number > 0 ? '+' : ''}$${moneyFormatter.format(number)}`;
+    if (formatter === integerFormatter && Math.abs(number) < 0.5) return '$0';
+    return `${number > 0 ? '+' : ''}$${formatter.format(number)}`;
   }
 
   function formatPercent(value, signed = false) {
@@ -419,9 +420,10 @@
     const drawdown = valueFrom(portfolio, ['current_drawdown_pct']);
     const active = valueFrom(portfolio, ['active_strategies_count']);
 
-    dom.metricAllocated.textContent = formatMoney(allocated);
-    dom.metricBalance.textContent = formatMoney(balance);
-    dom.metricReturnUsd.textContent = formatSignedMoney(returnUsd);
+    const summaryFormatter = ownerMode ? integerFormatter : moneyFormatter;
+    dom.metricAllocated.textContent = formatMoney(allocated, summaryFormatter);
+    dom.metricBalance.textContent = formatMoney(balance, summaryFormatter);
+    dom.metricReturnUsd.textContent = formatSignedMoney(returnUsd, summaryFormatter);
     dom.metricReturnPct.textContent = formatPercent(returnPct, true);
     dom.metricDrawdown.textContent = formatDrawdown(drawdown);
     dom.metricActive.textContent = formatNumber(active);
