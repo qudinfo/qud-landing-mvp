@@ -1,4 +1,23 @@
 .owner-vp [hidden]{display:none!important}
+.owner-vp .vp-instructions {
+  border-top: 1px solid var(--border-soft);
+  padding-top: 18px;
+}
+.owner-vp .vp-instructions .broker-document-card[open] {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.owner-vp .vp-instructions .broker-document-card[open] .broker-document-content {
+  position: absolute;
+  top: 100%;
+  inset-inline: -1px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: 0 6px 14px rgb(0 0 0 / 20%);
+}
 .owner-vp .vp-instructions h2.eyebrow{margin:0;font-size:11px;font-weight:730;letter-spacing:.12em;line-height:1.4;text-transform:uppercase}
 .owner-vp .vp-instructions .broker-document-content p{margin:0;color:var(--text-soft);font-size:11px;line-height:1.6}
 .owner-vp .vp-instructions .broker-document-card summary{min-height:60px;gap:10px;padding:10px 13px}
