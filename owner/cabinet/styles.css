@@ -2,7 +2,7 @@
   color-scheme: dark;
   --bg: #090b0d;
   --bg-soft: #0d1013;
-  --sidebar: #0a0d10;
+  --sidebar: rgba(16, 19, 23, 0.62);
   --panel: #101317;
   --panel-strong: #15191e;
   --panel-soft: #0d1013;
@@ -71,8 +71,10 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
   height: 100vh;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--border);
+  border-right: 1px solid #30363e;
   background: var(--sidebar);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   padding: 28px 16px 18px;
 }
 
@@ -616,16 +618,19 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 
 button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
 
+@media (hover: hover) and (pointer: fine) and (min-width: 981px) {
+  .sidebar:hover { border-right-color: #454c55; }
+}
+
 @media (min-width: 821px) {
   .sidebar {
     width: var(--sidebar-width);
     overflow: hidden;
     padding-inline: 8px;
-    transition: width 200ms ease 190ms, box-shadow 200ms ease 190ms;
+    transition: width 200ms ease 190ms, border-color 240ms ease;
   }
   .sidebar:hover, .sidebar:focus-within {
     width: var(--sidebar-expanded-width);
-    box-shadow: 24px 0 54px rgba(0, 0, 0, .42);
     transition-delay: 0ms;
   }
   .sidebar-header { padding-inline: 0; }
@@ -728,7 +733,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   :root { --topbar-height: 78px; }
   body { overflow: hidden; }
   .cabinet-shell { grid-template-columns: 1fr; }
-  .sidebar { position: fixed; inset: 0 auto 0 0; width: min(86vw, 330px); transform: translateX(-102%); transition: transform 210ms ease; box-shadow: 25px 0 70px rgba(0,0,0,.45); }
+  .sidebar { position: fixed; inset: 0 auto 0 0; width: min(86vw, 330px); transform: translateX(-102%); transition: transform 210ms ease; }
   .sidebar.is-open { transform: translateX(0); }
   .sidebar-close, .menu-button { display: grid; }
   .topbar { padding: 0 20px; }
