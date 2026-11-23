@@ -1003,6 +1003,8 @@
   let refreshTimer;
   let requestVersion = 0;
   let sending = false;
+  const readTimers = new Map();
+  let readIds = new Set();
 
   function showUnread(count) {
     unreadCount = Math.max(0, Math.min(Number(count) || 0, 999));
@@ -1052,9 +1054,8 @@
     items.forEach((item) => {
       if (!item || typeof item.id !== 'string' ||
           !['owner', 'qud'].includes(item.direction) || typeof item.body !== 'string') return;
-      const entry = document.createElement('details');
+      const entry = document.createElement('article');
       entry.className = `support-message support-message-${item.direction}`;
-      const summary = document.createElement('summary');
       const label = document.createElement('strong');
       label.textContent = item.direction === 'qud' ? 'QUD' : 'Вы';
       const date = document.createElement('time');
@@ -1067,22 +1068,20 @@
           }).format(parsed);
         }
       }
-      const preview = document.createElement('span');
-      preview.textContent = item.body.replace(/\s+/g, ' ').slice(0, 90);
-      summary.append(label, date, preview);
-      if (item.direction === 'qud' && !item.read) {
-        const newLabel = document.createElement('em');
-        newLabel.textContent = 'Новое';
-        summary.append(newLabel);
-        entry.addEventListener('toggle', () => {
-          if (entry.open && newLabel.isConnected) markRead(item.id, newLabel);
-        });
-      }
       const body = document.createElement('p');
       body.textContent = item.body;
-      entry.append(summary, body);
+      entry.append(label, date, body);
+      if (item.direction === 'qud' && !item.read) {
+        entry.dataset.unreadId = item.id;
+        const newLabel = document.createElement('em');
+        newLabel.textContent = 'Новое';
+        newLabel.hidden = readIds.has(item.id);
+        entry.append(newLabel);
+      }
       messages.append(entry);
     });
+    syncReadIndicators();
+    updateReadTimers();
   }
 
   async function refreshSupport() {
@@ -1095,7 +1094,6 @@
       available = true;
       const email = typeof data.owner_email === 'string' ? data.owner_email.trim() : '';
       ownerEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : '';
-      showUnread(data.unread_count);
       renderMessages(data.messages);
       feedback.textContent = ownerEmail
         ? ''
@@ -1106,6 +1104,7 @@
       ownerEmail = '';
       showUnread(0);
       messages.replaceChildren();
+      updateReadTimers();
       historyCount.textContent = '';
       historyState.hidden = false;
       historyState.textContent = 'Не удалось загрузить переписку. Откройте поддержку ещё раз.';
@@ -1114,30 +1113,87 @@
     updateComposer();
   }
 
-  async function markRead(messageId, newLabel) {
-    if (newLabel.dataset.pending) return;
-    newLabel.dataset.pending = '1';
-    const owner = sessionOwner;
-    try {
-      await supportRequest(`${endpoint}/read`, {
-        method: 'POST', body: JSON.stringify({ message_id: messageId })
-      });
-      if (owner !== sessionOwner || !newLabel.isConnected) return;
-      newLabel.remove();
-      if (authenticated) showUnread(unreadCount - 1);
-    } catch {
-      delete newLabel.dataset.pending;
+  function syncReadIndicators() {
+    let count = 0;
+    for (const entry of messages.querySelectorAll('[data-unread-id]')) {
+      const read = readIds.has(entry.dataset.unreadId);
+      entry.querySelector('em').hidden = read;
+      if (!read) count++;
+    }
+    showUnread(count);
+  }
+
+  function visibleUnreadIds() {
+    const ids = new Set();
+    if (!authenticated || !dialog.open || document.hidden) return ids;
+    const list = messages.getBoundingClientRect();
+    const panel = dialog.getBoundingClientRect();
+    const top = Math.max(0, list.top, panel.top);
+    const bottom = Math.min(window.innerHeight, list.bottom, panel.bottom);
+    if (bottom <= top) return ids;
+    for (const entry of messages.querySelectorAll('[data-unread-id]')) {
+      const id = entry.dataset.unreadId;
+      const rect = entry.getBoundingClientRect();
+      if (!readIds.has(id) && rect.bottom > top && rect.top < bottom) ids.add(id);
+    }
+    return ids;
+  }
+
+  function updateReadTimers() {
+    const visible = visibleUnreadIds();
+    for (const [id, timer] of readTimers) {
+      if (!visible.has(id)) {
+        clearTimeout(timer);
+        readTimers.delete(id);
+      }
+    }
+    for (const id of visible) {
+      if (readTimers.has(id)) continue;
+      readTimers.set(id, setTimeout(() => {
+        readTimers.delete(id);
+        if (visibleUnreadIds().has(id)) markRead(id);
+      }, 5000));
     }
   }
 
+  async function markRead(id) {
+    if (readIds.has(id)) return;
+    const sessionReads = readIds;
+    sessionReads.add(id);
+    syncReadIndicators();
+    try {
+      await supportRequest(`${endpoint}/read`, {
+        method: 'POST', body: JSON.stringify({ message_id: id })
+      });
+    } catch {
+      if (readIds !== sessionReads) return;
+      sessionReads.delete(id);
+      syncReadIndicators();
+      // The next refresh or interaction can retry.
+    }
+  }
+
+  dialog.addEventListener('close', updateReadTimers);
+  dialog.addEventListener('scroll', updateReadTimers, true);
+  document.addEventListener('visibilitychange', updateReadTimers);
+  window.addEventListener('resize', updateReadTimers);
+
   openButton.addEventListener('click', () => {
     dialog.showModal();
+    updateReadTimers();
     fitMessageInput();
     refreshSupport();
     byId('close-support').focus();
   });
   byId('close-support').addEventListener('click', () => dialog.close());
-  messageInput.addEventListener('input', () => { outgoingId = ''; updateComposer(); });
+  messageInput.addEventListener('input', () => {
+    outgoingId = '';
+    if (messageInput.value.trim()) {
+      for (const id of visibleUnreadIds()) markRead(id);
+    }
+    updateComposer();
+    updateReadTimers();
+  });
   byId('support-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     const body = messageInput.value.trim();
@@ -1172,12 +1228,14 @@
     const nextOwner = authenticated ? event.detail.owner_id : '';
     if (nextOwner !== sessionOwner) {
       sessionOwner = nextOwner;
+      readIds = new Set();
       available = false;
       ownerEmail = '';
       outgoingId = '';
       sending = false;
       messageInput.value = '';
       messages.replaceChildren();
+      updateReadTimers();
       historyCount.textContent = '';
       historyState.hidden = false;
       historyState.textContent = 'Загружаем переписку…';

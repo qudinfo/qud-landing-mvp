@@ -594,13 +594,11 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .support-history-heading span, .support-history-state { color: var(--muted); font-size: 11px; }
 .support-history-state { margin: 16px 0; line-height: 1.5; }
 #support-messages { max-height: 260px; overflow-y: auto; }
-.support-message summary { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: 10px; cursor: pointer; padding: 13px 0; list-style: none; }
-.support-message summary::-webkit-details-marker { display: none; }
-.support-message summary strong { color: var(--muted); font-size: 12px; }
-.support-message summary time { color: var(--muted); font-size: 10px; }
-.support-message summary span { color: var(--text-soft); font-size: 13px; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.support-message summary em { color: var(--green); font-size: 10px; font-style: normal; }
-.support-message p { margin: 0 0 14px; color: var(--text-soft); font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; white-space: pre-wrap; }
+.support-message { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: baseline; gap: 10px; padding: 13px 0; }
+.support-message strong { color: var(--muted); font-size: 12px; }
+.support-message time { color: var(--muted); font-size: 10px; }
+.support-message p { margin: 0; color: var(--text-soft); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; white-space: pre-wrap; }
+.support-message em { color: var(--green); font-size: 10px; font-style: normal; }
 .support-form { display: grid; gap: 9px; border-top: 1px solid var(--border-soft); margin-top: 20px; padding-top: 20px; }
 .support-form label { font-size: 12px; font-weight: 600; }
 .support-form textarea { width: 100%; min-height: 44px; max-height: min(210px, 34vh); resize: none; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-soft); color: var(--text); padding: 12px; font: inherit; font-size: 12px; line-height: 1.5; }
@@ -747,8 +745,9 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 
 @media (max-width: 640px) {
   .support-dialog { padding: 20px; }
-  .support-message summary { grid-template-columns: auto auto 1fr; }
-  .support-message summary span { grid-column: 1 / -1; }
+  .support-message { grid-template-columns: auto 1fr auto; }
+  .support-message p { grid-column: 1 / -1; grid-row: 2; }
+  .support-message em { grid-column: 3; grid-row: 1; }
   .broker-guide-content { left: 0; right: auto; }
   .broker-terminal-inline { gap: 12px; }
   .broker-terminal-wordmark { font-size: 13px; }
