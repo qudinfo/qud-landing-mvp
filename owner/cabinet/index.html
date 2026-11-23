@@ -165,23 +165,6 @@
 
         <section class="view owner-vp" id="view-portfolio" data-title="Virtual Portfolio" aria-labelledby="portfolio-title" hidden>
           <p class="vp-intro">Выберите реальные торговые стратегии QUD и укажите виртуальную сумму для каждой.<br>Наблюдайте, как сделки трейдеров меняют баланс портфеля, без вложения собственных денег.</p>
-          <div class="page-heading broker-heading vp-instructions">
-            <h2 class="eyebrow" id="portfolio-title">Инструкции</h2>
-            <div class="broker-documents" aria-label="Инструкции Virtual Portfolio">
-              <details class="broker-document-card panel" name="vp-instruction">
-                <summary><svg><use href="#icon-strategies"></use></svg><span><strong>Выбор стратегии</strong><small>Как выбрать доступную стратегию</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
-                <div class="broker-document-content"><p>Изучите показатели стратегии в разделе «Стратегии». Для нового наблюдения в Virtual Portfolio доступны только подготовленные и допущенные стратегии.</p></div>
-              </details>
-              <details class="broker-document-card panel" name="vp-instruction">
-                <summary><svg><use href="#icon-portfolio"></use></svg><span><strong>Создание наблюдения</strong><small>Сумма, срок и лимит просадки</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
-                <div class="broker-document-content"><p>Нажмите «Добавить наблюдение», выберите стратегию и задайте виртуальную сумму, срок и лимит просадки. Проверьте параметры перед запуском: после создания наблюдения их изменить нельзя.</p></div>
-              </details>
-              <details class="broker-document-card panel" name="vp-instruction">
-                <summary><svg><use href="#icon-chart"></use></svg><span><strong>Результаты наблюдения</strong><small>Баланс, график и история</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
-                <div class="broker-document-content"><p>Выберите созданное наблюдение в списке, чтобы открыть его показатели и историю. Общая динамика портфеля показана выше списка стратегий.</p></div>
-              </details>
-            </div>
-          </div>
           <span id="header-status" hidden>Защищённый раздел</span>
           <div id="access-view" hidden><p role="status" id="access-message">Для просмотра портфеля войдите в кабинет.</p></div>
           <div id="workspace" hidden>
@@ -193,6 +176,23 @@
                 <section class="panel vp-chart-panel" aria-labelledby="vp-chart-title"><div class="vp-chart-heading"><h3 class="eyebrow" id="vp-chart-title">Динамика виртуального баланса</h3><span id="portfolio-chart-count">0 недель</span></div><div class="chart-stage" id="portfolio-chart"></div></section>
               </div>
             </section>
+            <div class="page-heading broker-heading vp-instructions">
+              <h2 class="eyebrow" id="portfolio-title">Инструкции</h2>
+              <div class="broker-documents" aria-label="Инструкции Virtual Portfolio">
+                <details class="broker-document-card panel" name="vp-instruction">
+                  <summary><svg><use href="#icon-strategies"></use></svg><span><strong>Выбор стратегии</strong><small>Как выбрать доступную стратегию</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                  <div class="broker-document-content"><p>Изучите показатели стратегии в разделе «Стратегии». Для нового наблюдения в Virtual Portfolio доступны только подготовленные и допущенные стратегии.</p></div>
+                </details>
+                <details class="broker-document-card panel" name="vp-instruction">
+                  <summary><svg><use href="#icon-portfolio"></use></svg><span><strong>Создание наблюдения</strong><small>Сумма, срок и лимит просадки</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                  <div class="broker-document-content"><p>Нажмите «Добавить наблюдение», выберите стратегию и задайте виртуальную сумму, срок и лимит просадки. Проверьте параметры перед запуском: после создания наблюдения их изменить нельзя.</p></div>
+                </details>
+                <details class="broker-document-card panel" name="vp-instruction">
+                  <summary><svg><use href="#icon-chart"></use></svg><span><strong>Результаты наблюдения</strong><small>Баланс, график и история</small></span><span class="broker-document-chevron" aria-hidden="true">⌄</span></summary>
+                  <div class="broker-document-content"><p>Выберите созданное наблюдение в списке, чтобы открыть его показатели и историю. Общая динамика портфеля показана выше списка стратегий.</p></div>
+                </details>
+              </div>
+            </div>
             <div class="vp-columns">
               <aside class="vp-observations" aria-label="Стратегии портфеля">
                 <div class="vp-section-heading"><div><p class="eyebrow">Наблюдаемые стратегии</p></div></div>
@@ -222,7 +222,7 @@
             </div>
             <p class="vp-disclaimer">Виртуальное наблюдение не задействует реальные деньги и не является инвестиционной рекомендацией.</p>
           </div>
-          <template id="empty-portfolio-chart-template"><div class="chart-empty"><p>график появится после первого<br>подтверждённого недельного периода.</p></div></template>
+          <template id="empty-portfolio-chart-template"><div class="chart-empty"><p>График появится после первого<br>подтверждённого недельного периода.</p></div></template>
           <template id="empty-chart-template"><div class="chart-empty"><strong>Первая точка ещё не сформирована</strong><p>График появится после первого подтверждённого недельного периода.</p></div></template>
         </section>
 
