@@ -315,6 +315,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .strategy-view.is-detail .strategy-catalog { margin-top: 0; }
 .strategy-catalog { display: grid; gap: 12px; margin-top: 8px; }
 .strategy-catalog-row {
+  cursor: pointer;
   width: 100%;
   min-height: 116px;
   display: grid;
@@ -334,7 +335,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .strategy-identity strong { overflow: hidden; font-size: 16px; font-weight: 570; letter-spacing: .015em; text-overflow: ellipsis; white-space: nowrap; }
 .strategy-metric { min-height: 48px; align-content: center; border-left: 1px solid var(--border-soft); padding-left: 17px; }
 .strategy-metric strong { overflow: hidden; color: var(--text-soft); font-size: 14px; font-weight: 540; text-overflow: ellipsis; white-space: nowrap; }
-.strategy-row-open { width: 28px; height: 28px; display: grid; place-items: center; justify-self: end; border: 1px solid var(--border); border-radius: 50%; color: var(--muted); }
+.strategy-row-open { padding: 0; background: transparent; width: 28px; height: 28px; display: grid; place-items: center; justify-self: end; border: 1px solid var(--border); border-radius: 50%; color: var(--muted); }
 .strategy-row-open svg { width: 15px; height: 15px; }
 .strategy-state { min-height: 150px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); color: var(--muted); padding: 28px; text-align: center; }
 .strategy-state-error { gap: 18px; align-content: center; }
@@ -959,3 +960,42 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 #owner-profile-editor #owner-name-status { font-size: 11px; color: var(--text-soft); }
 
 #catalog-description { white-space: pre-line; }
+
+.metric-help {
+  display: inline-grid;
+  place-items: center;
+  vertical-align: middle;
+  min-width: 20px;
+  min-height: 22px;
+  margin-inline-start: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: help;
+}
+.metric-help:is(:hover, :focus-visible) { color: var(--text); }
+.metric-tooltip {
+  position: fixed;
+  z-index: 100;
+  width: max-content;
+  max-width: min(310px, calc(100vw - 16px));
+  padding: 10px 13px;
+  background: var(--sidebar);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid #30363e;
+  border-radius: 8px;
+  color: var(--text-soft);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .metric-tooltip:not([hidden]) { animation: metric-tip-appear 120ms ease-out; }
+  @keyframes metric-tip-appear { from { opacity: 0; } to { opacity: 1; } }
+}

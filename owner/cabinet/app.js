@@ -69,6 +69,83 @@
   let applicationController;
   const maxDemoBrokerAccounts = 3;
   let demoBrokerAccounts = [];
+  const metricTip = document.createElement('div');
+  metricTip.id = 'catalog-metric-tip';
+  metricTip.className = 'metric-tooltip';
+  metricTip.setAttribute('role', 'tooltip');
+  metricTip.hidden = true;
+  document.body.append(metricTip);
+
+  let helpAnchor;
+  let helpHideTimer;
+  const helpObserver = new MutationObserver(positionMetricHelp);
+
+  function closeMetricHelp() {
+    clearTimeout(helpHideTimer);
+    helpObserver.disconnect();
+    helpAnchor?.removeAttribute('aria-describedby');
+    helpAnchor = null;
+    metricTip.hidden = true;
+  }
+
+  function positionMetricHelp() {
+    if (!helpAnchor) return;
+    const anchor = helpAnchor.getBoundingClientRect();
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    if (!anchor.width || anchor.bottom < 0 || anchor.top > height || anchor.right < 0 || anchor.left > width) {
+      closeMetricHelp();
+      return;
+    }
+    const box = metricTip.getBoundingClientRect();
+    const left = Math.min(width - box.width - 8, Math.max(8, anchor.left + anchor.width / 2 - box.width / 2));
+    const top = anchor.bottom + 6 + box.height <= height - 8 ? anchor.bottom + 6 : Math.max(8, anchor.top - box.height - 6);
+    metricTip.style.left = left + 'px';
+    metricTip.style.top = top + 'px';
+  }
+
+  function deferHelpClose() {
+    clearTimeout(helpHideTimer);
+    helpHideTimer = setTimeout(() => {
+      if (document.activeElement !== helpAnchor && !helpAnchor?.matches(':hover') && !metricTip.matches(':hover')) closeMetricHelp();
+    }, 180);
+  }
+
+  function addMetricHelp(labelElement, description) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'metric-help';
+    button.textContent = '?';
+    button.setAttribute('aria-label', 'Пояснение: ' + labelElement.textContent.trim().replace(/\s+/g, ' '));
+    labelElement.append(button);
+
+    function show() {
+      closeMetricHelp();
+      helpAnchor = button;
+      metricTip.textContent = typeof description === 'function' ? description() : description;
+      metricTip.hidden = false;
+      button.setAttribute('aria-describedby', metricTip.id);
+      positionMetricHelp();
+      helpObserver.observe(strategyView, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'open'] });
+    }
+    button.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') show(); });
+    button.addEventListener('focus', show);
+    button.addEventListener('click', event => { event.stopPropagation(); show(); });
+    button.addEventListener('pointerleave', deferHelpClose);
+    button.addEventListener('blur', deferHelpClose);
+  }
+
+  metricTip.addEventListener('pointerenter', () => clearTimeout(helpHideTimer));
+  metricTip.addEventListener('pointerleave', deferHelpClose);
+  document.addEventListener('pointerdown', event => {
+    if (helpAnchor && !helpAnchor.contains(event.target) && !metricTip.contains(event.target)) closeMetricHelp();
+  }, true);
+  document.addEventListener('keydown', event => { if (helpAnchor && event.key === 'Escape') closeMetricHelp(); });
+  document.addEventListener('scroll', positionMetricHelp, true);
+  window.addEventListener('resize', positionMetricHelp);
+  window.addEventListener('hashchange', closeMetricHelp);
+  window.addEventListener('owner:session', closeMetricHelp);
+
   const viewIcons = {
     overview: '#icon-overview',
     strategies: '#icon-strategies',
@@ -161,26 +238,36 @@
     if (!confirmed.length) return;
     const number = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 });
     const score = confirmed.reduce((sum, s) => sum + s.trust_score, 0) / confirmed.length;
-    function display(weekly, winRatio, trades) {
+    function display(weekly = null, wins = null, trades = null, week = null) {
       if (requestId !== strategyRequest) return;
+      const winRatio = trades > 0 && wins !== null ? number.format(100 * wins / trades) + '%' : '—';
+      const weeklyReturn = weekly === null ? '—' : number.format(weekly) + '%';
       const metrics = [
-        ['Закрыто сделок\nза всё время', trades],
-        ['Win Ratio\nза всё время', winRatio],
-        ['Средний\nTrust Score', number.format(score)],
-        ['Средняя доходность\nза последнюю неделю', weekly]
+        ['Закрыто сделок\nза всё время', trades === null ? '—' : number.format(trades),
+          trades === null ? 'Сколько сделок трейдеры завершили за всю подтверждённую историю стратегий каталога.'
+            : `Всего закрытых сделок по стратегиям каталога — ${number.format(trades)}. Открытые сделки войдут в статистику после закрытия.`],
+        ['Win Ratio\nза всё время', winRatio,
+          winRatio === '—' ? 'Доля прибыльных сделок среди всех закрытых сделок каталога.'
+            : `С прибылью закрыто ${number.format(wins)} из ${number.format(trades)} сделок. Это ${winRatio}. Размер прибыли у каждой сделки может быть разным.`],
+        ['Средний\nTrust Score', number.format(score),
+          `QUD оценивает, как трейдеры управляют риском. Средняя оценка стратегий каталога — ${number.format(score)} из 100. У каждой стратегии одинаковый вес.`],
+        ['Средняя доходность\nза последнюю неделю', weeklyReturn,
+          week ? `С ${formatDate(week.period_start)} по ${formatDate(week.period_end)} средняя доходность составила ${weeklyReturn}. Количество стратегий в расчёте — ${number.format(confirmed.length)}. У каждой одинаковый вес.`
+            : 'Среднее значение доходности стратегий за одну отчётную неделю. Для расчёта нужны результаты каждой стратегии за тот же период.']
       ];
-      catalogMetrics.replaceChildren(...metrics.map(([label, value]) => {
+      catalogMetrics.replaceChildren(...metrics.map(([label, value, help]) => {
         const pair = document.createElement('div');
         const term = document.createElement('dt');
         const result = document.createElement('dd');
         term.textContent = label;
+        addMetricHelp(term, help);
         result.textContent = value;
         pair.append(term, result);
         return pair;
       }));
       catalogMetrics.hidden = false;
     }
-    display('—', '—', '—');
+    display();
     const details = [];
     // Limit concurrent requests and reuse the data when a strategy is opened.
     const pending = confirmed.values();
@@ -217,14 +304,11 @@
       const n = strategy.closed_trades_total;
       if (!Number.isSafeInteger(n) || n < 0) return;
       trades += n;
-      // The source ratio is wins / closed trades * 100. Reject rounded or inconsistent inputs.
-      const raw = strategy.win_ratio_pct * n / 100;
-      const count = Math.round(raw);
-      if (count < 0 || count > n || Math.abs(raw - count) > 8 * Number.EPSILON * Math.max(1, n)) exact = false;
-      wins += count;
+      const count = confirmedWinCount(strategy);
+      if (count === null) exact = false;
+      else wins += count;
     }
-    display(weekly === null ? '—' : number.format(weekly) + '%',
-      trades && exact ? number.format(100 * wins / trades) + '%' : '—', number.format(trades));
+    display(weekly, exact ? wins : null, trades, sameWeek ? weeks[0] : null);
   }
 
   function isValidStrategy(value) {
@@ -293,12 +377,50 @@
     return `${day}.${month}.${year}`;
   }
 
-  function createMetric(label, value) {
+  const helpNumber = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 });
+  const trustScoreHelp = 'Оценка от 0 до 100 баллов по методике QUD. Учитывает, как трейдер управляет риском и какой историей это подтверждено. Это один из основных показателей допуска стратегии в каталог.';
+
+  function trustZoneHelp(strategy) {
+    return 'Для допуска в каталог нужно набрать минимум 40 баллов Trust Score. С 40 баллов начинается QUD Room, с 80 — QUD Elite. ' +
+      `У этой стратегии ${helpNumber.format(strategy.trust_score)} из 100. Категория — ${strategy.trust_zone}.`;
+  }
+
+  function confirmedWinCount(strategy) {
+    const trades = strategy.closed_trades_total;
+    const ratio = strategy.win_ratio_pct;
+    if (!Number.isSafeInteger(trades) || trades < 0 || !Number.isFinite(ratio) || ratio < 0 || ratio > 100) return null;
+    const raw = ratio * trades / 100;
+    const wins = Math.round(raw);
+    return Math.abs(raw - wins) <= 8 * Number.EPSILON * Math.max(1, trades) ? wins : null;
+  }
+
+  function winRatioHelp(strategy) {
+    const detail = strategyDetailCache.get(strategy.strategy_id);
+    const info = detail && detail.strategy;
+    if (info && info.closed_trades_total === 0) return 'У стратегии пока нет закрытых сделок, по которым можно определить долю прибыльных.';
+    const wins = info && confirmedWinCount(info);
+    if (Number.isInteger(wins)) {
+      return `Закрытых сделок — ${helpNumber.format(info.closed_trades_total)}, из них прибыльных — ${helpNumber.format(wins)}. Их доля — ${helpNumber.format(info.win_ratio_pct)}%.`;
+    }
+    return `Доля прибыльных сделок среди всех закрытых сделок стратегии — ${helpNumber.format(strategy.win_ratio_pct)}%. Берётся из истории сделок: каждая сделка учитывается один раз независимо от суммы.`;
+  }
+
+  function historyHelp(strategy) {
+    const detail = strategyDetailCache.get(strategy.strategy_id);
+    const history = detail && detail.history;
+    const weeks = `В истории стратегии — ${formatWeeks(strategy.history_weeks_count)} с подтверждёнными результатами.`;
+    return history && history.length
+      ? weeks + ` Первый отчёт начинается ${formatDate(history[0].period_start)}, последний заканчивается ${formatDate(history[history.length - 1].period_end)}.`
+      : weeks;
+  }
+
+  function createMetric(label, value, help) {
     const metric = document.createElement('span');
     metric.className = 'strategy-metric';
     const caption = document.createElement('small');
     const result = document.createElement('strong');
     caption.textContent = label;
+    addMetricHelp(caption, help);
     result.textContent = value;
     metric.append(caption, result);
     return metric;
@@ -320,11 +442,11 @@
     }
 
     strategies.forEach((strategy) => {
-      const row = document.createElement('button');
+      const row = document.createElement('div');
       row.className = 'strategy-catalog-row panel';
-      row.type = 'button';
-      row.setAttribute('aria-label', `Открыть стратегию ${strategy.strategy_id}`);
-      row.addEventListener('click', () => openStrategy(strategy.strategy_id));
+      row.addEventListener('click', event => {
+        if (!event.target.closest('button')) openStrategy(strategy.strategy_id);
+      });
 
       const identity = document.createElement('span');
       identity.className = 'strategy-identity';
@@ -338,26 +460,29 @@
 
       row.append(
         identity,
-        createMetric('Trust Score', formatTrustScore(strategy.trust_score)),
-        createMetric('Trust Zone', strategy.trust_zone),
-        createMetric('Win Ratio', `${strategy.win_ratio_pct.toFixed(1).replace(/\.0$/, '')}%`),
-        createMetric('История', formatWeeks(strategy.history_weeks_count))
+        createMetric('Trust Score', formatTrustScore(strategy.trust_score), trustScoreHelp),
+        createMetric('Trust Zone', strategy.trust_zone, trustZoneHelp(strategy)),
+        createMetric('Win Ratio', `${strategy.win_ratio_pct.toFixed(1).replace(/\.0$/, '')}%`, () => winRatioHelp(strategy)),
+        createMetric('История', formatWeeks(strategy.history_weeks_count), () => historyHelp(strategy))
       );
-      const open = document.createElement('span');
+      const open = document.createElement('button');
+      open.type = 'button';
       open.className = 'strategy-row-open';
-      open.setAttribute('aria-hidden', 'true');
+      open.setAttribute('aria-label', `Открыть стратегию ${strategy.strategy_id}`);
+      open.addEventListener('click', () => openStrategy(strategy.strategy_id));
       open.innerHTML = '<svg><use href="#icon-chevron"></use></svg>';
       row.append(open);
       strategyCatalog.append(row);
     });
   }
 
-  function createDetailMetric(label, value, className = '') {
+  function createDetailMetric(label, value, help, className = '') {
     const metric = document.createElement('div');
     metric.className = `strategy-detail-metric${className ? ` ${className}` : ''}`;
     const caption = document.createElement('dt');
     const result = document.createElement('dd');
     caption.textContent = label;
+    addMetricHelp(caption, help);
     result.textContent = value;
     metric.append(caption, result);
     return metric;
@@ -451,7 +576,7 @@
     return section;
   }
 
-  function createHistoryTable(history) {
+  function createHistoryTable(history, strategy) {
     const section = document.createElement('details');
     section.className = 'strategy-history panel';
     const summary = document.createElement('summary');
@@ -482,6 +607,13 @@
     wrapper.className = 'strategy-history-scroll';
     const table = document.createElement('table');
     table.innerHTML = '<thead><tr><th>Период</th><th>Результат периода</th><th>Результат с начала</th></tr></thead>';
+    const latest = history[history.length - 1];
+    const headings = table.tHead.rows[0].cells;
+    addMetricHelp(headings[1], 'Изменение результата только за указанную неделю. ' +
+      `За ${formatDate(latest.period_start)}–${formatDate(latest.period_end)}: ${helpNumber.format(latest.period_return_pct)}%; закрыто сделок — ${helpNumber.format(latest.closed_trades_period)}.`);
+    addMetricHelp(headings[2], 'Результат, накопленный с начала наблюдения к концу указанной недели. ' +
+      `К ${formatDate(latest.period_end)} он составил ${helpNumber.format(latest.strategy_return_since_start_pct)}%.` +
+      (latest.period_end === strategy.data_period_end ? ` За это время закрыто сделок: ${helpNumber.format(strategy.closed_trades_total)}.` : ''));
     const body = document.createElement('tbody');
     history.forEach((row) => {
       const tr = document.createElement('tr');
@@ -520,22 +652,44 @@
     const trust = document.createElement('dl');
     trust.className = 'strategy-trust-summary';
     trust.append(
-      createDetailMetric('Trust Score', formatTrustScore(strategy.trust_score)),
-      createDetailMetric('Trust Zone', strategy.trust_zone)
+      createDetailMetric('Trust Score', formatTrustScore(strategy.trust_score), trustScoreHelp),
+      createDetailMetric('Trust Zone', strategy.trust_zone, trustZoneHelp(strategy))
     );
     header.append(identity, trust);
 
     const metrics = document.createElement('dl');
     metrics.className = 'strategy-detail-metrics';
+    const latest = history.find(row => row.period_end === strategy.data_period_end);
+    const countedTrades = helpNumber.format(strategy.closed_trades_total);
+    const lastDate = formatDate(strategy.data_period_end);
+    function withReading(explanation, value) {
+      return explanation + (value === null
+        ? ' Подтверждённых данных для расчёта пока недостаточно.'
+        : ` Значение на ${lastDate} — ${helpNumber.format(value)}%.`);
+    }
     metrics.append(
-      createDetailMetric('Закрытых сделок', formatNumber(strategy.closed_trades_total)),
-      createDetailMetric('Доходность с начала', formatPercent(strategy.strategy_return_since_start_pct, true)),
-      createDetailMetric('Max Drawdown', strategy.max_drawdown_since_start_pct === null ? 'Недостаточно подтверждённых данных' : formatPercent(strategy.max_drawdown_since_start_pct), strategy.max_drawdown_since_start_pct === null ? 'metric-insufficient' : ''),
-      createDetailMetric('Profit Factor', strategy.profit_factor === null ? '—' : formatNumber(strategy.profit_factor)),
-      createDetailMetric('Average Risk', strategy.average_risk_pct === null ? '—' : formatPercent(strategy.average_risk_pct)),
-      createDetailMetric('SL Safe', strategy.sl_safe_pct === null ? 'Недостаточно подтверждённых данных' : formatPercent(strategy.sl_safe_pct), strategy.sl_safe_pct === null ? 'metric-insufficient' : ''),
-      createDetailMetric('Risk CV', strategy.risk_cv_pct === null ? '—' : formatPercent(strategy.risk_cv_pct)),
-      createDetailMetric('Обновлено', formatDate(strategy.data_period_end))
+      createDetailMetric('Закрытых сделок', formatNumber(strategy.closed_trades_total),
+        `С начала наблюдения по этой стратегии закрыто сделок — ${countedTrades}.` +
+        (latest ? ` За последний отчётный период закрыто сделок: ${helpNumber.format(latest.closed_trades_period)}.` : '')),
+      createDetailMetric('Доходность с начала', formatPercent(strategy.strategy_return_since_start_pct, true),
+        `На сколько процентов изменился результат стратегии с начала наблюдения. К ${lastDate} он составил ${helpNumber.format(strategy.strategy_return_since_start_pct)}%.`),
+      createDetailMetric('Max Drawdown', strategy.max_drawdown_since_start_pct === null ? 'Недостаточно подтверждённых данных' : formatPercent(strategy.max_drawdown_since_start_pct),
+        strategy.max_drawdown_since_start_pct === null
+          ? 'Самое большое снижение от ранее достигнутого максимума по недельным итогам. Подтверждённых данных о его размере пока недостаточно.'
+          : `Самый большой спад по недельным итогам: от достигнутого максимума результат снизился на ${helpNumber.format(Math.abs(strategy.max_drawdown_since_start_pct))}%.`,
+        strategy.max_drawdown_since_start_pct === null ? 'metric-insufficient' : ''),
+      createDetailMetric('Profit Factor', strategy.profit_factor === null ? '—' : formatNumber(strategy.profit_factor),
+        'Прибыль по всем выигрышным сделкам делим на сумму потерь по всем убыточным.' +
+        (strategy.profit_factor === null ? ' Для расчёта пока недостаточно данных.' : ` Соотношение прибыли и потерь у этой стратегии — ${helpNumber.format(strategy.profit_factor)} к 1.`)),
+      createDetailMetric('Average Risk', strategy.average_risk_pct === null ? '—' : formatPercent(strategy.average_risk_pct),
+        withReading('Какой долей капитала трейдер в среднем планировал рискнуть в одной сделке.', strategy.average_risk_pct)),
+      createDetailMetric('SL Safe', strategy.sl_safe_pct === null ? 'Недостаточно подтверждённых данных' : formatPercent(strategy.sl_safe_pct),
+        withReading('Стоп-лосс — заданная цена для автоматического выхода из сделки, если рынок идёт против трейдера. SL Safe показывает долю проверенных сделок, в которых трейдер соблюдал правила QUD по установке и изменению этой границы.', strategy.sl_safe_pct),
+        strategy.sl_safe_pct === null ? 'metric-insufficient' : ''),
+      createDetailMetric('Risk CV', strategy.risk_cv_pct === null ? '—' : formatPercent(strategy.risk_cv_pct),
+        'Насколько менялся плановый риск от сделки к сделке. Чем меньше значение, тем ровнее трейдер выбирал риск.' +
+        (strategy.risk_cv_pct === null ? ' Подтверждённых данных для расчёта пока недостаточно.' : '')),
+      createDetailMetric('Обновлено', lastDate, `${lastDate} — последний день, за который в карточке учтены подтверждённые результаты.`)
     );
 
     const summary = document.createElement('div');
@@ -545,7 +699,7 @@
     dashboard.className = 'strategy-detail-dashboard';
     dashboard.append(summary, createStrategyChart(history, strategy.strategy_id));
 
-    strategyCatalog.append(back, dashboard, createHistoryTable(history));
+    strategyCatalog.append(back, dashboard, createHistoryTable(history, strategy));
     strategyCatalog.querySelector('.strategy-back').focus({ preventScroll: true });
   }
 
