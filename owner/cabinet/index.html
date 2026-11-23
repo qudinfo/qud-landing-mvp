@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261123-name-dialog">
+  <link rel="stylesheet" href="./styles.css?v=20261123-support-layout">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
@@ -349,10 +349,10 @@
   </dialog>
 
   <dialog class="support-dialog panel" id="support-dialog" aria-labelledby="support-dialog-title">
-    <div class="broker-dialog-header"><div><p class="eyebrow">Связь с QUD</p><h2 id="support-dialog-title">Поддержка</h2></div><button class="icon-button" id="close-support" type="button" aria-label="Закрыть поддержку"><svg><use href="#icon-close"></use></svg></button></div>
+    <div class="support-dialog-header"><h2 class="eyebrow" id="support-dialog-title">Связь с QUD</h2><button class="icon-button" id="close-support" type="button" aria-label="Закрыть поддержку"><svg><use href="#icon-close"></use></svg></button></div>
     <div class="support-addresses"><div><span>От кого</span><strong id="support-from">—</strong><small id="support-owner-id"></small></div><div><span>Кому</span><strong>Поддержка QUD</strong></div></div>
     <section class="support-history" aria-labelledby="support-history-title"><div class="support-history-heading"><h3 id="support-history-title">История переписки</h3><span id="support-history-count"></span></div><p class="support-history-state" id="support-history-state" role="status">Загрузка сообщений…</p><div id="support-messages"></div></section>
-    <form class="support-form" id="support-form"><label for="support-message">Сообщение</label><textarea id="support-message" name="message" rows="4" maxlength="4000" placeholder="Напишите ваш вопрос для QUD" required disabled></textarea><div class="support-form-footer"><p id="support-feedback" role="status">Проверяем доступность канала поддержки.</p><button class="button button-primary" id="support-send" type="submit" disabled>Отправить</button></div></form>
+    <form class="support-form" id="support-form"><label for="support-message">Сообщение</label><textarea id="support-message" name="message" rows="1" maxlength="4000" placeholder="Напишите ваш вопрос для QUD" required disabled></textarea><div class="support-form-footer"><p id="support-feedback" role="status">Проверяем доступность канала поддержки.</p><button class="button button-primary" id="support-send" type="submit" disabled>Отправить</button></div></form>
   </dialog>
 
   <dialog class="broker-application-dialog broker-account-dialog panel" id="broker-account-dialog" aria-labelledby="broker-account-dialog-title">
@@ -406,7 +406,7 @@
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
   <script src="./profile.js?v=8" defer></script>
-  <script src="./app.js?v=20261123-support" defer></script>
+  <script src="./app.js?v=20261123-support-layout" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261122-pilot-login" defer></script>
   <script src="/portal/portfolio/mvp/app.js?v=20261023-owner-9" defer></script>

@@ -1015,7 +1015,17 @@
     openButton.title = label;
   }
 
+  function fitMessageInput() {
+    if (!dialog.open) return;
+    messageInput.style.height = 'auto';
+    const borders = messageInput.offsetHeight - messageInput.clientHeight;
+    messageInput.style.height = (messageInput.scrollHeight + borders) + 'px';
+  }
+
+  window.addEventListener('resize', fitMessageInput);
+
   function updateComposer() {
+    fitMessageInput();
     const canSend = authenticated && available && ownerEmail && !sending;
     messageInput.disabled = !authenticated || sending;
     sendButton.disabled = !canSend || !messageInput.value.trim();
@@ -1128,6 +1138,7 @@
 
   openButton.addEventListener('click', () => {
     dialog.showModal();
+    fitMessageInput();
     refreshSupport();
     byId('close-support').focus();
   });

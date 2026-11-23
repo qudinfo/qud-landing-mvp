@@ -585,6 +585,8 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .settings-card dd { flex: 0 0 auto; margin: 0; color: var(--text-soft); font-size: 11px; text-align: right; }
 
 .support-dialog { width: min(670px, calc(100vw - 28px)); max-height: calc(100vh - 28px); overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); color: var(--text); padding: 28px; box-shadow: 0 28px 80px rgba(0,0,0,.7); }
+.support-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.support-dialog-header .eyebrow { margin: 0; }
 .support-dialog::backdrop { background: rgba(0,0,0,.72); }
 .support-addresses { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 24px 0; }
 .support-addresses > div { min-width: 0; display: grid; align-content: start; gap: 6px; border-top: 1px solid var(--border-soft); padding-top: 13px; }
@@ -592,21 +594,21 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .support-addresses strong { overflow-wrap: anywhere; font-size: 12px; font-weight: 580; }
 .support-history { border-top: 1px solid var(--border-soft); padding-top: 17px; }
 .support-history-heading { display: flex; justify-content: space-between; gap: 15px; align-items: baseline; }
-.support-history h3 { margin: 0; font-size: 14px; font-weight: 570; }
+.support-history h3 { color: var(--muted); margin: 0; font-size: 14px; font-weight: 570; }
 .support-history-heading span, .support-history-state { color: var(--muted); font-size: 11px; }
 .support-history-state { margin: 16px 0; line-height: 1.5; }
 #support-messages { max-height: 260px; overflow-y: auto; }
-.support-message { border-bottom: 1px solid var(--border-soft); }
+.support-message + .support-message { border-top: 1px solid var(--border-soft); }
 .support-message summary { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: 10px; cursor: pointer; padding: 13px 0; list-style: none; }
 .support-message summary::-webkit-details-marker { display: none; }
-.support-message summary strong { font-size: 11px; }
-.support-message summary time, .support-message summary span { color: var(--muted); font-size: 10px; }
-.support-message summary span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.support-message summary strong { color: var(--muted); font-size: 12px; }
+.support-message summary time { color: var(--muted); font-size: 10px; }
+.support-message summary span { color: var(--text-soft); font-size: 13px; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .support-message summary em { color: var(--green); font-size: 10px; font-style: normal; }
-.support-message p { margin: 0 0 14px; color: var(--text-soft); font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; white-space: pre-wrap; }
+.support-message p { margin: 0 0 14px; color: var(--text-soft); font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; white-space: pre-wrap; }
 .support-form { display: grid; gap: 9px; border-top: 1px solid var(--border-soft); margin-top: 20px; padding-top: 20px; }
 .support-form label { font-size: 12px; font-weight: 600; }
-.support-form textarea { width: 100%; min-height: 105px; resize: vertical; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-soft); color: var(--text); padding: 12px; font: inherit; font-size: 12px; line-height: 1.5; }
+.support-form textarea { width: 100%; min-height: 44px; max-height: min(210px, 34vh); resize: none; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-soft); color: var(--text); padding: 12px; font: inherit; font-size: 12px; line-height: 1.5; }
 .support-form textarea:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
 .support-form textarea:disabled { opacity: .5; }
 .support-form-footer { display: flex; justify-content: space-between; align-items: center; gap: 18px; }
