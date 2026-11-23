@@ -71,6 +71,20 @@
     return at > 0 ? address.slice(0, 1) + '…' + address.slice(at) : '';
   }
 
+  function formatKeyIssued(value) {
+    if (!value) return '—';
+    // Calendar dates from older profiles have no time zone.
+    const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (dateOnly) return dateOnly.slice(1).reverse().join('.');
+    if (/^\d{2}\.\d{2}\.\d{4}(?:[ ,]+\d{2}:\d{2}(?::\d{2})?)?$/.test(value)) return value;
+    if (!/^\d{4}-\d{2}-\d{2}T/.test(value)) return '—';
+    const issued = new Date(value);
+    if (!Number.isFinite(issued.getTime())) return '—';
+    return new Intl.DateTimeFormat('ru-RU', {
+      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    }).format(issued);
+  }
+
   function render() {
     showConfirmation();
     const email = profile?.email || '';
@@ -84,7 +98,7 @@
     emailStatus.classList.toggle('is-unverified', Boolean(profile && !profile.email_verified));
     emailStatus.textContent = profile
       ? (profile.email_verified ? 'Подтверждена' : 'Ожидает подтверждения') : '—';
-    el('profile-key-issued').textContent = profile?.key_issued || '—';
+    el('profile-key-issued').textContent = formatKeyIssued(profile?.key_issued);
     const first = profile && !profile.chosen;
     if (!first && firstDialog.open) firstDialog.close();
     const container = first ? el('first-name-editor') : el('owner-profile-editor');

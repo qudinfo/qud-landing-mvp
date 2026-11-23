@@ -996,6 +996,8 @@
   const feedback = byId('support-feedback');
   const sendButton = byId('support-send');
   const endpoint = '/owner/api/support';
+  let sessionOwner = '';
+  let outgoingId = '';
   let authenticated = false;
   let available = false;
   let ownerEmail = '';
@@ -1015,14 +1017,14 @@
 
   function updateComposer() {
     const canSend = authenticated && available && ownerEmail && !sending;
-    messageInput.disabled = !canSend;
+    messageInput.disabled = !authenticated || sending;
     sendButton.disabled = !canSend || !messageInput.value.trim();
   }
 
   async function supportRequest(path, options = {}) {
     const response = await fetch(path, {
       credentials: 'same-origin', cache: 'no-store',
-      headers: { Accept: 'application/json', ...(options.body ? { 'Content-Type': 'application/json' } : {}) },
+      headers: { Accept: 'application/json', 'X-QUD-Support-Owner': sessionOwner, ...(options.body ? { 'Content-Type': 'application/json' } : {}) },
       ...options
     });
     const payload = await response.json().catch(() => null);
@@ -1060,13 +1062,13 @@
       const preview = document.createElement('span');
       preview.textContent = item.body.replace(/\s+/g, ' ').slice(0, 90);
       summary.append(label, date, preview);
-      if (item.direction === 'qud' && !item.read_at) {
+      if (item.direction === 'qud' && !item.read) {
         const newLabel = document.createElement('em');
         newLabel.textContent = 'Новое';
         summary.append(newLabel);
         entry.addEventListener('toggle', () => {
-          if (entry.open) markRead(item.id, newLabel);
-        }, { once: true });
+          if (entry.open && newLabel.isConnected) markRead(item.id, newLabel);
+        });
       }
       const body = document.createElement('p');
       body.textContent = item.body;
@@ -1096,29 +1098,31 @@
       if (version !== requestVersion || !authenticated) return;
       available = false;
       ownerEmail = '';
-      from.textContent = 'Электронная почта не указана';
+      from.textContent = '—';
       ownerId.textContent = '';
       showUnread(0);
       messages.replaceChildren();
       historyCount.textContent = '';
       historyState.hidden = false;
-      historyState.textContent = error.status === 404
-        ? 'Канал поддержки ещё не подключён.'
-        : 'Не удалось загрузить переписку. Попробуйте открыть окно снова.';
-      feedback.textContent = 'Отправка недоступна, пока защищённый канал поддержки не работает.';
+      historyState.textContent = 'Не удалось загрузить переписку. Откройте поддержку ещё раз.';
+      feedback.textContent = 'Можно написать сообщение. Отправка станет доступна после подключения.';
     }
     updateComposer();
   }
 
   async function markRead(messageId, newLabel) {
+    if (newLabel.dataset.pending) return;
+    newLabel.dataset.pending = '1';
+    const owner = sessionOwner;
     try {
       await supportRequest(`${endpoint}/read`, {
         method: 'POST', body: JSON.stringify({ message_id: messageId })
       });
+      if (owner !== sessionOwner || !newLabel.isConnected) return;
       newLabel.remove();
       if (authenticated) showUnread(unreadCount - 1);
     } catch {
-      // The unread indication remains until the server confirms the change.
+      delete newLabel.dataset.pending;
     }
   }
 
@@ -1128,24 +1132,31 @@
     byId('close-support').focus();
   });
   byId('close-support').addEventListener('click', () => dialog.close());
-  messageInput.addEventListener('input', updateComposer);
+  messageInput.addEventListener('input', () => { outgoingId = ''; updateComposer(); });
   byId('support-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     const body = messageInput.value.trim();
     if (!authenticated || !available || !ownerEmail || !body || sending) return;
     sending = true;
     updateComposer();
+    const owner = sessionOwner;
+    outgoingId ||= crypto.randomUUID();
     feedback.textContent = 'Отправка сообщения…';
     try {
-      await supportRequest(endpoint, { method: 'POST', body: JSON.stringify({ message: body }) });
+      await supportRequest(endpoint, { method: 'POST', body: JSON.stringify({ message: body, message_id: outgoingId }) });
+      if (owner !== sessionOwner) return;
+      outgoingId = '';
       messageInput.value = '';
       await refreshSupport();
+      if (owner !== sessionOwner) return;
       feedback.textContent = available
         ? 'Сообщение отправлено QUD.'
         : 'Сообщение отправлено, но историю пока не удалось обновить.';
     } catch {
+      if (owner !== sessionOwner) return;
       feedback.textContent = 'Не удалось отправить сообщение. Текст сохранён в форме; попробуйте ещё раз.';
     } finally {
+      if (owner !== sessionOwner) return;
       sending = false;
       updateComposer();
     }
@@ -1153,6 +1164,22 @@
 
   window.addEventListener('owner:session', (event) => {
     authenticated = event.detail && event.detail.authenticated === true;
+    const nextOwner = authenticated ? event.detail.owner_id : '';
+    if (nextOwner !== sessionOwner) {
+      sessionOwner = nextOwner;
+      available = false;
+      ownerEmail = '';
+      outgoingId = '';
+      sending = false;
+      messageInput.value = '';
+      messages.replaceChildren();
+      from.textContent = '—';
+      historyCount.textContent = '';
+      historyState.hidden = false;
+      historyState.textContent = 'Загружаем переписку…';
+      showUnread(0);
+      updateComposer();
+    }
     clearInterval(refreshTimer);
     requestVersion++;
     if (!authenticated) {

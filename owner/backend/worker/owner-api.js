@@ -72,6 +72,41 @@ export default {
         );
       }
 
+      if (url.pathname === '/owner/api/support' || url.pathname === '/owner/api/support/read') {
+        const isRead = url.pathname.endsWith('/read');
+        if (request.method !== 'POST' && (request.method !== 'GET' || isRead)) {
+          return methodNotAllowed(isRead ? 'POST' : 'GET, POST');
+        }
+        if (request.headers.get('x-qud-support-owner') !== session.owner_id) {
+          return jsonResponse({ok: false, error: 'SESSION_CHANGED'}, 409);
+        }
+        const action = {action: 'owner_support', owner_id: session.owner_id, mode: 'list'};
+        if (request.method === 'POST') {
+          if (request.headers.get('origin') !== url.origin || request.headers.get('content-type')?.split(';')[0] !== 'application/json') {
+            return jsonResponse({ok: false, error: 'INVALID_REQUEST'}, 403);
+          }
+          const body = await readJson(request);
+          if (typeof body.message_id !== 'string' || !/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(body.message_id)) {
+            return jsonResponse({ok: false, error: 'INVALID_MESSAGE_ID'}, 400);
+          }
+          action.mode = isRead ? 'mark_read' : 'send';
+          action.message_id = body.message_id;
+          if (!isRead) {
+            if (typeof body.message !== 'string' || !body.message.trim() || body.message.length > 4000) {
+              return jsonResponse({ok: false, error: 'INVALID_MESSAGE'}, 400);
+            }
+            action.message = body.message.trim();
+          }
+        }
+        const result = await postProfileAction(env, action);
+        const failure = normalizeUpstreamError(result);
+        if (failure) return failure;
+        if (result.payload?.ok !== true || (action.mode === 'list' && !Array.isArray(result.payload.messages))) {
+          return jsonResponse({ok: false, error: 'INVALID_UPSTREAM_RESPONSE'}, 502);
+        }
+        return jsonResponse(result.payload);
+      }
+
       if (url.pathname === '/owner/api/profile') {
         return await handleOwnerProfile(request, env, session);
       }
