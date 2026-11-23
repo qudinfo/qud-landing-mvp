@@ -200,7 +200,7 @@
   .owner-vp .vp-summary .vp-metrics article { padding: 4px 5px 4px 0; overflow-wrap: anywhere; }
 }
 
-.owner-vp #portfolio-chart .chart-empty { justify-items: start; text-align: left; }
+.owner-vp :is(#portfolio-chart, #strategy-chart) .chart-empty { justify-items: start; text-align: left; }
 
 .owner-vp .vp-observations:has(.strategy-list-empty) .vp-section-heading,
 .owner-vp .vp-observations:has(.strategy-list-empty) .eyebrow { margin-bottom: 0; }
@@ -222,3 +222,5 @@
 }
 .owner-vp .vp-field select:invalid { color: var(--muted); }
 .owner-vp .vp-field select option { color: var(--text); background-color: var(--panel); }
+
+.owner-vp .vp-detail .history-empty { margin: 0; font-size: 11px; line-height: 1.4; text-align: left; }

@@ -112,9 +112,11 @@
     return Number.isFinite(number) ? number : null;
   }
 
-  function formatMoney(value) {
+  const integerFormatter = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 });
+
+  function formatMoney(value, formatter = moneyFormatter) {
     const number = finiteNumber(value);
-    return number === null ? '—' : `$${moneyFormatter.format(number)}`;
+    return number === null ? '—' : `$${formatter.format(number)}`;
   }
 
   function formatSignedMoney(value) {
@@ -134,9 +136,9 @@
     return number === null ? '—' : formatPercent(-Math.abs(number));
   }
 
-  function formatNumber(value) {
+  function formatNumber(value, formatter = compactNumberFormatter) {
     const number = finiteNumber(value);
-    return number === null ? '—' : compactNumberFormatter.format(number);
+    return number === null ? '—' : formatter.format(number);
   }
 
   function parseDate(value) {
@@ -642,8 +644,8 @@
       : (ownerMode ? '№ наблюдения: —' : 'Наблюдение');
     applyStatus(dom.strategyStatus, slot.status);
 
-    dom.detailAllocated.textContent = formatMoney(slot.allocated_balance_usd);
-    dom.detailBalance.textContent = formatMoney(slot.current_balance_usd);
+    dom.detailAllocated.textContent = formatMoney(slot.allocated_balance_usd, ownerMode ? integerFormatter : moneyFormatter);
+    dom.detailBalance.textContent = formatMoney(slot.current_balance_usd, ownerMode ? integerFormatter : moneyFormatter);
     dom.detailReturn.textContent = formatPercent(slot.strategy_return_pct, true);
     dom.detailDrawdown.textContent = formatPercent(slot.current_drawdown_pct);
     dom.detailLimit.textContent = formatPercent(slot.max_drawdown_limit_pct);
@@ -672,7 +674,7 @@
     dom.qualityTrades.textContent = formatNumber(slot.closed_trades_total);
     dom.qualityWinrate.textContent = formatPercent(slot.win_ratio_pct);
     dom.qualityPf.textContent = formatNumber(slot.profit_factor);
-    dom.qualityTrust.textContent = formatNumber(slot.trust_score);
+    dom.qualityTrust.textContent = formatNumber(slot.trust_score, ownerMode ? integerFormatter : compactNumberFormatter);
     applySignedClass(dom.qualityReturn, slot.strategy_return_since_start_pct);
 
     const history = [...(slot.history || [])].sort((a, b) => {
@@ -758,10 +760,7 @@
   function renderLineChart(container, points, ariaLabel, options = {}) {
     container.replaceChildren();
     if (points.length < 2) {
-      const template = ownerMode && container === dom.portfolioChart
-        ? document.getElementById('empty-portfolio-chart-template') || dom.emptyChartTemplate
-        : dom.emptyChartTemplate;
-      container.append(template.content.cloneNode(true));
+      container.append(dom.emptyChartTemplate.content.cloneNode(true));
       return;
     }
 
@@ -1026,7 +1025,7 @@
     dom.previewTrades.textContent = formatNumber(item.closed_trades_total);
     dom.previewWinrate.textContent = formatPercent(item.win_ratio_pct);
     dom.previewPf.textContent = formatNumber(item.profit_factor);
-    dom.previewTrust.textContent = formatNumber(item.trust_score);
+    dom.previewTrust.textContent = formatNumber(item.trust_score, ownerMode ? integerFormatter : compactNumberFormatter);
     applySignedClass(dom.previewReturn, item.strategy_return_since_start_pct);
   }
 
