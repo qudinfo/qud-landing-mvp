@@ -594,7 +594,6 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .support-history-heading span, .support-history-state { color: var(--muted); font-size: 11px; }
 .support-history-state { margin: 16px 0; line-height: 1.5; }
 #support-messages { max-height: 260px; overflow-y: auto; }
-.support-message + .support-message { border-top: 1px solid var(--border-soft); }
 .support-message summary { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: 10px; cursor: pointer; padding: 13px 0; list-style: none; }
 .support-message summary::-webkit-details-marker { display: none; }
 .support-message summary strong { color: var(--muted); font-size: 12px; }
