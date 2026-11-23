@@ -8,7 +8,6 @@
   const key = byId('owner-key');
   const submit = byId('owner-login-submit');
   const message = byId('owner-login-message');
-  const accessPill = document.querySelector('.access-pill');
   let busy = false;
   let authenticated = false;
   let expiryTimer;
@@ -16,14 +15,9 @@
   function renderOwnerAccess(data = {}) {
     // The MVP session proves cabinet access, not a paid subscription status.
     const active = data.authenticated === true;
-    const label = active ? 'Доступ к кабинету активен' : 'Вход не подтверждён';
-    accessPill.dataset.accessStatus = active ? 'active' : 'inactive';
-    byId('access-status-label').textContent = label;
     const overviewStatus = byId('overview-access-status');
     overviewStatus.dataset.accessStatus = active ? 'active' : 'inactive';
-    overviewStatus.textContent = label;
-    accessPill.setAttribute('aria-label', `Статус доступа: ${label.toLowerCase()}`);
-    accessPill.title = `Статус доступа: ${label.toLowerCase()}`;
+    overviewStatus.textContent = active ? 'Активно' : 'Вход не подтверждён';
   }
 
   function show(name, text = '') {
