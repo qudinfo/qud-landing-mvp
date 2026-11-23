@@ -211,6 +211,11 @@
     if (number < 0) element.classList.add('value-negative');
   }
 
+  function visibleReturn(value, precision) {
+    const number = finiteNumber(value);
+    return number !== null && Math.abs(number) < 0.5 * 10 ** -precision ? 0 : value;
+  }
+
   function pluralWeeks(count) {
     const value = Number(count) || 0;
     const mod10 = value % 10;
@@ -417,8 +422,8 @@
 
     const allocated = valueFrom(portfolio, ['total_allocated_usd']);
     const balance = valueFrom(portfolio, ['current_balance_usd']);
-    const returnUsd = valueFrom(portfolio, ['portfolio_return_usd']);
-    const returnPct = valueFrom(portfolio, ['portfolio_return_pct']);
+    const returnUsd = visibleReturn(valueFrom(portfolio, ['portfolio_return_usd']), ownerMode ? 0 : 2);
+    const returnPct = visibleReturn(valueFrom(portfolio, ['portfolio_return_pct']), 2);
     const drawdown = valueFrom(portfolio, ['current_drawdown_pct']);
     const active = valueFrom(portfolio, ['active_strategies_count']);
 
@@ -491,16 +496,16 @@
         startingBalance
       }
     );
-    if (ownerMode) renderOwnerOverview(payload, balancePoints, allocatedPoints);
+    if (ownerMode) renderOwnerOverview(payload, balancePoints, returnUsd, returnPct);
   }
 
-  function renderOwnerOverview(payload, balancePoints, allocatedPoints) {
+  function renderOwnerOverview(payload, balancePoints, returnUsd, returnPct) {
     const portfolio = payload.portfolio;
     const values = {
       'overview-vp-allocated': formatMoney(valueFrom(portfolio, ['total_allocated_usd']), integerFormatter),
       'overview-vp-balance': formatMoney(valueFrom(portfolio, ['current_balance_usd']), integerFormatter),
-      'overview-vp-result': formatSignedMoney(valueFrom(portfolio, ['portfolio_return_usd']), integerFormatter),
-      'overview-vp-return': formatPercent(valueFrom(portfolio, ['portfolio_return_pct']), true),
+      'overview-vp-result': formatSignedMoney(returnUsd, integerFormatter),
+      'overview-vp-return': formatPercent(returnPct, true),
       'overview-vp-drawdown': formatDrawdown(valueFrom(portfolio, ['current_drawdown_pct'])),
       'overview-vp-active': formatNumber(valueFrom(portfolio, ['active_strategies_count']))
     };
@@ -512,8 +517,8 @@
       }
     });
     [
-      ['overview-vp-result', portfolio.portfolio_return_usd],
-      ['overview-vp-return', portfolio.portfolio_return_pct]
+      ['overview-vp-result', returnUsd],
+      ['overview-vp-return', returnPct]
     ].forEach(([id, value]) => {
       const card = document.getElementById(id)?.closest('.metric-card');
       if (!card) return;
