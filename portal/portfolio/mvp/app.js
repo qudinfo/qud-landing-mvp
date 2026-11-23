@@ -988,6 +988,7 @@
     });
     dom.strategySelect.replaceChildren();
 
+    if (ownerMode) dom.strategyAvailabilityNote.hidden = state.availableStrategies.length > 0;
     if (!state.availableStrategies.length) {
       dom.strategySelect.append(new Option('Нет доступных стратегий', ''));
       dom.strategySelect.disabled = true;
@@ -1147,6 +1148,16 @@
     if (open) dom.strategySelect.focus();
   }
 
+  if (ownerMode) {
+    const amountFormat = new Intl.NumberFormat('ru-RU');
+    for (let amount = 1000; amount <= 25000; amount += 100) {
+      dom.capitalInput.add(new Option(amountFormat.format(amount), String(amount)));
+    }
+    for (let limit = 4; limit <= 10; limit += 0.5) {
+      dom.drawdownInput.add(new Option(amountFormat.format(limit) + '%', String(limit)));
+    }
+  }
+
   function validateObservation() {
     const strategyId = dom.strategySelect.value.trim();
     const capital = finiteNumber(dom.capitalInput.value);
@@ -1154,6 +1165,12 @@
     const period = dom.periodSelect.value;
 
     if (!strategyId) return { error: 'Выберите стратегию.' };
+    if (ownerMode && (capital === null || capital < 1000 || capital > 25000)) {
+      return { error: 'Выберите сумму от 1 000 до 25 000 USD.' };
+    }
+    if (ownerMode && (drawdown === null || drawdown < 4 || drawdown > 10)) {
+      return { error: 'Выберите лимит просадки от 4% до 10%.' };
+    }
     if (capital === null || capital < 1000) {
       return { error: 'Сумма капитала должна быть не меньше $1 000.' };
     }
@@ -1279,9 +1296,9 @@
       }
       dom.observationMessage.textContent = 'Наблюдение запущено. Стратегия добавлена в портфель.';
       dom.observationMessage.classList.add('is-success');
-      dom.capitalInput.value = '1000';
-      dom.drawdownInput.value = '7';
-      dom.periodSelect.value = '2_weeks';
+      dom.capitalInput.value = ownerMode ? '' : '1000';
+      dom.drawdownInput.value = ownerMode ? '' : '7';
+      dom.periodSelect.value = ownerMode ? '' : '2_weeks';
       await loadPortfolio(state.portfolioId);
       setTimeout(() => setObservationForm(false), 900);
     } catch (error) {

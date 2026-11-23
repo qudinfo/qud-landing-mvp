@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
   <link rel="stylesheet" href="./styles.css?v=20261123-chart-area">
-  <link rel="stylesheet" href="./portfolio.css?v=20261123-vp-alignment">
+  <link rel="stylesheet" href="./portfolio.css?v=20261123-observation-selects">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
 <body>
@@ -207,12 +207,12 @@
                 <button class="button button-primary" id="toggle-observation" type="button">Добавить наблюдение</button>
                 <form class="observation-form" id="observation-form" hidden novalidate>
                   <div class="vp-form-head"><h4>Новое наблюдение</h4><button type="button" id="close-observation" aria-label="Закрыть форму">×</button></div>
-                  <p class="vp-note">После запуска сумму, срок и лимит просадки изменить нельзя.</p>
                   <label class="vp-field">Стратегия<select id="strategy-select" name="strategy_id" required><option value="">Загрузка…</option></select></label>
                   <p class="vp-note" id="strategy-availability-note">Получение доступных стратегий.</p>
                   <div class="vp-strategy-preview" id="strategy-preview" hidden><div><span>Доходность</span><strong id="preview-return">—</strong></div><div><span>Макс. просадка</span><strong id="preview-dd">—</strong></div><div><span>Сделки</span><strong id="preview-trades">—</strong></div><div><span>Win Rate</span><strong id="preview-winrate">—</strong></div><div><span>Profit Factor</span><strong id="preview-pf">—</strong></div><div><span>Trust Score</span><strong id="preview-trust">—</strong></div></div>
-                  <label class="vp-field">Виртуальная сумма, USD<input id="capital-input" name="start_balance_usd" type="number" min="1000" step="100" value="1000" required></label>
-                  <div class="vp-form-grid"><label class="vp-field">Срок<select id="period-select" name="period" required><option value="2_weeks">2 недели</option><option value="1_month">1 месяц</option><option value="3_months">3 месяца</option></select></label><label class="vp-field">Лимит просадки, %<input id="drawdown-input" name="max_drawdown_limit_pct" type="number" min="1" max="50" step="0.5" value="7" required></label></div>
+                  <label class="vp-field">Виртуальная сумма, USD<select id="capital-input" name="start_balance_usd" required><option value="">Выберите сумму</option></select></label>
+                  <div class="vp-form-grid"><label class="vp-field">Срок<select id="period-select" name="period" required><option value="">Выберите срок</option><option value="2_weeks">2 недели</option><option value="1_month">1 месяц</option><option value="3_months">3 месяца</option></select></label><label class="vp-field">Лимит просадки, %<select id="drawdown-input" name="max_drawdown_limit_pct" required><option value="">Выберите лимит</option></select></label></div>
+                  <p class="vp-lock-note">После запуска сумму, срок<br>и лимит просадки изменить нельзя.</p>
                   <button class="button button-primary" id="submit-observation" type="submit">Начать наблюдение</button><p id="observation-message" role="status"></p>
                 </form>
               </aside>
@@ -420,6 +420,6 @@
   <script src="./app.js?v=20261123-vp-metric-help" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261123-access-card" defer></script>
-  <script src="/portal/portfolio/mvp/app.js?v=20261123-observation-copy" defer></script>
+  <script src="/portal/portfolio/mvp/app.js?v=20261123-observation-selects" defer></script>
 </body>
 </html>
