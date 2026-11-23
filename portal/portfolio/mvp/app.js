@@ -134,7 +134,9 @@
 
   function formatDrawdown(value) {
     const number = finiteNumber(value);
-    return number === null ? '—' : formatPercent(-Math.abs(number));
+    if (number === null) return '—';
+    const magnitude = compactNumberFormatter.format(Math.abs(number));
+    return magnitude === '0' ? '0%' : `-${magnitude}%`;
   }
 
   function formatNumber(value, formatter = compactNumberFormatter) {
@@ -426,6 +428,7 @@
     dom.metricReturnUsd.textContent = formatSignedMoney(returnUsd, summaryFormatter);
     dom.metricReturnPct.textContent = formatPercent(returnPct, true);
     dom.metricDrawdown.textContent = formatDrawdown(drawdown);
+    dom.metricDrawdown.classList.toggle('has-drawdown', dom.metricDrawdown.textContent.startsWith('-'));
     dom.metricActive.textContent = formatNumber(active);
     applySignedClass(dom.metricReturnUsd, returnUsd);
     applySignedClass(dom.metricReturnPct, returnPct);
@@ -503,7 +506,10 @@
     };
     Object.entries(values).forEach(([id, value]) => {
       const element = document.getElementById(id);
-      if (element) element.textContent = value;
+      if (element) {
+        element.textContent = value;
+        if (id === 'overview-vp-drawdown') element.classList.toggle('has-drawdown', value.startsWith('-'));
+      }
     });
     [
       ['overview-vp-result', portfolio.portfolio_return_usd],

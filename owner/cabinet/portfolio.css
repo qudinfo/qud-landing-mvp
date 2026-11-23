@@ -147,7 +147,7 @@
 .owner-vp .chart-svg .chart-label,.portfolio-panel .chart-svg .chart-label{fill:#7d878f;opacity:.68;stroke:none;font-size:9px;font-weight:300;letter-spacing:0;text-shadow:none}
 .owner-vp .chart-svg .chart-label-money,.portfolio-panel .chart-svg .chart-label-money{font-size:9px}
 .owner-vp .chart-svg .chart-area,.portfolio-panel .chart-svg .chart-area{stroke:none}
-.owner-vp #metric-drawdown,.portfolio-summary #overview-vp-drawdown{color:#df7872}
+.owner-vp #metric-drawdown.has-drawdown,.portfolio-summary #overview-vp-drawdown.has-drawdown{color:#df7872}
 .owner-vp #metric-return-usd,.owner-vp #metric-return-pct{color:#84d2a7}
 .portfolio-summary .metric-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
 .portfolio-summary .metric-card{padding-left:18px;border-right:1px solid var(--border)}
