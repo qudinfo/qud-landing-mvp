@@ -223,17 +223,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .button-outline:hover { border-color: #505861; background: rgba(216, 221, 229, .085); }
 .full-width { width: 100%; }
 
-.hero-visual { position: relative; min-height: 255px; overflow: hidden; background: radial-gradient(circle at 52% 50%, rgba(197, 203, 208, .08), transparent 18%); }
-.hero-visual::before, .hero-visual::after { content: ""; position: absolute; inset: 50% auto auto 50%; width: 400px; height: 1px; background: linear-gradient(90deg, transparent, rgba(161, 170, 178, .22), transparent); transform: translate(-50%, -50%) rotate(25deg); }
-.hero-visual::after { transform: translate(-50%, -50%) rotate(-25deg); }
-.orbit { position: absolute; left: 50%; top: 50%; border: 1px solid rgba(151, 160, 168, .18); border-radius: 50%; transform: translate(-50%, -50%) rotate(-12deg); }
-.orbit-one { width: 250px; height: 110px; }
-.orbit-two { width: 330px; height: 160px; opacity: .55; transform: translate(-50%, -50%) rotate(17deg); }
-.core-cube { position: absolute; left: 50%; top: 50%; width: 88px; height: 88px; display: grid; place-items: center; border: 1px solid #596168; background: #171b1f; box-shadow: inset 0 0 0 1px rgba(255,255,255,.018); transform: translate(-50%, -50%) rotate(9deg); }
-.core-cube::before { content: ""; position: absolute; inset: 9px; border: 1px solid #353c43; }
-.core-cube span { color: var(--gold-bright); font-size: 17px; font-weight: 780; letter-spacing: .08em; transform: rotate(-9deg); }
-.node { position: absolute; width: 7px; height: 7px; border: 1px solid #68717a; border-radius: 50%; background: var(--bg); box-shadow: none; }
-.node-one { left: 15%; top: 25%; }.node-two { right: 13%; top: 30%; }.node-three { left: 18%; bottom: 23%; }.node-four { right: 16%; bottom: 18%; }
+.hero-visual { display: block; align-self: center; width: 100%; height: auto; }
 
 .section-heading, .chart-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
 .section-heading h3, .chart-header h3 { margin: 0; font-size: 16px; font-weight: 560; }
@@ -711,7 +701,6 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .top-profile { grid-template-columns: 42px 17px; }
   .hero-card { grid-template-columns: minmax(0, 1fr) 220px; }
   .hero-copy { padding: 25px; }
-  .hero-visual { opacity: .72; }
   .overview-aside { grid-template-columns: 1fr 1fr; }
   .help-card { grid-column: 1 / -1; }
   .feature-placeholder-grid, .journey-list { grid-template-columns: 1fr; }
@@ -778,11 +767,11 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .top-support { min-height: 46px; width: 46px; }
   .top-profile { display: none; }
   .content { padding: 16px 14px 45px; }
-  .hero-card { display: block; min-height: 420px; position: relative; }
+  .hero-card { display: block; }
   .hero-copy { padding: 23px 20px; }
   .hero-actions { display: grid; }
   .button { width: 100%; }
-  .hero-visual { position: absolute; inset: auto 0 0; height: 155px; min-height: 0; opacity: .58; }
+  .hero-visual { width: calc(100% - 40px); max-width: 400px; margin: 0 auto 20px; }
   .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .metric-card { min-height: 100px; padding: 10px 12px 14px; }
   .metric-card:nth-child(3n) { border-right: 1px solid var(--border); }
