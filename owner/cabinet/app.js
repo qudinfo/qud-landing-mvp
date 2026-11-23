@@ -126,7 +126,7 @@
       metricTip.hidden = false;
       button.setAttribute('aria-describedby', metricTip.id);
       positionMetricHelp();
-      helpObserver.observe(strategyView, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'open'] });
+      helpObserver.observe(button.closest('.view') || strategyView, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'open'] });
     }
     button.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') show(); });
     button.addEventListener('focus', show);
@@ -134,6 +134,10 @@
     button.addEventListener('pointerleave', deferHelpClose);
     button.addEventListener('blur', deferHelpClose);
   }
+
+  document.querySelectorAll('[data-portfolio-help]').forEach(label => {
+    addMetricHelp(label, label.dataset.portfolioHelp);
+  });
 
   metricTip.addEventListener('pointerenter', () => clearTimeout(helpHideTimer));
   metricTip.addEventListener('pointerleave', deferHelpClose);

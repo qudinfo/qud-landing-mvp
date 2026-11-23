@@ -172,7 +172,14 @@
               <div class="vp-summary-toolbar"><h2 class="eyebrow" id="vp-summary-title">Мой Virtual Portfolio</h2><div class="vp-summary-refresh"><button id="vp-refresh" type="button" aria-label="Обновить данные портфеля" title="Обновить данные портфеля"><svg aria-hidden="true"><use href="#icon-refresh"></use></svg></button><span id="update-label" role="status">Загрузка данных…</span></div><span class="status-badge" id="portfolio-status" hidden>—</span></div>
               <span id="portfolio-identity" hidden>Получение портфеля…</span>
               <div class="vp-summary-body">
-                <div class="vp-metrics"><article><span>Распределено</span><strong id="metric-allocated">—</strong><small>Виртуальный капитал</small><svg><use href="#icon-portfolio"></use></svg></article><article><span>Текущий баланс</span><strong id="metric-balance">—</strong><small>Виртуальный баланс</small><svg><use href="#icon-wallet"></use></svg></article><article><span>Результат</span><strong id="metric-return-usd">—</strong><small>Финансовый результат</small><svg><use href="#icon-money"></use></svg></article><article><span>Доходность</span><strong id="metric-return-pct">—</strong><small>Относительно капитала</small><svg><use href="#icon-percent"></use></svg></article><article><span>Просадка</span><strong id="metric-drawdown">—</strong><small>От пика баланса</small><svg><use href="#icon-chart"></use></svg></article><article><span>Активные стратегии</span><strong id="metric-active">—</strong><small>В наблюдении</small><svg><use href="#icon-users"></use></svg></article></div>
+                <div class="vp-metrics">
+                  <article><span data-portfolio-help="Сколько виртуальных денег вы выделили на наблюдения.">Распределено</span><strong id="metric-allocated">—</strong></article>
+                  <article><span data-portfolio-help="Сколько сейчас стоят выделенные виртуальные деньги с учётом результатов стратегий.">Текущий баланс</span><strong id="metric-balance">—</strong></article>
+                  <article><span data-portfolio-help="Сколько виртуальных долларов портфель заработал или потерял.">Результат</span><strong id="metric-return-usd">—</strong></article>
+                  <article><span data-portfolio-help="На сколько процентов выросла или уменьшилась выделенная сумма.">Доходность</span><strong id="metric-return-pct">—</strong></article>
+                  <article><span data-portfolio-help="На сколько процентов текущий баланс ниже своего прежнего максимума.">Просадка</span><strong id="metric-drawdown">—</strong></article>
+                  <article><span data-portfolio-help="За сколькими стратегиями вы сейчас наблюдаете.">Активные стратегии</span><strong id="metric-active">—</strong></article>
+                </div>
                 <section class="panel vp-chart-panel" aria-labelledby="vp-chart-title"><div class="vp-chart-heading"><h3 class="eyebrow" id="vp-chart-title">Динамика виртуального баланса</h3><span id="portfolio-chart-count">0 недель</span></div><div class="chart-stage" id="portfolio-chart"></div></section>
               </div>
             </section>
@@ -410,7 +417,7 @@
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
   <script src="./profile.js?v=8" defer></script>
-  <script src="./app.js?v=20261123-chart-area" defer></script>
+  <script src="./app.js?v=20261123-vp-metric-help" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261123-access-card" defer></script>
   <script src="/portal/portfolio/mvp/app.js?v=20261123-observation-copy" defer></script>
