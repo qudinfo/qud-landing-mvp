@@ -2,6 +2,7 @@
   'use strict';
   const el = id => document.getElementById(id);
   const form = el('owner-name-form');
+  const firstDialog = el('owner-first-choice');
   const input = el('owner-name');
   const edit = el('owner-name-edit');
   const save = el('owner-name-save');
@@ -85,7 +86,8 @@
       ? (profile.email_verified ? 'Подтверждена' : 'Ожидает подтверждения') : '—';
     el('profile-key-issued').textContent = profile?.key_issued || '—';
     const first = profile && !profile.chosen;
-    const container = first ? el('owner-first-choice') : el('owner-profile-editor');
+    if (!first && firstDialog.open) firstDialog.close();
+    const container = first ? el('first-name-editor') : el('owner-profile-editor');
     if (form.parentElement !== container) container.appendChild(form);
     form.hidden = !profile;
     skip.hidden = !first;
@@ -96,9 +98,9 @@
     el('owner-name-hint').hidden = !first;
     if (first) input.setAttribute('aria-describedby', 'owner-name-hint');
     else input.removeAttribute('aria-describedby');
-    el('owner-name-label').textContent = first ? 'Укажите пожалуйста имя' : 'Ваше имя';
     save.textContent = first ? 'Сохранить имя' : 'Сохранить';
     updateSave();
+    if (first && !firstDialog.open) firstDialog.showModal();
   }
 
   function updateSave() {
@@ -146,7 +148,7 @@
       profile = data;
       render();
       if (mode === 'edit') edit.focus();
-      status.textContent = 'Выбор сохранён.';
+      status.textContent = mode === 'edit' ? 'Имя сохранено.' : '';
     } catch (error) {
       if (token !== generation) return;
       status.textContent = error.message === 'INVALID_NAME' ? 'Введите имя длиной до 60 знаков. Допустимы буквы, пробел, дефис и апостроф.'
@@ -179,6 +181,10 @@
     submit(profile?.chosen ? 'edit' : 'save');
   });
   skip.addEventListener('click', () => submit('skip'));
+  firstDialog.addEventListener('cancel', event => {
+    event.preventDefault();
+    submit('skip');
+  });
   retry.addEventListener('click', load);
   window.addEventListener('owner:session', event => {
     const id = event.detail.authenticated ? event.detail.owner_id : '';

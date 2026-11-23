@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261122-sidebar-qc">
+  <link rel="stylesheet" href="./styles.css?v=20261123-name-dialog">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
@@ -114,7 +114,6 @@
 
       <main class="content" id="cabinet-content" tabindex="-1">
         <p id="email-inbox-hint" hidden>Для подтверждения почты откройте письмо от QUD. Если его нет во «Входящих», проверьте папку «Спам».</p>
-        <div id="owner-first-choice"></div>
         <section class="view is-active" id="view-overview" data-title="Исследовательский доступ" aria-labelledby="overview-title">
           <div class="overview-grid">
             <div class="overview-main">
@@ -312,14 +311,14 @@
               <button id="owner-profile-retry" type="button" class="button button-secondary" hidden>Повторить</button>
               <div id="owner-profile-editor">
                 <form id="owner-name-form" hidden>
-                  <label id="owner-name-label" for="owner-name">Укажите пожалуйста имя</label>
+                  <label id="owner-name-label" for="owner-name">Ваше имя</label>
                   <div class="owner-name-field">
                     <input id="owner-name" type="text" autocomplete="given-name" maxlength="60" aria-describedby="owner-name-hint">
                     <button type="button" id="owner-name-edit" aria-label="Изменить имя" title="Изменить имя" hidden>
                       <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 5 4 4M4 20l4.5-1 12-12a2.8 2.8 0 0 0-4-4l-12 12L4 20Z"/></svg>
                     </button>
                   </div>
-                  <small id="owner-name-hint">Имя можно изменить позже в профиле</small>
+                  <small id="owner-name-hint">Имя можно указать или изменить позже в профиле.</small>
                   <div class="owner-name-actions">
                     <button type="submit" id="owner-name-save" class="button button-primary">Сохранить имя</button>
                     <button type="button" id="owner-name-skip" class="button button-secondary">Пропустить</button>
@@ -343,6 +342,11 @@
       </main>
     </section>
   </div>
+
+  <dialog class="name-dialog panel" id="owner-first-choice" aria-labelledby="first-name-title">
+    <h2 id="first-name-title">Как к вам обращаться?</h2>
+    <div id="first-name-editor"></div>
+  </dialog>
 
   <dialog class="support-dialog panel" id="support-dialog" aria-labelledby="support-dialog-title">
     <div class="broker-dialog-header"><div><p class="eyebrow">Связь с QUD</p><h2 id="support-dialog-title">Поддержка</h2></div><button class="icon-button" id="close-support" type="button" aria-label="Закрыть поддержку"><svg><use href="#icon-close"></use></svg></button></div>
@@ -401,7 +405,7 @@
     </form>
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
-  <script src="./profile.js?v=6" defer></script>
+  <script src="./profile.js?v=7" defer></script>
   <script src="./app.js?v=20261122-profile-1" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261122-pilot-login" defer></script>
