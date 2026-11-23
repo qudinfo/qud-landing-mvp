@@ -6,8 +6,6 @@
     'overview',
     'strategies',
     'portfolio',
-    'real-account',
-    'documents',
     'profile'
   ]);
 
@@ -1071,7 +1069,7 @@
     if (viewName !== 'real-account') hideDemoPassword();
     document.title = `${viewTitle.textContent} — QUD Capital Owner`;
 
-    if (updateHash && window.location.hash !== `#${viewName}`) {
+    if ((updateHash || (requestedView && requestedView !== viewName)) && window.location.hash !== `#${viewName}`) {
       window.history.replaceState(null, '', `#${viewName}`);
     }
 
