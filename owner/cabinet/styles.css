@@ -225,6 +225,14 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 
 .hero-visual { display: block; align-self: center; width: 100%; height: auto; }
 
+@media (min-width: 641px) {
+  .hero-visual {
+    transform-origin: right center;
+    transform: translateX(-17%) scale(1.24);
+    pointer-events: none;
+  }
+}
+
 .section-heading, .chart-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
 .section-heading h3, .chart-header h3 { margin: 0; font-size: 16px; font-weight: 560; }
 .compact-heading { margin-bottom: 12px; }
