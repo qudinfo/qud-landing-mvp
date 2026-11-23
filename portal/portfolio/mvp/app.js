@@ -659,8 +659,16 @@
 
     dom.detailAllocated.textContent = formatMoney(slot.allocated_balance_usd, ownerMode ? integerFormatter : moneyFormatter);
     dom.detailBalance.textContent = formatMoney(slot.current_balance_usd, ownerMode ? integerFormatter : moneyFormatter);
-    dom.detailReturn.textContent = formatPercent(slot.strategy_return_pct, true);
-    dom.detailDrawdown.textContent = formatPercent(slot.current_drawdown_pct);
+    const result = ownerMode ? visibleReturn(slot.strategy_return_pct, 2) : slot.strategy_return_pct;
+    dom.detailReturn.textContent = formatPercent(result, true);
+    applySignedClass(dom.detailReturn, result);
+    if (ownerMode) {
+      const drawdown = formatDrawdown(slot.current_drawdown_pct);
+      dom.detailDrawdown.textContent = drawdown;
+      dom.detailDrawdown.classList.toggle('value-negative', drawdown.startsWith('-'));
+    } else {
+      dom.detailDrawdown.textContent = formatPercent(slot.current_drawdown_pct);
+    }
     dom.detailLimit.textContent = formatPercent(slot.max_drawdown_limit_pct);
     const periodText = formatPeriod(
       slot.period_code,
@@ -680,7 +688,6 @@
     } else {
       dom.detailPeriod.textContent = periodText;
     }
-    applySignedClass(dom.detailReturn, slot.strategy_return_pct);
 
     dom.qualityReturn.textContent = formatPercent(slot.strategy_return_since_start_pct, true);
     dom.qualityDd.textContent = formatPercent(slot.max_drawdown_since_start_pct);
