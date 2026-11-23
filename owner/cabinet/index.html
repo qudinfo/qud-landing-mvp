@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=20261123-catalog-final">
+  <link rel="stylesheet" href="./styles.css?v=20261123-catalog-metrics">
   <link rel="stylesheet" href="./portfolio.css?v=20261023-21">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
@@ -154,7 +154,7 @@
             <div class="catalog-intro"><h2 class="eyebrow" id="strategies-title" lang="en">Strategy Catalog</h2><p id="catalog-description">Каталог QUD предназначен для анализа реальных торговых стратегий на основе подтверждённой истории сделок и аналитики доходности и риска. Демонстрационные значения не являются основанием для инвестиционных решений.</p></div>
           </div>
 
-          <div class="catalog-summary"><span class="catalog-count" id="strategy-count" aria-live="polite"></span></div>
+          <dl class="catalog-summary" id="catalog-metrics" aria-label="Показатели каталога" aria-live="polite" hidden></dl>
 
           <div class="strategy-catalog" id="strategy-catalog" aria-live="polite" aria-busy="false">
             <div class="strategy-state" role="status">Загрузка стратегий…</div>
@@ -404,7 +404,7 @@
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
   <script src="./profile.js?v=8" defer></script>
-  <script src="./app.js?v=20261123-catalog-final" defer></script>
+  <script src="./app.js?v=20261123-catalog-metrics" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261123-access-card" defer></script>
   <script src="/portal/portfolio/mvp/app.js?v=20261023-owner-9" defer></script>

@@ -42,7 +42,7 @@
   const toast = document.getElementById('demo-toast');
   const strategyView = document.getElementById('view-strategies');
   const strategyCatalog = document.getElementById('strategy-catalog');
-  const strategyCount = document.getElementById('strategy-count');
+  const catalogMetrics = document.getElementById('catalog-metrics');
   const catalogDescription = document.getElementById('catalog-description');
   const navItems = Array.from(document.querySelectorAll('.nav-item[data-view]'));
   const viewTriggers = Array.from(document.querySelectorAll('[data-view], [data-open-view]'));
@@ -155,13 +155,75 @@
     return `${value} недель`;
   }
 
-  function formatStrategyCount(value) {
-    const lastTwo = value % 100;
-    const last = value % 10;
-    if (lastTwo >= 11 && lastTwo <= 14) return `${value} стратегий`;
-    if (last === 1) return `${value} стратегия`;
-    if (last >= 2 && last <= 4) return `${value} стратегии`;
-    return `${value} стратегий`;
+  async function loadCatalogMetrics(strategies, requestId, signal) {
+    const confirmed = strategies.filter(s => s.data_status.toUpperCase() === 'CONFIRMED' && !s.strategy_id.includes('-DEMO-'));
+    if (!confirmed.length) return;
+    const number = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 });
+    const score = confirmed.reduce((sum, s) => sum + s.trust_score, 0) / confirmed.length;
+    function display(weekly, winRatio, trades) {
+      if (requestId !== strategyRequest) return;
+      const metrics = [
+        ['Средняя доходность за неделю', weekly],
+        ['Общий Win Ratio', winRatio],
+        ['Средний Trust Score', number.format(score)],
+        ['Закрыто сделок', trades]
+      ];
+      catalogMetrics.replaceChildren(...metrics.map(([label, value]) => {
+        const pair = document.createElement('div');
+        const term = document.createElement('dt');
+        const result = document.createElement('dd');
+        term.textContent = label;
+        result.textContent = value;
+        pair.append(term, result);
+        return pair;
+      }));
+      catalogMetrics.hidden = false;
+    }
+    display('—', '—', '—');
+    const details = [];
+    // Limit concurrent requests and reuse the data when a strategy is opened.
+    const pending = confirmed.values();
+    async function loadNext() {
+      for (const item of pending) {
+        const id = item.strategy_id;
+        let detail = strategyDetailCache.get(id);
+        if (!detail) {
+          const response = await fetch('/owner/api/strategies/' + encodeURIComponent(id), {
+            credentials: 'same-origin', cache: 'no-store', signal: AbortSignal.any([signal, AbortSignal.timeout(15000)])
+          });
+          if (!response.ok) throw new Error('CATALOG_DETAIL_UNAVAILABLE');
+          detail = await response.json();
+        }
+        if (!isValidStrategyDetail(detail, id) || detail.strategy.data_status.toUpperCase() !== 'CONFIRMED' ||
+            detail.strategy.data_period_end !== item.data_period_end) throw new Error('CATALOG_SNAPSHOT_CHANGED');
+        if (requestId !== strategyRequest) return;
+        strategyDetailCache.set(id, detail);
+        details.push(detail);
+      }
+    }
+    try {
+      await Promise.all(Array.from({ length: Math.min(3, confirmed.length) }, loadNext));
+    } catch {
+      return;
+    }
+    if (details.length !== confirmed.length || requestId !== strategyRequest) return;
+    const end = confirmed.reduce((latest, s) => s.data_period_end > latest ? s.data_period_end : latest, '');
+    const weeks = details.map(d => d.history.find(h => h.period_end === end));
+    const sameWeek = weeks.every(h => h && h.period_start === weeks[0].period_start);
+    const weekly = sameWeek ? weeks.reduce((sum, h) => sum + h.period_return_pct, 0) / weeks.length : null;
+    let trades = 0, wins = 0, exact = true;
+    for (const { strategy } of details) {
+      const n = strategy.closed_trades_total;
+      if (!Number.isSafeInteger(n) || n < 0) return;
+      trades += n;
+      // The source ratio is wins / closed trades * 100. Reject rounded or inconsistent inputs.
+      const raw = strategy.win_ratio_pct * n / 100;
+      const count = Math.round(raw);
+      if (count < 0 || count > n || Math.abs(raw - count) > 8 * Number.EPSILON * Math.max(1, n)) exact = false;
+      wins += count;
+    }
+    display(weekly === null ? '—' : number.format(weekly) + '%',
+      trades && exact ? number.format(100 * wins / trades) + '%' : '—', number.format(trades));
   }
 
   function isValidStrategy(value) {
@@ -244,7 +306,6 @@
   function renderStrategies(strategies) {
     strategyCatalog.replaceChildren();
     strategyCatalog.setAttribute('aria-busy', 'false');
-    strategyCount.textContent = formatStrategyCount(strategies.length);
     const confirmedRealData = strategies.length > 0 && strategies.every((strategy) =>
       strategy.data_status.toUpperCase() === 'CONFIRMED' &&
       !strategy.strategy_id.includes('-DEMO-')
@@ -587,7 +648,7 @@
   function renderStrategyError() {
     strategyCatalog.replaceChildren();
     strategyCatalog.setAttribute('aria-busy', 'false');
-    strategyCount.textContent = '';
+    catalogMetrics.hidden = true;
     const error = document.createElement('div');
     error.className = 'strategy-state strategy-state-error';
     const message = document.createElement('p');
@@ -606,7 +667,7 @@
     strategyState = 'loading';
     strategyCatalog.setAttribute('aria-busy', 'true');
     strategyCatalog.innerHTML = '<div class="strategy-state" role="status">Загрузка стратегий…</div>';
-    strategyCount.textContent = '';
+    catalogMetrics.hidden = true;
 
     const requestId = ++strategyRequest;
     const controller = new AbortController();
@@ -636,6 +697,8 @@
       strategyCache = data.strategies;
       strategyState = 'loaded';
       renderStrategies(strategyCache);
+      window.clearTimeout(timeout);
+      await loadCatalogMetrics(strategyCache, requestId, controller.signal);
     } catch {
       if (requestId !== strategyRequest) return;
       strategyState = 'error';
@@ -665,7 +728,7 @@
     strategyDetailController = undefined;
     strategyView.classList.remove('is-detail');
     strategyState = 'initial';
-    strategyCount.textContent = '';
+    catalogMetrics.hidden = true;
     strategyCatalog.setAttribute('aria-busy', 'false');
     strategyCatalog.innerHTML = '<div class="strategy-state" role="status">Загрузка стратегий…</div>';
     applicationRequest += 1;

@@ -304,8 +304,10 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .catalog-intro { min-width: 0; max-width: 950px; }
 .catalog-intro h2 { margin: 0 0 16px; }
 .catalog-toolbar p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
-.catalog-summary { min-height: 16px; display: flex; justify-content: flex-end; align-items: center; margin-top: 13px; padding: 0 2px; }
-.catalog-count { color: var(--text-soft); font-size: 11px; }
+.catalog-summary { display: flex; flex-wrap: wrap; gap: 7px 24px; margin: 13px 0 8px; color: var(--muted); font-size: 11px; }
+.catalog-summary div { display: flex; align-items: baseline; gap: 6px; }
+.catalog-summary dd { margin: 0; color: var(--text-soft); font-weight: 550; font-variant-numeric: tabular-nums; }
+.catalog-summary[hidden] { display: none; }
 .strategy-view.is-detail .catalog-toolbar { display: none; }
 .strategy-view.is-detail .catalog-summary { display: none; }
 .strategy-view.is-detail .strategy-catalog { margin-top: 0; }
