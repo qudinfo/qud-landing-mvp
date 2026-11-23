@@ -319,7 +319,7 @@
       return;
     }
 
-    strategies.forEach((strategy, index) => {
+    strategies.forEach((strategy) => {
       const row = document.createElement('button');
       row.className = 'strategy-catalog-row panel';
       row.type = 'button';
@@ -328,16 +328,13 @@
 
       const identity = document.createElement('span');
       identity.className = 'strategy-identity';
-      const number = document.createElement('span');
-      number.className = 'strategy-number';
-      number.textContent = String(index + 1).padStart(2, '0');
       const identityCopy = document.createElement('span');
       const identityLabel = document.createElement('small');
       const identityValue = document.createElement('strong');
       identityLabel.textContent = 'Strategy ID';
       identityValue.textContent = strategy.strategy_id;
       identityCopy.append(identityLabel, identityValue);
-      identity.append(number, identityCopy);
+      identity.append(identityCopy);
 
       row.append(
         identity,
