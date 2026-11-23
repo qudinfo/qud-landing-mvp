@@ -5,7 +5,7 @@
 .owner-vp .vp-instructions .broker-document-card summary>svg{width:20px;height:20px}
 .owner-vp .vp-instructions .broker-document-card strong{font-size:11px}
 .owner-vp .vp-instructions .broker-document-card small{font-size:9px}
-.owner-vp .vp-summary-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;min-height:30px;margin-bottom:8px}
+.owner-vp .vp-summary-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;min-height:30px;margin-bottom:18px}
 .owner-vp .vp-summary-toolbar h2.eyebrow{margin:0 2px 0 0;font-size:12px;font-weight:730;letter-spacing:.12em;line-height:1.4;text-transform:uppercase}
 .owner-vp .vp-summary-refresh{display:flex;align-items:center;gap:5px;min-width:0}
 .owner-vp .vp-summary-toolbar button{display:grid;place-items:center;flex:0 0 auto;width:30px;height:30px;padding:4px;border:0;border-radius:50%;background:transparent;color:#a9b4bc;cursor:pointer}
@@ -106,7 +106,7 @@
 .owner-vp .vp-chart-panel{padding:25px 30px;margin:4px 0 20px}
 .owner-vp .vp-chart-panel .vp-chart-heading{align-items:flex-end;margin-bottom:21px}
 .owner-vp .vp-chart-panel .vp-chart-heading h3.eyebrow{margin:0;font-size:12px;font-weight:730;letter-spacing:.12em;line-height:1.4;text-transform:uppercase}
-.owner-vp #portfolio-chart-count{color:#7d878f}
+.owner-vp #portfolio-chart-count{color:#7d878f;font-size:12px;white-space:nowrap}
 .owner-vp .vp-chart-panel .chart-stage{min-height:245px}
 .owner-vp #portfolio-chart,.owner-vp #strategy-chart{position:relative}
 .owner-vp #portfolio-chart .chart-line,.owner-vp #strategy-chart .chart-line{stroke:#c4cbd2;stroke-width:1.35;vector-effect:non-scaling-stroke}
@@ -168,7 +168,7 @@
   align-items: center;
   gap: 20px;
 }
-.owner-vp .vp-summary-body .vp-chart-panel { min-width: 0; margin: 0; }
+.owner-vp .vp-summary-body .vp-chart-panel { min-width: 0; margin: 0; align-self: stretch; }
 .owner-vp .vp-summary-body .chart-stage { min-height: 0; }
 @media (max-width: 950px) {
   .owner-vp .vp-summary-body { grid-template-columns: minmax(0, 1fr); gap: 14px; }
@@ -177,3 +177,5 @@
 @media (max-width: 700px) {
   .owner-vp .vp-summary .vp-metrics article { padding: 4px 5px 4px 0; overflow-wrap: anywhere; }
 }
+
+.owner-vp #portfolio-chart .chart-empty { justify-items: start; text-align: left; }

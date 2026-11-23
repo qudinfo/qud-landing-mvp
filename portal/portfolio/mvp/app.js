@@ -757,7 +757,10 @@
   function renderLineChart(container, points, ariaLabel, options = {}) {
     container.replaceChildren();
     if (points.length < 2) {
-      container.append(dom.emptyChartTemplate.content.cloneNode(true));
+      const template = ownerMode && container === dom.portfolioChart
+        ? document.getElementById('empty-portfolio-chart-template') || dom.emptyChartTemplate
+        : dom.emptyChartTemplate;
+      container.append(template.content.cloneNode(true));
       return;
     }
 

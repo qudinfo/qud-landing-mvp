@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
   <link rel="stylesheet" href="./styles.css?v=20261123-chart-area">
-  <link rel="stylesheet" href="./portfolio.css?v=20261123-vp-rows">
+  <link rel="stylesheet" href="./portfolio.css?v=20261123-vp-spacing">
 <link rel="stylesheet" href="./login-design.css?v=1">
 </head>
 <body>
@@ -54,7 +54,7 @@
     <symbol id="icon-exit" viewBox="0 0 24 24"><path d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5M14 8l4 4-4 4M8 12h10"/></symbol>
     <symbol id="icon-wallet" viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H19v16H6.5A2.5 2.5 0 0 1 4 17.5Z"/><path d="M4 7h13M15 11h6v5h-6a2.5 2.5 0 0 1 0-5Z"/></symbol>
     <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 20h18M5 17l4-5 4 2 6-8"/></symbol>
-    <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M19.5 15a8 8 0 1 1-1.8-8.7L20 9M20 4v5h-5"/></symbol>
     <symbol id="icon-money" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M5.5 9c1.4 0 2-.8 2-2M18.5 15c-1.4 0-2 .8-2 2"/></symbol>
     <symbol id="icon-percent" viewBox="0 0 24 24"><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><path d="m18 4-12 16"/></symbol>
     <symbol id="icon-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M14 15a4.5 4.5 0 0 1 6.5 4"/></symbol>
@@ -222,6 +222,7 @@
             </div>
             <p class="vp-disclaimer">Виртуальное наблюдение не задействует реальные деньги и не является инвестиционной рекомендацией.</p>
           </div>
+          <template id="empty-portfolio-chart-template"><div class="chart-empty"><p>график появится после первого<br>подтверждённого недельного периода.</p></div></template>
           <template id="empty-chart-template"><div class="chart-empty"><strong>Первая точка ещё не сформирована</strong><p>График появится после первого подтверждённого недельного периода.</p></div></template>
         </section>
 
@@ -412,6 +413,6 @@
   <script src="./app.js?v=20261123-chart-area" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=20261123-access-card" defer></script>
-  <script src="/portal/portfolio/mvp/app.js?v=20261123-vp-chart" defer></script>
+  <script src="/portal/portfolio/mvp/app.js?v=20261123-vp-spacing" defer></script>
 </body>
 </html>
