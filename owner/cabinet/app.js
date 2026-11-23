@@ -44,6 +44,7 @@
   const strategyCatalog = document.getElementById('strategy-catalog');
   const catalogMetrics = document.getElementById('catalog-metrics');
   const catalogDescription = document.getElementById('catalog-description');
+  const catalogIntro = catalogDescription.textContent;
   const navItems = Array.from(document.querySelectorAll('.nav-item[data-view]'));
   const viewTriggers = Array.from(document.querySelectorAll('[data-view], [data-open-view]'));
   const demoTriggers = Array.from(document.querySelectorAll('[data-demo-action]'));
@@ -163,10 +164,10 @@
     function display(weekly, winRatio, trades) {
       if (requestId !== strategyRequest) return;
       const metrics = [
-        ['Средняя доходность за неделю', weekly],
-        ['Общий Win Ratio', winRatio],
-        ['Средний Trust Score', number.format(score)],
-        ['Закрыто сделок', trades]
+        ['Закрыто сделок\nза всё время', trades],
+        ['Win Ratio\nза всё время', winRatio],
+        ['Средний\nTrust Score', number.format(score)],
+        ['Средняя доходность\nза последнюю неделю', weekly]
       ];
       catalogMetrics.replaceChildren(...metrics.map(([label, value]) => {
         const pair = document.createElement('div');
@@ -306,13 +307,9 @@
   function renderStrategies(strategies) {
     strategyCatalog.replaceChildren();
     strategyCatalog.setAttribute('aria-busy', 'false');
-    const confirmedRealData = strategies.length > 0 && strategies.every((strategy) =>
-      strategy.data_status.toUpperCase() === 'CONFIRMED' &&
-      !strategy.strategy_id.includes('-DEMO-')
-    );
-    catalogDescription.textContent = confirmedRealData
-      ? 'В каталоге представлены торговые стратегии QUD. Торговые решения по каждой стратегии принимают трейдеры в реальном времени. Каждое воскресенье история сделок обновляется и пополняется данными за прошедшую неделю.\n\nПоказатели основаны на подтверждённой истории сделок и анализе доходности и риска. Это помогает оценить стратегию перед началом виртуального наблюдения. Исторические результаты не гарантируют будущую доходность.'
-      : 'Каталог QUD предназначен для анализа реальных торговых стратегий на основе подтверждённой истории сделок и актуальной аналитики риска. Демонстрационные значения не являются основанием для инвестиционных решений.';
+    catalogDescription.textContent = strategies.length && strategies.some(strategy =>
+      strategy.data_status.toUpperCase() !== 'CONFIRMED' || strategy.strategy_id.includes('-DEMO-')
+    ) ? 'Каталог QUD предназначен для анализа торговых стратегий. Демонстрационные значения не являются основанием для инвестиционных решений.' : catalogIntro;
 
     if (strategies.length === 0) {
       const empty = document.createElement('div');
@@ -665,6 +662,7 @@
   async function loadStrategies() {
     if (strategyState === 'loading' || strategyState === 'loaded') return;
     strategyState = 'loading';
+    catalogDescription.textContent = catalogIntro;
     strategyCatalog.setAttribute('aria-busy', 'true');
     strategyCatalog.innerHTML = '<div class="strategy-state" role="status">Загрузка стратегий…</div>';
     catalogMetrics.hidden = true;
