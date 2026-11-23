@@ -106,7 +106,7 @@
 .owner-vp .history-scroll th,.owner-vp .history-scroll td{padding:10px 8px;border-bottom:1px solid #293039;text-align:left;font-size:12px}
 .owner-vp .history-scroll th{color:#8e99a4;font-weight:500}
 .owner-vp .chart-empty{display:grid;place-items:center;min-height:170px;text-align:center;color:#9aa4ae}
-.owner-vp .vp-disclaimer{margin:22px 0}
+.owner-vp .vp-disclaimer{margin:16px 0;font-size:10px}
 .owner-vp #observation-message{min-height:20px;color:#e9a1a1;font-size:13px}
 .owner-vp #observation-message.is-success{color:#8bd2aa}
 @media(max-width:1050px){.owner-vp .vp-columns{grid-template-columns:minmax(0,1fr)}}
@@ -198,3 +198,9 @@
 }
 
 .owner-vp #portfolio-chart .chart-empty { justify-items: start; text-align: left; }
+
+.owner-vp .vp-observations:has(.strategy-list-empty) .vp-section-heading,
+.owner-vp .vp-observations:has(.strategy-list-empty) .eyebrow { margin-bottom: 0; }
+.owner-vp .strategy-list:has(.strategy-list-empty) { margin-top: 4px; }
+.owner-vp .strategy-list-empty, .owner-vp .vp-empty p { margin: 0; font-size: 11px; line-height: 1.4; text-align: left; }
+.owner-vp .vp-detail:has(#strategy-empty-state:not([hidden])) { padding: 14px 18px; }
