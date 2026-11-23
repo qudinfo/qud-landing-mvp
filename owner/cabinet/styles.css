@@ -588,12 +588,8 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .support-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .support-dialog-header .eyebrow { margin: 0; }
 .support-dialog::backdrop { background: rgba(0,0,0,.72); }
-.support-addresses { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 24px 0; }
-.support-addresses > div { min-width: 0; display: grid; align-content: start; gap: 6px; border-top: 1px solid var(--border-soft); padding-top: 13px; }
-.support-addresses span, .support-addresses small { color: var(--muted); font-size: 10px; }
-.support-addresses strong { overflow-wrap: anywhere; font-size: 12px; font-weight: 580; }
-.support-history { border-top: 1px solid var(--border-soft); padding-top: 17px; }
-.support-history-heading { display: flex; justify-content: space-between; gap: 15px; align-items: baseline; }
+.support-history { margin-top: 18px; border-top: 1px solid var(--border-soft); padding-top: 17px; }
+.support-history-heading { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; }
 .support-history h3 { color: var(--muted); margin: 0; font-size: 14px; font-weight: 570; }
 .support-history-heading span, .support-history-state { color: var(--muted); font-size: 11px; }
 .support-history-state { margin: 16px 0; line-height: 1.5; }
@@ -611,7 +607,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .support-form textarea { width: 100%; min-height: 44px; max-height: min(210px, 34vh); resize: none; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-soft); color: var(--text); padding: 12px; font: inherit; font-size: 12px; line-height: 1.5; }
 .support-form textarea:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
 .support-form textarea:disabled { opacity: .5; }
-.support-form-footer { display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+.support-form-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
 .support-form-footer p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
 .support-form-footer .button { flex: 0 0 auto; }
 .support-form-footer .button:disabled { cursor: not-allowed; opacity: .5; }
@@ -752,11 +748,8 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 
 @media (max-width: 640px) {
   .support-dialog { padding: 20px; }
-  .support-addresses { grid-template-columns: 1fr; }
   .support-message summary { grid-template-columns: auto auto 1fr; }
   .support-message summary span { grid-column: 1 / -1; }
-  .support-form-footer { align-items: stretch; flex-direction: column; }
-  .support-form-footer .button { width: 100%; }
   .broker-guide-content { left: 0; right: auto; }
   .broker-terminal-inline { gap: 12px; }
   .broker-terminal-wordmark { font-size: 13px; }

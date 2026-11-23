@@ -987,8 +987,6 @@
   const dialog = byId('support-dialog');
   const openButton = byId('open-support');
   const unreadBadge = byId('support-unread');
-  const from = byId('support-from');
-  const ownerId = byId('support-owner-id');
   const historyState = byId('support-history-state');
   const historyCount = byId('support-history-count');
   const messages = byId('support-messages');
@@ -1097,19 +1095,15 @@
       available = true;
       const email = typeof data.owner_email === 'string' ? data.owner_email.trim() : '';
       ownerEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : '';
-      from.textContent = ownerEmail || 'Электронная почта не указана';
-      ownerId.textContent = '';
       showUnread(data.unread_count);
       renderMessages(data.messages);
       feedback.textContent = ownerEmail
-        ? 'Сообщение и история доступны только владельцу этого кабинета.'
+        ? ''
         : 'Отправка недоступна: к кабинету не привязан подтверждённый email.';
     } catch (error) {
       if (version !== requestVersion || !authenticated) return;
       available = false;
       ownerEmail = '';
-      from.textContent = '—';
-      ownerId.textContent = '';
       showUnread(0);
       messages.replaceChildren();
       historyCount.textContent = '';
@@ -1184,7 +1178,6 @@
       sending = false;
       messageInput.value = '';
       messages.replaceChildren();
-      from.textContent = '—';
       historyCount.textContent = '';
       historyState.hidden = false;
       historyState.textContent = 'Загружаем переписку…';
