@@ -358,11 +358,29 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .strategy-section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 5px; }
 .strategy-section-heading h3 { margin: 3px 0 0; font-size: 17px; font-weight: 540; }
 .strategy-section-heading > span { color: var(--muted); font-size: 9px; }
-.strategy-history-chart { width: 100%; height: auto; overflow: visible; }
+.strategy-chart-plot { position: relative; min-width: 0; }
+.strategy-history-chart { display: block; width: 100%; height: auto; overflow: visible; stroke: none; }
 .chart-grid-line { stroke: #232a30; stroke-width: 1; }
 .chart-zero-line { stroke: #717b84; stroke-width: 1.2; stroke-dasharray: 4 5; }
-.chart-result-line { fill: none; stroke: #c4cbd2; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.chart-result-point { fill: #11161a; stroke: #d8dde5; stroke-width: 2.2; vector-effect: non-scaling-stroke; }
+.chart-result-area { fill: #bbc5ce; fill-opacity: .11; }
+.chart-result-line { fill: none; stroke: #c4cbd2; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.chart-result-point { fill: #cbd2d9; pointer-events: none; }
+.chart-point-hit { fill: transparent; cursor: crosshair; }
+.chart-point-value {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 6px));
+  pointer-events: none;
+  white-space: nowrap;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+.chart-point-value.align-start { transform: translate(0, calc(-100% - 6px)); }
+.chart-point-value.align-end { transform: translate(-100%, calc(-100% - 6px)); }
 .chart-axis-label { fill: #7f8891; stroke: none; font-size: 11px; font-weight: 520; }
 .chart-date-label { font-size: 10px; }
 .strategy-chart-empty, .strategy-history-empty { min-height: 120px; display: grid; place-items: center; margin: 0; color: var(--muted); font-size: 11px; text-align: center; }

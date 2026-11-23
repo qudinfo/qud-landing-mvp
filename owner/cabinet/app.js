@@ -508,7 +508,7 @@
     const svg = document.createElementNS(namespace, 'svg');
     svg.setAttribute('class', 'strategy-history-chart');
     svg.setAttribute('viewBox', '0 0 900 320');
-    svg.setAttribute('role', 'img');
+    svg.setAttribute('role', 'group');
     svg.setAttribute('aria-label', `Динамика накопительного результата стратегии ${strategyId}`);
 
     const values = history.map((row) => row.strategy_return_since_start_pct);
@@ -536,6 +536,12 @@
       return element;
     };
 
+    const points = values.map((value, index) => `${xAt(index)},${yAt(value)}`).join(' ');
+    if (history.length > 1) {
+      const base = top + height;
+      addSvg('polygon', { class: 'chart-result-area', points: `${points} ${xAt(history.length - 1)},${base} ${xAt(0)},${base}` });
+    }
+
     for (let index = 0; index <= 4; index += 1) {
       const value = max - ((max - min) * index / 4);
       const y = yAt(value);
@@ -545,14 +551,45 @@
 
     const zeroY = yAt(0);
     addSvg('line', { class: 'chart-zero-line', x1: left, x2: 900 - right, y1: zeroY, y2: zeroY });
-    const points = history.map((row, index) => `${xAt(index)},${yAt(row.strategy_return_since_start_pct)}`).join(' ');
     addSvg('polyline', { class: 'chart-result-line', points });
+    const plot = document.createElement('div');
+    plot.className = 'strategy-chart-plot';
+    const label = document.createElement('span');
+    label.className = 'chart-point-value';
+    label.hidden = true;
+    label.setAttribute('aria-hidden', 'true');
+    const hitWidth = Math.min(48, width / Math.max(1, history.length - 1));
     history.forEach((row, index) => {
-      addSvg('circle', {
-        class: 'chart-result-point',
-        cx: xAt(index),
-        cy: yAt(row.strategy_return_since_start_pct),
-        r: history.length === 1 ? 6 : 4
+      const cx = xAt(index);
+      const cy = yAt(values[index]);
+      const value = formatPercent(values[index], true).replace('.', ',');
+      addSvg('circle', { class: 'chart-result-point', cx, cy, r: 2.25 });
+      const hit = addSvg('rect', {
+        class: 'chart-point-hit', x: cx - hitWidth / 2, y: cy - 24,
+        width: hitWidth, height: 48, tabindex: 0, role: 'img',
+        'aria-label': `${formatDate(row.period_end)}, ${value}`
+      });
+      const showValue = () => {
+        label.textContent = value;
+        label.style.left = `${cx / 900 * 100}%`;
+        label.style.top = `${cy / 320 * 100}%`;
+        label.classList.toggle('align-start', cx < left + 50);
+        label.classList.toggle('align-end', cx > 900 - right - 50);
+        label.hidden = false;
+      };
+      const hideValue = () => { label.hidden = true; };
+      hit.addEventListener('pointerenter', showValue);
+      hit.addEventListener('pointerleave', (event) => {
+        if (event.pointerType !== 'touch') hideValue();
+      });
+      hit.addEventListener('focus', showValue);
+      hit.addEventListener('blur', hideValue);
+      hit.addEventListener('click', () => {
+        hit.focus({ preventScroll: true });
+        showValue();
+      });
+      hit.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') hideValue();
       });
     });
 
@@ -572,7 +609,8 @@
         'text-anchor': index === 0 && history.length > 1 ? 'start' : index === history.length - 1 && history.length > 1 ? 'end' : 'middle'
       }, formatDate(history[index].period_end));
     });
-    section.append(svg);
+    plot.append(svg, label);
+    section.append(plot);
     return section;
   }
 
