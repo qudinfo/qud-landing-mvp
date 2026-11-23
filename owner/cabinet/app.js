@@ -828,6 +828,11 @@
     if (moveFocus) content.focus({ preventScroll: true });
   }
 
+  const brand = document.querySelector('.sidebar .brand');
+  brand.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'mouse') window.location.assign(brand.href);
+  });
+
   viewTriggers.forEach((trigger) => {
     trigger.addEventListener('click', (event) => {
       if (trigger.tagName === 'A') event.preventDefault();
