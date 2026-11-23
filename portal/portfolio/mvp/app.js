@@ -494,9 +494,9 @@
   function renderOwnerOverview(payload, balancePoints, allocatedPoints) {
     const portfolio = payload.portfolio;
     const values = {
-      'overview-vp-allocated': formatMoney(valueFrom(portfolio, ['total_allocated_usd'])),
-      'overview-vp-balance': formatMoney(valueFrom(portfolio, ['current_balance_usd'])),
-      'overview-vp-result': formatSignedMoney(valueFrom(portfolio, ['portfolio_return_usd'])),
+      'overview-vp-allocated': formatMoney(valueFrom(portfolio, ['total_allocated_usd']), integerFormatter),
+      'overview-vp-balance': formatMoney(valueFrom(portfolio, ['current_balance_usd']), integerFormatter),
+      'overview-vp-result': formatSignedMoney(valueFrom(portfolio, ['portfolio_return_usd']), integerFormatter),
       'overview-vp-return': formatPercent(valueFrom(portfolio, ['portfolio_return_pct']), true),
       'overview-vp-drawdown': formatDrawdown(valueFrom(portfolio, ['current_drawdown_pct'])),
       'overview-vp-active': formatNumber(valueFrom(portfolio, ['active_strategies_count']))
