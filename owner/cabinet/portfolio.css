@@ -118,7 +118,7 @@
 /* Portfolio summary follows the compact, unboxed metric language of Overview. */
 .owner-vp .vp-summary{padding:14px 0 20px;background:transparent;border:0;box-shadow:none}
 .owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 0}
-.owner-vp .vp-summary .vp-metrics article{position:relative;min-height:0;display:grid;align-content:start;gap:3px;padding:4px 14px;background:transparent;border:0;border-radius:0}
+.owner-vp .vp-summary .vp-metrics article{position:relative;min-height:0;display:grid;grid-template-rows:1fr auto;gap:3px;padding:4px 14px;background:transparent;border:0;border-radius:0}
 .owner-vp .vp-summary .vp-metrics article:nth-child(3n+1){padding-left:0}
 .owner-vp .vp-summary .vp-metrics::before{content:"";grid-column:1 / -1;grid-row:2;border-top:1px solid #293039}
 .owner-vp .vp-summary .vp-metrics span{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#a6afb5}
@@ -207,3 +207,7 @@
 .owner-vp .strategy-list:has(.strategy-list-empty) { margin-top: 4px; }
 .owner-vp .strategy-list-empty, .owner-vp .vp-empty p { margin: 0; font-size: 11px; line-height: 1.4; text-align: left; }
 .owner-vp .vp-detail:has(#strategy-empty-state:not([hidden])) { padding: 14px 18px; }
+
+.owner-vp .vp-summary .vp-metrics article:nth-child(3n) { padding-right: 0; }
+.owner-vp [data-portfolio-help] { display: flex; align-items: center; justify-content: flex-start; }
+.owner-vp [data-portfolio-help] .metric-help { flex: none; }
