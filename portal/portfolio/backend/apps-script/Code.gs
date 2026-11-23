@@ -14,10 +14,9 @@ const QUD_VP_CONFIG = Object.freeze({
     apiAvailability: 'api_strategy_availability'
   }),
   allowedPeriods: Object.freeze(['2_weeks', '1_month', '3_months']),
-  minAllocatedBalanceUsd: 1000,
-  maxAllocatedBalanceUsd: 10000000,
-  minDrawdownPct: 1,
-  maxDrawdownPct: 50,
+  allowedAmountsUsd: Object.freeze([1000, 5000, 10000, 15000, 20000, 25000]),
+  minDrawdownPct: 4,
+  maxDrawdownPct: 10,
   maxIdempotencyKeyLength: 128
 });
 
@@ -345,14 +344,12 @@ function assertPortfolioOwnership_(subscriberId, portfolioId) {
 }
 
 function validateRequestParameters_(allocatedBalance, maxDrawdown, periodCode) {
-  if (
-    allocatedBalance < QUD_VP_CONFIG.minAllocatedBalanceUsd ||
-    allocatedBalance > QUD_VP_CONFIG.maxAllocatedBalanceUsd
-  ) {
+  if (!QUD_VP_CONFIG.allowedAmountsUsd.includes(allocatedBalance)) {
     throw apiError_('INVALID_ALLOCATED_BALANCE', 400);
   }
 
   if (
+    !Number.isInteger(maxDrawdown) ||
     maxDrawdown < QUD_VP_CONFIG.minDrawdownPct ||
     maxDrawdown > QUD_VP_CONFIG.maxDrawdownPct
   ) {

@@ -1148,12 +1148,13 @@
     if (open) dom.strategySelect.focus();
   }
 
+  const observationAmounts = [1000, 5000, 10000, 15000, 20000, 25000];
   if (ownerMode) {
     const amountFormat = new Intl.NumberFormat('ru-RU');
-    for (let amount = 1000; amount <= 25000; amount += 100) {
+    for (const amount of observationAmounts) {
       dom.capitalInput.add(new Option(amountFormat.format(amount), String(amount)));
     }
-    for (let limit = 4; limit <= 10; limit += 0.5) {
+    for (let limit = 4; limit <= 10; limit += 1) {
       dom.drawdownInput.add(new Option(amountFormat.format(limit) + '%', String(limit)));
     }
   }
@@ -1165,17 +1166,11 @@
     const period = dom.periodSelect.value;
 
     if (!strategyId) return { error: 'Выберите стратегию.' };
-    if (ownerMode && (capital === null || capital < 1000 || capital > 25000)) {
-      return { error: 'Выберите сумму от 1 000 до 25 000 USD.' };
+    if (!observationAmounts.includes(capital)) {
+      return { error: 'Выберите одну из сумм: 1 000, 5 000, 10 000, 15 000, 20 000 или 25 000 USD.' };
     }
-    if (ownerMode && (drawdown === null || drawdown < 4 || drawdown > 10)) {
-      return { error: 'Выберите лимит просадки от 4% до 10%.' };
-    }
-    if (capital === null || capital < 1000) {
-      return { error: 'Сумма капитала должна быть не меньше $1 000.' };
-    }
-    if (drawdown === null || drawdown < 1 || drawdown > 50) {
-      return { error: 'Лимит просадки должен быть от 1% до 50%.' };
+    if (!Number.isInteger(drawdown) || drawdown < 4 || drawdown > 10) {
+      return { error: 'Выберите целое число от 4 до 10%.' };
     }
     if (!['2_weeks', '1_month', '3_months'].includes(period)) {
       return { error: 'Выберите допустимый период.' };
@@ -1185,8 +1180,8 @@
 
   function observationErrorMessage(error) {
     const messages = {
-      INVALID_ALLOCATED_BALANCE: 'Сумма капитала должна быть не меньше $1 000.',
-      INVALID_DRAWDOWN_LIMIT: 'Лимит просадки должен быть от 1% до 50%.',
+      INVALID_ALLOCATED_BALANCE: 'Выберите одну из сумм: 1 000, 5 000, 10 000, 15 000, 20 000 или 25 000 USD.',
+      INVALID_DRAWDOWN_LIMIT: 'Выберите целое число от 4 до 10%.',
       INVALID_PERIOD_CODE: 'Выбран недопустимый период.',
       ACTIVE_REQUEST_EXISTS: 'Эта стратегия уже находится под активным наблюдением.',
       STRATEGY_NOT_AVAILABLE: 'Стратегия сейчас недоступна для нового наблюдения.',
