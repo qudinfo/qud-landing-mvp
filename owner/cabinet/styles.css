@@ -308,7 +308,7 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .catalog-summary div { display: flex; align-items: center; gap: 20px; padding: 5px 16px; }
 .catalog-summary div:first-child { padding-left: 0; }
 .catalog-summary dt { white-space: pre; color: var(--muted); font-size: 10px; font-weight: 650; line-height: 1.45; letter-spacing: .05em; text-transform: uppercase; }
-.catalog-summary dd { order: -1; margin: 0; color: var(--text-soft); font-size: 30px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.catalog-summary dd { order: -1; margin: 0; color: var(--text-soft); font-size: 21px; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
 .catalog-summary[hidden] { display: none; }
 .strategy-view.is-detail .catalog-toolbar { display: none; }
 .strategy-view.is-detail .catalog-summary { display: none; }
