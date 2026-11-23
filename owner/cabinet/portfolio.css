@@ -109,9 +109,9 @@
 .owner-vp #portfolio-chart-count{color:#7d878f}
 .owner-vp .vp-chart-panel .chart-stage{min-height:245px}
 .owner-vp #portfolio-chart,.owner-vp #strategy-chart{position:relative}
-.owner-vp #portfolio-chart .chart-line,.owner-vp #strategy-chart .chart-line{stroke-width:1.5}
+.owner-vp #portfolio-chart .chart-line,.owner-vp #strategy-chart .chart-line{stroke:#c4cbd2;stroke-width:1.35;vector-effect:non-scaling-stroke}
 .owner-vp #portfolio-chart .chart-hit-target,.owner-vp #strategy-chart .chart-hit-target{fill:transparent;stroke:none;cursor:crosshair}
-.owner-vp #portfolio-chart .chart-tooltip,.owner-vp #strategy-chart .chart-tooltip{position:absolute;z-index:2;min-width:135px;padding:9px 11px;border:1px solid #45505a;border-radius:8px;background:#1a2127;color:#e9edf0;box-shadow:0 8px 24px #0008;font-size:11px;line-height:1.5;pointer-events:none;white-space:nowrap}
+.owner-vp #portfolio-chart .chart-tooltip,.owner-vp #strategy-chart .chart-tooltip{position:absolute;z-index:2;padding:2px 5px;border-radius:3px;background:var(--panel);color:var(--text);font-variant-numeric:tabular-nums;font-size:11px;line-height:1.5;pointer-events:none;white-space:nowrap}
 .owner-vp #portfolio-chart .chart-tooltip strong,.owner-vp #strategy-chart .chart-tooltip strong{display:block;font-size:12px}
 .owner-vp .vp-chart-block .vp-chart-heading{align-items:center;margin-bottom:18px}
 .owner-vp .vp-chart-block .vp-chart-heading h4{margin:0;color:#a6afb5;font-size:12px;font-weight:730;letter-spacing:.1em;text-transform:uppercase}
@@ -159,3 +159,6 @@
 .owner-vp .vp-chart-panel:has(.chart-empty) .vp-chart-heading { margin-bottom: 8px; }
 .owner-vp .chart-empty { display: grid; justify-items: end; gap: 2px; min-height: 0; text-align: right; font-size: 11px; line-height: 1.4; }
 .owner-vp .chart-empty p { margin: 0; }
+
+.owner-vp .chart-svg .chart-area { fill: #bbc5ce; fill-opacity: .11; }
+.owner-vp .chart-svg .chart-point { fill: #cbd2d9; stroke: none; }

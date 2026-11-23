@@ -835,25 +835,27 @@
     svg.setAttribute('role', 'img');
     svg.setAttribute('aria-label', ariaLabel);
 
-    const defs = document.createElementNS(svgNs, 'defs');
-    const gradient = document.createElementNS(svgNs, 'linearGradient');
     const gradientId = `qud-chart-fill-${String(container.id || 'chart').replace(/[^a-zA-Z0-9_-]/g, '')}`;
-    gradient.id = gradientId;
-    gradient.setAttribute('x1', '0');
-    gradient.setAttribute('y1', '0');
-    gradient.setAttribute('x2', '0');
-    gradient.setAttribute('y2', '1');
-    const topStop = document.createElementNS(svgNs, 'stop');
-    topStop.setAttribute('offset', '0%');
-    topStop.setAttribute('stop-color', ownerMode ? '#aeb5bb' : '#74b47d');
-    topStop.setAttribute('stop-opacity', ownerMode ? '0.20' : '0.30');
-    const bottomStop = document.createElementNS(svgNs, 'stop');
-    bottomStop.setAttribute('offset', '100%');
-    bottomStop.setAttribute('stop-color', ownerMode ? '#aeb5bb' : '#74b47d');
-    bottomStop.setAttribute('stop-opacity', '0');
-    gradient.append(topStop, bottomStop);
-    defs.append(gradient);
-    svg.append(defs);
+    if (!ownerPortfolio) {
+      const defs = document.createElementNS(svgNs, 'defs');
+      const gradient = document.createElementNS(svgNs, 'linearGradient');
+      gradient.id = gradientId;
+      gradient.setAttribute('x1', '0');
+      gradient.setAttribute('y1', '0');
+      gradient.setAttribute('x2', '0');
+      gradient.setAttribute('y2', '1');
+      const topStop = document.createElementNS(svgNs, 'stop');
+      topStop.setAttribute('offset', '0%');
+      topStop.setAttribute('stop-color', ownerMode ? '#aeb5bb' : '#74b47d');
+      topStop.setAttribute('stop-opacity', ownerMode ? '0.20' : '0.30');
+      const bottomStop = document.createElementNS(svgNs, 'stop');
+      bottomStop.setAttribute('offset', '100%');
+      bottomStop.setAttribute('stop-color', ownerMode ? '#aeb5bb' : '#74b47d');
+      bottomStop.setAttribute('stop-opacity', '0');
+      gradient.append(topStop, bottomStop);
+      defs.append(gradient);
+      svg.append(defs);
+    }
 
     const gridLevels = ownerPortfolio
       ? yTicks.map(y)
@@ -871,7 +873,7 @@
     const area = document.createElementNS(svgNs, 'path');
     area.setAttribute('class', 'chart-area');
     area.setAttribute('d', areaPath);
-    area.style.fill = `url(#${gradientId})`;
+    if (!ownerPortfolio) area.style.fill = `url(#${gradientId})`;
     svg.append(area);
 
     if (referenceLinePath) {
@@ -905,7 +907,7 @@
       circle.setAttribute('class', 'chart-point');
       circle.setAttribute('cx', String(point.x));
       circle.setAttribute('cy', String(point.y));
-      circle.setAttribute('r', '4');
+      circle.setAttribute('r', ownerPortfolio ? '2.25' : '4');
       group.append(circle);
       if (ownerPortfolio) {
         const hit = document.createElementNS(svgNs, 'circle');
@@ -960,14 +962,7 @@
       tooltip.hidden = true;
       container.append(tooltip);
       const showTooltip = (point) => {
-        const allocated = finiteNumber(point.allocated) ?? startingBalance;
-        const result = point.value - allocated;
-        const resultPct = allocated ? result / allocated * 100 : 0;
-        const heading = document.createElement('strong');
-        heading.textContent = `${formatDate(point.date)} · ${formatMoney(point.value)}`;
-        const detail = document.createElement('span');
-        detail.textContent = `Результат: ${formatSignedMoney(result)} (${formatPercent(resultPct, true)})`;
-        tooltip.replaceChildren(heading, detail);
+        tooltip.textContent = formatMoney(point.value);
         tooltip.hidden = false;
         const scale = svg.getBoundingClientRect().width / width;
         tooltip.style.left = `${Math.max(4, Math.min(point.x * scale + 12, container.clientWidth - tooltip.offsetWidth - 4))}px`;
