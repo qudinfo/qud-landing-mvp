@@ -5,7 +5,7 @@
 .owner-vp .vp-instructions .broker-document-card summary>svg{width:20px;height:20px}
 .owner-vp .vp-instructions .broker-document-card strong{font-size:11px}
 .owner-vp .vp-instructions .broker-document-card small{font-size:9px}
-.owner-vp .vp-summary-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;min-height:45px;margin-bottom:22px}
+.owner-vp .vp-summary-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;min-height:30px;margin-bottom:8px}
 .owner-vp .vp-summary-toolbar h2.eyebrow{margin:0 2px 0 0;font-size:12px;font-weight:730;letter-spacing:.12em;line-height:1.4;text-transform:uppercase}
 .owner-vp .vp-summary-refresh{display:flex;align-items:center;gap:5px;min-width:0}
 .owner-vp .vp-summary-toolbar button{display:grid;place-items:center;flex:0 0 auto;width:30px;height:30px;padding:4px;border:0;border-radius:50%;background:transparent;color:#a9b4bc;cursor:pointer}
@@ -96,13 +96,13 @@
 /* Portfolio summary follows the compact, unboxed metric language of Overview. */
 .owner-vp .vp-summary{padding:14px 0 20px;background:transparent;border:0;box-shadow:none}
 .owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(6,minmax(0,1fr));gap:0}
-.owner-vp .vp-summary .vp-metrics article{position:relative;min-height:125px;display:grid;align-content:start;gap:7px;padding:12px 18px;background:transparent;border:0;border-right:1px solid #293039;border-radius:0}
+.owner-vp .vp-summary .vp-metrics article{position:relative;min-height:0;display:grid;align-content:start;gap:3px;padding:4px 14px;background:transparent;border:0;border-right:1px solid #293039;border-radius:0}
 .owner-vp .vp-summary .vp-metrics article:first-child{padding-left:0}
 .owner-vp .vp-summary .vp-metrics article:last-child{border-right:0}
 .owner-vp .vp-summary .vp-metrics span{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#a6afb5}
-.owner-vp .vp-summary .vp-metrics strong{font-size:clamp(21px,2.15vw,36px);line-height:1.13;font-weight:560;letter-spacing:-.035em}
+.owner-vp .vp-summary .vp-metrics strong{font-size:clamp(17px,1.35vw,21px);line-height:1.13;font-weight:560;letter-spacing:-.035em}
 .owner-vp .vp-summary .vp-metrics small{font-size:11px;line-height:1.4;color:#858f99}
-.owner-vp .vp-summary .vp-metrics svg{position:absolute;right:17px;bottom:11px;width:26px;height:26px;color:#6f7981}
+.owner-vp .vp-summary .vp-metrics svg{display:none}
 .owner-vp .vp-chart-panel{padding:25px 30px;margin:4px 0 20px}
 .owner-vp .vp-chart-panel .vp-chart-heading{align-items:flex-end;margin-bottom:21px}
 .owner-vp .vp-chart-panel .vp-chart-heading h3.eyebrow{margin:0;font-size:12px;font-weight:730;letter-spacing:.12em;line-height:1.4;text-transform:uppercase}
@@ -144,7 +144,7 @@
 @media(max-width:1250px){.owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:12px}.owner-vp .vp-summary .vp-metrics article:nth-child(3n){border-right:0}.owner-vp .vp-summary .vp-metrics article:nth-child(4){padding-left:0}}
 @media(max-width:1500px){.portfolio-summary .metric-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.portfolio-summary .metric-card{padding-left:12px}.portfolio-summary .metric-card:first-child{padding-left:0}.portfolio-summary .metric-card:nth-child(3n){border-right:1px solid var(--border)}.portfolio-summary .metric-card:last-child{border-right:0}}
 @media(max-width:850px){.portfolio-summary .metric-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.portfolio-summary .metric-card:nth-child(3n){border-right:0}.portfolio-summary .metric-card:nth-child(4){padding-left:0}.portfolio-summary .metric-card:last-child{border-right:1px solid var(--border)}.overview-vp-lower{grid-template-columns:1fr;gap:12px}.overview-vp-lower .strategy-preview{border-left:0;border-top:1px solid #242b31;padding:14px 0 0}}
-@media(max-width:700px){.owner-vp .vp-summary{padding:12px 0}.owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-vp .vp-summary .vp-metrics article{min-height:116px;padding:10px 12px}.owner-vp .vp-summary .vp-metrics article:nth-child(3n){border-right:1px solid #293039}.owner-vp .vp-summary .vp-metrics article:nth-child(2n){border-right:0}.owner-vp .vp-summary .vp-metrics article:nth-child(4){padding-left:12px}.owner-vp .vp-summary .vp-metrics article:nth-child(odd){padding-left:0}.owner-vp .vp-chart-panel{padding:18px}.portfolio-summary .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.portfolio-summary .metric-card{padding-left:12px;border-right:1px solid var(--border)}.portfolio-summary .metric-card:nth-child(odd){padding-left:0}.portfolio-summary .metric-card:nth-child(2n){border-right:0}.portfolio-summary .metric-card:last-child{border-right:1px solid var(--border)}.overview-sparkline{width:min(100%,300px)}}
+@media(max-width:700px){.owner-vp .vp-summary{padding:12px 0}.owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-vp .vp-summary .vp-metrics article{min-height:0;padding:4px 12px}.owner-vp .vp-summary .vp-metrics article:nth-child(3n){border-right:1px solid #293039}.owner-vp .vp-summary .vp-metrics article:nth-child(2n){border-right:0}.owner-vp .vp-summary .vp-metrics article:nth-child(4){padding-left:12px}.owner-vp .vp-summary .vp-metrics article:nth-child(odd){padding-left:0}.owner-vp .vp-chart-panel{padding:18px}.portfolio-summary .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.portfolio-summary .metric-card{padding-left:12px;border-right:1px solid var(--border)}.portfolio-summary .metric-card:nth-child(odd){padding-left:0}.portfolio-summary .metric-card:nth-child(2n){border-right:0}.portfolio-summary .metric-card:last-child{border-right:1px solid var(--border)}.overview-sparkline{width:min(100%,300px)}}
 @media(max-width:700px){.owner-vp .vp-observations{padding:4px 0 0}.owner-vp .vp-detail .vp-detail-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-vp .vp-detail .vp-detail-metrics article{padding-left:12px;border-right:1px solid #293039}.owner-vp .vp-detail .vp-detail-metrics article:nth-child(odd){padding-left:0;border-right:1px solid #293039}.owner-vp .vp-detail .vp-detail-metrics article:nth-child(2n){border-right:0;padding-left:12px}}
 @media(max-width:1300px){.owner-vp .vp-detail .vp-detail-metrics.vp-quality-metrics{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:8px}.owner-vp .vp-detail .vp-quality-metrics article:nth-child(3n+1){padding-left:0}.owner-vp .vp-detail .vp-quality-metrics article:nth-child(3n){border-right:0}}
 @media(max-width:1300px){.owner-vp .vp-detail .vp-detail-metrics.vp-observation-metrics{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:8px}.owner-vp .vp-detail .vp-observation-metrics article:nth-child(3n+1){padding-left:0}.owner-vp .vp-detail .vp-observation-metrics article:nth-child(3n){border-right:0}}
@@ -152,3 +152,10 @@
 @media(max-width:700px){.owner-vp .vp-detail .vp-detail-metrics.vp-observation-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-vp .vp-detail .vp-observation-metrics article:nth-child(odd){padding-left:0;border-right:1px solid #293039}.owner-vp .vp-detail .vp-observation-metrics article:nth-child(2n){padding-left:9px;border-right:0}.owner-vp .vp-detail #detail-period span:last-child{white-space:normal}}
 @media(max-width:1300px){.owner-vp .vp-detail .vp-detail-metrics:is(.vp-observation-metrics,.vp-quality-metrics) article:nth-child(3n){border-right:0}}
 @media(max-width:700px){.owner-vp .vp-detail .vp-detail-metrics:is(.vp-observation-metrics,.vp-quality-metrics) article:nth-child(odd){border-right:1px solid #293039}.owner-vp .vp-detail .vp-detail-metrics:is(.vp-observation-metrics,.vp-quality-metrics) article:nth-child(2n){border-right:0}}
+
+.owner-vp .vp-intro { margin: 0 0 12px; max-width: 960px; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.owner-vp .chart-stage:has(.chart-empty), .owner-vp .chart-stage:empty { min-height: 0; }
+.owner-vp .vp-chart-panel:has(.chart-empty) { padding: 14px 18px; }
+.owner-vp .vp-chart-panel:has(.chart-empty) .vp-chart-heading { margin-bottom: 8px; }
+.owner-vp .chart-empty { display: grid; justify-items: end; gap: 2px; min-height: 0; text-align: right; font-size: 11px; line-height: 1.4; }
+.owner-vp .chart-empty p { margin: 0; }

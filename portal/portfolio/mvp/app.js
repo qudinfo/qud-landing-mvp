@@ -585,6 +585,7 @@
       const empty = document.createElement('p');
       empty.className = 'strategy-list-empty';
       empty.textContent = 'Стратегии пока не добавлены. Начните первое наблюдение.';
+      if (ownerMode) empty.replaceChildren('Стратегии пока не добавлены.', document.createElement('br'), 'Начните первое наблюдение.');
       dom.strategyList.append(empty);
       clearStrategyDetail();
       return;
