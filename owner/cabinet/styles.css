@@ -209,8 +209,8 @@ svg { display: block; fill: none; stroke: currentColor; stroke-width: 1.65; stro
 .overview-aside { min-width: 0; display: grid; gap: 20px; }
 
 .hero-card { min-height: 255px; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, .75fr); overflow: hidden; }
-.hero-copy { position: relative; z-index: 2; padding: 27px 30px 25px; }
-.hero-copy h2 { max-width: 780px; margin: 0; font-size: clamp(25px, 2.3vw, 38px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.12; }
+.hero-copy { container-type: inline-size; position: relative; z-index: 2; padding: 27px 30px 25px; }
+.hero-copy h2 { max-width: 780px; margin: 0; font-size: clamp(15px, 4.4cqi, 30px); text-wrap: balance; overflow-wrap: anywhere; font-weight: 500; letter-spacing: -0.035em; line-height: 1.12; }
 .hero-copy > p:last-of-type { max-width: 690px; margin: 15px 0 0; color: var(--text-soft); font-size: 13px; line-height: 1.62; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 .button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; border-radius: 8px; padding: 0 18px; text-decoration: none; font-size: 12px; font-weight: 650; transition: transform 160ms ease, border-color 160ms ease, background 160ms ease; }
@@ -780,7 +780,6 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .content { padding: 16px 14px 45px; }
   .hero-card { display: block; min-height: 420px; position: relative; }
   .hero-copy { padding: 23px 20px; }
-  .hero-copy h2 { font-size: 30px; }
   .hero-actions { display: grid; }
   .button { width: 100%; }
   .hero-visual { position: absolute; inset: auto 0 0; height: 155px; min-height: 0; opacity: .58; }
@@ -847,10 +846,6 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 @media (max-width: 480px) {
   .access-pill { width: 46px; justify-content: center; }
   .access-pill > span:last-child { display: none; }
-}
-
-@media (max-width: 390px) {
-  .hero-copy h2 { font-size: 27px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
