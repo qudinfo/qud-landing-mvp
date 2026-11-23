@@ -95,7 +95,7 @@
 
 /* Portfolio summary follows the compact, unboxed metric language of Overview. */
 .owner-vp .vp-summary{padding:14px 0 20px;background:transparent;border:0;box-shadow:none}
-.owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(6,minmax(0,1fr));gap:0}
+.owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 0}
 .owner-vp .vp-summary .vp-metrics article{position:relative;min-height:0;display:grid;align-content:start;gap:3px;padding:4px 14px;background:transparent;border:0;border-right:1px solid #293039;border-radius:0}
 .owner-vp .vp-summary .vp-metrics article:first-child{padding-left:0}
 .owner-vp .vp-summary .vp-metrics article:last-child{border-right:0}
@@ -141,7 +141,7 @@
 .overview-sparkline svg{display:block;width:100%;height:auto;max-height:90px;overflow:visible}
 .overview-sparkline .sparkline-line{fill:none;stroke:#9aafca;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .overview-sparkline .sparkline-endpoint{fill:#9aafca}
-@media(max-width:1250px){.owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:12px}.owner-vp .vp-summary .vp-metrics article:nth-child(3n){border-right:0}.owner-vp .vp-summary .vp-metrics article:nth-child(4){padding-left:0}}
+@media(min-width:701px){.owner-vp .vp-summary .vp-metrics article:nth-child(3n){border-right:0}.owner-vp .vp-summary .vp-metrics article:nth-child(4){padding-left:0}}
 @media(max-width:1500px){.portfolio-summary .metric-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.portfolio-summary .metric-card{padding-left:12px}.portfolio-summary .metric-card:first-child{padding-left:0}.portfolio-summary .metric-card:nth-child(3n){border-right:1px solid var(--border)}.portfolio-summary .metric-card:last-child{border-right:0}}
 @media(max-width:850px){.portfolio-summary .metric-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.portfolio-summary .metric-card:nth-child(3n){border-right:0}.portfolio-summary .metric-card:nth-child(4){padding-left:0}.portfolio-summary .metric-card:last-child{border-right:1px solid var(--border)}.overview-vp-lower{grid-template-columns:1fr;gap:12px}.overview-vp-lower .strategy-preview{border-left:0;border-top:1px solid #242b31;padding:14px 0 0}}
 @media(max-width:700px){.owner-vp .vp-summary{padding:12px 0}.owner-vp .vp-summary .vp-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-vp .vp-summary .vp-metrics article{min-height:0;padding:4px 12px}.owner-vp .vp-summary .vp-metrics article:nth-child(3n){border-right:1px solid #293039}.owner-vp .vp-summary .vp-metrics article:nth-child(2n){border-right:0}.owner-vp .vp-summary .vp-metrics article:nth-child(4){padding-left:12px}.owner-vp .vp-summary .vp-metrics article:nth-child(odd){padding-left:0}.owner-vp .vp-chart-panel{padding:18px}.portfolio-summary .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.portfolio-summary .metric-card{padding-left:12px;border-right:1px solid var(--border)}.portfolio-summary .metric-card:nth-child(odd){padding-left:0}.portfolio-summary .metric-card:nth-child(2n){border-right:0}.portfolio-summary .metric-card:last-child{border-right:1px solid var(--border)}.overview-sparkline{width:min(100%,300px)}}
@@ -162,3 +162,15 @@
 
 .owner-vp .chart-svg .chart-area { fill: #bbc5ce; fill-opacity: .11; }
 .owner-vp .chart-svg .chart-point { fill: #cbd2d9; stroke: none; }
+
+.owner-vp .vp-summary-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+}
+.owner-vp .vp-summary-body .vp-chart-panel { min-width: 0; margin: 0; }
+.owner-vp .vp-summary-body .chart-stage { min-height: 0; }
+@media (max-width: 950px) {
+  .owner-vp .vp-summary-body { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+}
