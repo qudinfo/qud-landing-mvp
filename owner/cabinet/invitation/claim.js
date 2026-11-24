@@ -35,7 +35,7 @@
     el('status').classList.toggle('confirmed', !preview);
     el('status').hidden = false;
     el('received').hidden = false;
-    el('message').textContent = preview ? 'Пример ключа для предпросмотра.' : 'Сохраните ключ для входа в кабинет.';
+    el('message').textContent = preview ? 'Пример ключа для предпросмотра.' : 'Сохраните ключ в безопасном месте.';
     el('login').hidden = false;
   }
 
