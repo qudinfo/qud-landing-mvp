@@ -346,34 +346,22 @@ async function handleStrategyDetail(env, strategyId) {
 /** Owner cookie is the only browser identity. Portfolio IDs never come from the client. */
 async function handleOwnerPortfolio(request, env, session) {
   const identity = ownerPortfolioIdentity(session, env);
+  const vpRequest = (method, fields) => requestOwnerVp(env, session.owner_id, identity, method, fields);
   const path = new URL(request.url).pathname;
   const portfolioPath = VP_API_PREFIX + 'portfolio';
   const strategiesPath = VP_API_PREFIX + 'strategies';
   const portfoliosPath = VP_API_PREFIX + 'portfolios';
   if (request.method === 'GET' && path === portfoliosPath) {
-    const result = await ownerVpUpstream(env, 'GET', {
-      action: 'portfolios', subscriber_id: identity.subscriberId
-    });
-    if (result.ok) {
-      const listed = Array.isArray(result.portfolios) ? result.portfolios : result.items;
-      if (!Array.isArray(listed)) throw apiError('INVALID_VP_RESPONSE', 502);
-      const own = listed.filter((item) =>
-        String(item.portfolio_id) === identity.portfolioId);
-      result.portfolios = own;
-      result.items = own;
-    }
-    return ownerVpResult(result);
+    return ownerVpResult(await vpRequest('GET', {action: 'portfolios'}));
   }
   if (request.method === 'GET' && path === portfolioPath) {
-    return ownerVpResult(await ownerVpUpstream(env, 'GET', {
-      action: 'portfolio', subscriber_id: identity.subscriberId,
-      portfolio_id: identity.portfolioId
+    return ownerVpResult(await vpRequest('GET', {
+      action: 'portfolio'
     }));
   }
   if (request.method === 'GET' && path === strategiesPath) {
-    return ownerVpResult(await ownerVpUpstream(env, 'GET', {
-      action: 'strategies', subscriber_id: identity.subscriberId,
-      portfolio_id: identity.portfolioId
+    return ownerVpResult(await vpRequest('GET', {
+      action: 'strategies'
     }));
   }
   if (request.method === 'POST' && path === portfolioPath) {
@@ -391,9 +379,8 @@ async function handleOwnerPortfolio(request, env, session) {
     if (!strategyId || strategyId.length > 128 || !period || !key || key.length > 128 ||
         !Number.isFinite(amount) || !Number.isFinite(limit))
       throw apiError('INVALID_OBSERVATION', 400);
-    return ownerVpResult(await ownerVpUpstream(env, 'POST', {
-      action: 'create_strategy_request', subscriber_id: identity.subscriberId,
-      portfolio_id: identity.portfolioId, strategy_id: strategyId,
+    return ownerVpResult(await vpRequest('POST', {
+      action: 'create_strategy_request', strategy_id: strategyId,
       allocated_balance_usd: amount, max_drawdown_limit_pct: limit,
       period_code: period, idempotency_key: key
     }));
@@ -405,14 +392,49 @@ function ownerPortfolioIdentity(session, env) {
   let map;
   try { map = JSON.parse(String(env.QUD_OWNER_VP_IDENTITY_MAP || '')); }
   catch { throw apiError('VP_IDENTITY_NOT_CONFIGURED', 503); }
-  const entry = map && typeof map === 'object' && map[session.owner_id];
+  if (!map || typeof map !== 'object' || Array.isArray(map))
+    throw apiError('VP_IDENTITY_NOT_CONFIGURED', 503);
+  const ownerId = session.owner_id;
+  const personal = /^QUD-[a-f0-9]{32}$/.test(ownerId)
+    ? {subscriberId: 'QSUB-O-' + ownerId.slice(4), portfolioId: 'QVP-O-' + ownerId.slice(4)} : null;
+  const entry = map[ownerId];
   const subscriberId = String(entry?.subscriber_id || '').trim();
   const portfolioId = String(entry?.portfolio_id || '').trim();
-  if (!subscriberId || !portfolioId) throw apiError('VP_IDENTITY_NOT_CONFIGURED', 503);
-  if (session.owner_id !== (env.QUD_OWNER_ID || 'TEST-OWNER-001') && Object.entries(map).some(([owner,other]) =>
-      owner !== session.owner_id && (String(other?.subscriber_id || '').trim() === subscriberId ||
-      String(other?.portfolio_id || '').trim() === portfolioId))) throw apiError('VP_IDENTITY_NOT_CONFIGURED',503);
-  return {subscriberId,portfolioId};
+  const primary = ownerId === (env.QUD_OWNER_ID || 'TEST-OWNER-001');
+  const reserved = subscriberId.startsWith('QSUB-O-') || portfolioId.startsWith('QVP-O-');
+  const shared = !primary && Object.entries(map).some(([owner, other]) => owner !== ownerId &&
+    (String(other?.subscriber_id || '').trim() === subscriberId ||
+     String(other?.portfolio_id || '').trim() === portfolioId));
+  if (subscriberId && portfolioId && !shared && !reserved)
+    return {subscriberId, portfolioId, personal};
+  if (personal) return {...personal, personal};
+  throw apiError('VP_IDENTITY_NOT_CONFIGURED', 503);
+}
+
+async function requestOwnerVp(env, ownerId, identity, method, fields) {
+  const list = fields.action === 'portfolios';
+  async function requestFor(pair) {
+    const params = {...fields, subscriber_id: pair.subscriberId};
+    if (!list) params.portfolio_id = pair.portfolioId;
+    const result = await ownerVpUpstream(env, method, params);
+    if (list && result?.ok) {
+      const rows = Array.isArray(result.portfolios) ? result.portfolios : result.items;
+      if (!Array.isArray(rows)) throw apiError('INVALID_VP_RESPONSE', 502);
+      const own = rows.filter(row => String(row.portfolio_id) === pair.portfolioId);
+      return {...result, portfolios: own, items: own};
+    }
+    return result;
+  }
+  const result = await requestFor(identity);
+  const missing = (list && result?.ok === true && result.portfolios.length === 0) ||
+    (result?.ok === false && result.error === 'PORTFOLIO_NOT_FOUND' && Number(result.status) === 404);
+  if (!identity.personal || !missing) return result;
+  // Only a definite missing portfolio can trigger provisioning or replay.
+  const {response, payload} = await postProfileAction(env, {action: 'ensure_owner_portfolio', owner_id: ownerId});
+  if (!response.ok || payload?.ok !== true || payload.portfolio_id !== identity.personal.portfolioId ||
+      payload.subscriber_id !== identity.personal.subscriberId)
+    throw apiError('VP_PROVISIONING_UNAVAILABLE', 503);
+  return requestFor(identity.personal);
 }
 
 function ownerVpUpstreamConfig(env) {

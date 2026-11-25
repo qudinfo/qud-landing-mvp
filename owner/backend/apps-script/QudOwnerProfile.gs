@@ -4,13 +4,16 @@ function doPost(e) {
   try {
     const body = JSON.parse(e.postData.contents);
     qudOwnerApiAssertProxySecret_({parameter: {proxy_secret: body.proxy_secret}});
-    if (body.action !== 'owner_profile' && body.action !== 'confirm_email_link' && body.action !== 'pilot_login' && body.action !== 'claim_invitation' && body.action !== 'owner_support') throw qudOwnerApiError_('NOT_FOUND', 404);
+    if (body.action !== 'owner_profile' && body.action !== 'confirm_email_link' && body.action !== 'pilot_login' && body.action !== 'claim_invitation' && body.action !== 'owner_support' && body.action !== 'ensure_owner_portfolio') throw qudOwnerApiError_('NOT_FOUND', 404);
     const sheetId = PropertiesService.getScriptProperties().getProperty('QUD_OWNER_SERVICE_SHEET_ID') || QUD_OWNER_PROFILE_DEFAULT_SHEET;
     const sheet = SpreadsheetApp.openById(sheetId).getSheetByName('Владельцы');
     if (!sheet) throw qudOwnerApiError_('PROFILE_CONFIGURATION', 500);
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
+      if (body.action === 'ensure_owner_portfolio') {
+        return qudOwnerApiJson_(qudEnsureOwnerPortfolio_(sheet, body.owner_id));
+      }
       if (body.action === 'owner_support') {
         const result = qudOwnerSupport_(sheet, body);
         SpreadsheetApp.flush();

@@ -14,6 +14,7 @@
     strategies: '/portal/vp/strategies'
   });
 
+  let workspaceVersion = 0;
   const state = {
     portfolios: [],
     portfolioId: null,
@@ -273,6 +274,8 @@
   }
 
   function showAccess(message = '') {
+    workspaceVersion++;
+    dom.toggleObservation.disabled = true;
     state.payload = null;
     state.portfolioId = null;
     state.sessionPortfolioId = null;
@@ -1049,7 +1052,7 @@
     applySignedClass(dom.previewReturn, item.strategy_return_since_start_pct);
   }
 
-  async function loadPortfolio(portfolioId) {
+  async function loadPortfolio(portfolioId, version = workspaceVersion) {
     const requestedId = String(portfolioId || '').trim();
     const portfolioUrl = requestedId
       ? `${ENDPOINTS.portfolio}?portfolio_id=${encodeURIComponent(requestedId)}`
@@ -1063,9 +1066,6 @@
     ).trim();
     if (!resolvedId) throw new Error('PORTFOLIO_ID_MISSING');
 
-    state.portfolioId = resolvedId;
-    state.sessionPortfolioId = state.sessionPortfolioId || resolvedId;
-    state.payload = payload;
 
     let strategiesData = null;
     try {
@@ -1081,6 +1081,10 @@
       }
     }
 
+    if (version !== workspaceVersion) return;
+    state.portfolioId = resolvedId;
+    state.sessionPortfolioId = state.sessionPortfolioId || resolvedId;
+    state.payload = payload;
     const available = extractAvailable(strategiesData, payload.availableStrategies);
     payload.availableStrategies = available;
 
@@ -1096,7 +1100,9 @@
   }
 
   async function loadWorkspace(sessionData = null) {
+    const version = ++workspaceVersion;
     showWorkspace();
+    dom.toggleObservation.disabled = true;
     captureSessionPortfolioId(sessionData);
     dom.updateLabel.textContent = 'Загрузка данных…';
 
@@ -1108,6 +1114,7 @@
       } catch (error) {
         if (error?.code === 'SESSION_EXPIRED') throw error;
       }
+      if (version !== workspaceVersion) return;
       state.portfolios = portfolios;
 
       const queryId = ownerMode ? '' : String(
@@ -1121,17 +1128,19 @@
         : (portfolios[0]?.portfolio_id || state.sessionPortfolioId || null);
 
       try {
-        await loadPortfolio(selectedId);
+        await loadPortfolio(selectedId, version);
       } catch (error) {
         if (error?.code === 'SESSION_EXPIRED') throw error;
+        if (version !== workspaceVersion) return;
         if (!queryId && selectedId) {
-          await loadPortfolio(null);
+          await loadPortfolio(null, version);
         } else {
           throw error;
         }
       }
+      if (version === workspaceVersion) dom.toggleObservation.disabled = false;
     } catch (error) {
-      if (handleApiError(error, false)) return;
+      if (version !== workspaceVersion || handleApiError(error, false)) return;
       const code = safeErrorCode(error);
       dom.updateLabel.textContent = `Не удалось загрузить данные · ${code}`;
       dom.portfolioIdentity.textContent = 'Ошибка загрузки портфеля';

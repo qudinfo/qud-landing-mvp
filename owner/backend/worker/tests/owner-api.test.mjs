@@ -519,3 +519,46 @@ console.log('Owner Worker tests passed');
     assert.equal(forwarded.owner_id,undefined);
   } finally {globalThis.fetch=saved;}
 }
+
+{
+  const previousFetch = globalThis.fetch;
+  const owner = 'QUD-' + 'd'.repeat(32);
+  const ownPortfolio = 'QVP-O-' + owner.slice(4), ownSubscriber = 'QSUB-O-' + owner.slice(4);
+  const personalEnv = {...vpEnv, QUD_OWNER_PROFILE_URL: 'https://script.google.com/macros/s/test-profile/exec'};
+  let created = false, provisions = 0, writes = 0, fail = false;
+  try {
+    globalThis.fetch = async (input, options) => {
+      const url = new URL(input);
+      const body = options.body ? JSON.parse(options.body) : Object.fromEntries(url.searchParams);
+      if (body.action === 'pilot_login') return Response.json({ok:true, login:{owner_id:owner,until:Math.floor(Date.now()/1000)+600}});
+      if (body.action === 'ensure_owner_portfolio') {
+        assert.equal(body.owner_id, owner);
+        provisions++;
+        created = true;
+        return Response.json({ok:true, portfolio_id:ownPortfolio, subscriber_id:ownSubscriber});
+      }
+      assert.equal(body.subscriber_id, ownSubscriber);
+      if (body.action === 'portfolios') return Response.json({ok:true,portfolios:created ? [{portfolio_id:ownPortfolio}] : []});
+      assert.equal(body.portfolio_id, ownPortfolio);
+      if (fail) return Response.json({ok:false,error:'SERVICE_BUSY',status:503});
+      if (body.action === 'create_strategy_request') writes++;
+      return Response.json({ok:true,portfolio:{portfolio_id:ownPortfolio}});
+    };
+    const login = await worker.fetch(request('/owner/api/session', {method:'POST',body:JSON.stringify({email:'sample@example.com',access_key:'demo-Key12'})}), personalEnv);
+    assert.equal(login.status, 200);
+    const cookie = cookiePair(login.headers.get('set-cookie'));
+    const get = route => worker.fetch(request('/owner/api/vp/'+route, {headers:{cookie}}), personalEnv);
+    assert.deepEqual((await (await get('portfolios')).json()).portfolios, [{portfolio_id:ownPortfolio}]);
+    assert.equal((await get('portfolios')).status, 200);
+    assert.equal((await get('portfolio')).status, 200);
+    assert.equal(provisions, 1);
+    const submit = () => worker.fetch(request('/owner/api/vp/portfolio', {method:'POST',headers:{cookie,origin:'https://fx-qud.com'},
+      body:JSON.stringify({strategy_id:'QST-DEMO',allocated_balance_usd:1000,max_drawdown_limit_pct:6,period:'2_weeks',idempotency_key:'demo-observation'})}), personalEnv);
+    assert.equal((await submit()).status, 200);
+    assert.equal(writes, 1);
+    fail = true;
+    assert.equal((await submit()).status, 502);
+    assert.equal(provisions, 1);
+    assert.equal(writes, 1);
+  } finally { globalThis.fetch = previousFetch; }
+}
