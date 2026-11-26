@@ -750,6 +750,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .sidebar { position: fixed; inset: 0 auto 0 0; width: min(86vw, 330px); transform: translateX(-102%); transition: transform 210ms ease; }
   .sidebar.is-open { transform: translateX(0); }
   .sidebar-close, .menu-button { display: grid; }
+  .top-support, .menu-button { width: 48px; height: 56px; border-radius: 9px; }
   .topbar { padding: 0 20px; }
   .topbar h1 { font-size: 20px; }
   .content { padding: 22px 20px 50px; }
@@ -786,7 +787,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .topbar-heading { gap: 7px; }
   .topbar-section-icon { width: 28px; height: 28px; }
   .topbar-actions { margin-left: auto; }
-  .top-support { min-height: 46px; width: 46px; }
+  .top-support, .menu-button { min-height: 46px; height: 46px; width: 46px; }
   .top-profile { display: none; }
   .content { padding: 16px 14px 45px; }
   .hero-card { display: block; }
