@@ -36,7 +36,7 @@
       delete byId('owner-retry').dataset.action;
     }
     message.textContent = text;
-    if (name === 'login') { key.value = ''; key.focus(); }
+    if (name === 'login') { key.value = ''; if (!matchMedia('(pointer: coarse)').matches) key.focus(); }
   }
 
   async function request(method, accessKey) {
@@ -63,7 +63,12 @@
       show('login', wasAuthenticated ? t('Сессия завершена. Введите ключ доступа снова.', 'Your session has ended. Please enter your access key again.') : '');
       return;
     }
+    if (screens.login.contains(document.activeElement)) document.activeElement.blur();
     show('shell');
+    if (!wasAuthenticated && matchMedia('(max-width: 820px)').matches) {
+      window.scrollTo(0, 0);
+      byId('cabinet-content').scrollTop = 0;
+    }
     renderOwnerAccess(data);
     authenticated = true;
     window.dispatchEvent(new CustomEvent('owner:session', { detail: { authenticated: true, owner_id: data.owner_id } }));
