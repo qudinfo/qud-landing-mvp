@@ -133,6 +133,41 @@
     button.addEventListener('blur', deferHelpClose);
   }
 
+  const tickerMotion = matchMedia('(max-width: 820px) and (prefers-reduced-motion: no-preference)');
+  let tickerVisible = false;
+  let tickerTouch = false;
+  let tickerFrame = 0;
+  let tickerTime = 0;
+  let tickerPosition = 0;
+
+  function advanceTicker(now) {
+    const copy = catalogMetrics.querySelector('.ticker-copy');
+    if (copy && !tickerTouch && !catalogMetrics.contains(helpAnchor) &&
+        !catalogMetrics.matches(':focus-within')) {
+      const width = copy.offsetLeft - catalogMetrics.firstElementChild.offsetLeft;
+      if (width > catalogMetrics.clientWidth) {
+        if (Math.abs(catalogMetrics.scrollLeft - tickerPosition) > 1) tickerPosition = catalogMetrics.scrollLeft;
+        tickerPosition = (tickerPosition + Math.min(now - (tickerTime || now), 80) * 0.022) % width;
+        catalogMetrics.scrollLeft = tickerPosition;
+      }
+    }
+    tickerTime = now;
+    tickerFrame = requestAnimationFrame(advanceTicker);
+  }
+  function syncTicker() {
+    cancelAnimationFrame(tickerFrame);
+    tickerTime = 0;
+    if (tickerVisible && tickerMotion.matches && !document.hidden) tickerFrame = requestAnimationFrame(advanceTicker);
+  }
+  new IntersectionObserver(([entry]) => {
+    tickerVisible = entry.isIntersecting;
+    syncTicker();
+  }).observe(catalogMetrics);
+  catalogMetrics.addEventListener('touchstart', () => { tickerTouch = true; }, {passive:true});
+  for (const event of ['touchend','touchcancel']) catalogMetrics.addEventListener(event, () => { tickerTouch = false; });
+  tickerMotion.addEventListener('change', syncTicker);
+  document.addEventListener('visibilitychange', syncTicker);
+
   document.querySelectorAll('[data-portfolio-help]').forEach(label => {
     addMetricHelp(label, label.dataset.portfolioHelp);
   });
@@ -257,12 +292,17 @@
           week ? `С ${formatDate(week.period_start)} по ${formatDate(week.period_end)} средняя доходность составила ${weeklyReturn}. Количество стратегий в расчёте — ${number.format(confirmed.length)}. У каждой одинаковый вес.`
             : 'Среднее значение доходности стратегий за одну отчётную неделю. Для расчёта нужны результаты каждой стратегии за тот же период.']
       ];
-      catalogMetrics.replaceChildren(...metrics.map(([label, value, help]) => {
+      catalogMetrics.replaceChildren(...[...metrics, ...metrics].map(([label, value, help], index) => {
         const pair = document.createElement('div');
         const term = document.createElement('dt');
         const result = document.createElement('dd');
         term.textContent = label;
         addMetricHelp(term, help);
+        if (index >= metrics.length) {
+          pair.className = 'ticker-copy';
+          pair.setAttribute('aria-hidden', 'true');
+          term.querySelector('button').tabIndex = -1;
+        }
         result.textContent = value;
         pair.append(term, result);
         return pair;
