@@ -1036,3 +1036,9 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .topbar-actions { flex-shrink: 0; }
   .topbar-context, .topbar-heading { min-width: 0; }
 }
+
+@media (max-width: 820px) {
+  .hero-copy > .hero-intro:last-of-type { font-size: clamp(10px, 3.45cqi, 14px); }
+  .hero-intro span { display: block; }
+  .hero-intro br { display: none; }
+}
