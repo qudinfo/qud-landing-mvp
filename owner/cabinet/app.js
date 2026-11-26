@@ -1379,7 +1379,25 @@
     return payload;
   }
 
-  function renderMessages(items) {
+  let history = [];
+  let pending = null;
+  const receiptStart = Date.parse('2026-11-26T08:55:00Z');
+  const conversationPause = 24 * 60 * 60 * 1000;
+
+  function renderMessages() {
+    const items = [];
+    let lastActivity = -Infinity;
+    for (const message of history) {
+      items.push(message);
+      const time = Date.parse(message.created_at);
+      if (message.direction === 'owner' && time >= receiptStart && time - lastActivity >= conversationPause) {
+        items.push({ id: 'receipt-' + message.id, direction: 'qud', automatic: true, read: true,
+          body: 'Спасибо, ваше сообщение получено, поддержка ответит в этом чате.',
+          created_at: message.created_at });
+      }
+      if (Number.isFinite(time)) lastActivity = Math.max(lastActivity, time);
+    }
+    if (pending) items.push(pending);
     messages.replaceChildren();
     historyCount.textContent = items.length ? `${items.length} сообщ.` : '';
     historyState.hidden = items.length > 0;
@@ -1390,7 +1408,7 @@
       const entry = document.createElement('article');
       entry.className = `support-message support-message-${item.direction}`;
       const label = document.createElement('strong');
-      label.textContent = item.direction === 'qud' ? 'QUD' : 'Вы';
+      label.textContent = item.automatic ? 'QUD · Автоответ' : item.direction === 'qud' ? 'QUD' : 'Вы';
       const date = document.createElement('time');
       if (typeof item.created_at === 'string') {
         const parsed = new Date(item.created_at);
@@ -1403,7 +1421,16 @@
       }
       const body = document.createElement('p');
       body.textContent = item.body;
-      entry.append(label, date, body);
+      entry.append(label, date);
+      if (item.direction === 'owner') {
+        const checks = document.createElement('span');
+        checks.className = 'support-checks';
+        checks.textContent = item.pending ? '✓' : '✓✓';
+        checks.setAttribute('role', 'img');
+        checks.setAttribute('aria-label', item.pending ? 'Доставка пока не подтверждена' : 'Сообщение доставлено');
+        date.append(checks);
+      }
+      entry.append(body);
       if (item.direction === 'qud' && !item.read) {
         entry.dataset.unreadId = item.id;
         const newLabel = document.createElement('em');
@@ -1427,7 +1454,15 @@
       available = true;
       const email = typeof data.owner_email === 'string' ? data.owner_email.trim() : '';
       ownerEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : '';
-      renderMessages(data.messages);
+      history = data.messages;
+      if (pending && history.some(message => message.id === pending.id)) {
+        if (outgoingId === pending.id) {
+          outgoingId = '';
+          messageInput.value = '';
+        }
+        pending = null;
+      }
+      renderMessages();
       feedback.textContent = ownerEmail
         ? ''
         : 'Отправка недоступна: к кабинету не привязан подтверждённый email.';
@@ -1435,12 +1470,8 @@
       if (version !== requestVersion || !authenticated) return;
       available = false;
       ownerEmail = '';
-      showUnread(0);
-      messages.replaceChildren();
-      updateReadTimers();
-      historyCount.textContent = '';
-      historyState.hidden = false;
-      historyState.textContent = 'Не удалось загрузить переписку. Откройте поддержку ещё раз.';
+      renderMessages();
+      if (!history.length && !pending) historyState.textContent = 'Не удалось загрузить переписку. Откройте поддержку ещё раз.';
       feedback.textContent = 'Можно написать сообщение. Отправка станет доступна после подключения.';
     }
     updateComposer();
@@ -1521,6 +1552,7 @@
   byId('close-support').addEventListener('click', () => dialog.close());
   messageInput.addEventListener('input', () => {
     outgoingId = '';
+    if (pending) { pending = null; renderMessages(); }
     if (messageInput.value.trim()) {
       for (const id of visibleUnreadIds()) markRead(id);
     }
@@ -1535,20 +1567,23 @@
     updateComposer();
     const owner = sessionOwner;
     outgoingId ||= crypto.randomUUID();
-    feedback.textContent = 'Отправка сообщения…';
+    const draft = { id: outgoingId, body, direction: 'owner', created_at: new Date().toISOString(), pending: true };
+    pending = draft;
+    renderMessages();
+    feedback.textContent = '';
     try {
-      await supportRequest(endpoint, { method: 'POST', body: JSON.stringify({ message: body, message_id: outgoingId }) });
+      await supportRequest(endpoint, { method: 'POST', body: JSON.stringify({ message: body, message_id: draft.id }) });
       if (owner !== sessionOwner) return;
+      requestVersion++;
+      if (!history.some(message => message.id === draft.id)) history.push({ ...draft, pending: false });
+      pending = null;
       outgoingId = '';
       messageInput.value = '';
+      renderMessages();
       await refreshSupport();
-      if (owner !== sessionOwner) return;
-      feedback.textContent = available
-        ? 'Сообщение отправлено QUD.'
-        : 'Сообщение отправлено, но историю пока не удалось обновить.';
     } catch {
-      if (owner !== sessionOwner) return;
-      feedback.textContent = 'Не удалось отправить сообщение. Текст сохранён в форме; попробуйте ещё раз.';
+      if (owner !== sessionOwner || !pending) return;
+      feedback.textContent = 'Доставка пока не подтверждена. Можно повторить отправку.';
     } finally {
       if (owner !== sessionOwner) return;
       sending = false;
@@ -1561,6 +1596,8 @@
     const nextOwner = authenticated ? event.detail.owner_id : '';
     if (nextOwner !== sessionOwner) {
       sessionOwner = nextOwner;
+      history = [];
+      pending = null;
       readIds = new Set();
       available = false;
       ownerEmail = '';

@@ -1070,3 +1070,5 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 .period-breakdown { border-top:1px solid var(--border-soft); }
 .period-item { display:grid; grid-template-columns:1fr auto; gap:4px 8px; padding:10px 0; font-size:12px; }
 .period-item small { grid-column:1/-1; }
+
+.support-checks { color: var(--muted); font-size: 11px; letter-spacing: -0.22em; margin-inline-start: 3px; }
