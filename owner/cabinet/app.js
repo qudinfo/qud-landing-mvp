@@ -740,7 +740,8 @@
     dashboard.append(summary, createStrategyChart(history, strategy.strategy_id));
 
     strategyCatalog.append(back, dashboard, createHistoryTable(history, strategy));
-    strategyCatalog.querySelector('.strategy-back').focus({ preventScroll: true });
+    const backControl = matchMedia('(max-width: 820px)').matches ? mobileBack : strategyCatalog.querySelector('.strategy-back');
+    backControl.focus({ preventScroll: true });
   }
 
   function renderStrategyDetailState(kind, strategyId) {
@@ -1046,10 +1047,24 @@
     }
   }
 
-  function activateView(requestedView, { updateHash = true, moveFocus = false } = {}) {
+  const mobileBack = document.getElementById('mobile-back');
+  const visitedViews = [];
+  let currentView;
+  mobileBack.addEventListener('click', () => {
+    if (currentView === 'strategies' && selectedStrategyId) {
+      showStrategyList();
+      return;
+    }
+    activateView(visitedViews.pop() || 'overview', { returning: true, moveFocus: true });
+  });
+
+  function activateView(requestedView, { updateHash = true, moveFocus = false, returning = false } = {}) {
     const viewName = allowedViews.has(requestedView) ? requestedView : 'overview';
     const activeView = views.get(viewName);
     if (!activeView) return;
+    if (currentView && currentView !== viewName && !returning) visitedViews.push(currentView);
+    currentView = viewName;
+    mobileBack.hidden = !visitedViews.length && viewName === 'overview';
 
     views.forEach((view, name) => {
       const isActive = name === viewName;

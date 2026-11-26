@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070b0e">
   <title>Обзор — QUD Capital Owner</title>
-  <link rel="stylesheet" href="./styles.css?v=9187a1cb4c7e">
+  <link rel="stylesheet" href="./styles.css?v=71abbca453ad">
   <link rel="stylesheet" href="./portfolio.css?v=20261123-neutral-returns">
 <link rel="stylesheet" href="./login-design.css?v=f22d2bc7098e">
 </head>
@@ -102,16 +102,17 @@
     <section class="workspace">
       <header class="topbar">
         <div class="topbar-context">
-          <button class="icon-button menu-button" id="menu-button" type="button" aria-label="Открыть меню" aria-controls="sidebar" aria-expanded="false"><svg><use href="#icon-menu"></use></svg></button>
           <div class="topbar-heading"><svg class="topbar-section-icon" aria-hidden="true"><use href="#icon-overview"></use></svg><div class="topbar-heading-copy"><p class="topbar-kicker">Owner Cabinet</p><h1 id="view-title">Исследовательский доступ</h1></div></div>
         </div>
         <div class="topbar-actions">
           <button class="top-support" id="open-support" type="button" aria-label="Поддержка" aria-haspopup="dialog" aria-controls="support-dialog" title="Поддержка"><svg aria-hidden="true"><use href="#icon-support"></use></svg><span>Поддержка</span><span class="support-unread" id="support-unread" hidden></span></button>
+          <button class="icon-button menu-button" id="menu-button" type="button" aria-label="Открыть меню" aria-controls="sidebar" aria-expanded="false"><svg><use href="#icon-menu"></use></svg></button>
           <button class="top-profile" type="button" data-view="profile" aria-label="Открыть профиль владельца"><span class="avatar">QC</span><span class="top-profile-copy"><strong id="header-owner-id">Мой профиль</strong><small id="header-owner-email"></small></span><svg class="chevron"><use href="#icon-chevron"></use></svg></button>
         </div>
       </header>
 
       <main class="content" id="cabinet-content" tabindex="-1">
+        <button id="mobile-back" class="strategy-back" type="button" hidden>← Назад</button>
         <p id="email-inbox-hint" hidden>Для подтверждения почты откройте письмо от QUD. Если его нет во «Входящих», проверьте папку «Спам».</p>
         <section class="view is-active" id="view-overview" data-title="Исследовательский доступ" aria-labelledby="overview-title">
           <div class="overview-grid">
@@ -416,7 +417,7 @@
   </dialog>
   <div class="toast" id="demo-toast" role="status" aria-live="polite" hidden><strong>Функция появится на следующем этапе</strong><span>Сейчас это только визуальный элемент MVP-каркаса.</span></div>
   <script src="./profile.js?v=8" defer></script>
-  <script src="./app.js?v=20261123-pilot" defer></script>
+  <script src="./app.js?v=d131b759f3ea" defer></script>
   <script src="./login-language.js?v=1"></script>
   <script src="./session.js?v=bb3e71895025" defer></script>
   <script src="/portal/portfolio/mvp/app.js?v=616b13c64a08" defer></script>

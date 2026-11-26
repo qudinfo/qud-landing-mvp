@@ -1028,3 +1028,11 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .sidebar > * { flex-shrink: 0; }
   .workspace input, .workspace select, .workspace textarea, #support-message, #owner-login input { font-size: 16px; }
 }
+
+#mobile-back { display: none; }
+@media (max-width: 820px) {
+  #mobile-back:not([hidden]) { display: block; min-height: 44px; margin-bottom: 4px; font-size: 13px; }
+  #view-strategies .strategy-back { display: none; }
+  .topbar-actions { flex-shrink: 0; }
+  .topbar-context, .topbar-heading { min-width: 0; }
+}
