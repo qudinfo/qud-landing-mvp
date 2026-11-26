@@ -656,61 +656,87 @@
     return section;
   }
 
-  function createHistoryTable(history, strategy) {
-    const section = document.createElement('details');
-    section.className = 'strategy-history panel';
-    const summary = document.createElement('summary');
-    summary.className = 'strategy-history-summary';
-    const summaryCopy = document.createElement('span');
-    summaryCopy.innerHTML = '<small>История</small><strong>Подтверждённые периоды</strong>';
-    const summaryMeta = document.createElement('span');
-    summaryMeta.className = 'strategy-history-meta';
-    summaryMeta.textContent = history.length === 0
-      ? 'Нет периодов'
-      : `${history.length} · ${formatDate(history[0].period_start)}–${formatDate(history[history.length - 1].period_end)}`;
-    const summaryIcon = document.createElement('span');
-    summaryIcon.className = 'strategy-history-toggle';
-    summaryIcon.setAttribute('aria-hidden', 'true');
-    summaryIcon.innerHTML = '<svg><use href="#icon-chevron"></use></svg>';
-    summary.append(summaryCopy, summaryMeta, summaryIcon);
-    section.append(summary);
-
-    if (history.length === 0) {
-      const empty = document.createElement('p');
-      empty.className = 'strategy-history-empty';
-      empty.textContent = 'Подтверждённая история пока отсутствует.';
-      section.append(empty);
+  function createPeriodHistory(history) {
+    function element(tag, cls, text) {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    }
+    function percent(value) {
+      const rounded = Number(value.toFixed(2)) || 0;
+      return element('strong', rounded > 0 ? 'positive' : rounded < 0 ? 'negative' : '', formatPercent(rounded, true));
+    }
+    const section = element('section', 'period-history panel');
+    section.append(element('small', 'eyebrow', 'История'), element('h3', '', 'Подтверждённые периоды'));
+    if (!history.length) {
+      section.append(element('p', 'period-note', 'Подтверждённая история пока отсутствует.'));
       return section;
     }
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'strategy-history-scroll';
-    const table = document.createElement('table');
-    table.innerHTML = '<thead><tr><th>Период</th><th>Результат периода</th><th>Результат с начала</th></tr></thead>';
-    const latest = history[history.length - 1];
-    const headings = table.tHead.rows[0].cells;
-    addMetricHelp(headings[1], 'Изменение результата только за указанную неделю. ' +
-      `За ${formatDate(latest.period_start)}–${formatDate(latest.period_end)}: ${helpNumber.format(latest.period_return_pct)}%; закрыто сделок — ${helpNumber.format(latest.closed_trades_period)}.`);
-    addMetricHelp(headings[2], 'Результат, накопленный с начала наблюдения к концу указанной недели. ' +
-      `К ${formatDate(latest.period_end)} он составил ${helpNumber.format(latest.strategy_return_since_start_pct)}%.` +
-      (latest.period_end === strategy.data_period_end ? ` За это время закрыто сделок: ${helpNumber.format(strategy.closed_trades_total)}.` : ''));
-    const body = document.createElement('tbody');
-    history.forEach((row) => {
-      const tr = document.createElement('tr');
-      const period = document.createElement('td');
-      const periodResult = document.createElement('td');
-      const totalResult = document.createElement('td');
-      period.textContent = `${formatDate(row.period_start)} — ${formatDate(row.period_end)}`;
-      periodResult.textContent = formatPercent(row.period_return_pct, true);
-      totalResult.textContent = formatPercent(row.strategy_return_since_start_pct, true);
-      periodResult.className = row.period_return_pct > 0 ? 'positive' : row.period_return_pct < 0 ? 'negative' : '';
-      totalResult.className = row.strategy_return_since_start_pct > 0 ? 'positive' : row.strategy_return_since_start_pct < 0 ? 'negative' : '';
-      tr.append(period, periodResult, totalResult);
-      body.append(tr);
-    });
-    table.append(body);
-    wrapper.append(table);
-    section.append(wrapper);
+    const rows = [...history].sort((a,b) => b.period_end.localeCompare(a.period_end));
+    const groups = new Map();
+    for (const row of rows) {
+      const key = row.period_end.slice(0,7);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(row);
+    }
+    const monthFormat = new Intl.DateTimeFormat('ru-RU', {month:'long', year:'numeric', timeZone:'UTC'});
+    const months = Array.from(groups, ([key, periods]) => ({
+      key, periods, title: monthFormat.format(new Date(key + '-01T00:00:00Z')),
+      value: (periods.reduce((factor, row) => factor * (1 + row.period_return_pct / 100), 1) - 1) * 100
+    }));
+    const range = row => formatDate(row.period_start) + ' — ' + formatDate(row.period_end);
+    const records = element('div', 'period-records');
+    const details = element('div', 'period-breakdown');
+    details.hidden = true;
+    details.id = 'strategy-period-breakdown';
+    const buttons = new Map();
+    function openMonth(month, highlight) {
+      for (const [key, button] of buttons) button.setAttribute('aria-expanded', String(key === month?.key));
+      details.replaceChildren();
+      details.hidden = !month;
+      if (!month) return;
+      details.append(element('h4', '', month.title));
+      for (const row of month.periods) {
+        const item = element('div', 'period-item');
+        item.append(element('span', '', range(row)), percent(row.period_return_pct),
+          element('small', 'period-note', 'С начала: ' + formatPercent(row.strategy_return_since_start_pct, true) + ' · Закрыто сделок: ' + row.closed_trades_period));
+        details.append(item);
+        if (row === highlight) {
+          item.tabIndex = -1;
+          item.focus({preventScroll:true});
+          item.scrollIntoView({block:'nearest'});
+        }
+      }
+    }
+    for (const [label, best] of [['Лучший период', true], ['Худший период', false]]) {
+      const row = rows.reduce((winner, item) => (best ? item.period_return_pct > winner.period_return_pct : item.period_return_pct < winner.period_return_pct) ? item : winner);
+      const record = element('button', 'period-record');
+      record.type = 'button';
+      record.append(element('small', 'eyebrow', label), percent(row.period_return_pct), element('small', 'period-note', range(row)));
+      record.onclick = () => openMonth(months.find(month => month.key === row.period_end.slice(0,7)), row);
+      records.append(record);
+    }
+    section.append(records, element('h4', '', 'Доходность по месяцам'),
+      element('p', 'period-note', 'По подтверждённым периодам, завершившимся в этом месяце.'));
+    const scale = Math.max(...months.map(month => Math.abs(month.value)), 0.01);
+    for (const month of months) {
+      const button = element('button', 'period-month');
+      button.type = 'button';
+      button.setAttribute('aria-controls', details.id);
+      button.setAttribute('aria-expanded', 'false');
+      const track = element('span', 'period-track');
+      const bar = element('i', month.value < 0 ? 'loss' : 'gain');
+      bar.style.width = Math.abs(month.value) / scale * 50 + '%';
+      track.append(bar);
+      const arrow = element('span', 'period-chevron');
+      arrow.setAttribute('aria-hidden','true');
+      button.append(element('span', '', month.title), percent(month.value), track, arrow);
+      buttons.set(month.key, button);
+      button.onclick = () => openMonth(button.getAttribute('aria-expanded') === 'true' ? null : month);
+      section.append(button);
+    }
+    section.append(details);
     return section;
   }
 
@@ -779,7 +805,7 @@
     dashboard.className = 'strategy-detail-dashboard';
     dashboard.append(summary, createStrategyChart(history, strategy.strategy_id));
 
-    strategyCatalog.append(back, dashboard, createHistoryTable(history, strategy));
+    strategyCatalog.append(back, dashboard, createPeriodHistory(history));
     const backControl = matchMedia('(max-width: 820px)').matches ? mobileBack : strategyCatalog.querySelector('.strategy-back');
     backControl.focus({ preventScroll: true });
   }
